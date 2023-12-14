@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import imgSrc from '../Header/hiClass_logo.svg';
+
 
 // const Hero = ({heading, message}) => {
 //     return (
@@ -17,29 +19,19 @@ import Image from "next/image";
 
 const Header = () => {
     return (
-        <div className="bg-gray-200 px-4 py-2 rounded-lg shadow-md">
-            <div className="header-left">
-                <Image src="/hiClass_logo.svg" alt="hiClass Logo" width={150} height={50} />
-                <div className="menu">
-                    <div className="menu-text">Discover</div>
-                    <div className="menu-text">
-                        <a className="profile-link" href="../createClass/emptyProfile.html">
-                            My profile
-                        </a>
-                    </div>
+        <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
+            <div className="header-left flex items-center">
+                <Image src={imgSrc} alt="hiClass Logo" width={150} height={50} />
+                <div className="flex ml-4">
+                    <div className="">Discover</div>
+                    <div className="ml-6">My profile</div>
                 </div>
             </div>
-            <div className="header-right">
-                <div className="tertiary-button">
-                    <img src="../images/tertiary-button.svg" alt="" />
-                </div>
-                <div className="profile">
-                    <div className="avatar">
-                        <img src="../images/avatar40x40_Online.svg" alt="" />
-                    </div>
-                    <div className="chevron-down">
-                        <img src="../images/chevron-down.svg" alt="" />
-                    </div>
+            <div className="header-right flex items-center">
+                <img src="../images/tertiary-button.svg" alt="" />
+                <div className="flex">
+                    <Image className='' src="/avatar40x40_Online.svg" alt="avatar-header" width={40} height={40} />
+                    <Image className='' src="/chevron-down.svg" alt="profile-dropdown-button" width={20} height={20} />
                 </div>
             </div>
         </div>
