@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
-
+import Link from 'next/link'
 
 // const Hero = ({heading, message}) => {
 //     return (
@@ -21,17 +21,19 @@ const Header = () => {
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
-                <Image src={imgSrc} alt="hiClass Logo" width={150} height={50} />
+                <Image src={imgSrc} alt="hiClass Logo" />
                 <div className="flex ml-4">
-                    <div className="">Discover</div>
-                    <div className="ml-6">My profile</div>
+                    <Link href='/' className="ml-6">Discover</Link>
+                    <Link href='/myProfile' className="ml-6">My profile</Link>
+                    {/*<div className="ml-6">Discover</div>*/}
+                    {/*<div className="ml-6">My profile</div>*/}
                 </div>
             </div>
             <div className="header-right flex items-center">
                 <img src="../images/tertiary-button.svg" alt="" />
                 <div className="flex">
-                    <Image className='' src="/avatar40x40_Online.svg" alt="avatar-header" width={40} height={40} />
-                    <Image className='' src="/chevron-down.svg" alt="profile-dropdown-button" width={20} height={20} />
+                    {/*<Image className='' src="/avatar40x40_Online.svg" alt="avatar-header"  />*/}
+                    {/*<Image className='' src="/chevron-down.svg" alt="profile-dropdown-button" />*/}
                 </div>
             </div>
         </div>

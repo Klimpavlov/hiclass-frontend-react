@@ -1,7 +1,8 @@
-import Image from 'next/image'
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection"
 import Filter from "@/components/Filter/Filter";
+import Switch from "@/components/Buttons/SwitchButton";
+import ClassesSection from "@/components/ClassesSection/ClassesSection";
 
 export default function ExplorePage() {
     return (
@@ -15,10 +16,12 @@ export default function ExplorePage() {
                     <Filter buttonText='Languege'/>
                     <Filter buttonText='Location'/>
                 </div>
-                <div className='px-4 md:px-8 flex items-center'>
-                    Show only experts
+                <div className='show-experts px-4 md:px-8 flex items-center'>
+                    <Switch/>
+                    <span className='ml-4'>Show only experts</span>
                 </div>
             </div>
+            <ClassesSection/>
         </main>
     )
 }
