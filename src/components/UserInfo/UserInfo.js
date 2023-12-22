@@ -16,11 +16,11 @@ const UserInfo = () => {
             <div className='country'>Minsk, Belarus</div>
             <div className='time'>14:10 local time</div>
             <div className='w-full'><EditProfileButton/></div>
-            <div className='show-experts px-4 md:px-8 flex items-center'>
+            <div className="show-experts flex flex-col sm:flex-row items-center justify-start">
                 <Switch/>
-                <span className='ml-4'>Available as an expert</span>
+                <span className="ml-0 mt-2 sm:ml-4 sm:mt-0">Available as an expert</span>
             </div>
-            <div className='position flex justify-between'>
+            <div className='flex justify-between'>
                 <div>Position</div>
                 <div className='text-green-800'>Verify</div>
             </div>

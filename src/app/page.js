@@ -9,16 +9,16 @@ export default function ExplorePage() {
         <main className="">
             <Header/>
             <TopSection/>
-            <div className='flex justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray'>
-                <div className='flex gap-2 px-4 md:px-8'>
-                    <Filter buttonText='Subject'/>
-                    <Filter buttonText='Grade'/>
-                    <Filter buttonText='Languege'/>
-                    <Filter buttonText='Location'/>
+            <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
+                <div className="flex flex-wrap gap-2 px-4 md:px-8">
+                    <Filter buttonText="Subject" />
+                    <Filter buttonText="Grade" />
+                    <Filter buttonText="Language" />
+                    <Filter buttonText="Location" />
                 </div>
-                <div className='show-experts px-4 md:px-8 flex items-center'>
-                    <Switch/>
-                    <span className='ml-4'>Show only experts</span>
+                <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
+                    <Switch />
+                    <span className="ml-2 md:ml-4">Show only experts</span>
                 </div>
             </div>
             <ClassesSection/>

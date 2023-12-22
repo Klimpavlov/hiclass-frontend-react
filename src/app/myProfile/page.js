@@ -1,7 +1,7 @@
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection"
 import UserInfo from "@/components/UserInfo/UserInfo";
-import ClassInProfile from "@/components/ClassPrewiev/ClassInProfile";
+import ClassPreview from "@/components/ClassPreview/ClassPreview";
 
 export default function MyProfile() {
     return (
@@ -16,9 +16,9 @@ export default function MyProfile() {
                         <div className='text-green-700'>+ Add class</div>
                     </div>
                     <div className='clsCntMain grid grid-cols-2 gap-4 '>
-                        <ClassInProfile />
-                        <ClassInProfile />
-                        <ClassInProfile />
+                        <ClassPreview />
+                        <ClassPreview />
+                        <ClassPreview />
                     </div>
                 </div>
             </div>

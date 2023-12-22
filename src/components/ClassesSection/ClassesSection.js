@@ -1,16 +1,16 @@
 import React from "react";
-import ClassInProfile from "@/components/ClassPrewiev/ClassInProfile";
+import ClassPreview from "@/components/ClassPreview/ClassPreview";
 const ClassesSection = () => {
     return (
-        <div>
+        <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
             <div className='flex justify-between'>
-                <div>Most popular classes in Geography</div>
+                <div className='font-bold'>Most popular classes in <span className='text-green-700'>Geography</span></div>
                 <div className='text-green-700'>See all</div>
             </div>
-            <div className='flex gap-3'>
-                <ClassInProfile/>
-                <ClassInProfile/>
-                <ClassInProfile/>
+            <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <ClassPreview className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4" />
+                <ClassPreview className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4" />
+                <ClassPreview className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4" />
             </div>
         </div>
     )

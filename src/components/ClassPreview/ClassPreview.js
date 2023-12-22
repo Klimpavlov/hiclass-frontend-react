@@ -1,8 +1,8 @@
 import React from "react";
 import Tag from "@/components/Tags/Tag";
-import imgSrc from '../ClassPrewiev/class-preview-image.svg';
+import imgSrc from '@/components/ClassPreview/class-preview-image.svg';
 import Image from "next/image";
-const ClassInProfile = () => {
+const ClassPreview = () => {
     return (
             <div className="class-preview ">
                 <div className="class-preview-content">
@@ -25,4 +25,4 @@ const ClassInProfile = () => {
     )
 }
 
-export default ClassInProfile
+export default ClassPreview
