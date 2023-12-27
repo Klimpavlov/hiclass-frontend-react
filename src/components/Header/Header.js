@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
+import imgChatButton from '../Header/tertiary-button.svg';
+import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
+import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 
 // const Hero = ({heading, message}) => {
@@ -22,18 +25,16 @@ const Header = () => {
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
                 <Image src={imgSrc} alt="hiClass Logo" />
-                <div className="flex ml-4">
-                    <Link href='/' className="ml-6">Discover</Link>
-                    <Link href='/myProfile' className="ml-6">My profile</Link>
-                    {/*<div className="ml-6">Discover</div>*/}
-                    {/*<div className="ml-6">My profile</div>*/}
+                <div className="flex flex-wrap justify-start ml-4">
+                    <Link href="/" className="ml-6 my-2">Discover</Link>
+                    <Link href="/myProfile" className="ml-6 my-2">My profile</Link>
                 </div>
             </div>
-            <div className="header-right flex items-center">
-                <img src="../images/tertiary-button.svg" alt="" />
-                <div className="flex">
-                    {/*<Image className='' src="/avatar40x40_Online.svg" alt="avatar-header"  />*/}
-                    {/*<Image className='' src="/chevron-down.svg" alt="profile-dropdown-button" />*/}
+            <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
+                <Image src={imgChatButton} alt="chat-button" />
+                <div className="flex gap-3 sm:gap-1 md:gap-2">
+                    <Image className='' src={imgAvatarSrc} alt="avatar-header"  />
+                    <Image className='' src={imgChevronDownSrc} alt="chevron-down" />
                 </div>
             </div>
         </div>

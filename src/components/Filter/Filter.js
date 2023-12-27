@@ -22,14 +22,18 @@ const Filter = ({buttonText}) => {
             setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
         } else {
             setSelectedSubjects([...selectedSubjects, subject]);
+            console.log(subject)
         }
+
     };
 
     return (
         <div className="relative">
             <div
-                className="flex justify-between py-2 px-4 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white shadow-xs
-         text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6"
+                className="flex justify-between py-2 px-4 rounded-lg
+                 border border-neutral-200-b-2-b-7-bd bg-white shadow-xs
+                  text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6
+                  "
                 onClick={toggleDropdown}
             >
                 <div className="">{buttonText}</div>
@@ -40,8 +44,8 @@ const Filter = ({buttonText}) => {
                 />
             </div>
             {isOpen && (
-                <div className="absolute top-full left-0 mt-2 w-40 bg-white border rounded-lg
-                  border-neutral-200-b-2-b-7-bd shadow-xs">
+                <div className="absolute top-full left-0 mt-2 w-full md:w-80 bg-white border rounded-lg
+                border-neutral-200-b-2-b-7-bd shadow-xs">
                     <div className="py-2">
                         {subjects.map((subject, index) => (
                             <div
@@ -59,9 +63,9 @@ const Filter = ({buttonText}) => {
                             </div>
                         ))}
                     </div>
-                    <div className='flex justify-between'>
-                        <ApplyButton/>
-                        <ClearAllButton/>
+                    <div className="flex justify-between px-3 py-2">
+                        <ApplyButton />
+                        <ClearAllButton />
                     </div>
                 </div>
             )}
