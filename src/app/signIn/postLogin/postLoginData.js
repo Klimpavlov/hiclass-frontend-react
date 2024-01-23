@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const postLoginData = () => {
+const postLoginData = (email, password) => {
 
     axios.post('http://localhost:7280/api/User/login', {
-        Email: "Klimpaulau@icloud.com",
-        Password: "111111"
+        Email: email,
+        Password: password
     })
         .then(function (response) {
             console.log(response);

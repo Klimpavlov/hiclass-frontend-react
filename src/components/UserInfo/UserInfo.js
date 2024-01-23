@@ -11,6 +11,11 @@ const UserInfo = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [languageTitles, setLanguageTitles] = useState([]);
+    const [userDescription, setUserDescription] = useState('');
+    const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [institution, setInstitution] = useState('');
+    const [disciplineTitles, setDisciplineTitles] = useState([]);
 
     useEffect(() => {
         getUser();
@@ -22,12 +27,7 @@ const UserInfo = () => {
                 "http://localhost:7280/api/User/get-userprofile",
                 {
                     headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYjkwNWEzMy1kNTQxLT" +
-                            "Q0M2ItYTUzMy1hYTkwZGJmOWE3NmMiLCJlbWFpbCI6IktsaW1wYXVsYXVAaWNsb3V" +
-                            "kLmNvbSIsImp0aSI6IjExNzRkMDA2LTZhZTAtNDJlMC1iODBjLWNiNTZkZGQyOGFhNyIsImlhdC" +
-                            "I6MTcwNTkyNDQzMiwiaXNWZXJpZmllZCI6IlRydWUiLCJpc0NyZWF0ZWRBY2NvdW50IjoiVHJ1ZSIsImlzQVRlYWN" +
-                            "oZXIiOiJUcnVlIiwiaXNBRXhwZXJ0IjoiRmFsc2UiLCJuYmYiOjE3MDU5MjQ0MzIsImV4cCI6MTcwNjAxMDgzMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MjgwIiwiYXVkIjoiaHR0cDovL2xv" +
-                            "Y2FsaG9zdDo3MjgwIn0.ErVL-A07oKrS-31rMlTiyQAHbn7eEe-VBOje64_KriQ"
+                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYjkwNWEzMy1kNTQxLTQ0M2ItYTUzMy1hYTkwZGJmOWE3NmMiLCJlbWFpbCI6IktsaW1wYXVsYXVAaWNsb3VkLmNvbSIsImp0aSI6ImM5YWFkYTA0LWE5MWMtNDUwYy04NjJjLWVlOGFjNjRkZGEzMiIsImlhdCI6MTcwNjAxMTQ4MSwiaXNWZXJpZmllZCI6IlRydWUiLCJpc0NyZWF0ZWRBY2NvdW50IjoiVHJ1ZSIsImlzQVRlYWNoZXIiOiJUcnVlIiwiaXNBRXhwZXJ0IjoiRmFsc2UiLCJuYmYiOjE3MDYwMTE0ODEsImV4cCI6MTcwNjA5MjIzNCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MjgwIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo3MjgwIn0.Uh2j9Yi_QS79zAOh5OoEgvhYakNqQPXgX71bXcxzEuU"
                     }
                 }
             );
@@ -37,7 +37,11 @@ const UserInfo = () => {
             setFirstname(response.data.value.firstName);
             setLastname(response.data.value.lastName)
             setLanguageTitles(response.data.value.languageTitles);
-
+            setUserDescription(response.data.value.description);
+            setCountry(response.data.value.countryTitle);
+            setCity(response.data.value.cityTitle);
+            setInstitution(response.data.value.institution.title);
+            setDisciplineTitles(response.data.value.disciplineTitles);
         } catch (error) {
             console.error(error);
         }
@@ -50,11 +54,8 @@ const UserInfo = () => {
             <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>
             <div className='raiting'></div>
             <div className="languages">Speaks {languageTitles.join(", ")}</div>
-            <div className='aboutUser '>Lorem ipsum dolor sit amet consectetur.
-                Donec imperdiet vivamus id egestas.
-                Elit vulputate pellentesque a amet. Sed etiam platea suscipit
-            </div>
-            <div className='country'>Minsk, Belarus</div>
+            <div className='aboutUser '>{userDescription}</div>
+            <div className='country'>{city}, {country}</div>
             <div className='time'>14:10 local time</div>
             <div className='w-full'><EditProfileButton/></div>
             <div className="show-experts flex flex-col sm:flex-row items-center justify-start">
@@ -65,12 +66,11 @@ const UserInfo = () => {
                 <div>Position</div>
                 <div className='text-green-800'>Verify</div>
             </div>
-            <div className='location'>Gymnasium No. 2, Minsk, Belarus</div>
+            <div className='location'>{institution}</div>
             <div className='tags flex flex-wrap gap-2'>
-                <Tag text='Geography'/>
-                <Tag text='Maths'/>
-                <Tag text='English'/>
-                <Tag text='French'/>
+                {disciplineTitles.map((title) => (
+                    <Tag key={title} text={title}></Tag>
+                ))}
             </div>
         </div>);
 };

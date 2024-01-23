@@ -1,11 +1,22 @@
+'use client';
+
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
 import FacebookButton from "@/components/Buttons/FacebookButton";
-import React from "react";
+import React, {useState} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
+import postLoginData from "@/app/signIn/postLogin/postLoginData";
 
 export default function SignIn() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSignIn = () => {
+        postLoginData(email, password);
+    };
+
     return (
         <main className="">
             <RegistrationHeader/>
@@ -19,11 +30,15 @@ export default function SignIn() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"/>
+                            <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"
+                                       value={email}
+                                       onChange={(e) => setEmail(e.target.value)}/>
                         </div>
-                        <InputForm inputFormText="Password" placeholderText="Enter your password"/>
+                        <InputForm inputFormText="Password" placeholderText="Enter your password"
+                                   value={password}
+                                   onChange={(e) => setPassword(e.target.value)}/>
                     </div>
-                    <ContinueButton buttonText="Sign in"/>
+                    <ContinueButton buttonText="Sign in" onClick={handleSignIn}/>
                 </div>
             </div>
         </main>
