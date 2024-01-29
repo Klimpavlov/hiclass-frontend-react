@@ -36,7 +36,9 @@ export default function SignIn() {
                         </div>
                         <InputForm inputFormText="Password" placeholderText="Enter your password"
                                    value={password}
-                                   onChange={(e) => setPassword(e.target.value)}/>
+                                   onChange={(e) => setPassword(e.target.value)}
+                                   isPassword={true}
+                        />
                     </div>
                     <ContinueButton buttonText="Sign in" onClick={handleSignIn}/>
                 </div>
