@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClearAllButton = ({clearAll}) => {
+const ClearAllButton = ({buttonText, clearAll}) => {
     return (
         <button
             className="flex items-center justify-center px-5 py-3 mt-4
@@ -8,7 +8,7 @@ const ClearAllButton = ({clearAll}) => {
                               text-sm font-medium shadow-xs"
             onClick={clearAll}
         >
-           Clear all
+            {buttonText}
         </button>
     )
 }

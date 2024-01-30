@@ -48,8 +48,7 @@ const UserInfo = () => {
     }
 
     return (
-        <div className='w-384 sm:w-1/3 lg:w-1/4 flex
-        flex-col gap-4 mx-auto sm:ml-0 lg:ml-28'>
+        <div className='sm:w-1/3'>
             <div className='avatar'></div>
             <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>
             <div className='raiting'></div>
@@ -58,7 +57,7 @@ const UserInfo = () => {
             <div className='country'>{city}, {country}</div>
             <div className='time'>14:10 local time</div>
             <div className='w-full'><EditProfileButton/></div>
-            <div className="show-experts flex flex-col sm:flex-row items-center justify-start">
+            <div className="show-experts flex items-center">
                 <Switch/>
                 <span className="ml-0 mt-2 sm:ml-4 sm:mt-0">Available as an expert</span>
             </div>

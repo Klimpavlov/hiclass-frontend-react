@@ -36,11 +36,13 @@ const Header = () => {
                 <Image src={imgChatButton} alt="chat-button" />
                 <div className="flex gap-3 sm:gap-1 md:gap-2">
                     <Image className='' src={imgAvatarSrc} alt="avatar-header"  />
-                    <Image className='' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
+                    <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
                     {isDropdownOpen && (
-                        <div className="absolute right-0 mt-10">
+                        <div className="absolute right-0 mt-10 ">
                             <button
-                                className="block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-white border border-gray-300 rounded-lg shadow-lg"
+                                className="block py-2 px-4 sm:py-1 sm:px-2 text-left
+                                hover:bg-gray-100 bg-white border border-gray-300
+                                 rounded-lg shadow-lg cursor-pointer"
                                 onClick={handleLogout}
                             >
                                <Link href="/signIn">Logout</Link>

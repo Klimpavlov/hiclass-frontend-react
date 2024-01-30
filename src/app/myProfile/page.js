@@ -24,12 +24,12 @@ export default function MyProfile() {
         <main className="">
             <Header />
             <TopSection />
-            <div className='flex '>
-                <UserInfo />
-                <div className='classesContainer mt-12 flex flex-col gap-12 mx-auto sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
+            <div className='flex flex-col sm:flex-row'>
+                <UserInfo/>
+                <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
                     <div className='clsCntHeader flex justify-between'>
-                        <div>Classes</div>
-                        <div className='text-green-700' onClick={handleAddClass}>
+                        <div className=''>Classes</div>
+                        <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
                             + Add class
                         </div>
                     </div>
@@ -42,8 +42,13 @@ export default function MyProfile() {
             </div>
 
             {isModalOpen && (
-                <CreateClassMoьщdal onCreateClass={handleCreateClass} />
+                <CreateClassModal
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
+                    onCreateClass={handleCreateClass}
+                />
             )}
+
         </main>
     );
 }
