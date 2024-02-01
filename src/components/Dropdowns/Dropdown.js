@@ -1,10 +1,14 @@
 'use client';
 
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 
-const Dropdown = ({ dropdownFormText, placeholderText, isOpen, toggleDropdown}) => {
+const Dropdown = ({ dropdownFormText, placeholderText}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
     return (
         <div className="">
             {dropdownFormText}

@@ -5,6 +5,7 @@ import EditProfileButton from "@/components/Buttons/EditProfileButton";
 import Switch from "@/components/Buttons/SwitchButton";
 import Tag from "@/components/Tags/Tag";
 import axios from "axios";
+import Link from "next/link";
 
 const UserInfo = () => {
 

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Header from "@/components/Header/Header";
-import TopSection from "@/components/TopSection/TopSection"
+import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
@@ -24,7 +24,7 @@ export default function MyProfile() {
         <main className="">
             <Header />
             <TopSection />
-            <div className='flex flex-col sm:flex-row'>
+            <div className='flex flex-col sm:flex-row '>
                 <UserInfo/>
                 <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
                     <div className='clsCntHeader flex justify-between'>
