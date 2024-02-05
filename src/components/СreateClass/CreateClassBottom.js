@@ -10,6 +10,7 @@ const CreateClassBottom = ({handleCloseModal, handlePostCreateClass}) => {
 
     const handlePost = () => {
         handlePostCreateClass();
+
     }
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
