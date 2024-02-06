@@ -41,7 +41,7 @@ export default function ExplorePage() {
                     ))}
                 </div>
             </div>
-            <ClassesSection selectedFilters={selectedFilters} />
+            {/*<ClassesSection selectedFilters={selectedFilters} />*/}
         </main>
     );
 }
