@@ -28,7 +28,7 @@ const UserInfo = () => {
                 "http://localhost:7280/api/User/get-userprofile",
                 {
                     headers: {
-                        Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZTI5YjFhZS0yNDFkLTQ0ZTctOWM4OS1kNjZmZThjMGY4ZGIiLCJlbWFpbCI6IktsaW1wYXZsb3YyMDAyQGdtYWlsLmNvbSIsImp0aSI6IjUwZmE1NWU0LWZmYmEtNGRiNC05NTgxLTRkZWM3YjQ0OTU5ZiIsImlhdCI6MTcwNjk1NjAzNiwiaXNWZXJpZmllZCI6IlRydWUiLCJpc0NyZWF0ZWRBY2NvdW50IjoiRmFsc2UiLCJpc0FUZWFjaGVyIjoiIiwiaXNBRXhwZXJ0IjoiIiwibmJmIjoxNzA2OTU2MDM2LCJleHAiOjE3MDcwNDE0NTMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzI4MCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzI4MCJ9.H_31WRpXjAz7CjdCuysrSkWLw7KqFxJWTofORoeSVKk"
+                        Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmMzY0MjhlOS01NmJhLTQ1MWEtYjZkMC1lMzg0YWEzNzQyMjkiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiI4N2NhZDNkOS1jZDIxLTQ2YWUtOGE1Ni1lNzM0NDJmODczYjAiLCJpYXQiOjE3MDczMjgzNzQsImlzVmVyaWZpZWQiOiJUcnVlIiwiaXNDcmVhdGVkQWNjb3VudCI6IlRydWUiLCJpc0FUZWFjaGVyIjoiVHJ1ZSIsImlzQUV4cGVydCI6IkZhbHNlIiwibmJmIjoxNzA3MzI4Mzc0LCJleHAiOjE3MDc0MTM3NTIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzI4MCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzI4MCJ9.od0mtgVXcF8zdRqgZuCiwCuh76nrBU_FssUdhqnM2Fo"
                     }
                 }
             );

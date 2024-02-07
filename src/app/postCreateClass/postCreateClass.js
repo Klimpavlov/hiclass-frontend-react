@@ -3,11 +3,11 @@ import axios from "axios";
 const postCreateClass = (title, gradeNumber, photoUrl, languageTitles, disciplineTitles) => {
 
     axios.post('http://localhost:7280/api/Class/create-class', {
-        Title: title,
-        GradeNumber: gradeNumber,
-        PhotoUrl: photoUrl,
-        LanguageTitles: languageTitles,
-        DisciplineTitles: disciplineTitles
+        Title: "title",
+        GradeNumber: "gradeNumber",
+        PhotoUrl: "photoUrl",
+        LanguageTitles: "languageTitles",
+        DisciplineTitles: "disciplineTitles"
     })
         .then(function (response) {
             console.log(response);

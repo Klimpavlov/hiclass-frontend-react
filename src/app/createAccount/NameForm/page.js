@@ -39,7 +39,8 @@ export default function nameForm() {
                                    onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
-                            <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/positionForm')}/>
+                            <ContinueButton buttonText='Continue'
+                                            onClick={() => router.push('/createAccount/positionForm')}/>
                 </div>
             </div>
         </main>

@@ -1,13 +1,15 @@
 'use client';
 
 import React, {useState} from 'react';
+import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
-import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
+import InputRadioForm from "@/components/Inputs/InputRadioForm";
+import {router} from "next/client";
 
 export default function positionForm() {
 
-
+const router = useRouter()
 
     return (
         <main>
@@ -21,10 +23,14 @@ export default function positionForm() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-
+                            <InputRadioForm inputFormText='I’m a teacher'
+                                             inputAboutFormText='As a teacher you can add your classes and
+                                             organise lessons, as well as join lessons as an expert in your field.'/>
                         </div>
+                        <InputRadioForm inputFormText='I’m an expert'
+                                        inputAboutFormText='As an expert you can connect with teacher and join lessons.'/>
                     </div>
-                    <ContinueButton buttonText='Continue'/>
+                    <ContinueButton buttonText='Continue' onClick={() => router.push('')}/>
                 </div>
             </div>
         </main>
