@@ -4,11 +4,11 @@ import React, {useState} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
-import InputRadioForm from "@/components/Inputs/InputRadioForm";
+import InputForm from "@/components/Inputs/InputForm";
 
-export default function positionForm() {
+export default function institutionForm() {
 
-const router = useRouter()
+    const router = useRouter()
 
     return (
         <main>
@@ -22,14 +22,12 @@ const router = useRouter()
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputRadioForm inputFormText='I’m a teacher'
-                                             inputAboutFormText='As a teacher you can add your classes and
-                                             organise lessons, as well as join lessons as an expert in your field.'/>
+                           <InputForm inputFormText='Institution name'
+                                      placeholderText='e.g. Gymnasium No. 7, Minsk'
+                           />
                         </div>
-                        <InputRadioForm inputFormText='I’m an expert'
-                                        inputAboutFormText='As an expert you can connect with teacher and join lessons.'/>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/locationAndLanguages')}/>
+                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/disciplines')}/>
                 </div>
             </div>
         </main>

@@ -11,7 +11,7 @@ const InputRadioForm = ({inputFormText, inputAboutFormText}) => {
                         {inputFormText}
                     </div>
                     <input className=""
-                           type="radio"
+                           type="checkbox"
 
                     />
                 </div>

@@ -1,14 +1,24 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
-import InputRadioForm from "@/components/Inputs/InputRadioForm";
+import Dropdown from "@/components/Dropdowns/Dropdown";
 
-export default function positionForm() {
+export default function disciplinesForm() {
 
-const router = useRouter()
+    const router = useRouter();
+    const [disciplines, setDisciplines] = useState([]);
+
+    useEffect(() => {
+        fetch("https://api.example.com/languages")
+            .then((response) => response.json())
+            .then((data) => setDisciplines(data.disciplines))
+            .catch((error) => {
+                console.error("Error fetching disciplines:", error);
+            });
+    }, []);
 
     return (
         <main>
@@ -22,14 +32,12 @@ const router = useRouter()
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputRadioForm inputFormText='I’m a teacher'
-                                             inputAboutFormText='As a teacher you can add your classes and
-                                             organise lessons, as well as join lessons as an expert in your field.'/>
+                            <Dropdown dropdownFormText='Areas of work' placeholderText='Select..'
+                                      options={disciplines}
+                            />
                         </div>
-                        <InputRadioForm inputFormText='I’m an expert'
-                                        inputAboutFormText='As an expert you can connect with teacher and join lessons.'/>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/locationAndLanguages')}/>
+                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/grades')}/>
                 </div>
             </div>
         </main>
