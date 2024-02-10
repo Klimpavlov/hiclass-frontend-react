@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
+import postCreateAccount from "@/app/createAccount/postCreateAccount/postCreateAccount";
 
 export default function nameForm() {
 
@@ -13,9 +14,10 @@ export default function nameForm() {
 
     const router = useRouter();
 
-    // const handleContinue = () => {
-    //     router.push('/createAccount/positionForm');
-    // };
+    const handleContinue = () => {
+        postCreateAccount(firstName, lastName);
+        router.push('/createAccount/positionForm');
+    };
 
     return (
         <main>
@@ -39,7 +41,7 @@ export default function nameForm() {
                         />
                     </div>
                             <ContinueButton buttonText='Continue'
-                                            onClick={() => router.push('/createAccount/positionForm')}/>
+                                            onClick={handleContinue}/>
                 </div>
             </div>
         </main>

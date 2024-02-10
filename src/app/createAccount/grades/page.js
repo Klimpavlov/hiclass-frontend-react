@@ -5,20 +5,15 @@ import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
+import postCreateAccount from "@/app/createAccount/postCreateAccount/postCreateAccount";
 
 export default function gradesForm() {
 
     const router = useRouter();
-    const [grades, setGrades] = useState([]);
+    const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    useEffect(() => {
-        fetch("https://api.example.com/languages")
-            .then((response) => response.json())
-            .then((data) => setGrades(data.grades))
-            .catch((error) => {
-                console.error("Error fetching disciplines:", error);
-            });
-    }, []);
+    const handleContinue = () => {
+    }
 
     return (
         <main>
@@ -28,7 +23,8 @@ export default function gradesForm() {
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
                     <div className="text-4xl whitespace-pre-line">Welcome !</div>
                     <div className=" ">It’s great to have you with us! To help us optimise your
-                        experience, tell us what you plan to use WonderWorld for.</div>
+                        experience, tell us what you plan to use WonderWorld for.
+                    </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
@@ -37,7 +33,7 @@ export default function gradesForm() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/')}/>
+                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
                 </div>
             </div>
         </main>

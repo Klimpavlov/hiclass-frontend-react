@@ -1,9 +1,12 @@
+'use client';
+
 import React from "react";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
+import {useRouter} from "next/navigation";
 
 export default function isVerified() {
-
+    const router = useRouter();
     return (
         <main>
             <RegistrationHeader/>
@@ -13,7 +16,7 @@ export default function isVerified() {
                     <div className="text-4xl whitespace-pre-line">Email address verified!</div>
                     <div className=" ">You have successfully verified your email address.</div>
                     <div className="divider"></div>
-                    <ContinueButton buttonText="Continue"/>
+                    <ContinueButton buttonText="Continue" onClick={() => router.push('/createAccount/NameForm')}/>
                 </div>
             </div>
         </main>
