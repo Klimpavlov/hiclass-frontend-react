@@ -1,18 +1,20 @@
 import axios from "axios";
 
-const postCreateClass = (title, gradeNumber, photoUrl, languageTitles, disciplineTitles) => {
+const updatePersonalInfo = () => {
+    const accessToken = localStorage.getItem('accessToken');
 
-    const accessToken = localStorage.getItem('accessToken')
-
-    axios.post('http://localhost:7280/api/Class/create-class', {
+    axios.put('http://localhost:7280/api/UpdateUser/personal-info', {
+        IsATeacher: true,
+        IsAnExpert: false,
+        FirstName: "kakashka",
+        LastName: "govno",
+        CityTitle: "SP",
+        CountryTitle: "R",
+        Description: "Say my name"
+    }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
-        },
-        Title: "title",
-        GradeNumber: 4,
-        FormFileImage: "photoUrl",
-        LanguageTitles: ["English"],
-        DisciplineTitles: ["Biology"]
+        }
     })
         .then(function (response) {
             console.log(response);
@@ -22,6 +24,6 @@ const postCreateClass = (title, gradeNumber, photoUrl, languageTitles, disciplin
             console.log(error);
             // Перенаправление на страницу с ошибкой при ошибке запроса
         });
-}
+};
 
-export default postCreateClass
+export default updatePersonalInfo;

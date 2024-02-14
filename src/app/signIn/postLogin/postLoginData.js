@@ -9,13 +9,13 @@ const postLoginData = (email, password) => {
         Password: password
     })
         .then(function (response) {
+            const accessToken = response.data.value.accessToken;
             console.log(response);
             console.log(response.data.value.accessToken)
-            // Перенаправление на другую страницу после успешного выполнения запроса
+            localStorage.setItem('accessToken', accessToken);
         })
         .catch(function (error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
         });
 }
 

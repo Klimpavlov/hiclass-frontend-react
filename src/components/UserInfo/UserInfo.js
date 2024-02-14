@@ -23,17 +23,19 @@ const UserInfo = () => {
     }, []);
 
     async function getUser() {
+        const accessToken = localStorage.getItem('accessToken');
         try {
             const response = await axios.get(
                 "http://localhost:7280/api/User/get-userprofile",
                 {
                     headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhNjQyNmU3ZC1mOTEyLTRjYWItODg1NS0zZGE1MzViNTgyNTQiLCJlbWFpbCI6IjF1c2VyQGV4YW1wbGUuY29tIiwianRpIjoiY2MwZjNjMWMtYzIxZi00Y2NiLWE1YWQtNTM3NTkzNjY0YTE4IiwiaWF0IjoxNzA3NTUwOTc4LCJpc1ZlcmlmaWVkIjoiVHJ1ZSIsImlzQ3JlYXRlZEFjY291bnQiOiJUcnVlIiwiaXNBVGVhY2hlciI6IlRydWUiLCJpc0FFeHBlcnQiOiJGYWxzZSIsIm5iZiI6MTcwNzU1MDk3OCwiZXhwIjoxNzA3NjM3Mzc4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjcyODAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyODAifQ.eUlPFw3DpEl__4MUT3m5PqjyzJAa8PdrpW17WrnheUM"
+                        Authorization: `Bearer ${accessToken}`
                     }
                 }
             );
             console.log(response);
             console.log(response.data.value.languageTitles);
+
 
             setFirstname(response.data.value.firstName);
             setLastname(response.data.value.lastName)

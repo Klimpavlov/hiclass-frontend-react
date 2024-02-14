@@ -12,6 +12,7 @@ export default function CreateClassModal({ isModalOpen, setIsModalOpen, onCreate
     const [photo, setPhoto] = useState(null);
 
     const handlePostCreateClass = () => {
+        postCreateClass()
         const newClass = {
             photo,
             title,

@@ -13,6 +13,7 @@ export default function gradesForm() {
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     const handleContinue = () => {
+        router.push('/createAccount/profilePhoto')
     }
 
     return (

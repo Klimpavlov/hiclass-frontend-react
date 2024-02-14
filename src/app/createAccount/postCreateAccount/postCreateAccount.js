@@ -1,34 +1,36 @@
-import axios from "axios";
+import axios from 'axios';
 
-const postCreateAccount = (firstName, lastName) => {
+const postCreateAccount = (file) => {
+    const accessToken = localStorage.getItem('accessToken');
 
-    axios.post('http://localhost:7280/api/User/create-account', {
-        FirstName: firstName,
-        LastName: lastName,
-        IsATeacher: true,
-        IsAnExpert: false,
-        CityLocation: "Minsk",
-        CountryLocation: "Belarus",
-        InstitutionDto: {
-            Types: 'school',
-            Address: 'Nikif 37',
-            Title: 'Gymn 2',
-        },
-        DisciplineTitles: 'Biology',
-        LanguageTitles: 'English',
-        GradesEnumerable: '9',
-        ImageFormFile: 'string'
+    const formData = new FormData();
+    formData.append('FirstName', "K");
+    formData.append('LastName', "P");
+    formData.append('IsATeacher', true);
+    formData.append('IsAnExpert', false);
+    formData.append('CityLocation', 'Minsk');
+    formData.append('CountryLocation', 'Belarus');
+    formData.append('InstitutionDto.Types', 'school');
+    formData.append('InstitutionDto.Address', 'Nikif 37');
+    formData.append('InstitutionDto.Title', 'Gymn 2');
+    formData.append('DisciplineTitles', 'Biology');
+    formData.append('LanguageTitles', 'English');
+    formData.append('GradesEnumerable', 9);
+    formData.append('ImageFormFile', file);
 
-
-    })
+    axios
+        .post('http://localhost:7280/api/User/create-account', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
         .then(function (response) {
             console.log(response);
-            // Перенаправление на другую страницу после успешного выполнения запроса
         })
         .catch(function (error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
         });
-}
+};
 
-export default postCreateAccount
+export default postCreateAccount;

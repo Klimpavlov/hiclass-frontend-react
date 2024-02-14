@@ -4,6 +4,7 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
+import updatePersonalInfo from "@/app/updateUser/updatePersonalInfo/updatePersonalInfo";
 
 const SettingsProfileInfo = () => {
     return (
@@ -27,7 +28,7 @@ const SettingsProfileInfo = () => {
             <Dropdown dropdownFormText='I’m a/am'/>
             <InputForm inputFormText='Location'/>
             <InputForm inputFormText="Description"/>
-            <ApplyButton buttonText='Update'/>
+            <ApplyButton buttonText='Update' onApply={updatePersonalInfo}/>
         </div>
     </div>
     <div className='section-pos-verif py-8'>

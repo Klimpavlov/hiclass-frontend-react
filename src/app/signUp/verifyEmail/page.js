@@ -4,16 +4,16 @@ import React, {useEffect, useState} from "react";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
-import getVerifyCode from "@/app/signUp/verifyEmail/getVerifyCode/getVerifyCode";
+import postVerificationCode from "@/app/signUp/verifyEmail/postVerificationCode/postVerificationCode";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 
 export default function verifyEmail() {
     const router = useRouter();
-    const [code, setCode] = useState('');
+    const [code, setCode] = useState();
 
     const handleContinue = () => {
-        getVerifyCode(code);
+        postVerificationCode(code);
         router.push('/signUp/verifyEmail/isVerified')
     }
 

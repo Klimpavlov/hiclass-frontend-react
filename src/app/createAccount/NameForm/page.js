@@ -1,5 +1,4 @@
 'use client';
-
 import React, {useState} from 'react';
 import { useRouter } from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
@@ -14,8 +13,7 @@ export default function nameForm() {
 
     const router = useRouter();
 
-    const handleContinue = () => {
-        postCreateAccount(firstName, lastName);
+    const handleContinue = async () => {
         router.push('/createAccount/positionForm');
     };
 
@@ -40,8 +38,7 @@ export default function nameForm() {
                                    onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
-                            <ContinueButton buttonText='Continue'
-                                            onClick={handleContinue}/>
+                            <ContinueButton buttonText='Continue' onClick={handleContinue}/>
                 </div>
             </div>
         </main>
