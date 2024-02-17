@@ -1,8 +1,7 @@
 import React from "react";
 
-const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword}) => {
+const SearchInput = ({inputFormText, placeholderText, value, onChange}) => {
 
-    const inputType = isPassword ? 'password' : 'text';
 
 
     return (
@@ -10,7 +9,6 @@ const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword}
             <label htmlFor="Input">
                 <input className="input flex justify-center items-center py-3 px-5
                  rounded-lg border border-gray-400 w-full"
-                       type={inputType}
                        placeholder={placeholderText}
                        value={value}
                        onChange={onChange}/>
@@ -19,4 +17,4 @@ const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword}
     );
 };
 
-export default InputForm
+export default SearchInput

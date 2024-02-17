@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
@@ -11,18 +11,24 @@ export default function institutionForm() {
     const router = useRouter()
     const [institutionName, setInstitutionName] = useState('');
 
-    // async function fetchOrg(searchText) {
-    //     try {
-    //         const response = await fetch(
-    //             `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
-    //         );
-    //         const data = await response.json();
-    //         // Обработка полученных данных
-    //         console.log(data);
-    //     } catch (error) {
-    //         console.log('Error fetching organization data:', error);
-    //     }
-    // }
+
+    useEffect(() => {
+        fetchOrg(institutionName);
+    }, [institutionName])
+    async function fetchOrg(searchText) {
+        try {
+            const response = await fetch(
+                `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
+            );
+            const data = await response.json();
+            // Обработка полученных данных
+            console.log(data);
+        } catch (error) {
+            console.log('Error fetching organization data:', error);
+        }
+    }
+
+
 
     const handleContinue = () => {
         // Вызовите fetchOrg с передачей institutionName

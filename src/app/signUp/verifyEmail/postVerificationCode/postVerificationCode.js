@@ -29,14 +29,16 @@ const postVerificationCode = (code) => {
     const url = 'http://localhost:7280/api/User/verify-email';
     const requestUrl = `${url}?verificationCode=${code}`;
 
-    axios.post(requestUrl, {
+    axios.post("http://localhost:7280/api/User/verify-email", {
+        VerificationCode: code,
+    }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         }
     })
         .then(function (response) {
             console.log(response);
-            console.log(response.data.value.accessToken)
+            console.log(response.data.value)
         })
         .catch(function (error) {
             console.log(error);

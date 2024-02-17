@@ -1,16 +1,12 @@
 import axios from "axios";
 
-const updatePersonalInfo = () => {
+const putUpdatePersonalInfo = (languages, disciplines, grades) => {
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/UpdateUser/personal-info', {
-        IsATeacher: true,
-        IsAnExpert: false,
-        FirstName: "kakashka",
-        LastName: "govno",
-        CityTitle: "SP",
-        CountryTitle: "R",
-        Description: "Say my name"
+    axios.put('http://localhost:7280/api/UpdateUser/professional-info', {
+        Languages: 'l',
+        Disciplines: 'f',
+        Grades: 1
     }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -26,4 +22,6 @@ const updatePersonalInfo = () => {
         });
 };
 
-export default updatePersonalInfo;
+export default putUpdatePersonalInfo;
+
+

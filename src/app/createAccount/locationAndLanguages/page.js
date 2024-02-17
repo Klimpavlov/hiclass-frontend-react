@@ -7,6 +7,7 @@ import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
+import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 
 export default function locationAndLanguages() {
 
@@ -14,28 +15,15 @@ export default function locationAndLanguages() {
     const [languages, setLanguages] = useState([]);
 
     useEffect(() => {
-        getAvailableLanguages()
+        getLanguages()
     }, []);
 
 
-        async function getAvailableLanguages() {
-            try {
-                const response = await axios.get(
-                    "http://localhost:7280/api/StaticDataSources/get-available-languages",
-                    {
-                        headers: {
-                            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhNjQyNmU3ZC1mOTEyLTRjYWItODg1NS0zZGE1MzViNTgyNTQiLCJlbWFpbCI6IjF1c2VyQGV4YW1wbGUuY29tIiwianRpIjoiY2MwZjNjMWMtYzIxZi00Y2NiLWE1YWQtNTM3NTkzNjY0YTE4IiwiaWF0IjoxNzA3NTUwOTc4LCJpc1ZlcmlmaWVkIjoiVHJ1ZSIsImlzQ3JlYXRlZEFjY291bnQiOiJUcnVlIiwiaXNBVGVhY2hlciI6IlRydWUiLCJpc0FFeHBlcnQiOiJGYWxzZSIsIm5iZiI6MTcwNzU1MDk3OCwiZXhwIjoxNzA3NjM3Mzc4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjcyODAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyODAifQ.eUlPFw3DpEl__4MUT3m5PqjyzJAa8PdrpW17WrnheUM"
-                        }
-                    }
-                );
-                console.log(response.data.availableLanguages);
-
-                setLanguages(response.data.availableLanguages);
-
-            } catch (error) {
-                console.error(error);
-            }
-        }
+    async function getLanguages() {
+        const accessToken = localStorage.getItem('accessToken');
+        const availableLanguages = await getAvailableLanguages(accessToken);
+        setLanguages(availableLanguages);
+    }
 
 
 
