@@ -6,69 +6,64 @@ import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import putUpdatePersonalInfo from "@/app/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
 import axios from "axios";
-import SearchInput from "@/components/Inputs/SearchInput";
+import SearchInput from "@/components/Inputs/InputSearchForm";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
+import putUpdateProfessionalInfo from "@/app/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
+import InputSearchForm from "@/components/Inputs/InputSearchForm";
+import putUpdateInstitution from "@/app/updateUser/updateInstitution/putUpdateInstitution";
 
 const SettingsProfileInfo = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
-    const [cityTitle, setCityTitle] = useState('');
 
 
     const handleUpdatePersonalInfo = () => {
         putUpdatePersonalInfo(firstName, lastName, description)
     }
 
+
+    // country
+
+    const [country, setCountry] = useState('');
+    const [countryData, setCountryData] = useState([]);
+
     useEffect(() => {
-        getCountries()
-    }, []);
+        getCountries(country.toLowerCase());
+    }, [country]);
 
+    function handleInputCountry() {
 
-    async function getCountries() {
-        // const accessToken = localStorage.getItem('accessToken');
+    }
+
+    async function getCountries(searchText) {
         try {
             const response = await axios.get(
-                "https://countriesnow.space/api/v0.1/countries",
-                // {
-                //     headers: {
-                //         Authorization: `Bearer ${accessToken}`
-                //     }
-                // }
+                `https://countriesnow.space/api/v0.1/countries?text=${searchText}`
             );
-            console.log(response.data);
+            const countriesData = response.data.data;
 
+            countriesData.forEach((country) => {
+                const { country: countryName, cities } = country;
+                if (countryName.toLowerCase().includes(searchText.toLowerCase())) {
+                    console.log("Страна:", countryName);
+                }
+            });
         } catch (error) {
             console.error(error);
         }
     }
 
-    // async function getCountries(searchText) {
-    //         try {
-    //             const response = await fetch(
-    //                 `https://countriesnow.space/api/v0.1/countries`
-    //             );
-    //             const data = await response.json();
-    //             // Обработка полученных данных
-    //             console.log(data);
-    //         } catch (error) {
-    //             console.log('Error fetching organization data:', error);
-    //         }
-    //     }
-    //
-    // useEffect(() => {
-    //     getCountries(cityTitle);
-    // }, [cityTitle]);
-
-
+    // institution
 
     const [institutionName, setInstitutionName] = useState("");
     const [orgData, setOrgData] = useState([]);
 
     const handleUpdateInstitution = () => {
-
+        console.log(institutionName)
+        // putUpdateInstitution(institutionName)
     };
 
     useEffect(() => {
@@ -91,6 +86,7 @@ const SettingsProfileInfo = () => {
 // languages
 
     const [languages, setLanguages] = useState([]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
 
     useEffect(() => {
         getLanguages()
@@ -107,6 +103,8 @@ const SettingsProfileInfo = () => {
 
 
     const [disciplines, setDisciplines] = useState([]);
+    const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+
 
     useEffect(() => {
         getDisciplines()
@@ -123,6 +121,13 @@ const SettingsProfileInfo = () => {
     // grades
 
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const [selectedGrades, setSelectedGrades] = useState([])
+
+    const handleUpdateProfessionalInfo = () => {
+        putUpdateProfessionalInfo(selectedLanguages, selectedDisciplines, selectedGrades)
+        console.log(selectedDisciplines)
+    }
+
 
 
     return (
@@ -146,8 +151,8 @@ const SettingsProfileInfo = () => {
                                    onChange={(e) => setLastName(e.target.value)}/>
                     </div>
                     <Dropdown dropdownFormText='I’m a/am'/>
-                    <InputForm inputFormText='Location' value={cityTitle}
-                               onChange={(e) => setCityTitle(e.target.value)}/>
+                    <InputForm inputFormText='Location' value={country}
+                               onChange={(e) => setCountry(e.target.value)}/>
                     <InputForm inputFormText="Description" value={description}
                                onChange={(e) => setDescription(e.target.value)}/>
                     <ApplyButton buttonText='Update' onApply={handleUpdatePersonalInfo}/>
@@ -160,12 +165,13 @@ const SettingsProfileInfo = () => {
                     <InputForm inputFormText='Institution name' value={institutionName}
                                onChange={(e) => setInstitutionName(e.target.value)}/>
                     {orgData.map((feature) => (
-                        <div key={feature.properties.id}>
+                        <div key={feature.properties.id}
+                             onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
                             <h2>{feature.properties.name}</h2>
                             <p>{feature.properties.description}</p>
                         </div>
                     ))}
-                    <ApplyButton buttonText='Update'/>
+                    <ApplyButton buttonText='Update' onApply={handleUpdateInstitution}/>
                     {/*<ClearAllButton buttonText='Update'/>*/}
                 </div>
             </div>
@@ -174,10 +180,10 @@ const SettingsProfileInfo = () => {
                                  details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
                 />
                 <div className='py-8'>
-                    <Dropdown dropdownFormText='Areas of work' options={disciplines}/>
-                    <Dropdown dropdownFormText='Grades' options={grades}/>
-                    <Dropdown dropdownFormText='Languages' options={languages}/>
-                    <ApplyButton buttonText='Update'/>
+                    <Dropdown dropdownFormText='Areas of work' options={disciplines} onChange={setSelectedDisciplines} />
+                    <Dropdown dropdownFormText='Grades' options={grades} onChange={setSelectedGrades}/>
+                    <Dropdown dropdownFormText='Languages' options={languages} onChange={setSelectedLanguages}/>
+                    <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
                 </div>
             </div>
         </>

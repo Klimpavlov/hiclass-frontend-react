@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const putUpdateProfessionalInfo = (selectedLanguages, selectedDisciplines, selectedGrades) => {
+const putUpdatePassword = (password) => {
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/UpdateUser/professional-info', {
-        Languages: selectedLanguages,
-        Disciplines: selectedDisciplines,
-        Grades: selectedGrades
+    axios.put('http://localhost:7280/api/UpdateUser/password', {
+        Password: password,
     }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -22,6 +20,6 @@ const putUpdateProfessionalInfo = (selectedLanguages, selectedDisciplines, selec
         });
 };
 
-export default putUpdateProfessionalInfo;
+export default putUpdatePassword;
 
 

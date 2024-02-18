@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 
-const Dropdown = ({ dropdownFormText, placeholderText, options }) => {
+const Dropdown = ({ dropdownFormText, placeholderText, options, onChange  }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -18,13 +18,16 @@ const Dropdown = ({ dropdownFormText, placeholderText, options }) => {
         if (isOptionSelected) {
             const updatedOptions = selectedOptions.filter((selectedOption) => selectedOption !== option);
             setSelectedOptions(updatedOptions);
+            onChange(updatedOptions);
         } else {
             const updatedOptions = [...selectedOptions, option];
             setSelectedOptions(updatedOptions);
+            onChange(updatedOptions);
         }
     };
 
     const displayText = selectedOptions.length > 0 ? selectedOptions.join(", ") : placeholderText;
+
 
     return (
         <div className="">
@@ -44,6 +47,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options }) => {
                                 className="py-3 px-3 flex items-center justify-between cursor-pointer"
                                 key={index}
                                 onClick={() => handleOptionClick(option)}
+                                onChange={onChange}
                             >
                                 <span className="">{option}</span>
                             </div>
