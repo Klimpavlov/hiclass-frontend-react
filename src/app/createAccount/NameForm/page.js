@@ -11,6 +11,9 @@ export default function nameForm() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
+
     const router = useRouter();
 
     const handleContinue = async () => {

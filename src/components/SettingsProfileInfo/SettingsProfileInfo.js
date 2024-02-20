@@ -18,11 +18,18 @@ const SettingsProfileInfo = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
-
+    const [isTeacher, setIsTeacher] = useState(false);
+    const [isExpert, setIsExpert] = useState(false);
 
     const handleUpdatePersonalInfo = () => {
-        putUpdatePersonalInfo(firstName, lastName, description)
+        // console.log(selectedPosition)
+        putUpdatePersonalInfo(firstName, lastName, country, description, isTeacher, isExpert)
     }
+
+
+    // teacher/expert
+
+    const position = ['teacher', 'expert'];
 
 
     // country
@@ -34,23 +41,23 @@ const SettingsProfileInfo = () => {
         getCountries(country.toLowerCase());
     }, [country]);
 
-    function handleInputCountry() {
-
-    }
 
     async function getCountries(searchText) {
         try {
+            if (searchText === '') {
+                setCountryData([]);
+                return;
+            }
             const response = await axios.get(
-                `https://countriesnow.space/api/v0.1/countries?text=${searchText}`
+                `https://countriesnow.space/api/v0.1/countries`
             );
             const countriesData = response.data.data;
 
-            countriesData.forEach((country) => {
-                const { country: countryName, cities } = country;
-                if (countryName.toLowerCase().includes(searchText.toLowerCase())) {
-                    console.log("Страна:", countryName);
-                }
-            });
+            const filteredCountries = countriesData.filter((country) =>
+                country.country.toLowerCase().includes(searchText.toLowerCase())
+            );
+
+            setCountryData(filteredCountries);
         } catch (error) {
             console.error(error);
         }
@@ -62,8 +69,7 @@ const SettingsProfileInfo = () => {
     const [orgData, setOrgData] = useState([]);
 
     const handleUpdateInstitution = () => {
-        console.log(institutionName)
-        // putUpdateInstitution(institutionName)
+        putUpdateInstitution(institutionName)
     };
 
     useEffect(() => {
@@ -150,9 +156,24 @@ const SettingsProfileInfo = () => {
                         <InputForm inputFormText='Last name' value={lastName}
                                    onChange={(e) => setLastName(e.target.value)}/>
                     </div>
-                    <Dropdown dropdownFormText='I’m a/am'/>
-                    <InputForm inputFormText='Location' value={country}
+                    <Dropdown
+                        dropdownFormText="I’m a/am"
+                        options={position}
+                        onChange={(selectedOptions) => {
+                            setIsTeacher(selectedOptions.includes("teacher"));
+                            setIsExpert(selectedOptions.includes("expert"));
+                        }}
+                    />                    <InputForm inputFormText='Location' value={country}
                                onChange={(e) => setCountry(e.target.value)}/>
+                    {country !== '' && (
+                        <div>
+                            {countryData.map((country) => (
+                                <div key={country} onClick={() => setCountry(country.country)}>
+                                    {country.country}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                     <InputForm inputFormText="Description" value={description}
                                onChange={(e) => setDescription(e.target.value)}/>
                     <ApplyButton buttonText='Update' onApply={handleUpdatePersonalInfo}/>

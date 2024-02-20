@@ -3,9 +3,13 @@ import axios from 'axios';
 const postCreateAccount = (file) => {
     const accessToken = localStorage.getItem('accessToken');
 
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
+
+
     const formData = new FormData();
-    formData.append('FirstName', "K");
-    formData.append('LastName', "P");
+    formData.append('FirstName', firstName);
+    formData.append('LastName', lastName);
     formData.append('IsATeacher', true);
     formData.append('IsAnExpert', false);
     formData.append('CityLocation', 'Minsk');
@@ -34,3 +38,45 @@ const postCreateAccount = (file) => {
 };
 
 export default postCreateAccount;
+
+
+
+// import axios from 'axios';
+//
+// const postCreateAccount = (file) => {
+//     const accessToken = localStorage.getItem('accessToken');
+//
+//     const firstName = localStorage.getItem('firstName');
+//
+//     axios
+//         .post('http://localhost:7280/api/User/create-account', {
+//             FirstName: "firstName",
+//             LastName: "lastName",
+//             IsATeacher: "isTeacher",
+//             IsAnExpert: "isExpert",
+//             CityLocation: "S",
+//             CountryLocation: "country",
+//             InstitutionTitle: "institutionTitle",
+//             Address: "institutionAddress",
+//             Types: [
+//                 "School"
+//             ],
+//             DisciplineTitles: "disciplines",
+//             LanguageTitles: "English",
+//             GradesEnumerable: "grades",
+//             ImageFormFile: file,
+//
+//         }, {
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`,
+//             }
+//         })
+//         .then(function (response) {
+//             console.log(response);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+// };
+//
+// export default postCreateAccount;

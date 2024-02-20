@@ -2,11 +2,13 @@ import axios from "axios";
 
 const putUpdatePersonalInfo = (institution) => {
     const accessToken = localStorage.getItem('accessToken');
-    const institutionTitle = institution.split(';')
+    const institutionRequest = institution.split(';')
+    const institutionTitle = institutionRequest[0];
+    const institutionAddress = institution[1]
 
     axios.put('http://localhost:7280/api/UpdateUser/institution', {
         InstitutionTitle: institutionTitle,
-        Address: "string",
+        Address: institutionAddress,
         Types: [
             "School"
         ]
