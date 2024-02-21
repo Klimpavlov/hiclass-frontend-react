@@ -11,6 +11,10 @@ export default function gradesForm() {
 
     const router = useRouter();
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const [selectedGrades, setSelectedGrades] = useState([])
+
+    localStorage.setItem('grades', selectedGrades)
+
 
     const handleContinue = () => {
         router.push('/createAccount/profilePhoto')
@@ -31,6 +35,7 @@ export default function gradesForm() {
                         <div className="my-4">
                             <Dropdown dropdownFormText='Grades' placeholderText='Select..'
                                       options={grades}
+                                      onChange={setSelectedGrades}
                             />
                         </div>
                     </div>

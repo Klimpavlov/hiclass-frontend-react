@@ -6,34 +6,25 @@ import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHead
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
+import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 
 export default function disciplinesForm() {
 
     const router = useRouter();
     const [disciplines, setDisciplines] = useState([]);
+    const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+    localStorage.setItem('disciplines', selectedDisciplines);
+
 
     useEffect(() => {
-        getAvailableDisciplines()
+        getDisciplines()
     }, []);
 
 
-    async function getAvailableDisciplines() {
-        try {
-            const response = await axios.get(
-                "http://localhost:7280/api/StaticDataSources/get-available-disciplines",
-                {
-                    headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhNjQyNmU3ZC1mOTEyLTRjYWItODg1NS0zZGE1MzViNTgyNTQiLCJlbWFpbCI6IjF1c2VyQGV4YW1wbGUuY29tIiwianRpIjoiY2MwZjNjMWMtYzIxZi00Y2NiLWE1YWQtNTM3NTkzNjY0YTE4IiwiaWF0IjoxNzA3NTUwOTc4LCJpc1ZlcmlmaWVkIjoiVHJ1ZSIsImlzQ3JlYXRlZEFjY291bnQiOiJUcnVlIiwiaXNBVGVhY2hlciI6IlRydWUiLCJpc0FFeHBlcnQiOiJGYWxzZSIsIm5iZiI6MTcwNzU1MDk3OCwiZXhwIjoxNzA3NjM3Mzc4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjcyODAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcyODAifQ.eUlPFw3DpEl__4MUT3m5PqjyzJAa8PdrpW17WrnheUM"
-                    }
-                }
-            );
-            console.log(response.data.availableDisciplines);
-
-            setDisciplines(response.data.availableDisciplines);
-
-        } catch (error) {
-            console.error(error);
-        }
+    async function getDisciplines() {
+        const accessToken = localStorage.getItem('accessToken');
+        const availableDisciplines = await getAvailableDisciplines(accessToken);
+        setDisciplines(availableDisciplines);
     }
 
     return (
@@ -50,6 +41,7 @@ export default function disciplinesForm() {
                         <div className="my-4">
                             <Dropdown dropdownFormText='Areas of work' placeholderText='Select..'
                                       options={disciplines}
+                                      onChange={setSelectedDisciplines}
                             />
                         </div>
                     </div>
