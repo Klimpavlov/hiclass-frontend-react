@@ -6,32 +6,52 @@ import imgSrc from "@/components/Filter/chevron-down.svg";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 
-const Filter = ({buttonText, onApply, clearAll}) => {
+const Filter = ({buttonText, onApply, options, clearAll}) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedSubjects, setSelectedSubjects] = useState([]);
+    // const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
-    const subjects = ["Математика", "Физика", "История", "География"];
+    // const subjects = ["Математика", "Физика", "История", "География"];
 
-    const handleSubjectToggle = (subject) => {
-        if (selectedSubjects.includes(subject)) {
-            setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
+    // const handleSubjectToggle = (subject) => {
+    //     if (selectedSubjects.includes(subject)) {
+    //         setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
+    //     } else {
+    //         setSelectedSubjects([...selectedSubjects, subject]);
+    //     }
+    // };
+
+    const handleSubjectToggle = (option) => {
+        if (selectedOptions.includes(option)) {
+            setSelectedOptions(selectedOptions.filter((item) => item !== option));
         } else {
-            setSelectedSubjects([...selectedSubjects, subject]);
+            setSelectedOptions([...selectedOptions, option]);
         }
     };
 
+    // const handleApply = () => {
+    //     onApply(selectedSubjects);
+    //     toggleDropdown();
+    // };
+
     const handleApply = () => {
-        onApply(selectedSubjects);
+        onApply(selectedOptions);
         toggleDropdown();
     };
 
+    // const handleClearAll = () => {
+    //     clearAll();
+    //     setSelectedSubjects([]);
+    //     toggleDropdown();
+    // };
+
     const handleClearAll = () => {
         clearAll();
-        setSelectedSubjects([]);
+        setSelectedOptions([]);
         toggleDropdown();
     };
 
@@ -54,18 +74,18 @@ const Filter = ({buttonText, onApply, clearAll}) => {
                 <div
                     className="absolute top-full left-0 mt-2 w-full md:w-80 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs">
                     <div className="py-2">
-                        {subjects.map((subject, index) => (
+                        {options.map((option, index) => (
                             <div
                                 className="py-3 px-3 flex items-center justify-between cursor-pointer"
                                 key={index}
-                                onClick={() => handleSubjectToggle(subject)}
+                                onClick={() => handleSubjectToggle(option)}
                             >
-                                <span className="">{subject}</span>
+                                <span className="">{option}</span>
                                 <input
                                     type="checkbox"
                                     className="form-checkbox h-4 w-4 text-green-500 rounded"
-                                    checked={selectedSubjects.includes(subject)}
-                                    onChange={() => handleSubjectToggle(subject)}
+                                    checked={selectedOptions.includes(option)}
+                                    onChange={() => handleSubjectToggle(option)}
                                 />
                             </div>
                         ))}

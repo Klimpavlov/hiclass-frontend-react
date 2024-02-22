@@ -10,6 +10,7 @@ import Link from "next/link";
 const UserInfo = () => {
 
     const [firstname, setFirstname] = useState('');
+    localStorage.setItem('userName', firstname)
     const [lastname, setLastname] = useState('');
     const [languageTitles, setLanguageTitles] = useState([]);
     const [userDescription, setUserDescription] = useState('');
