@@ -8,8 +8,11 @@ import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postLoginData from "@/app/signIn/postLogin/postLoginData";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function SignIn() {
+    const router = useRouter();
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,6 +20,7 @@ export default function SignIn() {
     const handleSignIn = () => {
         postLoginData(email, password);
     };
+
 
     return (
         <main className="">

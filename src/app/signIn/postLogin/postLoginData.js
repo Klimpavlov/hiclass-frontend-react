@@ -1,8 +1,6 @@
 import axios from "axios";
-import {useRouter} from "next/navigation";
 
 const postLoginData = (email, password) => {
-
 
     axios.post('http://localhost:7280/api/User/login', {
         Email: email,

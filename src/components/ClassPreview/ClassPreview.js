@@ -3,8 +3,8 @@ import Tag from "@/components/Tags/Tag";
 import imgSrc from '@/components/ClassPreview/class-preview-image.svg';
 import Image from "next/image";
 
-const ClassPreview = ({classData, photo}) => {
-    const {title} = classData;
+const ClassPreview = ({title, tags}) => {
+    // const {title} = classData;
 
     return (
         <div className="class-preview ">
@@ -15,10 +15,9 @@ const ClassPreview = ({classData, photo}) => {
                 <div className="class-preview-text"> {title}</div>
                 <div className="class-preview-footer">
                     <div className="class-preview-tags flex flex-wrap gap-2">
-                        <Tag text='Geography'/>
-                        <Tag text='Maths'/>
-                        <Tag text='English'/>
-                        <Tag text='French'/>
+                        {tags.map((title) => (
+                            <Tag key={title} text={title}></Tag>
+                        ))}
                     </div>
                 </div>
             </div>
