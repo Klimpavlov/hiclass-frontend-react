@@ -19,7 +19,8 @@ export default function ExplorePage() {
 
     const handleFilterApply = (selectedFilters) => {
         setSelectedFilters(selectedFilters);
-        handleSearchRequest()
+        console.log(selectedFilters)
+        handleSearchRequest(selectedFilters)
     };
 
     const handleClearAll = () => {
@@ -96,9 +97,11 @@ export default function ExplorePage() {
 
     // search
 
-    async function handleSearchRequest() {
+    async function handleSearchRequest(selectedFilters) {
         const accessToken = localStorage.getItem('accessToken');
-        const queryParameters = selectedFilters.map(filter => `${filter.key}=${filter.value}`).join('&');
+
+        const queryParameters = selectedFilters.map(filter => `Countries=${filter}`).join('&');
+        console.log(selectedFilters)
         const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
 
         try {
@@ -148,7 +151,7 @@ export default function ExplorePage() {
                         <ClassPreview key={defaultClass.classId}
                                       title={defaultClass.title}
                                       tags={defaultClass.disciplines}
-                            // photo={defaultClass.imageUrl}
+                                      // photo={defaultClass.imageUrl}
                         ></ClassPreview>
                     ))}
                 </div>

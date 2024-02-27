@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const postLoginData = (email, password) => {
+
+const postLoginData = (email, password, successRedirect) => {
 
     axios.post('http://localhost:7280/api/User/login', {
         Email: email,
@@ -11,6 +12,8 @@ const postLoginData = (email, password) => {
             console.log(response);
             console.log(response.data.value.accessToken)
             localStorage.setItem('accessToken', accessToken);
+
+            successRedirect()
         })
         .catch(function (error) {
             console.log(error);

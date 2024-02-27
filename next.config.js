@@ -8,9 +8,9 @@ module.exports = nextConfig
 //         remotePatterns: [
 //             {
 //                 protocol: 'https',
-//                 hostname: 'assets.example.com',
+//                 hostname: 's3.eu-north-1.amazonaws.com',
 //                 port: '',
-//                 pathname: '/account123/**',
+//                 pathname: '/hiclass.images/ClassImages/d2865f27-ea0e-4697-a939-f95f6343b798.JPG',
 //             },
 //         ],
 //     },

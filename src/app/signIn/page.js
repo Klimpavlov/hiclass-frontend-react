@@ -18,7 +18,11 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
 
     const handleSignIn = () => {
-        postLoginData(email, password);
+        postLoginData(email, password, successRedirect);
+    };
+
+    const successRedirect = () => {
+        router.push("/myProfile");
     };
 
 
