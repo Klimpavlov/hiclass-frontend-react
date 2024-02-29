@@ -16,11 +16,17 @@ import Tag from "@/components/Tags/Tag";
 export default function ExplorePage() {
 
     const [selectedFilters, setSelectedFilters] = useState([]);
+    // const [filterName, setFilterName] = useState('');
+    const [languagesFilterName, setLanguagesFilterName] = useState('');
+    const [countriesFilterName, setCountriesFilterName] = useState('');
+    const [gradesFilterName, setGradesFilterName] = useState('');
+    const [disciplinesFilterName, setDisciplinesFilterName] = useState('');
 
-    const handleFilterApply = (selectedFilters) => {
+    const handleFilterApply = (selectedFilters, filterName) => {
         setSelectedFilters(selectedFilters);
         console.log(selectedFilters)
-        handleSearchRequest(selectedFilters)
+        console.log(filterName)
+        handleSearchRequest(selectedFilters, filterName)
     };
 
     const handleClearAll = () => {
@@ -30,27 +36,30 @@ export default function ExplorePage() {
     // disciplines
 
     const [disciplines, setDisciplines] = useState([]);
-    const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+    const disciplinesFilter = 'Disciplines'
 
     useEffect(() => {
-        getDisciplines()
+        getDisciplines();
     }, []);
-
 
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
         setDisciplines(availableDisciplines);
+        setDisciplinesFilterName(disciplinesFilter)
     }
 
     // grades
 
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-
+    const gradesFilter = 'Grades'
+    useEffect(() => {
+        setGradesFilterName(gradesFilter);
+    }, []);
     // languages
 
     const [languages, setLanguages] = useState([]);
+    const languagesFilter = 'Languages'
 
     useEffect(() => {
         getLanguages()
@@ -61,11 +70,13 @@ export default function ExplorePage() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
         setLanguages(availableLanguages);
+        setLanguagesFilterName(languagesFilter)
     }
 
     // countries
 
     const [countries, setCountries] = useState([]);
+    const countriesFilter = 'Countries'
 
     useEffect(() => {
         getCountries()
@@ -75,6 +86,7 @@ export default function ExplorePage() {
         const accessToken = localStorage.getItem('accessToken');
         const availableCountries = await getAvailableCountries(accessToken);
         setCountries(availableCountries);
+        setCountriesFilterName(countriesFilter)
     }
 
 
@@ -97,11 +109,17 @@ export default function ExplorePage() {
 
     // search
 
-    async function handleSearchRequest(selectedFilters) {
+    async function handleSearchRequest(selectedFilters, filterName) {
         const accessToken = localStorage.getItem('accessToken');
 
-        const queryParameters = selectedFilters.map(filter => `Countries=${filter}`).join('&');
+        // const queryParameters = selectedFilters.map(filter => `Countries=${filter}`).join('&');
+
+        const queryParameters = selectedFilters.map(filterValue => `${filterName}=${filterValue}`).join('&');
+
+
         console.log(selectedFilters)
+        // const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
+
         const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
 
         try {
@@ -122,12 +140,13 @@ export default function ExplorePage() {
             <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                 <div className="flex flex-wrap gap-2 px-4 md:px-8">
                     <Filter buttonText="Subject" options={disciplines} onApply={handleFilterApply}
-                            clearAll={handleClearAll}/>
-                    <Filter buttonText="Grade" options={grades} onApply={handleFilterApply} clearAll={handleClearAll}/>
+                            clearAll={handleClearAll} filterName={disciplinesFilterName}/>
+                    <Filter buttonText="Grade" options={grades} onApply={handleFilterApply}
+                            clearAll={handleClearAll} filterName={gradesFilterName}/>
                     <Filter buttonText="Language" options={languages} onApply={handleFilterApply}
-                            clearAll={handleClearAll}/>
+                            clearAll={handleClearAll} filterName={languagesFilterName}/>
                     <Filter buttonText="Location" options={countries} onApply={handleFilterApply}
-                            clearAll={handleClearAll}/>
+                            clearAll={handleClearAll} filterName={countriesFilterName}/>
                 </div>
                 <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
                     <Switch/>

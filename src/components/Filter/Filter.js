@@ -6,7 +6,7 @@ import imgSrc from "@/components/Filter/chevron-down.svg";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 
-const Filter = ({buttonText, onApply, options, clearAll}) => {
+const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
     const [isOpen, setIsOpen] = useState(false);
     // const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -15,15 +15,6 @@ const Filter = ({buttonText, onApply, options, clearAll}) => {
         setIsOpen(!isOpen);
     };
 
-    // const subjects = ["Математика", "Физика", "История", "География"];
-
-    // const handleSubjectToggle = (subject) => {
-    //     if (selectedSubjects.includes(subject)) {
-    //         setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
-    //     } else {
-    //         setSelectedSubjects([...selectedSubjects, subject]);
-    //     }
-    // };
 
     const handleSubjectToggle = (option) => {
         if (selectedOptions.includes(option)) {
@@ -33,21 +24,12 @@ const Filter = ({buttonText, onApply, options, clearAll}) => {
         }
     };
 
-    // const handleApply = () => {
-    //     onApply(selectedSubjects);
-    //     toggleDropdown();
-    // };
+
 
     const handleApply = () => {
-        onApply(selectedOptions);
+        onApply(selectedOptions, filterName);
         toggleDropdown();
     };
-
-    // const handleClearAll = () => {
-    //     clearAll();
-    //     setSelectedSubjects([]);
-    //     toggleDropdown();
-    // };
 
     const handleClearAll = () => {
         clearAll();
