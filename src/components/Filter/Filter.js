@@ -53,9 +53,9 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
                 />
             </div>
             {isOpen && (
-                <div
-                    className="absolute top-full left-0 mt-2 w-full md:w-80 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs">
-                    <div className="py-2">
+                <div className="absolute top-full left-0 mt-2 w-full md:w-80
+                 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs md:max-w-xs">
+                    <div className="py-2 max-h-60 overflow-y-auto">
                         {options.map((option, index) => (
                             <div
                                 className="py-3 px-3 flex items-center justify-between cursor-pointer"
@@ -72,7 +72,7 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-between px-3 py-2">
+                    <div className="flex flex-col md:flex-row justify-between px-3 py-2">
                         <ApplyButton buttonText='Apply' onApply={handleApply}/>
                         <ClearAllButton buttonText='Clear all' clearAll={handleClearAll}/>
                     </div>

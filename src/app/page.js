@@ -56,6 +56,8 @@ export default function ExplorePage() {
     useEffect(() => {
         setGradesFilterName(gradesFilter);
     }, []);
+
+
     // languages
 
     const [languages, setLanguages] = useState([]);
@@ -156,7 +158,7 @@ export default function ExplorePage() {
             <div className="applied-filters-container">
                 <div>
                     {selectedFilters.map((filter, index) => (
-                        <span key={index}>{filter + " "}</span>
+                        <Tag key={index} text={filter}/>
                     ))}
                 </div>
             </div>
@@ -169,6 +171,7 @@ export default function ExplorePage() {
                     {classData.map((defaultClass) => (
                         <ClassPreview key={defaultClass.classId}
                                       title={defaultClass.title}
+                                      username={defaultClass.userFullName}
                                       tags={defaultClass.disciplines}
                                       // photo={defaultClass.imageUrl}
                         ></ClassPreview>
