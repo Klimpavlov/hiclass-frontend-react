@@ -12,6 +12,8 @@ import {getAvailableCountries} from "@/app/api/getAvailableCountry/getAvailableC
 import {getDefaultSearch} from "@/app/api/defaultSearch/defaultSearch";
 import {searchRequest} from "@/app/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
+import ClassModal from "@/components/ClassPreview/ClassPreviewModal";
+import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 
 export default function ExplorePage() {
 
@@ -21,6 +23,14 @@ export default function ExplorePage() {
     const [countriesFilterName, setCountriesFilterName] = useState('');
     const [gradesFilterName, setGradesFilterName] = useState('');
     const [disciplinesFilterName, setDisciplinesFilterName] = useState('');
+
+    const [selectedClass, setSelectedClass] = useState(null);
+
+    //логика раскрытия класса
+    const handleClassClick = (selectedClass) => {
+        setSelectedClass(selectedClass);
+    };
+
 
     const handleFilterApply = (selectedFilters, filterName) => {
         setSelectedFilters(selectedFilters);
@@ -134,7 +144,6 @@ export default function ExplorePage() {
     }
 
 
-
     return (
         <main className="">
             <Header/>
@@ -164,19 +173,31 @@ export default function ExplorePage() {
             </div>
             <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
                 <div className='flex justify-between'>
-                    <div className='font-bold'>Most popular classes in <span className='text-green-700'>Belarus</span></div>
+                    <div className='font-bold'>Most popular classes in <span className='text-green-700'>Belarus</span>
+                    </div>
                     <div className='text-green-700'>See all</div>
                 </div>
-                <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div
+                    className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {classData.map((defaultClass) => (
-                        <ClassPreview key={defaultClass.classId}
-                                      title={defaultClass.title}
-                                      username={defaultClass.userFullName}
-                                      tags={defaultClass.disciplines}
-                                      // photo={defaultClass.imageUrl}
-                        ></ClassPreview>
+                        <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>
+                            <ClassPreview key={defaultClass.classId}
+                                          title={defaultClass.title}
+                                          username={defaultClass.userFullName}
+                                          tags={defaultClass.disciplines}
+                                // photo={defaultClass.imageUrl}
+                            ></ClassPreview>
+                        </div>
                     ))}
                 </div>
+                {selectedClass && (
+                    <ClassPreviewModal
+                        title={selectedClass.title}
+                        username={selectedClass.userFullName}
+                        tags={selectedClass.disciplines}
+                        handleCloseModal={() => setSelectedClass(null)}
+                    ></ClassPreviewModal>
+                )}
             </div>
         </main>
     );
