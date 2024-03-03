@@ -1,10 +1,11 @@
-import Modal from 'react-modal';
 import Image from "next/image";
 import imgSrc from "@/components/ClassPreview/class-preview-image.svg";
 import Tag from "@/components/Tags/Tag";
 import React from "react";
+import ApplyButton from "@/components/Buttons/ApplyButton";
+import postInviteClass from "@/app/postInviteClass/postInviteClass";
 
-const ClassPreviewModal = ({title, username, tags, handleCloseModal}) => {
+const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId}) => {
     return (
         <div className="class-preview fixed inset-0 flex items-center justify-center bg-white z-50 overflow-y-auto">
             <div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
@@ -14,9 +15,13 @@ const ClassPreviewModal = ({title, username, tags, handleCloseModal}) => {
                 </svg>
             </div>
             <div className="class-preview-content max-w-3xl w-full mx-auto p-8">
-                <div className='class-preview-header'>
+                <div className='class-preview-header flex justify-between items-center'>
+                    <div className='class-preview-text text-xl font-bold'>{headerText}</div>
+                    <ApplyButton buttonText='Invite class' onApply={postInviteClass}/>
+                </div>
+                <div className='class-preview-username&avatar'>
                     <div className="avatar">{}</div>
-                    <div className="username text-black font-bold cursor-pointer">{username}</div>
+                    <div className="username text-black text-sm font-bold cursor-pointer">{username}</div>
                 </div>
                 <div className="class-preview-image ">
                     <Image src={imgSrc} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>

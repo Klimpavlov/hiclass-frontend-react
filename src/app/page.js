@@ -178,7 +178,8 @@ export default function ExplorePage() {
                     <div className='text-green-700'>See all</div>
                 </div>
                 <div
-                    className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
+                     sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                     {classData.map((defaultClass) => (
                         <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>
                             <ClassPreview key={defaultClass.classId}
@@ -192,6 +193,8 @@ export default function ExplorePage() {
                 </div>
                 {selectedClass && (
                     <ClassPreviewModal
+                        headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
+                        classId={selectedClass.classId}
                         title={selectedClass.title}
                         username={selectedClass.userFullName}
                         tags={selectedClass.disciplines}
