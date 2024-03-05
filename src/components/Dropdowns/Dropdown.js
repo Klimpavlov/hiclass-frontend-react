@@ -41,7 +41,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, onChange  }) => 
             </div>
             {isOpen && (
                 <div className="">
-                    <div className="py-2">
+                    <div className="py-2 max-h-60 overflow-y-auto">
                         {options.map((option, index) => (
                             <div
                                 className="py-3 px-3 flex items-center justify-between cursor-pointer"

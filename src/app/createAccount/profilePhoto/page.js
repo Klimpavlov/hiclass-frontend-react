@@ -6,6 +6,7 @@ import RegistrationHeader from '@/components/RegistrationHeader/RegistrationHead
 import ContinueButton from '@/components/Buttons/ContinueButton';
 import postCreateAccount from '@/app/createAccount/postCreateAccount/postCreateAccount';
 import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
+import postUserImage from "@/app/createAccount/SetUserImage/postUserImage";
 
 export default function ProfilePhoto() {
     // const router = useRouter();
@@ -16,7 +17,7 @@ export default function ProfilePhoto() {
     // console.log(gradesArray);
 
     const handleContinue = () => {
-        postCreateAccount(selectedFile);
+        postUserImage(selectedFile);
         // router.push('/myProfile');
     };
 

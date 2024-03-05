@@ -13,7 +13,6 @@ export default function nameForm() {
 
     localStorage.setItem('firstName', firstName);
     localStorage.setItem('lastName', lastName);
-
     const router = useRouter();
 
     const handleContinue = async () => {

@@ -13,6 +13,7 @@ export default function disciplinesForm() {
     const router = useRouter();
     const [disciplines, setDisciplines] = useState([]);
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+    console.log(selectedDisciplines)
     localStorage.setItem('disciplines', selectedDisciplines);
 
 

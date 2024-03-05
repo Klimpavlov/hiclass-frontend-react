@@ -6,11 +6,9 @@ import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import putUpdatePersonalInfo from "@/app/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
 import axios from "axios";
-import SearchInput from "@/components/Inputs/InputSearchForm";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import putUpdateProfessionalInfo from "@/app/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
-import InputSearchForm from "@/components/Inputs/InputSearchForm";
 import putUpdateInstitution from "@/app/updateUser/updateInstitution/putUpdateInstitution";
 
 const SettingsProfileInfo = () => {

@@ -1,11 +1,19 @@
 import Image from "next/image";
 import imgSrc from "@/components/ClassPreview/class-preview-image.svg";
 import Tag from "@/components/Tags/Tag";
-import React from "react";
+import React, {useState} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import postInviteClass from "@/app/postInviteClass/postInviteClass";
+import InviteModal from "@/components/InviteClass/InviteModal";
 
 const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId}) => {
+
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
+    const handleOpenInviteModal = () => {
+        setIsInviteModalOpen(true);
+    };
+
     return (
         <div className="class-preview fixed inset-0 flex items-center justify-center bg-white z-50 overflow-y-auto">
             <div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
@@ -17,7 +25,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
             <div className="class-preview-content max-w-3xl w-full mx-auto p-8">
                 <div className='class-preview-header flex justify-between items-center'>
                     <div className='class-preview-text text-xl font-bold'>{headerText}</div>
-                    <ApplyButton buttonText='Invite class' onApply={postInviteClass}/>
+                    <ApplyButton buttonText='Invite class' onApply={handleOpenInviteModal}/>
                 </div>
                 <div className='class-preview-username&avatar'>
                     <div className="avatar">{}</div>
@@ -38,6 +46,9 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                     </div>
                 </div>
             </div>
+            {isInviteModalOpen && (
+                <InviteModal username={username}/>
+            )}
         </div>
     );
 };

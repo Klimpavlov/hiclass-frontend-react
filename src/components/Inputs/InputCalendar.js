@@ -13,7 +13,7 @@ const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
                        placeholder={placeholderText}
                        value={value}
                        onChange={onChange}/>
-                <Image src={imgCalendar} alt='Calendar' onClick={}/>
+                <Image src={imgCalendar} alt='Calendar'/>
             </label>
         </div>
     );

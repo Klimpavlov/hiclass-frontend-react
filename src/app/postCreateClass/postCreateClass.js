@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const postCreateClass = (title, gradeNumber, photoUrl, languageTitles, disciplineTitles) => {
+const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles) => {
 
     const accessToken = localStorage.getItem('accessToken')
 
@@ -10,7 +10,6 @@ const postCreateClass = (title, gradeNumber, photoUrl, languageTitles, disciplin
         },
         Title: "title",
         GradeNumber: 4,
-        FormFileImage: "photoUrl",
         LanguageTitles: ["English"],
         DisciplineTitles: ["Biology"]
     })
