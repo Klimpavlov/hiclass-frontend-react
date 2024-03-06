@@ -5,7 +5,6 @@ const postCreateAccount = (file) => {
 
     const firstName = localStorage.getItem('firstName');
     const lastName = localStorage.getItem('lastName');
-    const languages = localStorage.getItem('languages');
     const country = localStorage.getItem('country');
 
     const institution  = localStorage.getItem('institution');
@@ -16,6 +15,11 @@ const postCreateAccount = (file) => {
     const disciplines = localStorage.getItem('disciplines');
     const disciplinesArray = disciplines.split(',');
 
+    const languages = localStorage.getItem('languages');
+    const languagesArray = languages.split(',');
+
+    const grades = localStorage.getItem('grades');
+    const gradesArray = grades.split(',').map(Number);
 
 
     const formData = new FormData();

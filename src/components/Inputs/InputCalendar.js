@@ -1,22 +1,36 @@
-import React from "react";
-import Image from "next/image";
-import imgCalendar from "@/components/Inputs/Calendar.svg";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
+const InputCalendar = ({ inputFormText, placeholderText, value, onChange }) => {
+    const [selectedDate, setSelectedDate] = useState(value);
 
-const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        onChange(date);
+    };
 
     return (
-        <div className="">{inputFormText}
+        <div>
+            {inputFormText}
             <label htmlFor="Input" className='flex justify-between'>
-                <input className="input flex justify-center items-center py-3 px-5
-                 rounded-lg border border-gray-400 w-full"
-                       placeholder={placeholderText}
-                       value={value}
-                       onChange={onChange}/>
-                <Image src={imgCalendar} alt='Calendar'/>
+            <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                dateFormat="dd/MM/yyyy"
+                className="input flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 w-full"
+                placeholderText={placeholderText}
+                customInput={
+                    <input
+                        className="input flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 w-full"
+                        value={selectedDate ? selectedDate.toDateString() : ""}
+                        onChange={() => {}}
+                    />
+                }
+            />
             </label>
         </div>
     );
 };
 
-export default InputCalendar
+export default InputCalendar;

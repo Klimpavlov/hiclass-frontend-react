@@ -47,7 +47,8 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 </div>
             </div>
             {isInviteModalOpen && (
-                <InviteModal username={username}/>
+                <InviteModal username={username}
+                             handleCloseModal={() => setIsInviteModalOpen(false)}/>
             )}
         </div>
     );

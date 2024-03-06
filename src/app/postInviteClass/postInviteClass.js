@@ -8,10 +8,10 @@ const postInviteClass = (senderId, receiverId, date, invitationText) => {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        ClassSenderId: "72238656-30e4-428b-9c09-fa241278b0dc",
-        ClassReceiverId: "d2865f27-ea0e-4697-a939-f95f6343b798",
-        DateOfInvitation: "march",
-        InvitationText: "lets talk my friend",
+        ClassSenderId: "f9d1215e-b1ba-49ea-b63d-4298f6a863fb",
+        ClassReceiverId: "1231b5f1-4898-4809-b37f-32c2c9473af8",
+        DateOfInvitation: date,
+        InvitationText: invitationText,
     })
         .then(function (response) {
             console.log(response);
