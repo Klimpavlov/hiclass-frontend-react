@@ -14,6 +14,7 @@ import {searchRequest} from "@/app/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
 import ClassModal from "@/components/ClassPreview/ClassPreviewModal";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
+import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 
 export default function ExplorePage() {
 
@@ -105,6 +106,7 @@ export default function ExplorePage() {
     // default search
 
     const [classData, setClassData] = useState([]);
+    const [teacherProfileData, setTeacherProfileData] = useState([]);
 
     useEffect(() => {
         defaultSearch()
@@ -115,9 +117,13 @@ export default function ExplorePage() {
         const defaultSearch = await getDefaultSearch(accessToken);
         const classesByCountry = defaultSearch.classProfilesByCountry
         setClassData(classesByCountry)
+        const teacherByCountry = defaultSearch.teacherProfilesByCountry
+        setTeacherProfileData(teacherByCountry)
         console.log(defaultSearch)
     }
 
+
+    console.log(teacherProfileData)
 
     // search
 
@@ -202,6 +208,12 @@ export default function ExplorePage() {
                     ></ClassPreviewModal>
                 )}
             </div>
+            {/*{teacherProfileData && (*/}
+            {/*    <OtherUserInfo*/}
+            {/*        firstname={teacherProfileData.firstName}*/}
+            {/*        lastname={teacherProfileData.lastName}*/}
+            {/*    />*/}
+            {/*)}*/}
         </main>
     );
 }

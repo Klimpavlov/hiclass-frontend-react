@@ -8,9 +8,21 @@ import InputCalendar from "@/components/Inputs/InputCalendar";
 import InputForm from "@/components/Inputs/InputForm";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postInviteClass from "@/app/postInviteClass/postInviteClass";
+import {useRouter} from "next/navigation";
 
 
 const InviteModal = ({username, handleCloseModal}) => {
+    const router = useRouter()
+    const handleContinue = () => {
+        router.push('/userProfile');
+    };
+
+    // const [userPage, setIsUserPageOpen] = useState(false);
+    //
+    // const handleOpenInviteModal = () => {
+    //     setIsUserPageOpen(true);
+    // };
+
 
     const [dateOfInvitation, setDateOfInvitation] = useState('');
     const [invitationText, setInvitationText] = useState('');
@@ -73,12 +85,16 @@ const InviteModal = ({username, handleCloseModal}) => {
                 </div>
             </div>
             <div className='invite-modal-footer flex justify-between items-center'>
-                <div className='userinfo'>{username}</div>
+                <div className='userinfo' onClick={handleContinue}>{username}</div>
                 <div className='btns'>
                     <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
                     <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>
                 </div>
             </div>
+            {/*{userPage && (*/}
+            {/*    <InviteModal username={username}*/}
+            {/*                 handleCloseModal={() => setIsUserPageOpen(false)}/>*/}
+            {/*)}*/}
         </div>
     );
 };
