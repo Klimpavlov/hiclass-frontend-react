@@ -26,11 +26,17 @@ export default function ExplorePage() {
     const [disciplinesFilterName, setDisciplinesFilterName] = useState('');
 
     const [selectedClass, setSelectedClass] = useState(null);
+    const [selectedTeacher, setSelectedTeacher] = useState(null);
 
     //логика раскрытия класса
-    const handleClassClick = (selectedClass) => {
+    const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
+        setSelectedTeacher(teacher)
+        localStorage.setItem('selectedTeacherEmail', teacher.email);
     };
+
+    // console.log(selectedTeacher && selectedTeacher.email);
+
 
 
     const handleFilterApply = (selectedFilters, filterName) => {
@@ -117,8 +123,10 @@ export default function ExplorePage() {
         const defaultSearch = await getDefaultSearch(accessToken);
         const classesByCountry = defaultSearch.classProfilesByCountry
         setClassData(classesByCountry)
+
         const teacherByCountry = defaultSearch.teacherProfilesByCountry
         setTeacherProfileData(teacherByCountry)
+
         console.log(defaultSearch)
     }
 
@@ -186,16 +194,27 @@ export default function ExplorePage() {
                 <div
                     className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
                      sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                    {classData.map((defaultClass) => (
-                        <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>
-                            <ClassPreview key={defaultClass.classId}
-                                          title={defaultClass.title}
-                                          username={defaultClass.userFullName}
-                                          tags={defaultClass.disciplines}
-                                // photo={defaultClass.imageUrl}
-                            ></ClassPreview>
-                        </div>
-                    ))}
+                    {/*{classData.map((defaultClass) => (*/}
+                    {/*    <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>*/}
+                    {/*        <ClassPreview key={defaultClass.classId}*/}
+                    {/*                      title={defaultClass.title}*/}
+                    {/*                      username={defaultClass.userFullName}*/}
+                    {/*                      tags={defaultClass.disciplines}*/}
+                    {/*            // photo={defaultClass.imageUrl}*/}
+                    {/*        ></ClassPreview>*/}
+                    {/*    </div>*/}
+                    {/*))}*/}
+                    {teacherProfileData.map((teacher) => (
+                        teacher.classeDtos.map((classInfo) => (
+                            <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
+                                <ClassPreview key={classInfo.classId}
+                                              title={classInfo.title}
+                                              username={classInfo.userFullName}
+                                              tags={classInfo.disciplines}
+                                    // photo={defaultClass.imageUrl}
+                                ></ClassPreview>
+                            </div>
+                        ))))}
                 </div>
                 {selectedClass && (
                     <ClassPreviewModal

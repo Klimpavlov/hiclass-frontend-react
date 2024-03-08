@@ -7,13 +7,13 @@ import Tag from "@/components/Tags/Tag";
 import axios from "axios";
 import Link from "next/link";
 
-const OtherUserInfo = ({firstname, lastname, languageTitles, userDescription}) => {
+const OtherUserInfo = ({username, languageTitles, userDescription}) => {
 
 
     return (
         <div className='sm:w-1/3 flex flex-col gap-3'>
             <div className='avatar'></div>
-            <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>
+            <div className='username text-4xl whitespace-pre-line'>{username}</div>
             <div className='raiting'></div>
             {/*<div className="languages">Speaks {languageTitles.join(", ")}</div>*/}
             {/*<div className='aboutUser '>{userDescription}</div>*/}

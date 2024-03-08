@@ -5,13 +5,25 @@ import React, {useState} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import postInviteClass from "@/app/postInviteClass/postInviteClass";
 import InviteModal from "@/components/InviteClass/InviteModal";
+import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
+import {useRouter} from "next/navigation";
 
 const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId}) => {
+    const router = useRouter()
 
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     const handleOpenInviteModal = () => {
         setIsInviteModalOpen(true);
+    };
+
+    const [selectedUsername, setSelectedUsername] = useState("");
+
+    const handleOpenUserProfile = (username) => {
+        setSelectedUsername(username);
+        // router.push('/userProfile')
+        // setIsProfileOpen(true);
     };
 
     return (
@@ -29,7 +41,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 </div>
                 <div className='class-preview-username&avatar'>
                     <div className="avatar">{}</div>
-                    <div className="username text-black text-sm font-bold cursor-pointer">{username}</div>
+                    <div className="username text-black text-sm font-bold cursor-pointer" onClick={handleOpenUserProfile}>{username}</div>
                 </div>
                 <div className="class-preview-image ">
                     <Image src={imgSrc} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>
@@ -49,6 +61,9 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
             {isInviteModalOpen && (
                 <InviteModal username={username}
                              handleCloseModal={() => setIsInviteModalOpen(false)}/>
+            )}
+            {isProfileOpen && (
+                <OtherUserInfo username={selectedUsername}/>
             )}
         </div>
     );
