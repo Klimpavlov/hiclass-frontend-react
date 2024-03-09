@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +20,24 @@ export default function MyProfile() {
         setCreatedClasses([...createdClasses, newClass]);
         setIsModalOpen(false);
     };
+
+    const [classData, setClassData] = useState([]);
+
+    useEffect(() => {
+        getUser()
+    }, [])
+
+    async function getUser() {
+        const accessToken = localStorage.getItem('accessToken');
+        const defaultSearch = await getUserProfile(accessToken);
+        const userClasses = defaultSearch.classProfilesByCountry
+        setClassData(classesByCountry)
+
+        const teacherByCountry = defaultSearch.teacherProfilesByCountry
+        setTeacherProfileData(teacherByCountry)
+
+        console.log(defaultSearch)
+    }
 
     return (
         <main className="">

@@ -13,9 +13,6 @@ import {useRouter} from "next/navigation";
 
 const InviteModal = ({username, handleCloseModal}) => {
     const router = useRouter()
-    const handleContinue = () => {
-        router.push('/userProfile');
-    };
 
     // const [userPage, setIsUserPageOpen] = useState(false);
     //
@@ -50,7 +47,10 @@ const InviteModal = ({username, handleCloseModal}) => {
     const handlePostInvitation = () => {
         console.log(dateOfInvitation)
         console.log(invitationText)
-        postInviteClass(dateOfInvitation, invitationText)
+        alert('Invitation send!')
+        router.push('/')
+        handleCloseModal();
+        // postInviteClass(dateOfInvitation, invitationText)
     }
 
     return (
@@ -85,7 +85,7 @@ const InviteModal = ({username, handleCloseModal}) => {
                 </div>
             </div>
             <div className='invite-modal-footer flex justify-between items-center'>
-                <div className='userinfo' onClick={handleContinue}>{username}</div>
+                {/*<div className='userinfo' onClick={handleContinue}>{username}</div>*/}
                 <div className='btns'>
                     <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
                     <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>

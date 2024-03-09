@@ -21,8 +21,8 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
     const [selectedUsername, setSelectedUsername] = useState("");
 
     const handleOpenUserProfile = (username) => {
-        setSelectedUsername(username);
-        // router.push('/userProfile')
+        // setSelectedUsername(username);
+        router.push('/userProfile')
         // setIsProfileOpen(true);
     };
 

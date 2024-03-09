@@ -1,5 +1,5 @@
 import axios from "axios";
-async function getUserProfile(accessToken) {
+export async function getUserProfile(accessToken) {
     try {
         const response = await axios.get(
             "http://localhost:7280/api/User/get-userprofile",
