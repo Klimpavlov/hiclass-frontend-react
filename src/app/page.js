@@ -52,6 +52,7 @@ export default function ExplorePage() {
 
     const handleClearAll = () => {
         setSelectedFilters([]);
+        setSearchClassData([]);
     };
 
     // disciplines
@@ -115,7 +116,6 @@ export default function ExplorePage() {
 
     // default search
 
-    const [classData, setClassData] = useState([]);
     const [teacherProfileData, setTeacherProfileData] = useState([]);
 
     useEffect(() => {
@@ -125,8 +125,6 @@ export default function ExplorePage() {
     async function defaultSearch() {
         const accessToken = localStorage.getItem('accessToken');
         const defaultSearch = await getDefaultSearch(accessToken);
-        const classesByCountry = defaultSearch.classProfilesByCountry
-        setClassData(classesByCountry)
 
         const teacherByCountry = defaultSearch.teacherProfilesByCountry
         setTeacherProfileData(teacherByCountry)
@@ -138,6 +136,8 @@ export default function ExplorePage() {
     console.log(teacherProfileData)
 
     // search
+
+    const [searchClassData, setSearchClassData] = useState([]);
 
     async function handleSearchRequest(selectedFilters, filterName) {
         const accessToken = localStorage.getItem('accessToken');
@@ -153,9 +153,13 @@ export default function ExplorePage() {
         const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
 
         try {
-            const searchData = await searchRequest(accessToken, searchUrl);
+            const response = await searchRequest(accessToken, searchUrl);
             // Обработка полученных данных
-            console.log(searchData)
+            console.log(response)
+
+            const searchData = response.teacherProfiles
+            setSearchClassData(searchData)
+
         } catch (error) {
             console.error(error);
         }
@@ -190,7 +194,21 @@ export default function ExplorePage() {
                 </div>
             </div>
             <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
-                <div className='flex justify-between'>
+                <div  className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
+                     sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+                    {searchClassData.map((teacher) => (
+                        teacher.classeDtos.map((classInfo) => (
+                            <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
+                                <ClassPreview key={classInfo.classId}
+                                              title={classInfo.title}
+                                              username={classInfo.userFullName}
+                                              tags={classInfo.disciplines}
+                                    // photo={defaultClass.imageUrl}
+                                ></ClassPreview>
+                            </div>
+                        ))))}
+                </div>
+                <div className='flex justify-between mt-4 md:mt-8'>
                     <div className='font-bold'>Most popular classes in <span className='text-green-700'>Belarus</span>
                     </div>
                     <div className='text-green-700'>See all</div>
@@ -198,16 +216,6 @@ export default function ExplorePage() {
                 <div
                     className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
                      sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                    {/*{classData.map((defaultClass) => (*/}
-                    {/*    <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>*/}
-                    {/*        <ClassPreview key={defaultClass.classId}*/}
-                    {/*                      title={defaultClass.title}*/}
-                    {/*                      username={defaultClass.userFullName}*/}
-                    {/*                      tags={defaultClass.disciplines}*/}
-                    {/*            // photo={defaultClass.imageUrl}*/}
-                    {/*        ></ClassPreview>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
                     {teacherProfileData.map((teacher) => (
                         teacher.classeDtos.map((classInfo) => (
                             <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>

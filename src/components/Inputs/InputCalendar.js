@@ -18,11 +18,11 @@ const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
                     selected={selectedDate}
                     onChange={handleDateChange}
                     dateFormat="dd/MM/yyyy"
-                    className="input flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 w-full"
+                    className="w-full flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 "
                     placeholderText={placeholderText}
                     customInput={
                         <input
-                            className="input flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 w-full"
+                            className="w-full flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 "
                             value={selectedDate ? selectedDate.toDateString() : ""}
                             onChange={() => {
                             }}

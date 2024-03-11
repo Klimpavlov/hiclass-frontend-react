@@ -39,14 +39,17 @@ export default function SignUp() {
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
 
+
                             />
                         </div>
                         <InputForm inputFormText="Password" placeholderText="At least 6 characters"
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
+                                   isPassword={true}
                         />
                         <div className="my-4">
                             <InputForm inputFormText="Confirm password" placeholderText="Re-enter your password"
+                                       isPassword={true}
 
                             />
                         </div>

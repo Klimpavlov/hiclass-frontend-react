@@ -7,6 +7,7 @@ import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import axios from "axios";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,20 +24,42 @@ export default function MyProfile() {
 
     const [classData, setClassData] = useState([]);
 
+    // useEffect(() => {
+    //     getUser()
+    // }, [])
+    //
+    // async function getUser() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const response = await getUserProfile(accessToken);
+    //     const userClasses = response.data.value.classeDtos
+    //
+    //     setClassData(userClasses)
+    //
+    //     console.log(response)
+    // }
+
     useEffect(() => {
-        getUser()
-    }, [])
+        getUser();
+    }, []);
 
     async function getUser() {
         const accessToken = localStorage.getItem('accessToken');
-        const defaultSearch = await getUserProfile(accessToken);
-        const userClasses = defaultSearch.classProfilesByCountry
-        setClassData(classesByCountry)
+        try {
+            const response = await axios.get(
+                "http://localhost:7280/api/User/get-userprofile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+            console.log(response);
+            console.log(response.data.value.languageTitles);
 
-        const teacherByCountry = defaultSearch.teacherProfilesByCountry
-        setTeacherProfileData(teacherByCountry)
-
-        console.log(defaultSearch)
+            setClassData(response.data.value.classeDtos)
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -53,10 +76,19 @@ export default function MyProfile() {
                         </div>
                     </div>
                     <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
-                        {createdClasses.map((classItem) => (
-                            <ClassPreview classData={classItem}/>
+                        {/*{createdClasses.map((classItem) => (*/}
+                        {/*    <ClassPreview classData={classItem}/>*/}
+                        {/*))}*/}
+                        {classData.map((defaultClass) => (
+                            <div key={defaultClass.classId}>
+                                <ClassPreview key={defaultClass.classId}
+                                              title={defaultClass.title}
+                                              username={defaultClass.userFullName}
+                                              tags={defaultClass.disciplines}
+                                    // photo={defaultClass.imageUrl}
+                                ></ClassPreview>
+                            </div>
                         ))}
-
                     </div>
                 </div>
             </div>

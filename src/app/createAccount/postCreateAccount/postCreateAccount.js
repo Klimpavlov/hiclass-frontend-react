@@ -21,20 +21,33 @@ const postCreateAccount = (file) => {
     const grades = localStorage.getItem('grades');
     const gradesArray = grades.split(',').map(Number);
 
-
     const formData = new FormData();
-    formData.append('FirstName', "firstName");
-    formData.append('LastName', "lastName");
+    formData.append('FirstName', firstName);
+    formData.append('LastName', lastName);
     formData.append('IsATeacher', true);
     formData.append('IsAnExpert', false);
     formData.append('CityLocation', 'Minsk');
-    formData.append('CountryLocation', "Belarus");
-    formData.append('InstitutionDto.Types', 'school');
-    formData.append('InstitutionDto.Address', "institutionAddress");
-    formData.append('InstitutionDto.Title', "institutionTitle");
-    formData.append('DisciplineTitles', ["Biology"]);
-    formData.append('LanguageTitles', ["English"]);
-    formData.append('GradesEnumerable', [9]);
+    formData.append('CountryLocation', country);
+    formData.append('InstitutionDto.Types', 'School');
+    formData.append('InstitutionDto.Address', institutionAddress);
+    formData.append('InstitutionDto.Title', institutionTitle);
+    formData.append('DisciplineTitles', ["Geography"]);
+    formData.append('LanguageTitles', ["Russian"]);
+    formData.append('GradesEnumerable', [7]);
+
+    // const formData = new FormData();
+    // formData.append('FirstName', "Rita");
+    // formData.append('LastName', "Khamenka");
+    // formData.append('IsATeacher', true);
+    // formData.append('IsAnExpert', false);
+    // formData.append('CityLocation', 'Minsk');
+    // formData.append('CountryLocation', "Belarus");
+    // formData.append('InstitutionDto.Types', 'School');
+    // formData.append('InstitutionDto.Address', "Nikiforova 37");
+    // formData.append('InstitutionDto.Title', "Gymnasium 2");
+    // formData.append('DisciplineTitles', ["Biology"]);
+    // formData.append('LanguageTitles', ["English"]);
+    // formData.append('GradesEnumerable', [9]);
 
     axios
         .put('http://localhost:7280/api/User/create-account', formData, {

@@ -12,5 +12,6 @@ export async function getUserProfile(accessToken) {
         console.log(response);
     } catch (error) {
         console.error(error);
+        return [];
     }
 }
