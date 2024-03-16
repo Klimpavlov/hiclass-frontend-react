@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
+import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
+import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 
-const CreateClassBody = ({ setTitle, setPhoto }) => {
+const CreateClassBody = ({ setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const handleImageUpload = (event) => {
@@ -10,6 +12,40 @@ const CreateClassBody = ({ setTitle, setPhoto }) => {
         setSelectedImage(URL.createObjectURL(file));
 
     };
+
+    const [disciplines, setDisciplines] = useState([]);
+    const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+    setSubjects(selectedDisciplines)
+
+    useEffect(() => {
+        getDisciplines()
+    }, []);
+
+
+    async function getDisciplines() {
+        const accessToken = localStorage.getItem('accessToken');
+        const availableDisciplines = await getAvailableDisciplines(accessToken);
+        setDisciplines(availableDisciplines);
+    }
+
+    const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const [selectedGrades, setSelectedGrades] = useState([])
+    setGrades(selectedGrades)
+
+    const [languages, setLanguages] = useState([]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    setLanguage(selectedLanguages)
+    useEffect(() => {
+        getLanguages()
+    }, []);
+
+
+    async function getLanguages() {
+        const accessToken = localStorage.getItem('accessToken');
+        const availableLanguages = await getAvailableLanguages(accessToken);
+        setLanguages(availableLanguages);
+    }
+
 
     return (
         <div className="flex flex-col sm:flex-row gap-5">
@@ -42,13 +78,16 @@ const CreateClassBody = ({ setTitle, setPhoto }) => {
                 <div>Minimum size of "808x632px". GIF files will not animate</div>
             </div>
             <div className='section-info w-full '>
-                <InputForm inputFormText='Title' placeholderText='Class title' onChange={(e) => setTitle(e.target.value)}/>
+                <InputForm inputFormText='Title' placeholderText='Class title'
+                           onChange={(e) => setTitle(e.target.value)}/>
                 <div className='flex justify-between flex-col sm:flex-row'>
-                    <Dropdown dropdownFormText='Grade' placeholderText='Select grade'/>
-                    <Dropdown dropdownFormText='Age' placeholderText='Select age'/>
+                    <Dropdown dropdownFormText='Grade' placeholderText='Select grade'
+                    options={grades} onChange={setSelectedGrades}/>
                 </div>
-                <Dropdown dropdownFormText='Subjects' placeholderText='Class title'/>
-                <InputForm inputFormText='Description' placeholderText='Class description'/>
+                <Dropdown dropdownFormText='Subjects' placeholderText='Class subjects'
+                          options={disciplines} onChange={setSelectedDisciplines}/>
+                <Dropdown dropdownFormText='Languages' placeholderText='Class languages'
+                          options={languages} onChange={setSelectedLanguages}/>
             </div>
         </div>
     )

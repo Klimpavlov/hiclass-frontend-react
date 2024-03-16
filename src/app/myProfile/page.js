@@ -11,32 +11,18 @@ import axios from "axios";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [createdClasses, setCreatedClasses] = useState([]);
+    // const [createdClasses, setCreatedClasses] = useState([]);
 
     const handleAddClass = () => {
         setIsModalOpen(true);
     };
 
-    const handleCreateClass = (newClass) => {
-        setCreatedClasses([...createdClasses, newClass]);
+    const handleCreateClass = () => {
+        // setCreatedClasses([...createdClasses, newClass]);
         setIsModalOpen(false);
     };
 
     const [classData, setClassData] = useState([]);
-
-    // useEffect(() => {
-    //     getUser()
-    // }, [])
-    //
-    // async function getUser() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const response = await getUserProfile(accessToken);
-    //     const userClasses = response.data.value.classeDtos
-    //
-    //     setClassData(userClasses)
-    //
-    //     console.log(response)
-    // }
 
     useEffect(() => {
         getUser();
