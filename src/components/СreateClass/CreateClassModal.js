@@ -20,7 +20,9 @@ export default function CreateClassModal({isModalOpen, setIsModalOpen, onCreateC
         console.log(selectedDisciplines)
         console.log(grade)
         console.log(languages)
-        // postCreateClass()
+        postCreateClass(title, grade, languages, selectedDisciplines)
+        setIsModalOpen(false);
+
 
     };
 
@@ -33,7 +35,8 @@ export default function CreateClassModal({isModalOpen, setIsModalOpen, onCreateC
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400">
                 <div className="modal-content bg-white p-4 rounded-lg">
                     <CreateClassHeader handleCloseModal={handleCloseModal}/>
-                    <CreateClassBody setTitle={setTitle} setPhoto={setPhoto}
+                    <CreateClassBody setTitle={setTitle}
+                                     setPhoto={setPhoto}
                                      setSubjects={setSelectedDisciplines}
                                      setGrades={setGrade}
                                      setLanguage={setLanguages}

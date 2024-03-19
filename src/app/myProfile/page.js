@@ -11,17 +11,16 @@ import axios from "axios";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [createdClasses, setCreatedClasses] = useState([]);
 
     const handleAddClass = () => {
         setIsModalOpen(true);
     };
 
     const handleCreateClass = () => {
-        // setCreatedClasses([...createdClasses, newClass]);
         setIsModalOpen(false);
     };
 
+    const [userAvatar, setUserAvatar] = useState([]);
     const [classData, setClassData] = useState([]);
 
     useEffect(() => {
@@ -42,6 +41,9 @@ export default function MyProfile() {
             console.log(response);
             console.log(response.data.value.languageTitles);
 
+            console.log(response.data.value.imageUrl);
+            setUserAvatar(response.data.value.imageUrl)
+
             setClassData(response.data.value.classeDtos)
         } catch (error) {
             console.error(error);
@@ -50,7 +52,7 @@ export default function MyProfile() {
 
     return (
         <main className="">
-            <Header />
+            <Header avatar={userAvatar}/>
             <TopSection />
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                 <UserInfo/>
@@ -62,9 +64,6 @@ export default function MyProfile() {
                         </div>
                     </div>
                     <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
-                        {/*{createdClasses.map((classItem) => (*/}
-                        {/*    <ClassPreview classData={classItem}/>*/}
-                        {/*))}*/}
                         {classData.map((defaultClass) => (
                             <div key={defaultClass.classId}>
                                 <ClassPreview key={defaultClass.classId}

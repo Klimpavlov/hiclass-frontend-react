@@ -4,12 +4,13 @@ import Dropdown from "@/components/Dropdowns/Dropdown";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 
-const CreateClassBody = ({ setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
+const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setSelectedImage(URL.createObjectURL(file));
+        setPhoto(selectedImage)
 
     };
 
@@ -61,7 +62,8 @@ const CreateClassBody = ({ setTitle, setPhoto, setSubjects, setGrades, setLangua
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                <div className="flex items-center justify-center w-full h-full border-dashed border-2 cursor-pointer">
+                                <div
+                                    className="flex items-center justify-center w-full h-full border-dashed border-2 cursor-pointer">
                                     + Upload image
                                 </div>
                             )}
@@ -80,10 +82,9 @@ const CreateClassBody = ({ setTitle, setPhoto, setSubjects, setGrades, setLangua
             <div className='section-info w-full '>
                 <InputForm inputFormText='Title' placeholderText='Class title'
                            onChange={(e) => setTitle(e.target.value)}/>
-                <div className='flex justify-between flex-col sm:flex-row'>
-                    <Dropdown dropdownFormText='Grade' placeholderText='Select grade'
-                    options={grades} onChange={setSelectedGrades}/>
-                </div>
+                <Dropdown dropdownFormText='Grade' placeholderText='Select grade'
+                          options={grades} onChange={setSelectedGrades}/>
+
                 <Dropdown dropdownFormText='Subjects' placeholderText='Class subjects'
                           options={disciplines} onChange={setSelectedDisciplines}/>
                 <Dropdown dropdownFormText='Languages' placeholderText='Class languages'

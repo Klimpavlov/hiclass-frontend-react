@@ -1,17 +1,16 @@
 import axios from "axios";
-
-const postInviteClass = (senderId, receiverId, date, invitationText) => {
-
-    const accessToken = localStorage.getItem('accessToken')
+const postInviteClass = (receiverId, date, invitationText) => {
+    const accessToken = localStorage.getItem('accessToken');
 
     axios.post('http://localhost:7280/api/Invitation/create-invitation', {
+        ClassSenderId: 'd78395f3-944b-44a5-bbc1-891aab8557e8',
+        ClassReceiverId: receiverId.toString(),
+        DateOfInvitation: date,
+        InvitationText: invitationText,
+    }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        ClassSenderId: "f9d1215e-b1ba-49ea-b63d-4298f6a863fb",
-        ClassReceiverId: "1231b5f1-4898-4809-b37f-32c2c9473af8",
-        DateOfInvitation: date,
-        InvitationText: invitationText,
     })
         .then(function (response) {
             console.log(response);
@@ -21,6 +20,6 @@ const postInviteClass = (senderId, receiverId, date, invitationText) => {
             console.log(error);
             // Перенаправление на страницу с ошибкой при ошибке запроса
         });
-}
+};
 
-export default postInviteClass
+export default postInviteClass;

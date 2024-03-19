@@ -11,7 +11,7 @@ import postInviteClass from "@/app/postInviteClass/postInviteClass";
 import {useRouter} from "next/navigation";
 
 
-const InviteModal = ({username, handleCloseModal}) => {
+const InviteModal = ({username, classId, handleCloseModal}) => {
     const router = useRouter()
 
     // const [userPage, setIsUserPageOpen] = useState(false);
@@ -47,10 +47,11 @@ const InviteModal = ({username, handleCloseModal}) => {
     const handlePostInvitation = () => {
         console.log(dateOfInvitation)
         console.log(invitationText)
-        alert('Invitation send!')
-        router.push('/')
-        handleCloseModal();
-        // postInviteClass(dateOfInvitation, invitationText)
+        console.log(classId)
+        // alert('Invitation send!')
+        // router.push('/')
+        // handleCloseModal();
+        postInviteClass(classId, dateOfInvitation, invitationText)
     }
 
     return (

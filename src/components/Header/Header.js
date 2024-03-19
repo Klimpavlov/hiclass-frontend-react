@@ -8,7 +8,7 @@ import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 
-const Header = () => {
+const Header = ({avatar}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -35,7 +35,7 @@ const Header = () => {
             <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
                 <Image src={imgChatButton} alt="chat-button" />
                 <div className="flex gap-3 sm:gap-1 md:gap-2">
-                    <Image className='' src={imgAvatarSrc} alt="avatar-header"  />
+                    <Image className='rounded-full' src={avatar} alt="avatar-header"  width={50} height={50}  />
                     <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
                     {isDropdownOpen && (
                         <div className="absolute right-0 mt-10 ">
