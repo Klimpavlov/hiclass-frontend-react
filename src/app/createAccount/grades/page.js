@@ -19,7 +19,8 @@ export default function gradesForm() {
 
 
     const handleContinue = () => {
-        postCreateAccount();
+        postCreateAccount()
+        router.push('/createAccount/profilePhoto')
     }
 
     return (

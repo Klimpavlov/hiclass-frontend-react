@@ -8,6 +8,7 @@ import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import axios from "axios";
+import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function MyProfile() {
             console.error(error);
         }
     }
+
 
     return (
         <main className="">

@@ -1,13 +1,39 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "@/components/Header/Header";
 import BackButton from "@/components/Buttons/BackButton";
 import SettingsProfileInfo from "@/components/SettingsProfileInfo/SettingsProfileInfo";
 import SettingsLogSec from "@/components/SettingsLog&Sec/SettingsLog&Sec";
+import axios from "axios";
 
 
 export default function EditProfile() {
+
+    // get avatar
+
+    const [userAvatar, setUserAvatar] = useState([]);
+
+    useEffect(() => {
+        getUser();
+    }, []);
+    async function getUser() {
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            const response = await axios.get(
+                "http://localhost:7280/api/User/get-userprofile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+            setUserAvatar(response.data.value.imageUrl)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
     const [selectedFilter, setSelectedFilter] = useState('profile')
 
@@ -27,7 +53,7 @@ export default function EditProfile() {
 
     return (
         <main>
-            <Header/>
+            <Header avatar={userAvatar}/>
             <div className='p-4 md:p-28'>
                 <div className='button&filters pb-10'>
                     <BackButton/>

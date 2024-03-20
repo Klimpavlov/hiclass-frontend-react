@@ -35,7 +35,7 @@ const Header = ({avatar}) => {
             <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
                 <Image src={imgChatButton} alt="chat-button" />
                 <div className="flex gap-3 sm:gap-1 md:gap-2">
-                    <Image className='rounded-full' src={avatar} alt="avatar-header"  width={50} height={50}  />
+                    <Image className='rounded-full overflow-hidden w-10 h-10' src={avatar} alt="avatar-header"  width={50} height={50}  />
                     <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
                     {isDropdownOpen && (
                         <div className="absolute right-0 mt-10 ">

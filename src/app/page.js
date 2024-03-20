@@ -15,8 +15,33 @@ import Tag from "@/components/Tags/Tag";
 import ClassModal from "@/components/ClassPreview/ClassPreviewModal";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
+import axios from "axios";
 
 export default function ExplorePage() {
+
+    const [userAvatar, setUserAvatar] = useState([]);
+
+    useEffect(() => {
+        getUser();
+    }, []);
+    async function getUser() {
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            const response = await axios.get(
+                "http://localhost:7280/api/User/get-userprofile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+            setUserAvatar(response.data.value.imageUrl)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // filters
 
     const [selectedFilters, setSelectedFilters] = useState([]);
     // const [filterName, setFilterName] = useState('');
@@ -168,7 +193,7 @@ export default function ExplorePage() {
 
     return (
         <main className="">
-            <Header/>
+            <Header avatar={userAvatar}/>
             <TopSection/>
             <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                 <div className="flex flex-wrap gap-2 px-4 md:px-8">

@@ -9,7 +9,7 @@ import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
 import postUserImage from "@/app/createAccount/SetUserImage/postUserImage";
 
 export default function ProfilePhoto() {
-    // const router = useRouter();
+    const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
 
     // const grades = localStorage.getItem('grades');
@@ -18,7 +18,7 @@ export default function ProfilePhoto() {
 
     const handleContinue = () => {
         postUserImage(selectedFile);
-        // router.push('/myProfile');
+        router.push('/signIn');
     };
 
     return (
