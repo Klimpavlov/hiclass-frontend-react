@@ -1,4 +1,6 @@
 import axios from "axios";
+import putClassImage from "@/app/postCreateClass/setClassImage/putClassImage";
+import {useState} from "react";
 
 const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles) => {
 
@@ -18,7 +20,9 @@ const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles) =
     )
         .then(function (response) {
             console.log(response);
-            window.location.reload();
+            console.log(response.data.value.classId);
+            // const classId = response.data.value.classId;
+            localStorage.setItem('classId', response.data.value.classId)
             // Перенаправление на другую страницу после успешного выполнения запроса
         })
         .catch(function (error) {

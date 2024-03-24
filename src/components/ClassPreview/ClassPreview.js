@@ -10,8 +10,8 @@ const ClassPreview = ({title, username, tags, photo }) => {
         <div className="class-preview ">
             <div className="class-preview-content">
                 <div className="class-preview-image ">
-                    <Image src={imgSrc} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>
-                    {/*<Image src={photo} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>*/}
+                    {/*<Image src={imgSrc} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>*/}
+                    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>
                 </div>
                 <div className='class-preview-header'>
                     <div className="avatar">{}</div>

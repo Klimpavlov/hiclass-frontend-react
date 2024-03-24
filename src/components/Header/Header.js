@@ -50,6 +50,7 @@ const Header = ({avatar}) => {
                         </div>
                     )}
                 </div>
+
             </div>
         </div>
     );

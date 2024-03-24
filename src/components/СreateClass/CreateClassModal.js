@@ -6,6 +6,7 @@ import CreateClassBottom from "@/components/СreateClass/CreateClassBottom";
 import CreateClassBody from "@/components/СreateClass/CreateClassBody";
 import postCreateClass from "@/app/postCreateClass/postCreateClass";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
+import putClassImage from "@/app/postCreateClass/setClassImage/putClassImage";
 
 export default function CreateClassModal({isModalOpen, setIsModalOpen, onCreateClass}) {
 
@@ -20,9 +21,11 @@ export default function CreateClassModal({isModalOpen, setIsModalOpen, onCreateC
         console.log(selectedDisciplines)
         console.log(grade)
         console.log(languages)
+        console.log(photo)
         postCreateClass(title, grade, languages, selectedDisciplines)
-        setIsModalOpen(false);
-
+        setTimeout(() => {
+            putClassImage(photo);
+        }, 2000);
 
     };
 

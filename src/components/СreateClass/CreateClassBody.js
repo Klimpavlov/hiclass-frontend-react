@@ -10,8 +10,7 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setSelectedImage(URL.createObjectURL(file));
-        setPhoto(selectedImage)
-
+        setPhoto(file);
     };
 
     const [disciplines, setDisciplines] = useState([]);

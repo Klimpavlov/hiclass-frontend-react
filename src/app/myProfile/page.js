@@ -32,7 +32,7 @@ export default function MyProfile() {
         const accessToken = localStorage.getItem('accessToken');
         try {
             const response = await axios.get(
-                "http://localhost:7280/api/User/get-userprofile",
+                "http://localhost:7280/api/User/userprofile",
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
@@ -45,7 +45,7 @@ export default function MyProfile() {
             console.log(response.data.value.imageUrl);
             setUserAvatar(response.data.value.imageUrl)
 
-            setClassData(response.data.value.classeDtos)
+            setClassData(response.data.value.classDtos)
         } catch (error) {
             console.error(error);
         }
@@ -72,7 +72,7 @@ export default function MyProfile() {
                                               title={defaultClass.title}
                                               username={defaultClass.userFullName}
                                               tags={defaultClass.disciplines}
-                                    // photo={defaultClass.imageUrl}
+                                              photo={defaultClass.imageUrl}
                                 ></ClassPreview>
                             </div>
                         ))}

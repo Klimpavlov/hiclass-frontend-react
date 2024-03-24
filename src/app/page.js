@@ -28,7 +28,7 @@ export default function ExplorePage() {
         const accessToken = localStorage.getItem('accessToken');
         try {
             const response = await axios.get(
-                "http://localhost:7280/api/User/get-userprofile",
+                "http://localhost:7280/api/User/userprofile",
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
@@ -222,13 +222,13 @@ export default function ExplorePage() {
                 <div  className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
                      sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                     {searchClassData.map((teacher) => (
-                        teacher.classeDtos.map((classInfo) => (
+                        teacher.classDtos.map((classInfo) => (
                             <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
                                 <ClassPreview key={classInfo.classId}
                                               title={classInfo.title}
                                               username={classInfo.userFullName}
                                               tags={classInfo.disciplines}
-                                    // photo={defaultClass.imageUrl}
+                                              photo={classInfo.imageUrl}
                                 ></ClassPreview>
                             </div>
                         ))))}
@@ -242,13 +242,13 @@ export default function ExplorePage() {
                     className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
                      sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                     {teacherProfileData.map((teacher) => (
-                        teacher.classeDtos.map((classInfo) => (
+                        teacher.classDtos.map((classInfo) => (
                             <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
                                 <ClassPreview key={classInfo.classId}
                                               title={classInfo.title}
                                               username={classInfo.userFullName}
                                               tags={classInfo.disciplines}
-                                    // photo={defaultClass.imageUrl}
+                                              photo={classInfo.imageUrl}
                                 ></ClassPreview>
                             </div>
                         ))))}
