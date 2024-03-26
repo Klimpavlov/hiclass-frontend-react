@@ -9,17 +9,37 @@ import InputForm from "@/components/Inputs/InputForm";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postInviteClass from "@/app/postInviteClass/postInviteClass";
 import {useRouter} from "next/navigation";
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import axios from "axios";
+import ClassPreview from "@/components/ClassPreview/ClassPreview";
 
 
 const InviteModal = ({username, classId, handleCloseModal}) => {
     const router = useRouter()
 
-    // const [userPage, setIsUserPageOpen] = useState(false);
-    //
-    // const handleOpenInviteModal = () => {
-    //     setIsUserPageOpen(true);
-    // };
+    const [classData, setClassData] = useState([]);
 
+    useEffect(() => {
+        userProfile()
+    }, []);
+
+    async function userProfile() {
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            const response = await axios.get(
+                "http://localhost:7280/api/User/userprofile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }
+            );
+            console.log(response);
+            setClassData(response.data.value.classDtos)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const [dateOfInvitation, setDateOfInvitation] = useState('');
     const [invitationText, setInvitationText] = useState('');
@@ -44,6 +64,16 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         setDisciplines(availableDisciplines);
     }
 
+
+    const [classSenderId, setClassSenderId] = useState([])
+    const handleClassClick = (classId) => {
+        // console.log(classId)
+        setClassSenderId(classId)
+        // Дополнительная логика с обработкой id класса
+    };
+
+    console.log(classSenderId)
+
     const handlePostInvitation = () => {
         console.log(dateOfInvitation)
         console.log(invitationText)
@@ -51,12 +81,13 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         // alert('Invitation send!')
         // router.push('/')
         // handleCloseModal();
-        postInviteClass(classId, dateOfInvitation, invitationText)
+        postInviteClass(classSenderId, classId, dateOfInvitation)
+        // postInviteClass(classSenderId, classId, dateOfInvitation, invitationText)
     }
 
     return (
         <div className="class-preview fixed inset-0 flex flex-col items-center justify-center bg-white z-50 overflow-y-auto">
-            <div className="invite-header flex justify-between items-center px-4 py-2">
+            <div className="invite-header flex justify-between items-center px-4 py-2 mt-96">
                 <div className="header-title">Invite for a call</div>
                 <div
                     className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
@@ -79,23 +110,32 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
                     <InputForm inputFormText='Start time' placeholderText='Enter time'/>
                     <InputForm inputFormText='End time' placeholderText='Enter time'/>
                 </div>
-                <div className='invite-message-form '>
-                    <InputForm inputFormText='Message' placeholderText='Add a message'
-                               value={invitationText}
-                               onChange={(e) => (setInvitationText(e.target.value))}/>
-                </div>
+            </div>
+            <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
+                <InputForm inputFormText='Message' placeholderText='Add a message'
+                           value={invitationText}
+                           onChange={(e) => (setInvitationText(e.target.value))}/>
+            </div>
+            <div className='select-your-class max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col'>
+                {classData.map((defaultClass) => (
+                    <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass.classId)}>
+                        <ClassPreview key={defaultClass.classId}
+                                      title={defaultClass.title}
+                                      username={defaultClass.userFullName}
+                                      tags={defaultClass.disciplines}
+                                      photo={defaultClass.imageUrl}
+                                      // onClick={() => handleClassClick(defaultClass.classId)}
+                        />
+
+                    </div>
+                ))}
             </div>
             <div className='invite-modal-footer flex justify-between items-center'>
-                {/*<div className='userinfo' onClick={handleContinue}>{username}</div>*/}
                 <div className='btns'>
                     <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
                     <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>
                 </div>
             </div>
-            {/*{userPage && (*/}
-            {/*    <InviteModal username={username}*/}
-            {/*                 handleCloseModal={() => setIsUserPageOpen(false)}/>*/}
-            {/*)}*/}
         </div>
     );
 };

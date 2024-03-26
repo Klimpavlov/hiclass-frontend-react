@@ -26,8 +26,10 @@ export default function UserProfile() {
             <Header/>
             <TopSection/>
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
-                <OtherUserInfo username={username} email={email}
-                               languageTitles={languagesArray} country={country}
+                <OtherUserInfo username={username}
+                               email={email}
+                               languageTitles={languagesArray}
+                               country={country}
                                disciplines={disciplinesArray}
                 />
                 <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>

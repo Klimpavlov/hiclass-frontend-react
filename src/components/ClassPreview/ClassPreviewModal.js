@@ -22,7 +22,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
 
     const handleOpenUserProfile = (username) => {
         // setSelectedUsername(username);
-        router.push('/userProfile')
+        router.push('/otherUserProfile')
         // setIsProfileOpen(true);
     };
 

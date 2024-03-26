@@ -1,12 +1,12 @@
 import axios from "axios";
-const postInviteClass = (receiverId, date, invitationText) => {
+const postInviteClass = (classSenderId, receiverId, dateOfInvitation) => {
     const accessToken = localStorage.getItem('accessToken');
 
     axios.post('http://localhost:7280/api/Invitation/create-invitation', {
-        ClassSenderId: 'd78395f3-944b-44a5-bbc1-891aab8557e8',
+        ClassSenderId: classSenderId,
         ClassReceiverId: receiverId.toString(),
-        DateOfInvitation: date,
-        InvitationText: invitationText,
+        DateOfInvitation: dateOfInvitation,
+        InvitationText: "invitationText",
     }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
