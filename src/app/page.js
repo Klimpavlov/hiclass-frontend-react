@@ -57,11 +57,8 @@ export default function ExplorePage() {
     const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
         setSelectedTeacher(teacher)
-        localStorage.setItem('selectedTeacherFirstName', teacher.firstName);
-        localStorage.setItem('selectedTeacherLastName', teacher.lastName);
-        localStorage.setItem('selectedTeacherEmail', teacher.email);
-        localStorage.setItem('selectedTeacherCountry', teacher.countryTitle);
-        localStorage.setItem('selectedTeacherDisciplines', teacher.disciplineTitles);
+        localStorage.setItem('selectedUserId', teacher.userId);
+
     };
 
     // console.log(selectedTeacher && selectedTeacher.email);

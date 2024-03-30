@@ -8,12 +8,22 @@ import axios from "axios";
 import Link from "next/link";
 import UserProfileChatBtn from "@/components/Buttons/UserProfileChatBtn";
 import UserProfileSendInviteBtn from "@/components/Buttons/UserProfileSendInvite";
+import Image from "next/image";
 
-const OtherUserInfo = ({username, languageTitles, email, userDescription, country, disciplines}) => {
+const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescription, country, disciplines}) => {
 
 
     return (
         <div className='sm:w-1/3 flex flex-col gap-3'>
+            <div className="avatar-container">
+                <Image
+                    className="rounded-full w-36 h-36"
+                    src={userAvatar}
+                    alt="user-avatar"
+                    width={200}
+                    height={200}
+                />
+            </div>
             <div className='avatar'></div>
             <div className='username text-4xl whitespace-pre-line'>{username}</div>
             <div className='raiting'></div>

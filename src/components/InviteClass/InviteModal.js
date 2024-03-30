@@ -41,6 +41,7 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         }
     }
 
+
     const [dateOfInvitation, setDateOfInvitation] = useState('');
     const [invitationText, setInvitationText] = useState('');
 
@@ -58,6 +59,7 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
     useEffect(() => {
         getDisciplines()
     }, []);
+
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
@@ -81,59 +83,66 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         // alert('Invitation send!')
         // router.push('/')
         // handleCloseModal();
-        postInviteClass(classSenderId, classId, dateOfInvitation)
-        // postInviteClass(classSenderId, classId, dateOfInvitation, invitationText)
+        postInviteClass(classSenderId, classId, dateOfInvitation, invitationText)
     }
 
     return (
-        <div className="class-preview fixed inset-0 flex flex-col items-center justify-center bg-white z-50 overflow-y-auto">
-            <div className="invite-header flex justify-between items-center px-4 py-2 mt-96">
-                <div className="header-title">Invite for a call</div>
-                <div
-                    className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
-                    onClick={handleCloseModal}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </div>
-            </div>
-            <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
-                <div className='dropdowns'>
-                    <Dropdown dropdownFormText='Subject' placeholderText='Select subject'
-                              options={disciplines}
-                              onChange={setSelectedDisciplines}
-                    />
-                    <InputCalendar inputFormText='Date' placeholderText='Select date'
-                                   value={dateOfInvitation}
-                                   onChange={handleDateChange}/>
-                    <InputForm inputFormText='Start time' placeholderText='Enter time'/>
-                    <InputForm inputFormText='End time' placeholderText='Enter time'/>
-                </div>
-            </div>
-            <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
-                <InputForm inputFormText='Message' placeholderText='Add a message'
-                           value={invitationText}
-                           onChange={(e) => (setInvitationText(e.target.value))}/>
-            </div>
-            <div className='select-your-class max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col'>
-                {classData.map((defaultClass) => (
-                    <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass.classId)}>
-                        <ClassPreview key={defaultClass.classId}
-                                      title={defaultClass.title}
-                                      username={defaultClass.userFullName}
-                                      tags={defaultClass.disciplines}
-                                      photo={defaultClass.imageUrl}
-                                      // onClick={() => handleClassClick(defaultClass.classId)}
-                        />
-
+        <div className="modal-container fixed top-0 left-0 right-0 bottom-0 flex items-center">
+            <div className="class-preview fixed inset-0 flex flex-col items-center bg-white z-50 overflow-y-auto">
+                <div className="invite-header flex justify-between items-center px-4 py-2">
+                    <div className="header-title">Invite for a call</div>
+                    <div
+                        className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
+                        onClick={handleCloseModal}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
                     </div>
-                ))}
-            </div>
-            <div className='invite-modal-footer flex justify-between items-center'>
-                <div className='btns'>
-                    <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
-                    <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>
+                </div>
+                <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
+                    <div className='dropdowns'>
+                        <Dropdown dropdownFormText='Subject' placeholderText='Select subject'
+                                  options={disciplines}
+                                  onChange={setSelectedDisciplines}
+                        />
+                        <InputCalendar inputFormText='Date' placeholderText='Select date'
+                                       value={dateOfInvitation}
+                                       onChange={handleDateChange}/>
+                        {/*<InputForm inputFormText='Start time' placeholderText='Enter time'/>*/}
+                        {/*<InputForm inputFormText='End time' placeholderText='Enter time'/>*/}
+                    </div>
+                </div>
+                <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
+                    <InputForm inputFormText='Message' placeholderText='Add a message'
+                               value={invitationText}
+                               onChange={(e) => (setInvitationText(e.target.value))}/>
+                </div>
+                <div>Select your class</div>
+                <div className='select-your-class max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col'>
+                    {classData.map((defaultClass) => (
+                        <div key={defaultClass.classId}
+                             onClick={() => handleClassClick(defaultClass.classId)}
+                             className={`class-item ${
+                                 classSenderId === defaultClass.classId ? 'bg-green-100' : ''
+                             }`}                        >
+                            <ClassPreview key={defaultClass.classId}
+                                          title={defaultClass.title}
+                                          username={defaultClass.userFullName}
+                                          tags={defaultClass.disciplines}
+                                          photo={defaultClass.imageUrl}
+                            />
+
+                        </div>
+                    ))}
+                </div>
+                <div className='invite-modal-footer '>
+                    <div className='btns'>
+                        <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
+                        <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>
+                    </div>
                 </div>
             </div>
         </div>
