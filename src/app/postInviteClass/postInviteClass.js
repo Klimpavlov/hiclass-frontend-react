@@ -1,5 +1,5 @@
 import axios from "axios";
-const postInviteClass = (classSenderId, receiverId, dateOfInvitation, invitationText) => {
+const postInviteClass = (classSenderId, receiverId, dateOfInvitation, invitationText, successRedirect) => {
     const accessToken = localStorage.getItem('accessToken');
 
     axios.post('http://localhost:7280/api/Invitation/create-invitation', {
@@ -14,6 +14,7 @@ const postInviteClass = (classSenderId, receiverId, dateOfInvitation, invitation
     })
         .then(function (response) {
             console.log(response);
+            successRedirect()
             // Перенаправление на другую страницу после успешного выполнения запроса
         })
         .catch(function (error) {

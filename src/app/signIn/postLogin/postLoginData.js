@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const postLoginData = (email, password, successRedirect) => {
+const postLoginData = (email, password, successRedirect, handleLoginError) => {
 
     axios.post('http://localhost:7280/api/User/login', {
         Email: email,
@@ -17,6 +17,7 @@ const postLoginData = (email, password, successRedirect) => {
         })
         .catch(function (error) {
             console.log(error);
+            handleLoginError();
         });
 }
 

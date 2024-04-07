@@ -83,8 +83,12 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         // alert('Invitation send!')
         // router.push('/')
         // handleCloseModal();
-        postInviteClass(classSenderId, classId, dateOfInvitation, invitationText)
+        postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect)
     }
+
+    const successRedirect = () => {
+        alert('Invitation send!')
+    };
 
     return (
         <div className="modal-container fixed top-0 left-0 right-0 bottom-0 flex items-center">

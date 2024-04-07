@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword}) => {
+const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword, error}) => {
 
     const inputType = isPassword ? 'password' : 'text';
 
@@ -13,7 +13,9 @@ const InputForm = ({inputFormText, placeholderText, value, onChange, isPassword}
                        type={inputType}
                        placeholder={placeholderText}
                        value={value}
-                       onChange={onChange}/>
+                       onChange={onChange}
+                />
+                {error && <div className='text-red-700'>{error}</div>}
             </label>
         </div>
     );

@@ -14,12 +14,36 @@ export default function SignUp() {
     const router = useRouter();
 
     const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+
     const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("")
+
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("")
+
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
 
     const handleSignUp = () => {
-        postSignUp(email, password)
-        router.push('/signUp/verifyEmail');
+        if (!validateEmail(email)) {
+            setEmailError("Please enter a valid email address");
+            return;
+        }
+        if (password.length < 6) {
+            setPasswordError("Password must be at least 6 characters")
+        }
+        if (confirmPassword !== password) {
+            setConfirmPasswordError("Wrong password")
+        }
+        postSignUp(email, password, successRedirect)
     }
+
+    const successRedirect = () => {
+        router.push('/signUp/verifyEmail');
+    };
 
     return (
         <main>
@@ -38,20 +62,22 @@ export default function SignUp() {
                             <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
-
-
+                                       error={emailError}
                             />
                         </div>
                         <InputForm inputFormText="Password" placeholderText="At least 6 characters"
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
+                                   error={passwordError}
                         />
                         <div className="my-4">
                             <InputForm inputFormText="Confirm password" placeholderText="Re-enter your password"
+                                       onChange={(e) => setConfirmPassword(e.target.value)}
                                        isPassword={true}
-
+                                       error={confirmPasswordError}
                             />
+
                         </div>
                     </div>
                     <ContinueButton buttonText="Continue" onClick={handleSignUp}/>
