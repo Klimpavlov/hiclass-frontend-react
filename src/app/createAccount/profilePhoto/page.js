@@ -6,7 +6,7 @@ import RegistrationHeader from '@/components/RegistrationHeader/RegistrationHead
 import ContinueButton from '@/components/Buttons/ContinueButton';
 import postCreateAccount from '@/app/createAccount/postCreateAccount/postCreateAccount';
 import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
-import postUserImage from "@/app/createAccount/SetUserImage/postUserImage";
+import postUserImage from "@/app/createAccount/profilePhoto/postUserImage";
 
 export default function ProfilePhoto() {
     const router = useRouter();

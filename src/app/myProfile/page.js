@@ -2,13 +2,13 @@
 
 import React, { useState,useEffect } from "react";
 import Header from "@/components/Header/Header";
-import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
+import Banner from "@/components/Banner/Banner";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function MyProfile() {
     return (
         <main className="">
             <Header avatar={userAvatar}/>
-            <TopSection />
+            <Banner />
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                 <UserInfo/>
                 <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
