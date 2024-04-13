@@ -9,7 +9,7 @@ export async function getUserProfile(accessToken) {
                 }
             }
         );
-        console.log(response);
+        return response.data.value;
     } catch (error) {
         console.error(error);
         return [];

@@ -12,7 +12,6 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
     const router = useRouter()
 
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     const handleOpenInviteModal = () => {
         setIsInviteModalOpen(true);
@@ -22,7 +21,8 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
 
     const handleOpenUserProfile = (username) => {
         // setSelectedUsername(username);
-        router.push('/userProfile')
+
+        router.push('/otherUserProfile')
         // setIsProfileOpen(true);
     };
 
@@ -62,9 +62,6 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 <InviteModal username={username}
                              classId={classId}
                              handleCloseModal={() => setIsInviteModalOpen(false)}/>
-            )}
-            {isProfileOpen && (
-                <OtherUserInfo username={selectedUsername}/>
             )}
         </div>
     );

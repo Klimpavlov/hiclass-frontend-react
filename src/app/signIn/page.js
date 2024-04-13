@@ -16,9 +16,22 @@ export default function SignIn() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [emailDirty, setEmailDirty] = useState(false);
+    const [passwordDirty, setPasswordDirty] = useState(false);
+    // const [emailError, setEmailError] = useState('field is empty');
+    // const [passwordError, setPasswordError] = useState("field is empty");
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loginError, setLoginError] = useState("");
 
+    const handleLoginError = () => {
+        setLoginError("Invalid email or password");
+
+    };
     const handleSignIn = () => {
-        postLoginData(email, password, successRedirect);
+        setEmailDirty(true);
+        setPasswordDirty(true);
+        postLoginData(email, password, successRedirect, handleLoginError);
+        setFormSubmitted(true);
     };
 
     const successRedirect = () => {
@@ -33,12 +46,14 @@ export default function SignIn() {
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
                     <div className="text-4xl whitespace-pre-line">Sign in</div>
-                    <div className=" ">New to Wonder World? <Link className='text-green-800' href="/signUp">Sign up</Link></div>
+                    <div className=" ">New to Wonder World? <Link className='text-green-800' href="/signUp">Sign
+                        up</Link></div>
                     <GoogleButton/>
                     <FacebookButton/>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
+                            {loginError && <div className="text-red-700">{loginError}</div>}
                             <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}/>

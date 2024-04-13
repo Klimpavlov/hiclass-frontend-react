@@ -10,31 +10,6 @@ import axios from "axios";
 
 export default function EditProfile() {
 
-    // get avatar
-
-    const [userAvatar, setUserAvatar] = useState([]);
-
-    useEffect(() => {
-        getUser();
-    }, []);
-    async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
-        try {
-            const response = await axios.get(
-                "http://localhost:7280/api/User/userprofile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            setUserAvatar(response.data.value.imageUrl)
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-
     const [selectedFilter, setSelectedFilter] = useState('profile')
 
     const handleSelectedFilter = (section) => {
@@ -53,7 +28,7 @@ export default function EditProfile() {
 
     return (
         <main>
-            <Header avatar={userAvatar}/>
+            <Header/>
             <div className='p-4 md:p-28'>
                 <div className='button&filters pb-10'>
                     <BackButton/>

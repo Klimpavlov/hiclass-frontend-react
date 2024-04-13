@@ -2,13 +2,13 @@
 
 import React, { useState,useEffect } from "react";
 import Header from "@/components/Header/Header";
-import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
+import Banner from "@/components/Banner/Banner";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function MyProfile() {
         setIsModalOpen(false);
     };
 
-    const [userAvatar, setUserAvatar] = useState([]);
+
     const [classData, setClassData] = useState([]);
 
     useEffect(() => {
@@ -30,32 +30,17 @@ export default function MyProfile() {
 
     async function getUser() {
         const accessToken = localStorage.getItem('accessToken');
-        try {
-            const response = await axios.get(
-                "http://localhost:7280/api/User/userprofile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            console.log(response);
-            console.log(response.data.value.languageTitles);
+        const userProfile = await getUserProfile(accessToken)
+        console.log(userProfile);
 
-            console.log(response.data.value.imageUrl);
-            setUserAvatar(response.data.value.imageUrl)
-
-            setClassData(response.data.value.classDtos)
-        } catch (error) {
-            console.error(error);
-        }
+        setClassData(userProfile.classDtos)
     }
 
 
     return (
         <main className="">
-            <Header avatar={userAvatar}/>
-            <TopSection />
+            <Header/>
+            <Banner />
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                 <UserInfo/>
                 <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
