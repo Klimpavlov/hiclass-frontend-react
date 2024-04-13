@@ -4,7 +4,6 @@ import imgSrc from '@/components/ClassPreview/class-preview-image.svg';
 import Image from "next/image";
 
 const ClassPreview = ({title, username, tags, photo }) => {
-    // const {title} = classData;
 
     return (
         <div className="class-preview ">

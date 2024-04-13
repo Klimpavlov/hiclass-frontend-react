@@ -19,28 +19,6 @@ import axios from "axios";
 
 export default function ExplorePage() {
 
-    const [userAvatar, setUserAvatar] = useState([]);
-
-    useEffect(() => {
-        getUser();
-    }, []);
-    async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
-        try {
-            const response = await axios.get(
-                "http://localhost:7280/api/User/userprofile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            setUserAvatar(response.data.value.imageUrl)
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     // filters
 
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -190,7 +168,7 @@ export default function ExplorePage() {
 
     return (
         <main className="">
-            <Header avatar={userAvatar}/>
+            <Header/>
             <TopSection/>
             <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                 <div className="flex flex-wrap gap-2 px-4 md:px-8">
@@ -261,12 +239,7 @@ export default function ExplorePage() {
                     ></ClassPreviewModal>
                 )}
             </div>
-            {/*{teacherProfileData && (*/}
-            {/*    <OtherUserInfo*/}
-            {/*        firstname={teacherProfileData.firstName}*/}
-            {/*        lastname={teacherProfileData.lastName}*/}
-            {/*    />*/}
-            {/*)}*/}
+
         </main>
     );
 }

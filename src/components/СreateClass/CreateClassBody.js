@@ -3,6 +3,7 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
+import Image from "next/image";
 
 const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
@@ -49,10 +50,10 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
 
     return (
         <div className="flex flex-col sm:flex-row gap-5">
-            <div className="section-photo w-full sm:w-1/3">
+            <div className="section-photo w-full sm:w-1/2">
                 <div>Class photo (required)</div>
-                <div className="w-full aspect-w-3 aspect-h-4">
-                    <div className="border border-black">
+                <div className="w-full border border-black aspect-w-3 aspect-h-4">
+                    <div className="border border-black relative">
                         <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
                             {selectedImage ? (
                                 <img
@@ -62,7 +63,8 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
                                 />
                             ) : (
                                 <div
-                                    className="flex items-center justify-center w-full h-full border-dashed border-2 cursor-pointer">
+                                    className="flex items-center justify-center w-full h-full
+                                     border-2 cursor-pointer">
                                     + Upload image
                                 </div>
                             )}

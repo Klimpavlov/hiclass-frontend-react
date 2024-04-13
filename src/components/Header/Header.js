@@ -1,14 +1,15 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
 import imgChatButton from '../Header/tertiary-button.svg';
 import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 
-const Header = ({avatar}) => {
+const Header = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -21,6 +22,20 @@ const Header = ({avatar}) => {
         console.log("Logout");
 
     };
+
+    const [userAvatar, setUserAvatar] = useState([]);
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    async function getUser() {
+        const accessToken = localStorage.getItem('accessToken');
+        const userProfile = await getUserProfile(accessToken)
+        console.log(userProfile);
+
+        setUserAvatar(userProfile.imageUrl)
+    }
 
 
     return (
@@ -35,7 +50,15 @@ const Header = ({avatar}) => {
             <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
                 <Image src={imgChatButton} alt="chat-button" />
                 <div className="flex gap-3 sm:gap-1 md:gap-2">
-                    <Image className='rounded-full overflow-hidden w-10 h-10' src={avatar} alt="avatar-header"  width={50} height={50}  />
+                    <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12">
+                        <Image
+                            className="rounded-full overflow-hidden object-cover w-full h-full"
+                            src={userAvatar}
+                            alt="avatar-header"
+                            width={50}
+                            height={50}
+                        />
+                    </div>
                     <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
                     {isDropdownOpen && (
                         <div className="absolute right-0 mt-10 ">

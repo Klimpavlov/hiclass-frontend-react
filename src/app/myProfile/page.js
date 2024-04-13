@@ -21,7 +21,7 @@ export default function MyProfile() {
         setIsModalOpen(false);
     };
 
-    const [userAvatar, setUserAvatar] = useState([]);
+
     const [classData, setClassData] = useState([]);
 
     useEffect(() => {
@@ -30,31 +30,16 @@ export default function MyProfile() {
 
     async function getUser() {
         const accessToken = localStorage.getItem('accessToken');
-        try {
-            const response = await axios.get(
-                "http://localhost:7280/api/User/userprofile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            console.log(response);
-            console.log(response.data.value.languageTitles);
+        const userProfile = await getUserProfile(accessToken)
+        console.log(userProfile);
 
-            console.log(response.data.value.imageUrl);
-            setUserAvatar(response.data.value.imageUrl)
-
-            setClassData(response.data.value.classDtos)
-        } catch (error) {
-            console.error(error);
-        }
+        setClassData(userProfile.classDtos)
     }
 
 
     return (
         <main className="">
-            <Header avatar={userAvatar}/>
+            <Header/>
             <Banner />
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                 <UserInfo/>
