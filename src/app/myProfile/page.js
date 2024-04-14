@@ -9,6 +9,7 @@ import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 import Banner from "@/components/Banner/Banner";
+import putBannerImage from "@/app/putBanner/putBannerImage";
 
 export default function MyProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,11 +37,13 @@ export default function MyProfile() {
         setClassData(userProfile.classDtos)
     }
 
+    const [banner, setBanner] = useState(null);
+
 
     return (
         <main className="">
             <Header/>
-            <Banner />
+            <Banner/>
             <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                 <UserInfo/>
                 <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>

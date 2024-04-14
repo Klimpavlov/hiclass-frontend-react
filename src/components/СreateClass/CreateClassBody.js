@@ -3,6 +3,7 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import Image from "next/image";
 
 const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
@@ -19,13 +20,20 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
     setSubjects(selectedDisciplines)
 
     useEffect(() => {
-        getDisciplines()
+        getUserDisciplines()
     }, []);
 
 
-    async function getDisciplines() {
+    // async function getDisciplines() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const availableDisciplines = await getAvailableDisciplines(accessToken);
+    //     setDisciplines(availableDisciplines);
+    // }
+
+    async function getUserDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
-        const availableDisciplines = await getAvailableDisciplines(accessToken);
+        const userProfile = await getUserProfile(accessToken);
+        const availableDisciplines = userProfile.disciplineTitles
         setDisciplines(availableDisciplines);
     }
 
@@ -36,6 +44,7 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     setLanguage(selectedLanguages)
+
     useEffect(() => {
         getLanguages()
     }, []);

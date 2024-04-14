@@ -37,6 +37,26 @@ const Header = () => {
         setUserAvatar(userProfile.imageUrl)
     }
 
+    const [isAvatarOpen, setIsAvatarOpen] = useState(false);
+
+    const toggleAvatar = () => {
+        setIsAvatarOpen(!isAvatarOpen)
+    }
+
+    useEffect(() => {
+        const closeAvatar = () => {
+            setIsAvatarOpen(false);
+        };
+
+        if (isAvatarOpen) {
+            window.addEventListener("click", closeAvatar);
+        }
+
+        return () => {
+            window.removeEventListener("click", closeAvatar);
+        };
+    }, [isAvatarOpen]);
+
 
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
@@ -57,6 +77,8 @@ const Header = () => {
                             alt="avatar-header"
                             width={50}
                             height={50}
+                            onClick={toggleAvatar}
+
                         />
                     </div>
                     <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
