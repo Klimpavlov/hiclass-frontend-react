@@ -6,7 +6,7 @@ const putUpdatePersonalInfo = (institution) => {
     const institutionTitle = institutionRequest[0];
     const institutionAddress = institution[1]
 
-    axios.put('http://localhost:7280/api/UpdateUser/institution', {
+    axios.put('http://localhost:7280/api/EditUser/institution', {
         InstitutionTitle: institutionTitle,
         Address: institutionAddress,
         Types: [

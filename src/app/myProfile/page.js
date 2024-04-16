@@ -56,7 +56,7 @@ export default function MyProfile() {
                     <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
                         {classData.map((defaultClass) => (
                             <div key={defaultClass.classId}>
-                                <ClassPreview key={defaultClass.classId}
+                                <ClassPreview classId={defaultClass.classId}
                                               title={defaultClass.title}
                                               username={defaultClass.userFullName}
                                               tags={defaultClass.disciplines}

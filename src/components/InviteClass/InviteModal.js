@@ -120,7 +120,7 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
                     </div>
                 </div>
                 <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
-                    <InputForm inputFormText='Message' placeholderText='Add a message'
+                    <InputForm inputFormText='Message' placeholderText='Write a few words about your activity that you suggest for the meeting'
                                value={invitationText}
                                onChange={(e) => (setInvitationText(e.target.value))}/>
                 </div>

@@ -235,6 +235,7 @@ export default function ExplorePage() {
                         title={selectedClass.title}
                         username={selectedClass.userFullName}
                         tags={selectedClass.disciplines}
+                        photo={selectedClass.imageUrl}
                         handleCloseModal={() => setSelectedClass(null)}
                     ></ClassPreviewModal>
                 )}

@@ -3,7 +3,7 @@ import axios from "axios";
 const putUpdatePassword = (password) => {
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/UpdateUser/password', {
+    axios.put('http://localhost:7280/api/EditUser/password', {
         Password: password,
     }, {
         headers: {

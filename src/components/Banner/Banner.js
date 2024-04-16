@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import putBannerImage from "@/app/putBanner/putBannerImage";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import ApplyButton from "@/components/Buttons/ApplyButton";
 
 const Banner = () => {
     const [file, setFile] = useState();
@@ -38,6 +39,12 @@ const Banner = () => {
                             layout="fill"
                             objectFit="contain"
                         />
+                        {/*<div className="absolute">*/}
+                        {/*    <div className="space-x-2">*/}
+                        {/*        <ApplyButton buttonText="change" />*/}
+                        {/*        <ApplyButton buttonText="remove" />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 )}
                 {file && (
