@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Tag from "@/components/Tags/Tag";
 import imgSrc from '@/components/ClassPreview/class-preview-image.svg';
 import deleteClass from "@/app/deleteClass/deleteClass";
 import Image from "next/image";
+import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
 
 const ClassPreview = ({classId, title, username, tags, photo}) => {
 
@@ -15,6 +16,20 @@ const ClassPreview = ({classId, title, username, tags, photo}) => {
     const postDeleteClass = () => {
         console.log(classId)
         deleteClass({classId})
+    }
+
+    // get Class Info
+
+
+
+    useEffect(() => {
+        getClass()
+    }, [])
+
+    async function getClass() {
+        const accessToken = localStorage.getItem('accessToken');
+        const classInfo = await getClassInfo(accessToken, classId)
+        console.log(classInfo)
     }
 
     return (

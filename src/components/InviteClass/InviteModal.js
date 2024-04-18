@@ -14,7 +14,7 @@ import axios from "axios";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 
 
-const InviteModal = ({username, classId, handleCloseModal}) => {
+const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
     const router = useRouter()
 
     const [classData, setClassData] = useState([]);
@@ -53,18 +53,18 @@ const InviteModal = ({username, classId, handleCloseModal}) => {
         setDateOfInvitation(date);
     };
 
-    const [disciplines, setDisciplines] = useState([]);
+    // const [disciplines, setDisciplines] = useState([]);
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
 
-    useEffect(() => {
-        getDisciplines()
-    }, []);
-
-    async function getDisciplines() {
-        const accessToken = localStorage.getItem('accessToken');
-        const availableDisciplines = await getAvailableDisciplines(accessToken);
-        setDisciplines(availableDisciplines);
-    }
+    // useEffect(() => {
+    //     getDisciplines()
+    // }, []);
+    //
+    // async function getDisciplines() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const availableDisciplines = await getAvailableDisciplines(accessToken);
+    //     setDisciplines(availableDisciplines);
+    // }
 
 
     const [classSenderId, setClassSenderId] = useState([])
