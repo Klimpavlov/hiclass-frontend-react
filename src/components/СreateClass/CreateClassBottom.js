@@ -4,13 +4,13 @@ import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postCreateClass from "@/app/postCreateClass/postCreateClass";
 
-const CreateClassBottom = ({handleCloseModal, handlePostCreateClass}) => {
+const CreateClassBottom = ({handleCloseModal, handlePostClass}) => {
     const handleClose = () => {
         handleCloseModal();
     }
 
     const handlePost = () => {
-        handlePostCreateClass();
+        handlePostClass();
     }
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">

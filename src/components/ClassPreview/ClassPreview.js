@@ -4,11 +4,17 @@ import imgSrc from '@/components/ClassPreview/class-preview-image.svg';
 import deleteClass from "@/app/deleteClass/deleteClass";
 import Image from "next/image";
 import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
+import CreateClassModal from "@/components/СreateClass/CreateClassModal";
+import EditClassModal from "@/app/editClass/EditClassModal";
 
 const ClassPreview = ({classId, title, username, tags, photo}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
+    const toggleEditModal = () => {
+        setIsEditModalOpen(!isEditModalOpen)
+    }
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
@@ -55,7 +61,8 @@ const ClassPreview = ({classId, title, username, tags, photo}) => {
                         <div className=''>
                             <div className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left
                                 hover:bg-gray-100 bg-gray-200 border border-gray-300
-                                 rounded-lg shadow-lg cursor-pointer'>Edit
+                                 rounded-lg shadow-lg cursor-pointer'
+                            onClick={toggleEditModal}>Edit
                             </div>
                             <div className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left
                                 hover:bg-gray-100 bg-gray-200 border border-gray-300
@@ -64,6 +71,12 @@ const ClassPreview = ({classId, title, username, tags, photo}) => {
                         </div>
                     )}
                 </div>
+                {isEditModalOpen && (
+                    <EditClassModal
+                        classId={classId}
+                       setIsModalOpen={setIsEditModalOpen}
+                    />
+                )}
             </div>
         </div>
     )
