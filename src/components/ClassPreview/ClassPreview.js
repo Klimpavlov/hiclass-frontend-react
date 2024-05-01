@@ -6,18 +6,27 @@ import Image from "next/image";
 import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import EditClassModal from "@/app/editClass/EditClassModal";
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primeicons/primeicons.css';
+import BasicDemo from "@/components/ConfirmDialog/ConfirmDialog";
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
 
     const toggleEditModal = () => {
-        setIsEditModalOpen(!isEditModalOpen)
+        setIsEditModalOpen(!isEditModalOpen);
+    }
+
+    const toggleDeleteDropdown = () => {
+        setIsDeleteModalOpen(!isDeleteModalOpen);
     }
 
     const dropdownRef = useRef(null)
@@ -31,7 +40,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
 
         document.addEventListener('click', handleClickOutside);
 
-        return ()=> document.removeEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
 
     }, [])
 
@@ -82,10 +91,14 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                                 />
                                 {isDropdownOpen && (
                                     <div className="absolute">
-                                        <div className="block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border border-gray-300 rounded-lg shadow-lg cursor-pointer" onClick={toggleEditModal}>
+                                        <div className="block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border
+                                          border-gray-300 rounded-lg shadow-lg cursor-pointer"
+                                             onClick={toggleEditModal}>
                                             Edit
                                         </div>
-                                        <div className="w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2" onClick={postDeleteClass}>
+                                        <div className="w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100
+                                         bg-gray-200 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2"
+                                             onClick={toggleDeleteDropdown}>
                                             Delete
                                         </div>
                                     </div>
@@ -99,6 +112,12 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                         classId={classId}
                         setIsModalOpen={setIsEditModalOpen}
                     />
+                )}
+                {isDeleteModalOpen && (
+                   <BasicDemo
+                       classId={classId}
+                       setIsModalOpen={setIsDeleteModalOpen}
+                   />
                 )}
             </div>
         </div>
