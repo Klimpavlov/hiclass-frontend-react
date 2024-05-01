@@ -61,6 +61,7 @@ export default function MyProfile() {
                                               username={defaultClass.userFullName}
                                               tags={defaultClass.disciplines}
                                               photo={defaultClass.imageUrl}
+                                              showDropdown={true}
                                 ></ClassPreview>
                             </div>
                         ))}

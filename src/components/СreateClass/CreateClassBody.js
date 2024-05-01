@@ -31,7 +31,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
 
         setInitialTitle(classInfo.value.title)
         setInitialSubjects(classInfo.value.disciplines)
-        // setInitialGrades(classInfo.value)
+        setInitialGrades(classInfo.value.grade)
         setInitialLanguages(classInfo.value.languages)
         setInitialPhoto(classInfo.value.imageUrl)
 
@@ -67,7 +67,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
 
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [selectedGrades, setSelectedGrades] = useState([])
-    setGrades(selectedGrades)
+    setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades)
 
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
@@ -121,7 +121,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <InputForm inputFormText='Title' placeholderText='Class title'
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
-                <Dropdown dropdownFormText='Grade' placeholderText='Select grade'
+                <Dropdown dropdownFormText='Grade' placeholderText={initialGrades ? initialGrades : 'Select grade'}
                           options={grades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText='Subjects' placeholderText={initialSubjects ? initialSubjects : "Select subject"}
