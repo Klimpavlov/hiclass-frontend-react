@@ -3,7 +3,7 @@ import axios from "axios";
 const putUpdatePersonalInfo = (firstName, lastName, country, description, isTeacher, isExpert) => {
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/UpdateUser/personal-info', {
+    axios.put('http://localhost:7280/api/EditUser/personal-info', {
         IsATeacher: isTeacher,
         IsAnExpert: isExpert,
         FirstName: firstName,

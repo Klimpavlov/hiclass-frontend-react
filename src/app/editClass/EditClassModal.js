@@ -7,8 +7,10 @@ import CreateClassBody from "@/components/СreateClass/CreateClassBody";
 import postCreateClass from "@/app/postCreateClass/postCreateClass";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import putClassImage from "@/app/postCreateClass/setClassImage/putClassImage";
+import putEditClass from "@/app/editClass/putEditClass/putEditClass";
+import editClassImage from "@/app/editClass/editClassImage/editClassImage";
 
-export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
+export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
 
     const [title, setTitle] = useState('');
     const [grade, setGrade] = useState('');
@@ -16,12 +18,14 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
     const [languages, setLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
-    const handlePostCreateClass = () => {
-        postCreateClass(title, grade, languages, selectedDisciplines)
+    const handlePutEditClass = () => {
+        putEditClass(classId, title, grade, languages, selectedDisciplines)
         setTimeout(() => {
-            putClassImage(photo);
+            editClassImage(classId, photo);
         }, 2000);
 
+        console.log(title)
+        console.log(selectedDisciplines)
     };
 
     const handleCloseModal = () => {
@@ -41,7 +45,7 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
                                      classId={classId}
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}
-                                       handlePostClass={handlePostCreateClass}/>
+                                       handlePostClass={handlePutEditClass} />
                 </div>
             </div>
 

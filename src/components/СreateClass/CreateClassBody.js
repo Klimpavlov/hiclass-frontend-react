@@ -3,39 +3,76 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import Image from "next/image";
+import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
 
-const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
+const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
+
+    console.log(classId)
+
+// get Class Info
+
+
+    useEffect(() => {
+        getClass()
+    }, [])
+
+    const [initialTitle, setInitialTitle] = useState('')
+    const [initialSubjects, setInitialSubjects] = useState('');
+    const [initialGrades, setInitialGrades] = useState('');
+    const [initialLanguages, setInitialLanguages] = useState('');
+    const [initialPhoto, setInitialPhoto] = useState('');
+
+    async function getClass() {
+        const accessToken = localStorage.getItem('accessToken');
+        const classInfo = await getClassInfo(accessToken, classId)
+        console.log(classInfo)
+
+        setInitialTitle(classInfo.value.title)
+        setInitialSubjects(classInfo.value.disciplines)
+        setInitialGrades(classInfo.value.grade)
+        setInitialLanguages(classInfo.value.languages)
+        setInitialPhoto(classInfo.value.imageUrl)
+
+    }
+
+    console.log(initialTitle)
+
+    setTitle(initialTitle)
+
 
     const [selectedImage, setSelectedImage] = useState(null);
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setSelectedImage(URL.createObjectURL(file));
-        setPhoto(file);
+        setPhoto(file ? file : initialPhoto);
+
     };
 
     const [disciplines, setDisciplines] = useState([]);
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
-    setSubjects(selectedDisciplines)
+    setSubjects(selectedDisciplines.length > 0 ? selectedDisciplines : initialSubjects)
 
     useEffect(() => {
-        getDisciplines()
+        getUserDisciplines()
     }, []);
 
-
-    async function getDisciplines() {
+    async function getUserDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
-        const availableDisciplines = await getAvailableDisciplines(accessToken);
+        const userProfile = await getUserProfile(accessToken);
+        const availableDisciplines = userProfile.disciplineTitles
         setDisciplines(availableDisciplines);
     }
 
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [selectedGrades, setSelectedGrades] = useState([])
-    setGrades(selectedGrades)
+    setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades)
 
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    setLanguage(selectedLanguages)
+    setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
+
     useEffect(() => {
         getLanguages()
     }, []);
@@ -55,9 +92,9 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
                 <div className="w-full border border-black aspect-w-3 aspect-h-4">
                     <div className="border border-black relative">
                         <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
-                            {selectedImage ? (
+                            {selectedImage || initialPhoto ? (
                                 <img
-                                    src={selectedImage}
+                                    src={selectedImage ? selectedImage : initialPhoto}
                                     alt="Uploaded"
                                     className="w-full h-full object-cover"
                                 />
@@ -82,13 +119,14 @@ const CreateClassBody = ({setTitle, setPhoto, setSubjects, setGrades, setLanguag
             </div>
             <div className='section-info w-full '>
                 <InputForm inputFormText='Title' placeholderText='Class title'
-                           onChange={(e) => setTitle(e.target.value)}/>
-                <Dropdown dropdownFormText='Grade' placeholderText='Select grade'
+                           value={initialTitle}
+                           onChange={(e) => setInitialTitle(e.target.value)}/>
+                <Dropdown dropdownFormText='Grade' placeholderText={initialGrades ? initialGrades : 'Select grade'}
                           options={grades} onChange={setSelectedGrades}/>
 
-                <Dropdown dropdownFormText='Subjects' placeholderText='Class subjects'
+                <Dropdown dropdownFormText='Subjects' placeholderText={initialSubjects ? initialSubjects : "Select subject"}
                           options={disciplines} onChange={setSelectedDisciplines}/>
-                <Dropdown dropdownFormText='Languages' placeholderText='Class languages'
+                <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages ? initialLanguages :'Class languages'}
                           options={languages} onChange={setSelectedLanguages}/>
             </div>
         </div>

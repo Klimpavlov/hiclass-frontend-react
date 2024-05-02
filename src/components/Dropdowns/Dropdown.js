@@ -60,12 +60,3 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, onChange  }) => 
 };
 
 export default Dropdown;
-
-
-
-{/*<input*/}
-{/*    type="checkbox"*/}
-{/*    className="form-checkbox h-4 w-4 text-green-500 rounded"*/}
-{/*    checked*/}
-{/*    onChange*/}
-{/*/>*/}

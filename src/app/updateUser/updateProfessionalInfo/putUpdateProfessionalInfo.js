@@ -3,7 +3,7 @@ import axios from "axios";
 const putUpdateProfessionalInfo = (selectedLanguages, selectedDisciplines, selectedGrades) => {
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/UpdateUser/professional-info', {
+    axios.put('http://localhost:7280/api/EditUser/professional-info', {
         Languages: selectedLanguages,
         Disciplines: selectedDisciplines,
         Grades: selectedGrades
