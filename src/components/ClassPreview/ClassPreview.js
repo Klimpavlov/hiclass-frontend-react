@@ -10,6 +10,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import BasicDemo from "@/components/ConfirmDialog/ConfirmDialog";
+import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
 
@@ -45,8 +46,9 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
     }, [])
 
     const postDeleteClass = () => {
-        console.log(classId)
-        deleteClass({classId})
+        setTimeout(() => {
+            deleteClass({classId});
+        }, 1500)
     }
 
     // get Class Info
@@ -114,9 +116,10 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                     />
                 )}
                 {isDeleteModalOpen && (
-                   <BasicDemo
+                   <DialogModal
                        classId={classId}
                        setIsModalOpen={setIsDeleteModalOpen}
+                       postDelete={postDeleteClass}
                    />
                 )}
             </div>

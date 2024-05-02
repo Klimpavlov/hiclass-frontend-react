@@ -5,11 +5,11 @@ import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import deleteClass from "@/app/deleteClass/deleteClass";
 
-export default function BasicDemo({classId, setIsModalOpen}) {
+export default function DialogModal({setIsModalOpen, postDelete}) {
     const toast = useRef(null);
 
     const accept = () => {
-        deleteClass({classId});
+        postDelete()
         toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
 
     }
@@ -39,9 +39,11 @@ export default function BasicDemo({classId, setIsModalOpen}) {
         <>
             <Toast ref={toast} />
             <ConfirmDialog />
-            <div className="card flex flex-wrap gap-2 justify-content-center">
-                <Button onClick={confirm1} icon="pi pi-times" label="Cancel" className="mr-2"></Button>
-                <Button onClick={confirm2} icon="pi pi-check" label="Delete"></Button>
+            <div className="card flex flex-wrap gap-2 justify-content-center fixed top-0 bottom-0 items-center">
+                <Button onClick={confirm1} icon="pi pi-times" label="Cancel" className="px-5 py-3 mt-4
+                             mx-auto rounded-lg text-black bg-white
+                              text-sm font-medium shadow-xs"></Button>
+                <Button onClick={confirm2} icon="pi pi-check" label="Delete" className='px-5 py-3 mt-4 mx-auto rounded-lg bg-green-800 text-white text-sm font-medium shadow-xs'></Button>
             </div>
         </>
     )
