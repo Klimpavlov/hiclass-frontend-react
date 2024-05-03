@@ -23,8 +23,15 @@ const SettingsProfileInfo = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
+    const [country, setCountry] = useState('');
     const [isTeacher, setIsTeacher] = useState(false);
     const [isExpert, setIsExpert] = useState(false);
+
+    const [institutionName, setInstitutionName] = useState("");
+
+    const [initialLanguages, setInitialLanguages] = useState([]);
+    const [initialDisciplines, setInitialDisciplines] = useState([]);
+    const [initialGrades, setInitialGrades] = useState([]);
 
     async function getUserInfo() {
         const accessToken = localStorage.getItem('accessToken');
@@ -32,12 +39,18 @@ const SettingsProfileInfo = () => {
 
         console.log(userProfile)
 
-        setFirstName(userProfile.firstName)
-        setLastName(userProfile.lastName)
-        setDescription(userProfile.description)
-        setIsTeacher(userProfile.isATeacher)
-        setIsExpert(userProfile.isAnExpert)
+        setFirstName(userProfile.firstName);
+        setLastName(userProfile.lastName);
+        setDescription(userProfile.description);
+        setCountry(userProfile.countryTitle);
+        setIsTeacher(userProfile.isATeacher);
+        setIsExpert(userProfile.isAnExpert);
 
+        setInstitutionName(userProfile.institution.title)
+
+        setInitialLanguages(userProfile.languageTitles);
+        setInitialDisciplines(userProfile.disciplineTitles);
+        setInitialGrades(userProfile.gradeNumbers);
     }
 
 
@@ -54,7 +67,6 @@ const SettingsProfileInfo = () => {
 
     // country
 
-    const [country, setCountry] = useState('');
     const [countryData, setCountryData] = useState([]);
 
     useEffect(() => {
@@ -85,7 +97,7 @@ const SettingsProfileInfo = () => {
 
     // institution
 
-    const [institutionName, setInstitutionName] = useState("");
+    // const [institutionName, setInstitutionName] = useState("");
     const [orgData, setOrgData] = useState([]);
 
     const handleUpdateInstitution = () => {
@@ -222,9 +234,9 @@ const SettingsProfileInfo = () => {
                                  details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
                 />
                 <div className='py-8'>
-                    <Dropdown dropdownFormText='Areas of work' options={disciplines} onChange={setSelectedDisciplines}/>
-                    <Dropdown dropdownFormText='Grades' options={grades} onChange={setSelectedGrades}/>
-                    <Dropdown dropdownFormText='Languages' options={languages} onChange={setSelectedLanguages}/>
+                    <Dropdown dropdownFormText='Areas of work' placeholderText={initialDisciplines} options={disciplines} onChange={setSelectedDisciplines}/>
+                    <Dropdown dropdownFormText='Grades' placeholderText={initialGrades} options={grades} onChange={setSelectedGrades}/>
+                    <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages} options={languages} onChange={setSelectedLanguages}/>
                     <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
                 </div>
             </div>
