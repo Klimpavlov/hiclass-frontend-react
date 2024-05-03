@@ -10,14 +10,36 @@ import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailabl
 import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
 import putUpdateProfessionalInfo from "@/app/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
 import putUpdateInstitution from "@/app/updateUser/updateInstitution/putUpdateInstitution";
+import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 
 const SettingsProfileInfo = () => {
+
+    // initial values
+
+    useEffect(() => {
+        getUserInfo()
+    }, [])
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
     const [isTeacher, setIsTeacher] = useState(false);
     const [isExpert, setIsExpert] = useState(false);
+
+    async function getUserInfo() {
+        const accessToken = localStorage.getItem('accessToken');
+        const userProfile = await getUserProfile(accessToken);
+
+        console.log(userProfile)
+
+        setFirstName(userProfile.firstName)
+        setLastName(userProfile.lastName)
+        setDescription(userProfile.description)
+        setIsTeacher(userProfile.isATeacher)
+        setIsExpert(userProfile.isAnExpert)
+
+    }
+
 
     const handleUpdatePersonalInfo = () => {
         // console.log(selectedPosition)
@@ -133,7 +155,6 @@ const SettingsProfileInfo = () => {
     }
 
 
-
     return (
         <>
             <div className='section-photo'>
@@ -157,12 +178,14 @@ const SettingsProfileInfo = () => {
                     <Dropdown
                         dropdownFormText="I’m a/am"
                         options={position}
+                        placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
                         onChange={(selectedOptions) => {
                             setIsTeacher(selectedOptions.includes("teacher"));
                             setIsExpert(selectedOptions.includes("expert"));
                         }}
-                    />                    <InputForm inputFormText='Location' value={country}
-                               onChange={(e) => setCountry(e.target.value)}/>
+                    />
+                    <InputForm inputFormText='Location' value={country}
+                                  onChange={(e) => setCountry(e.target.value)}/>
                     {country !== '' && (
                         <div>
                             {countryData.map((country) => (
@@ -199,7 +222,7 @@ const SettingsProfileInfo = () => {
                                  details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
                 />
                 <div className='py-8'>
-                    <Dropdown dropdownFormText='Areas of work' options={disciplines} onChange={setSelectedDisciplines} />
+                    <Dropdown dropdownFormText='Areas of work' options={disciplines} onChange={setSelectedDisciplines}/>
                     <Dropdown dropdownFormText='Grades' options={grades} onChange={setSelectedGrades}/>
                     <Dropdown dropdownFormText='Languages' options={languages} onChange={setSelectedLanguages}/>
                     <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
