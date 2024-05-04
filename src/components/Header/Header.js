@@ -8,13 +8,23 @@ import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import {useRouter} from "next/navigation";
 
 const Header = () => {
+
+    const router = useRouter();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
+    }
+
+    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+
+    const toggleConfirmDialog = () => {
+        setIsConfirmDialogOpen(!isConfirmDialogOpen)
     }
 
     const handleLogout = () => {
@@ -61,15 +71,15 @@ const Header = () => {
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
-                <Image src={imgSrc} alt="hiClass Logo" />
+                <Image src={imgSrc} alt="hiClass Logo"/>
                 <div className="flex flex-wrap justify-start ml-4">
                     <Link href="/" className="ml-6 my-2">Discover</Link>
                     <Link href="/myProfile" className="ml-6 my-2">My profile</Link>
                 </div>
             </div>
             <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
-                <Image src={imgChatButton} alt="chat-button" />
-                <div className="flex gap-3 sm:gap-1 md:gap-2">
+                <Image src={imgChatButton} alt="chat-button"/>
+                <div className="flex gap-3 sm:gap-2 md:gap-3">
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12">
                         <Image
                             className="rounded-full overflow-hidden object-cover w-full h-full"
@@ -81,16 +91,23 @@ const Header = () => {
 
                         />
                     </div>
-                    <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down" onClick={toggleDropdown} />
+                    <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down"
+                           onClick={toggleDropdown}/>
                     {isDropdownOpen && (
-                        <div className="absolute right-0 mt-10 ">
+                        <div className="absolute right-5">
                             <button
                                 className="block py-2 px-4 sm:py-1 sm:px-2 text-left
                                 hover:bg-gray-100 bg-white border border-gray-300
                                  rounded-lg shadow-lg cursor-pointer"
-                                onClick={handleLogout}
-                            >
-                               <Link href="/signIn">Logout</Link>
+                                onClick={toggleConfirmDialog}
+                            >Logout
+                                {/*<Link href="/signIn">Logout</Link>*/}
+                                {isConfirmDialogOpen && (
+                                    <DialogModal
+                                        setIsModalOpen={setIsConfirmDialogOpen}
+                                        postDelete={() => router.push('/signIn')}
+                                    />
+                                )}
                             </button>
                         </div>
                     )}

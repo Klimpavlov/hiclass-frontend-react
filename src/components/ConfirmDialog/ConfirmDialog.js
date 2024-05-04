@@ -25,7 +25,7 @@ export default function DialogModal({setIsModalOpen, postDelete}) {
 
     const confirm2 = () => {
         confirmDialog({
-            message: 'Do you want to delete this class?',
+            message: 'Do you want to proceed?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             defaultFocus: 'reject',
@@ -39,11 +39,13 @@ export default function DialogModal({setIsModalOpen, postDelete}) {
         <>
             <Toast ref={toast} />
             <ConfirmDialog />
-            <div className="card flex flex-wrap gap-2 justify-content-center fixed top-0 bottom-0 items-center">
+            <div className='fixed top-0 bottom-0 items-center'>
+            <div className="card flex flex-wrap gap-2 justify-content-center">
                 <Button onClick={confirm1} icon="pi pi-times" label="Cancel" className="px-5 py-3 mt-4
                              mx-auto rounded-lg text-black bg-white
                               text-sm font-medium shadow-xs"></Button>
-                <Button onClick={confirm2} icon="pi pi-check" label="Delete" className='px-5 py-3 mt-4 mx-auto rounded-lg bg-green-800 text-white text-sm font-medium shadow-xs'></Button>
+                <Button onClick={confirm2} icon="pi pi-check" label="Continue" className='px-5 py-3 mt-4 mx-auto rounded-lg bg-green-800 text-white text-sm font-medium shadow-xs'></Button>
+            </div>
             </div>
         </>
     )
