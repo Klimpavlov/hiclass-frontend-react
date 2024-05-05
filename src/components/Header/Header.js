@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useState, useEffect} from "react";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
 import imgChatButton from '../Header/tertiary-button.svg';
@@ -8,8 +9,10 @@ import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primeicons/primeicons.css';
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
-import {useRouter} from "next/navigation";
 
 const Header = () => {
 
@@ -96,7 +99,7 @@ const Header = () => {
                     {isDropdownOpen && (
                         <div className="absolute right-5">
                             <button
-                                className="block py-2 px-4 sm:py-1 sm:px-2 text-left
+                                className="py-2 px-4 sm:py-1 sm:px-2 text-left
                                 hover:bg-gray-100 bg-white border border-gray-300
                                  rounded-lg shadow-lg cursor-pointer"
                                 onClick={toggleConfirmDialog}

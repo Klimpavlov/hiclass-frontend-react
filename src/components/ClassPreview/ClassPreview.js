@@ -9,7 +9,6 @@ import EditClassModal from "@/app/editClass/EditClassModal";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
-import BasicDemo from "@/components/ConfirmDialog/ConfirmDialog";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
