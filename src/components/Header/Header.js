@@ -94,7 +94,7 @@ const Header = () => {
 
                         />
                     </div>
-                    <Image className='cursor-pointer' src={imgChevronDownSrc} alt="chevron-down"
+                    <Image className={`${isDropdownOpen ? "rotate-180" : ""} cursor-pointer`} src={imgChevronDownSrc} alt="chevron-down"
                            onClick={toggleDropdown}/>
                     {isDropdownOpen && (
                         <div className="absolute right-5">
@@ -104,14 +104,15 @@ const Header = () => {
                                  rounded-lg shadow-lg cursor-pointer"
                                 onClick={toggleConfirmDialog}
                             >Logout
-                                {/*<Link href="/signIn">Logout</Link>*/}
-                                {isConfirmDialogOpen && (
-                                    <DialogModal
-                                        setIsModalOpen={setIsConfirmDialogOpen}
-                                        postDelete={() => router.push('/signIn')}
-                                    />
-                                )}
                             </button>
+                            {isConfirmDialogOpen && (
+                                <DialogModal
+                                    setIsModalOpen={setIsConfirmDialogOpen}
+                                    postDelete={() => setTimeout(() => {
+                                        router.push('/signIn')
+                                    }, 1500)}
+                                />
+                            )}
                         </div>
                     )}
                 </div>

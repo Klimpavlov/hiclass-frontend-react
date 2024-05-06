@@ -25,7 +25,7 @@ export default function DialogModal({setIsModalOpen, postDelete}) {
     const confirm2 = () => {
         confirmDialog({
             message: 'Do you want to proceed?',
-            header: 'Delete Confirmation',
+            header: 'Confirmation',
             icon: 'pi pi-info-circle',
             defaultFocus: 'reject',
             acceptClassName: 'p-button-danger',
