@@ -54,6 +54,14 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
     setSubjects(selectedDisciplines.length > 0 ? selectedDisciplines : initialSubjects)
 
+    const [grades, setGrade] = useState([]);
+    const [selectedGrades, setSelectedGrades] = useState([]);
+    setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades);
+
+    const [languages, setLanguages] = useState([]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
+
     useEffect(() => {
         getUserDisciplines()
     }, []);
@@ -61,28 +69,31 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     async function getUserDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const userProfile = await getUserProfile(accessToken);
-        const availableDisciplines = userProfile.disciplineTitles
+        const availableDisciplines = userProfile.disciplineTitles;
+        const availableGrades = userProfile.gradeNumbers;
+        const availableLanguages = userProfile.languageTitles;
         setDisciplines(availableDisciplines);
-    }
-
-    const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    const [selectedGrades, setSelectedGrades] = useState([])
-    setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades)
-
-    const [languages, setLanguages] = useState([]);
-    const [selectedLanguages, setSelectedLanguages] = useState([]);
-    setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
-
-    useEffect(() => {
-        getLanguages()
-    }, []);
-
-
-    async function getLanguages() {
-        const accessToken = localStorage.getItem('accessToken');
-        const availableLanguages = await getAvailableLanguages(accessToken);
+        setGrade(availableGrades);
         setLanguages(availableLanguages);
     }
+
+    // const [selectedGrades, setSelectedGrades] = useState([])
+    // setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades)
+
+    // const [languages, setLanguages] = useState([]);
+    // const [selectedLanguages, setSelectedLanguages] = useState([]);
+    // setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
+
+    // useEffect(() => {
+    //     getLanguages()
+    // }, []);
+    //
+    //
+    // async function getLanguages() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const availableLanguages = await getAvailableLanguages(accessToken);
+    //     setLanguages(availableLanguages);
+    // }
 
 
     return (
