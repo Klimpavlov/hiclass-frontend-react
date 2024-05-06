@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
-import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
-import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import Image from "next/image";
 import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
@@ -77,25 +75,6 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         setLanguages(availableLanguages);
     }
 
-    // const [selectedGrades, setSelectedGrades] = useState([])
-    // setGrades(selectedGrades.length > 0 ? selectedGrades : initialGrades)
-
-    // const [languages, setLanguages] = useState([]);
-    // const [selectedLanguages, setSelectedLanguages] = useState([]);
-    // setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
-
-    // useEffect(() => {
-    //     getLanguages()
-    // }, []);
-    //
-    //
-    // async function getLanguages() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const availableLanguages = await getAvailableLanguages(accessToken);
-    //     setLanguages(availableLanguages);
-    // }
-
-
     return (
         <div className="flex flex-col sm:flex-row gap-5">
             <div className="section-photo w-full sm:w-1/2">
@@ -132,12 +111,12 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <InputForm inputFormText='Title' placeholderText='Class title'
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
-                <Dropdown dropdownFormText='Grade' placeholderText={initialGrades ? initialGrades : 'Select grade'}
+                <Dropdown dropdownFormText='Grade' placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
                           options={grades} onChange={setSelectedGrades}/>
 
-                <Dropdown dropdownFormText='Subjects' placeholderText={initialSubjects ? initialSubjects : "Select subject"}
+                <Dropdown dropdownFormText='Subjects' placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
                           options={disciplines} onChange={setSelectedDisciplines}/>
-                <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages ? initialLanguages :'Class languages'}
+                <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") :'Class languages'}
                           options={languages} onChange={setSelectedLanguages}/>
             </div>
         </div>

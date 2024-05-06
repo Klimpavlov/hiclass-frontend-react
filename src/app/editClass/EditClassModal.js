@@ -19,13 +19,14 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
     const [photo, setPhoto] = useState(null);
 
     const handlePutEditClass = () => {
+        console.log(title)
+        console.log(selectedDisciplines)
         putEditClass(classId, title, grade, languages, selectedDisciplines)
         setTimeout(() => {
             editClassImage(classId, photo);
         }, 2000);
 
-        console.log(title)
-        console.log(selectedDisciplines)
+
     };
 
     const handleCloseModal = () => {

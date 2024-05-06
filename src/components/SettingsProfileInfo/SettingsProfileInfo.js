@@ -162,8 +162,11 @@ const SettingsProfileInfo = () => {
     const [selectedGrades, setSelectedGrades] = useState([])
 
     const handleUpdateProfessionalInfo = () => {
-        putUpdateProfessionalInfo(selectedLanguages, selectedDisciplines, selectedGrades)
-        console.log(selectedDisciplines)
+        putUpdateProfessionalInfo(
+            selectedLanguages.length > 0 ? selectedLanguages : initialLanguages,
+            selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines,
+            selectedGrades.length > 0 ? selectedGrades : initialGrades
+        );
     }
 
 
@@ -197,7 +200,7 @@ const SettingsProfileInfo = () => {
                         }}
                     />
                     <InputForm inputFormText='Location' value={country}
-                                  onChange={(e) => setCountry(e.target.value)}/>
+                               onChange={(e) => setCountry(e.target.value)}/>
                     {country !== '' && (
                         <div>
                             {countryData.map((country) => (
@@ -234,9 +237,16 @@ const SettingsProfileInfo = () => {
                                  details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
                 />
                 <div className='py-8'>
-                    <Dropdown dropdownFormText='Areas of work' placeholderText={initialDisciplines} options={disciplines} onChange={setSelectedDisciplines}/>
-                    <Dropdown dropdownFormText='Grades' placeholderText={initialGrades} options={grades} onChange={setSelectedGrades}/>
-                    <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages} options={languages} onChange={setSelectedLanguages}/>
+                    <Dropdown dropdownFormText='Areas of work'
+                              placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
+                              options={disciplines} onChange={setSelectedDisciplines}/>
+                    <Dropdown dropdownFormText='Grades'
+                              placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
+                              options={grades}
+                              onChange={setSelectedGrades}/>
+                    <Dropdown dropdownFormText='Languages'
+                              placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
+                              options={languages} onChange={setSelectedLanguages}/>
                     <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
                 </div>
             </div>
