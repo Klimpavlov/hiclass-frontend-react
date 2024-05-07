@@ -34,18 +34,28 @@ export default function locationAndLanguages() {
     // country
 
     const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+
     const [countryData, setCountryData] = useState([]);
+    const [cityData, setCityData] = useState([]);
+
     localStorage.setItem('country', country);
+    localStorage.setItem('city', city);
 
     useEffect(() => {
-        getCountries(country.toLowerCase());
-    }, [country]);
+        getCountries(country.toLowerCase(), city.toLowerCase());
+    }, [country, city]);
 
 
-    async function getCountries(searchText) {
+
+    async function getCountries(countrySearchText, citySearchText) {
         try {
-            if (searchText === '') {
+            if (countrySearchText === '') {
                 setCountryData([]);
+                return;
+            }
+            if (citySearchText === '') {
+                setCityData([]);
                 return;
             }
             const response = await axios.get(
@@ -54,10 +64,17 @@ export default function locationAndLanguages() {
             const countriesData = response.data.data;
 
             const filteredCountries = countriesData.filter((country) =>
-                country.country.toLowerCase().includes(searchText.toLowerCase())
+                country.country.toLowerCase().includes(countrySearchText.toLowerCase())
             );
 
             setCountryData(filteredCountries);
+
+            const filteredCities = filteredCountries.flatMap((country) =>
+                country.cities.filter((city) =>
+                    city.toLowerCase().includes(citySearchText)
+                )
+            );
+            setCityData(filteredCities);
         } catch (error) {
             console.error(error);
         }
@@ -77,13 +94,24 @@ export default function locationAndLanguages() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText='Location' value={country}
+                            <InputForm inputFormText='Country' value={country}
                                        onChange={(e) => setCountry(e.target.value)}/>
                             {country !== '' && (
                                 <div>
-                                    {countryData.map((country) => (
-                                        <div key={country} onClick={() => setCountry(country.country)}>
-                                            {country.country}
+                                    {countryData.map((countryItem) => (
+                                        <div key={countryItem} onClick={() => setCountry(countryItem.country)}>
+                                            {countryItem.country}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <InputForm inputFormText='City' value={city}
+                                       onChange={(e) => setCity(e.target.value)}/>
+                            {city !== '' && (
+                                <div className='cursor-pointer'>
+                                    {cityData.map((cityItem) => (
+                                        <div key={cityItem} onClick={() => setCity(cityItem)}>
+                                            {cityItem}
                                         </div>
                                     ))}
                                 </div>

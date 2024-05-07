@@ -56,12 +56,6 @@ const SettingsProfileInfo = () => {
     }
 
 
-    const handleUpdatePersonalInfo = () => {
-        // console.log(selectedPosition)
-        putUpdatePersonalInfo(firstName, lastName, country, description, isTeacher, isExpert)
-    }
-
-
     // teacher/expert
 
     const position = ['teacher', 'expert'];
@@ -108,6 +102,13 @@ const SettingsProfileInfo = () => {
             console.error(error);
         }
     }
+
+    const handleUpdatePersonalInfo = () => {
+        // console.log(selectedPosition)
+        putUpdatePersonalInfo(firstName, lastName, country, city, description, isTeacher, isExpert)
+    }
+
+
     // institution
 
     // const [institutionName, setInstitutionName] = useState("");
@@ -225,8 +226,8 @@ const SettingsProfileInfo = () => {
                     )}
                     <InputForm inputFormText='City' value={city}
                                onChange={(e) => setCity(e.target.value)}/>
-                    {city && (
-                        <div>
+                    {city !== '' && (
+                        <div className='cursor-pointer'>
                             {cityData.map((cityItem) => (
                                 <div key={cityItem} onClick={() => setCity(cityItem)}>
                                     {cityItem}

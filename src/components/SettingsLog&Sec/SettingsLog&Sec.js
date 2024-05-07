@@ -7,8 +7,14 @@ import DeleteAccBtn from "@/components/Buttons/DeleteAccBtn";
 import putUpdateEmail from "@/app/updateUser/updateEmail/putUpdateEmail";
 import putUpdatePassword from "@/app/updateUser/updatePassword/putUpdatePassword";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {ConfirmDialog} from "primereact/confirmdialog";
+import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import deleteUser from "@/app/deleteUser/deleteUser";
+import {useRouter} from "next/navigation";
 
 const SettingsLogSec = () => {
+
+    const router = useRouter();
 
     useEffect(() => {
         getUserInfo()
@@ -38,6 +44,22 @@ const SettingsLogSec = () => {
         putUpdatePassword(newPassword)
     }
 
+    // delete account
+
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const toggleDeleteModal = () => {
+        setIsDeleteModalOpen(!isDeleteModalOpen);
+    }
+
+    const handleDeleteUser = () => {
+        deleteUser(successRedirect)
+    }
+
+    const successRedirect = () => {
+        router.push("/signUp");
+    };
+
     return (
         <>
             <div className='section-email py-8'>
@@ -61,8 +83,11 @@ const SettingsLogSec = () => {
             <div className='section-pass-reset py-8'>
                 <SettingsSection title='Delete account' details='You will not be able to resotre your account'/>
                 <div className=''>
-                    <DeleteAccBtn buttonText='Delete account'/>
+                    <DeleteAccBtn buttonText='Delete account' onApply={toggleDeleteModal}/>
                 </div>
+                {isDeleteModalOpen && (
+                    <DialogModal setIsModalOpen={setIsDeleteModalOpen} postDelete={handleDeleteUser}/>
+                )}
             </div>
         </>
     )

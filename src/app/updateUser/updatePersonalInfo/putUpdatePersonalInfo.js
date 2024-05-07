@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const putUpdatePersonalInfo = (firstName, lastName, country, description, isTeacher, isExpert) => {
+const putUpdatePersonalInfo = (firstName, lastName, country, city, description, isTeacher, isExpert) => {
     const accessToken = localStorage.getItem('accessToken');
 
     axios.put('http://localhost:7280/api/EditUser/personal-info', {
@@ -8,7 +8,7 @@ const putUpdatePersonalInfo = (firstName, lastName, country, description, isTeac
         IsAnExpert: isExpert,
         FirstName: firstName,
         LastName: lastName,
-        CityTitle: "S",
+        CityTitle: city,
         CountryTitle: country,
         Description: description
     }, {
