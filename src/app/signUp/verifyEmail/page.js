@@ -11,11 +11,13 @@ import {useRouter} from "next/navigation";
 export default function verifyEmail() {
     const router = useRouter();
     const [code, setCode] = useState();
+    const email = localStorage.getItem('emailForVerification')
 
     const handleContinue = () => {
         postVerificationCode(code);
         router.push('/signUp/verifyEmail/isVerified')
     }
+
 
     return (
         <main>
@@ -24,7 +26,7 @@ export default function verifyEmail() {
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
                     <div className="text-4xl whitespace-pre-line">Verify your email address</div>
-                    <div className=" ">We’ve sent a verification link to <span className='user-email'>...</span>
+                    <div className=" ">We’ve sent a verification link to <span className='user-email'>{email}</span>
                     </div>
                     <div className=''>Click the link to complete the verification process. If you don’t see it you may
                         need to check your spam folder.

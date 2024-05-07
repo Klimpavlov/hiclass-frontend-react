@@ -15,6 +15,7 @@ export default function SignUp() {
 
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
+    localStorage.setItem('emailForVerification', email)
 
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("")

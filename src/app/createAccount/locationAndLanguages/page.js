@@ -43,21 +43,21 @@ export default function locationAndLanguages() {
     localStorage.setItem('city', city);
 
     useEffect(() => {
-        getCountries(country.toLowerCase(), city.toLowerCase());
+        getLocation(country.toLowerCase(), city.toLowerCase());
     }, [country, city]);
 
 
 
-    async function getCountries(countrySearchText, citySearchText) {
+    async function getLocation(countrySearchText, citySearchText) {
         try {
-            if (countrySearchText === '') {
-                setCountryData([]);
-                return;
-            }
-            if (citySearchText === '') {
-                setCityData([]);
-                return;
-            }
+            // if (countrySearchText === '') {
+            //     setCountryData([]);
+            //     return;
+            // }
+            // if (citySearchText === '') {
+            //     setCityData([]);
+            //     return;
+            // }
             const response = await axios.get(
                 `https://countriesnow.space/api/v0.1/countries`
             );
