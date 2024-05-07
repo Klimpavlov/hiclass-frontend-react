@@ -59,6 +59,8 @@ export default function SignIn() {
                                        onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                         <InputForm inputFormText="Password" placeholderText="Enter your password"
+                                   optionalFormText="Forgot password"
+                                   link='/signIn/forgetPassword'
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
