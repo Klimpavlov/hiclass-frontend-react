@@ -56,15 +56,6 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
     // const [disciplines, setDisciplines] = useState([]);
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
 
-    // useEffect(() => {
-    //     getDisciplines()
-    // }, []);
-    //
-    // async function getDisciplines() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const availableDisciplines = await getAvailableDisciplines(accessToken);
-    //     setDisciplines(availableDisciplines);
-    // }
 
 
     const [classSenderId, setClassSenderId] = useState([])
@@ -91,7 +82,8 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
     };
 
     return (
-        <div className="modal-container fixed top-0 left-0 right-0 bottom-0 flex items-center">
+        // <div className="modal-container fixed top-0 left-0 right-0 bottom-0 flex items-center">
+        // <div className="modal-container">
             <div className="class-preview fixed inset-0 flex flex-col items-center bg-white z-50 overflow-y-auto">
                 <div className="invite-header flex justify-between items-center px-4 py-2">
                     <div className="header-title">Invite for a call</div>
@@ -131,14 +123,16 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
                              onClick={() => handleClassClick(defaultClass.classId)}
                              className={`class-item ${
                                  classSenderId === defaultClass.classId ? 'bg-green-100' : ''
-                             }`}                        >
-                            <ClassPreview key={defaultClass.classId}
-                                          title={defaultClass.title}
-                                          username={defaultClass.userFullName}
-                                          tags={defaultClass.disciplines}
-                                          photo={defaultClass.imageUrl}
-                            />
-
+                             } cursor-pointer`}                        >
+                            {/*<ClassPreview key={defaultClass.classId}*/}
+                            {/*              title={defaultClass.title}*/}
+                            {/*              username={defaultClass.userFullName}*/}
+                            {/*              tags={defaultClass.disciplines}*/}
+                            {/*              photo={defaultClass.imageUrl}*/}
+                            {/*/>*/}
+                            <div className='border border-black rounded py-2 px-2'>
+                                <div>{defaultClass.title}</div>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -149,7 +143,7 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
                     </div>
                 </div>
             </div>
-        </div>
+        // </div>
     );
 };
 
