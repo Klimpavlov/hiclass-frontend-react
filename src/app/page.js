@@ -12,12 +12,21 @@ import {getAvailableCountries} from "@/app/api/getAvailableCountry/getAvailableC
 import {getDefaultSearch} from "@/app/api/defaultSearch/defaultSearch";
 import {searchRequest} from "@/app/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
-import ClassModal from "@/components/ClassPreview/ClassPreviewModal";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
-import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
-import axios from "axios";
+import {RingLoader} from "react-spinners";
+
 
 export default function ExplorePage() {
+    // loader
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false)
+        }, 3000)
+    })
 
     // filters
 
@@ -168,6 +177,18 @@ export default function ExplorePage() {
 
     return (
         <main className="">
+            {/*{loading ? (*/}
+            {/*    <div className='flex items-center justify-center h-screen'>*/}
+            {/*        <RingLoader*/}
+            {/*            color={'#36d7b7'}*/}
+            {/*            loading={loading}*/}
+            {/*            size={150}*/}
+            {/*            aria-label="Loading Spinner"*/}
+            {/*            data-testid="loader"*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*) : (*/}
+            {/*    <>*/}
             <Header/>
             <TopSection/>
             <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
@@ -228,6 +249,7 @@ export default function ExplorePage() {
                             </div>
                         ))))}
                 </div>
+
                 {selectedClass && (
                     <ClassPreviewModal
                         headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
@@ -240,7 +262,8 @@ export default function ExplorePage() {
                     ></ClassPreviewModal>
                 )}
             </div>
-
+            {/*    </>*/}
+            {/*)}*/}
         </main>
     );
 }

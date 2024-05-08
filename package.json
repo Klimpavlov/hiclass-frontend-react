@@ -19,7 +19,8 @@
     "react-datepicker": "^6.2.0",
     "react-dom": "^18",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "react-spinners": "^0.13.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

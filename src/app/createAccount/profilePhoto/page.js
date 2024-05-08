@@ -12,10 +12,6 @@ export default function ProfilePhoto() {
     const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
 
-    // const grades = localStorage.getItem('grades');
-    // const gradesArray = grades.split(',').map(Number);
-    // console.log(gradesArray);
-
     const handleContinue = () => {
         postUserImage(selectedFile);
         router.push('/signIn');

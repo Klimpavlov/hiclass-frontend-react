@@ -136,11 +136,9 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
                         </div>
                     ))}
                 </div>
-                <div className='invite-modal-footer '>
-                    <div className='btns'>
-                        <ClearAllButton buttonText='Cancel' clearAll={handleCancel}/>
-                        <ApplyButton buttonText='Send call invite' onApply={handlePostInvitation}/>
-                    </div>
+                <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
+                        <ClearAllButton buttonText="Cancel" clearAll={handleCancel} />
+                        <ApplyButton buttonText="Send call invite" onApply={handlePostInvitation} />
                 </div>
             </div>
         // </div>

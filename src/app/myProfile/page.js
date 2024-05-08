@@ -1,17 +1,25 @@
 'use client';
 
-import React, { useState,useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Header from "@/components/Header/Header";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
-import axios from "axios";
-import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
 import Banner from "@/components/Banner/Banner";
-import putBannerImage from "@/app/putBanner/putBannerImage";
+import {RingLoader} from "react-spinners";
+
 
 export default function MyProfile() {
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false)
+        }, 3000)
+    })
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAddClass = () => {
@@ -37,37 +45,49 @@ export default function MyProfile() {
         setClassData(userProfile.classDtos)
     }
 
-    const [banner, setBanner] = useState(null);
-
-
     return (
         <main className="">
-            <Header/>
-            <Banner/>
-            <div className='flex flex-col sm:flex-row p-4 md:p-28'>
-                <UserInfo/>
-                <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
-                    <div className='clsCntHeader flex justify-between'>
-                        <div className=''>Classes</div>
-                        <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
-                            + Add class
+            {loading ? (
+                <div className='flex items-center justify-center h-screen'>
+                <RingLoader
+                    color={'#36d7b7'}
+                    loading={loading}
+                    size={150}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+                </div>
+            ) : (
+                <>
+                    <Header/>
+                    <Banner/>
+                    <div className='flex flex-col sm:flex-row p-4 md:p-28'>
+                        <UserInfo/>
+                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28'>
+                            <div className='clsCntHeader flex justify-between'>
+                                <div className=''>Classes</div>
+                                <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
+                                    + Add class
+                                </div>
+                            </div>
+                            <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
+                                {classData.map((defaultClass) => (
+                                    <div key={defaultClass.classId}>
+                                        <ClassPreview
+                                            classId={defaultClass.classId}
+                                            title={defaultClass.title}
+                                            username={defaultClass.userFullName}
+                                            tags={defaultClass.disciplines}
+                                            photo={defaultClass.imageUrl}
+                                            showDropdown={true}
+                                        ></ClassPreview>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
-                        {classData.map((defaultClass) => (
-                            <div key={defaultClass.classId}>
-                                <ClassPreview classId={defaultClass.classId}
-                                              title={defaultClass.title}
-                                              username={defaultClass.userFullName}
-                                              tags={defaultClass.disciplines}
-                                              photo={defaultClass.imageUrl}
-                                              showDropdown={true}
-                                ></ClassPreview>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+                </>
+            )}
 
             {isModalOpen && (
                 <CreateClassModal
@@ -76,7 +96,7 @@ export default function MyProfile() {
                     onCreateClass={handleCreateClass}
                 />
             )}
-
         </main>
-    );
+    )
+        ;
 }
