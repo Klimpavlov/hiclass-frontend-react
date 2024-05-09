@@ -1,10 +1,17 @@
 import React from "react";
 
-const Tag = ({text}) => {
+const Tag = ({text, removeTag, onChange}) => {
+
     return (
-        <div className="inline-flex items-center justify-center bg-gray-100
+        <div className="inline-flex items-center justify-between bg-gray-100
         border border-solid border-neutral-50-ecedef text-white rounded-full px-4 py-2">
-            <span className="text-sm sm:text-base text-black">{text}</span>
+            <div className="text-sm sm:text-base text-black">{text}</div>
+            {removeTag && (
+                <div className="class-preview-close text-black pl-2 cursor-pointer"
+                    onClick={onChange}>
+                    &times;
+                </div>
+            )}
         </div>
     )
 }

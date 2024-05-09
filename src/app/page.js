@@ -19,19 +19,19 @@ import {RingLoader} from "react-spinners";
 export default function ExplorePage() {
     // loader
 
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false)
-        }, 3000)
-    })
+    // const [loading, setLoading] = useState(false);
+    //
+    // useEffect(() => {
+    //     setLoading(true);
+    //     setTimeout(() => {
+    //         setLoading(false)
+    //     }, 3000)
+    // })
 
     // filters
 
     const [selectedFilters, setSelectedFilters] = useState([]);
-    // const [filterName, setFilterName] = useState('');
+    // const [filtersNames, setFiltersNames] = useState('');
     const [languagesFilterName, setLanguagesFilterName] = useState('');
     const [countriesFilterName, setCountriesFilterName] = useState('');
     const [gradesFilterName, setGradesFilterName] = useState('');
@@ -48,9 +48,6 @@ export default function ExplorePage() {
 
     };
 
-    // console.log(selectedTeacher && selectedTeacher.email);
-
-
 
     const handleFilterApply = (selectedFilters, filterName) => {
         setSelectedFilters(selectedFilters);
@@ -63,6 +60,16 @@ export default function ExplorePage() {
         setSelectedFilters([]);
         setSearchClassData([]);
     };
+
+    const handleRemoveTag = (filter, searchData) => {
+        const updatedFilters = selectedFilters.filter((selectedFilter) => selectedFilter !== filter);
+        setSelectedFilters(updatedFilters);
+
+        // const updatedClassData = searchClassData.filter((prevSearchData) =>prevSearchData !== searchData);
+        setSearchClassData(updatedClassData);
+
+        // handleSearchRequest(updatedFilters);
+    }
 
     // disciplines
 
@@ -166,6 +173,7 @@ export default function ExplorePage() {
             // Обработка полученных данных
             console.log(response)
 
+            // const searchData = response.classProfiles
             const searchData = response.teacherProfiles
             setSearchClassData(searchData)
 
@@ -207,10 +215,10 @@ export default function ExplorePage() {
                     <span className="ml-2 md:ml-4">Show only experts</span>
                 </div>
             </div>
-            <div className="applied-filters-container">
-                <div>
-                    {selectedFilters.map((filter, index) => (
-                        <Tag key={index} text={filter}/>
+            <div className="applied-filters-container px-4 md:px-8">
+                <div className='px-4 md:px-8 pt-2 md:pt-4'>
+                    {selectedFilters.map((filter) => (
+                        <Tag text={filter} removeTag={true} onChange={() => handleRemoveTag(filter)}/>
                     ))}
                 </div>
             </div>
@@ -228,6 +236,16 @@ export default function ExplorePage() {
                                 ></ClassPreview>
                             </div>
                         ))))}
+                    {/*{searchClassData.map((classInfo) => (*/}
+                    {/*        <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>*/}
+                    {/*            <ClassPreview key={classInfo.classId}*/}
+                    {/*                          title={classInfo.title}*/}
+                    {/*                          username={classInfo.userFullName}*/}
+                    {/*                          tags={classInfo.disciplines}*/}
+                    {/*                          photo={classInfo.imageUrl}*/}
+                    {/*            ></ClassPreview>*/}
+                    {/*        </div>*/}
+                    {/*    ))}*/}
                 </div>
                 <div className='flex justify-between mt-4 md:mt-8'>
                     <div className='font-bold'>Most popular classes in <span className='text-green-700'>Belarus</span>
