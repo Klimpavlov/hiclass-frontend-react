@@ -50,18 +50,18 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
         }, 1500)
     }
 
-    // get Class Info
-
-
-    useEffect(() => {
-        getClass()
-    }, [])
-
-    async function getClass() {
-        const accessToken = localStorage.getItem('accessToken');
-        const classInfo = await getClassInfo(accessToken, classId)
-        console.log(classInfo)
-    }
+    // // get Class Info
+    //
+    //
+    // useEffect(() => {
+    //     getClass()
+    // }, [])
+    //
+    // async function getClass() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const classInfo = await getClassInfo(accessToken, classId)
+    //     console.log(classInfo)
+    // }
 
     return (
         <div className="class-preview ">

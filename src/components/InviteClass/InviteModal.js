@@ -34,7 +34,7 @@ const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
                     }
                 }
             );
-            console.log(response);
+            // console.log(response);
             setClassData(response.data.value.classDtos)
         } catch (error) {
             console.error(error);

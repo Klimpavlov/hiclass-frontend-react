@@ -38,7 +38,8 @@ export default function ExplorePage() {
     const [disciplinesFilterName, setDisciplinesFilterName] = useState('');
 
     const [selectedClass, setSelectedClass] = useState(null);
-    const [selectedTeacher, setSelectedTeacher] = useState(null);
+
+    const [currentSearchFilterName, setCurrentSearchFilterName] = useState('');
 
     //логика раскрытия класса
     const handleClassClick = (selectedClass, teacher) => {
@@ -54,6 +55,7 @@ export default function ExplorePage() {
         console.log(selectedFilters)
         console.log(filterName)
         handleSearchRequest(selectedFilters, filterName)
+        setCurrentSearchFilterName(filterName);
     };
 
     const handleClearAll = () => {
@@ -61,14 +63,15 @@ export default function ExplorePage() {
         setSearchClassData([]);
     };
 
-    const handleRemoveTag = (filter, searchData) => {
+    const handleRemoveTag = (filter) => {
         const updatedFilters = selectedFilters.filter((selectedFilter) => selectedFilter !== filter);
         setSelectedFilters(updatedFilters);
 
         // const updatedClassData = searchClassData.filter((prevSearchData) =>prevSearchData !== searchData);
-        setSearchClassData(updatedClassData);
 
-        // handleSearchRequest(updatedFilters);
+        console.log(currentSearchFilterName)
+
+        handleSearchRequest(updatedFilters, currentSearchFilterName);
     }
 
     // disciplines
