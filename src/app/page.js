@@ -14,6 +14,7 @@ import {searchRequest} from "@/app/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import {RingLoader} from "react-spinners";
+import {useTurbopack} from "next/dist/client/components/react-dev-overlay/internal/helpers/use-websocket";
 
 
 export default function ExplorePage() {
@@ -28,9 +29,11 @@ export default function ExplorePage() {
     //     }, 3000)
     // })
 
-    // filters
+    //
 
+    const [currentFilters, setCurrentFilters] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
+
     // const [filtersNames, setFiltersNames] = useState('');
     const [languagesFilterName, setLanguagesFilterName] = useState('');
     const [countriesFilterName, setCountriesFilterName] = useState('');
@@ -44,35 +47,53 @@ export default function ExplorePage() {
     //логика раскрытия класса
     const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
-        setSelectedTeacher(teacher)
         localStorage.setItem('selectedUserId', teacher.userId);
 
     };
 
 
-    const handleFilterApply = (selectedFilters, filterName) => {
-        setSelectedFilters(selectedFilters);
-        console.log(selectedFilters)
-        console.log(filterName)
-        handleSearchRequest(selectedFilters, filterName)
-        setCurrentSearchFilterName(filterName);
+    const handleFilterApply = (selectedFilter, filterName) => {
+        // setCurrentFilters(selectedFilter);
+        // console.log(selectedFilter)
+        // console.log(filterName)
+        // handleSearchRequest(selectedFilter, filterName)
+        // setCurrentSearchFilterName(filterName);
+
+        const updatedFilters = [...currentFilters, ...selectedFilter];
+        setCurrentFilters(updatedFilters);
+
+        const filterValues = updatedFilters.join(', '); // Concatenate filter values in one line
+        setCurrentSearchFilterName(filterName + ': ' + filterValues);
+
+        handleSearchRequest(updatedFilters, filterName);
     };
 
+
     const handleClearAll = () => {
-        setSelectedFilters([]);
+        setCurrentFilters([]);
         setSearchClassData([]);
     };
 
     const handleRemoveTag = (filter) => {
-        const updatedFilters = selectedFilters.filter((selectedFilter) => selectedFilter !== filter);
-        setSelectedFilters(updatedFilters);
+        // const updatedFilters = currentFilters.filter((selectedFilter) => selectedFilter !== filter);
+        // setCurrentFilters(updatedFilters);
+        //
+        // // const updatedClassData = searchClassData.filter((prevSearchData) =>prevSearchData !== searchData);
+        //
+        // console.log(currentSearchFilterName)
+        //
+        // handleSearchRequest(updatedFilters, currentSearchFilterName);
 
-        // const updatedClassData = searchClassData.filter((prevSearchData) =>prevSearchData !== searchData);
+        const updatedFilters = currentFilters.filter((selectedFilter) => selectedFilter !== filter);
+        setCurrentFilters(updatedFilters);
 
-        console.log(currentSearchFilterName)
+        const filterValues = updatedFilters.join(', '); // Concatenate filter values in one line
+        setCurrentSearchFilterName(currentSearchFilterName.split(':')[0] + ': ' + filterValues);
 
-        handleSearchRequest(updatedFilters, currentSearchFilterName);
-    }
+        handleSearchRequest(updatedFilters, currentSearchFilterName.split(':')[0]);
+    };
+
+
 
     // disciplines
 
@@ -161,13 +182,9 @@ export default function ExplorePage() {
     async function handleSearchRequest(selectedFilters, filterName) {
         const accessToken = localStorage.getItem('accessToken');
 
-        // const queryParameters = selectedFilters.map(filter => `Countries=${filter}`).join('&');
-
         const queryParameters = selectedFilters.map(filterValue => `${filterName}=${filterValue}`).join('&');
 
-
         console.log(selectedFilters)
-        // const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
 
         const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
 
@@ -220,7 +237,7 @@ export default function ExplorePage() {
             </div>
             <div className="applied-filters-container px-4 md:px-8">
                 <div className='px-4 md:px-8 pt-2 md:pt-4'>
-                    {selectedFilters.map((filter) => (
+                    {currentFilters.map((filter) => (
                         <Tag text={filter} removeTag={true} onChange={() => handleRemoveTag(filter)}/>
                     ))}
                 </div>
