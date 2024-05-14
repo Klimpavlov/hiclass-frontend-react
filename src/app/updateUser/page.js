@@ -16,7 +16,6 @@ export default function EditProfile() {
         setSelectedFilter(section)
     }
 
-
     let content;
 
     if (selectedFilter === "profile") {

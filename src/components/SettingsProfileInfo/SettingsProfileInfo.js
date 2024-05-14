@@ -11,14 +11,15 @@ import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvai
 import putUpdateProfessionalInfo from "@/app/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
 import putUpdateInstitution from "@/app/updateUser/updateInstitution/putUpdateInstitution";
 import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {RingLoader} from "react-spinners";
 
 const SettingsProfileInfo = () => {
 
-    // initial values
+    //loading
 
-    useEffect(() => {
-        getUserInfo()
-    }, [])
+    const [loading, setLoading] = useState(true);
+
+    // initial values
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -34,26 +35,34 @@ const SettingsProfileInfo = () => {
     const [initialDisciplines, setInitialDisciplines] = useState([]);
     const [initialGrades, setInitialGrades] = useState([]);
 
-    async function getUserInfo() {
-        const accessToken = localStorage.getItem('accessToken');
-        const userProfile = await getUserProfile(accessToken);
+    useEffect(() => {
+        async function getUserInfo() {
+            const accessToken = localStorage.getItem('accessToken');
+            const userProfile = await getUserProfile(accessToken);
 
-        console.log(userProfile)
+            console.log(userProfile)
 
-        setFirstName(userProfile.firstName);
-        setLastName(userProfile.lastName);
-        setDescription(userProfile.description);
-        setCountry(userProfile.countryTitle);
-        setCity(userProfile.cityTitle)
-        setIsTeacher(userProfile.isATeacher);
-        setIsExpert(userProfile.isAnExpert);
+            setFirstName(userProfile.firstName);
+            setLastName(userProfile.lastName);
+            setDescription(userProfile.description);
+            setCountry(userProfile.countryTitle);
+            setCity(userProfile.cityTitle)
+            setIsTeacher(userProfile.isATeacher);
+            setIsExpert(userProfile.isAnExpert);
 
-        setInstitutionName(userProfile.institution.title)
+            setInstitutionName(userProfile.institution.title)
 
-        setInitialLanguages(userProfile.languageTitles);
-        setInitialDisciplines(userProfile.disciplineTitles);
-        setInitialGrades(userProfile.gradeNumbers);
-    }
+            setInitialLanguages(userProfile.languageTitles);
+            setInitialDisciplines(userProfile.disciplineTitles);
+            setInitialGrades(userProfile.gradeNumbers);
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 1300);
+        }
+
+        getUserInfo()
+    }, [])
 
 
     // teacher/expert
@@ -185,97 +194,111 @@ const SettingsProfileInfo = () => {
 
 
     return (
-        <>
-            <div className='section-photo'>
-                <SettingsSection title='Profile photo'
-                                 details='Your photo appears on your Profile page and is visible for Brands on your profile preview
-                                                  Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.'/>
-                <div className='change photo'>
-                    <div className='photo'></div>
-                    <div className='changephotoBtn'></div>
-                </div>
-            </div>
-            <div className='section-aboutMe py-8'>
-                <SettingsSection title='About me' details='Add a brief description for your profile'/>
-                <div className='py-8'>
-                    <div className='flex flex-col md:flex-row justify-between'>
-                        <InputForm inputFormText='First name' value={firstName}
-                                   onChange={(e) => setFirstName(e.target.value)}/>
-                        <InputForm inputFormText='Last name' value={lastName}
-                                   onChange={(e) => setLastName(e.target.value)}/>
-                    </div>
-                    <Dropdown
-                        dropdownFormText="I’m a/am"
-                        options={position}
-                        placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
-                        onChange={(selectedOptions) => {
-                            setIsTeacher(selectedOptions.includes("teacher"));
-                            setIsExpert(selectedOptions.includes("expert"));
-                        }}
+        <main className="">
+            {loading ? (
+                <div className='flex justify-center items-center h-screen'>
+                    <RingLoader
+                        color={'#36d7b7'}
+                        loading={loading}
+                        size={150}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
                     />
-                    <InputForm inputFormText='Country' value={country}
-                               onChange={(e) => setCountry(e.target.value)}/>
-                    {country !== '' && (
-                        <div>
-                            {countryData.map((country) => (
-                                <div key={country} onClick={() => setCountry(country.country)}>
-                                    {country.country}
+                </div>
+            ) : (
+                <>
+                    <div className='section-photo'>
+                        <SettingsSection title='Profile photo'
+                                         details='Your photo appears on your Profile page and is visible for Brands on your profile preview
+                                                  Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.'/>
+                        <div className='change photo'>
+                            <div className='photo'></div>
+                            <div className='changephotoBtn'></div>
+                        </div>
+                    </div>
+                    <div className='section-aboutMe py-8'>
+                        <SettingsSection title='About me' details='Add a brief description for your profile'/>
+                        <div className='py-8'>
+                            <div className='flex flex-col md:flex-row justify-between'>
+                                <InputForm inputFormText='First name' value={firstName}
+                                           onChange={(e) => setFirstName(e.target.value)}/>
+                                <InputForm inputFormText='Last name' value={lastName}
+                                           onChange={(e) => setLastName(e.target.value)}/>
+                            </div>
+                            <Dropdown
+                                dropdownFormText="I’m a/am"
+                                options={position}
+                                placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
+                                onChange={(selectedOptions) => {
+                                    setIsTeacher(selectedOptions.includes("teacher"));
+                                    setIsExpert(selectedOptions.includes("expert"));
+                                }}
+                            />
+                            <InputForm inputFormText='Country' value={country}
+                                       onChange={(e) => setCountry(e.target.value)}/>
+                            {country !== '' && (
+                                <div>
+                                    {countryData.map((country) => (
+                                        <div key={country} onClick={() => setCountry(country.country)}>
+                                            {country.country}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <InputForm inputFormText='City' value={city}
+                                       onChange={(e) => setCity(e.target.value)}/>
+                            {city !== '' && (
+                                <div className='cursor-pointer'>
+                                    {cityData.map((cityItem) => (
+                                        <div key={cityItem} onClick={() => setCity(cityItem)}>
+                                            {cityItem}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            <InputForm inputFormText="Description" value={description}
+                                       onChange={(e) => setDescription(e.target.value)}/>
+                            <ApplyButton buttonText='Update' onApply={handleUpdatePersonalInfo}/>
+                        </div>
+                    </div>
+                    <div className='section-pos-verif py-8'>
+                        <SettingsSection title='Position verification'
+                                         details='For your security, we need you to verify your identity'/>
+                        <div className='py-8'>
+                            <InputForm inputFormText='Institution name' value={institutionName}
+                                       onChange={(e) => setInstitutionName(e.target.value)}/>
+                            {orgData.map((feature) => (
+                                <div key={feature.properties.id}
+                                     onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
+                                    <h2>{feature.properties.name}</h2>
+                                    <p>{feature.properties.description}</p>
                                 </div>
                             ))}
+                            <ApplyButton buttonText='Update' onApply={handleUpdateInstitution}/>
+                            {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
-                    )}
-                    <InputForm inputFormText='City' value={city}
-                               onChange={(e) => setCity(e.target.value)}/>
-                    {city !== '' && (
-                        <div className='cursor-pointer'>
-                            {cityData.map((cityItem) => (
-                                <div key={cityItem} onClick={() => setCity(cityItem)}>
-                                    {cityItem}
-                                </div>
-                            ))}
+                    </div>
+                    <div className='section-prof-details py-8'>
+                        <SettingsSection title='Professional details'
+                                         details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
+                        />
+                        <div className='py-8'>
+                            <Dropdown dropdownFormText='Areas of work'
+                                      placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
+                                      options={disciplines} onChange={setSelectedDisciplines}/>
+                            <Dropdown dropdownFormText='Grades'
+                                      placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
+                                      options={grades}
+                                      onChange={setSelectedGrades}/>
+                            <Dropdown dropdownFormText='Languages'
+                                      placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
+                                      options={languages} onChange={setSelectedLanguages}/>
+                            <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
                         </div>
-                    )}
-                    <InputForm inputFormText="Description" value={description}
-                               onChange={(e) => setDescription(e.target.value)}/>
-                    <ApplyButton buttonText='Update' onApply={handleUpdatePersonalInfo}/>
-                </div>
-            </div>
-            <div className='section-pos-verif py-8'>
-                <SettingsSection title='Position verification'
-                                 details='For your security, we need you to verify your identity'/>
-                <div className='py-8'>
-                    <InputForm inputFormText='Institution name' value={institutionName}
-                               onChange={(e) => setInstitutionName(e.target.value)}/>
-                    {orgData.map((feature) => (
-                        <div key={feature.properties.id}
-                             onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
-                            <h2>{feature.properties.name}</h2>
-                            <p>{feature.properties.description}</p>
-                        </div>
-                    ))}
-                    <ApplyButton buttonText='Update' onApply={handleUpdateInstitution}/>
-                    {/*<ClearAllButton buttonText='Update'/>*/}
-                </div>
-            </div>
-            <div className='section-prof-details py-8'>
-                <SettingsSection title='Professional details'
-                                 details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
-                />
-                <div className='py-8'>
-                    <Dropdown dropdownFormText='Areas of work'
-                              placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
-                              options={disciplines} onChange={setSelectedDisciplines}/>
-                    <Dropdown dropdownFormText='Grades'
-                              placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
-                              options={grades}
-                              onChange={setSelectedGrades}/>
-                    <Dropdown dropdownFormText='Languages'
-                              placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
-                              options={languages} onChange={setSelectedLanguages}/>
-                    <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
-                </div>
-            </div>
-        </>
+                    </div>
+                </>
+            )}
+        </main>
     )
 }
 

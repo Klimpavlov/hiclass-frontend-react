@@ -18,18 +18,11 @@ import {useTurbopack} from "next/dist/client/components/react-dev-overlay/intern
 
 
 export default function ExplorePage() {
+
     // loader
 
-    // const [loading, setLoading] = useState(false);
-    //
-    // useEffect(() => {
-    //     setLoading(true);
-    //     setTimeout(() => {
-    //         setLoading(false)
-    //     }, 3000)
-    // })
+    const [loading, setLoading] = useState(true);
 
-    //
 
     const [currentFilters, setCurrentFilters] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -94,14 +87,13 @@ export default function ExplorePage() {
     };
 
 
-
     // disciplines
 
     const [disciplines, setDisciplines] = useState([]);
     const disciplinesFilter = 'Disciplines'
 
     useEffect(() => {
-        getDisciplines();
+        getDisciplines()
     }, []);
 
     async function getDisciplines() {
@@ -110,6 +102,7 @@ export default function ExplorePage() {
         setDisciplines(availableDisciplines);
         setDisciplinesFilterName(disciplinesFilter)
     }
+
 
     // grades
 
@@ -159,18 +152,19 @@ export default function ExplorePage() {
     const [teacherProfileData, setTeacherProfileData] = useState([]);
 
     useEffect(() => {
+        async function defaultSearch() {
+            const accessToken = localStorage.getItem('accessToken');
+            const defaultSearch = await getDefaultSearch(accessToken);
+            const teacherByCountry = defaultSearch.teacherProfilesByCountry
+            setTeacherProfileData(teacherByCountry)
+            console.log(defaultSearch)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1300)
+        }
+
         defaultSearch()
     }, [])
-
-    async function defaultSearch() {
-        const accessToken = localStorage.getItem('accessToken');
-        const defaultSearch = await getDefaultSearch(accessToken);
-
-        const teacherByCountry = defaultSearch.teacherProfilesByCountry
-        setTeacherProfileData(teacherByCountry)
-
-        console.log(defaultSearch)
-    }
 
 
     console.log(teacherProfileData)
@@ -205,103 +199,97 @@ export default function ExplorePage() {
 
     return (
         <main className="">
-            {/*{loading ? (*/}
-            {/*    <div className='flex items-center justify-center h-screen'>*/}
-            {/*        <RingLoader*/}
-            {/*            color={'#36d7b7'}*/}
-            {/*            loading={loading}*/}
-            {/*            size={150}*/}
-            {/*            aria-label="Loading Spinner"*/}
-            {/*            data-testid="loader"*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*) : (*/}
-            {/*    <>*/}
-            <Header/>
-            <TopSection/>
-            <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
-                <div className="flex flex-wrap gap-2 px-4 md:px-8">
-                    <Filter buttonText="Subject" options={disciplines} onApply={handleFilterApply}
-                            clearAll={handleClearAll} filterName={disciplinesFilterName}/>
-                    <Filter buttonText="Grade" options={grades} onApply={handleFilterApply}
-                            clearAll={handleClearAll} filterName={gradesFilterName}/>
-                    <Filter buttonText="Language" options={languages} onApply={handleFilterApply}
-                            clearAll={handleClearAll} filterName={languagesFilterName}/>
-                    <Filter buttonText="Location" options={countries} onApply={handleFilterApply}
-                            clearAll={handleClearAll} filterName={countriesFilterName}/>
+            {loading ? (
+                <div className='flex items-center justify-center h-screen'>
+                    <RingLoader
+                        color={'#36d7b7'}
+                        loading={loading}
+                        size={150}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
                 </div>
-                <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
-                    <Switch/>
-                    <span className="ml-2 md:ml-4">Show only experts</span>
-                </div>
-            </div>
-            <div className="applied-filters-container px-4 md:px-8">
-                <div className='px-4 md:px-8 pt-2 md:pt-4'>
-                    {currentFilters.map((filter) => (
-                        <Tag text={filter} removeTag={true} onChange={() => handleRemoveTag(filter)}/>
-                    ))}
-                </div>
-            </div>
-            <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
-                <div  className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
-                     sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                    {searchClassData.map((teacher) => (
-                        teacher.classDtos.map((classInfo) => (
-                            <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                <ClassPreview key={classInfo.classId}
-                                              title={classInfo.title}
-                                              username={classInfo.userFullName}
-                                              tags={classInfo.disciplines}
-                                              photo={classInfo.imageUrl}
-                                ></ClassPreview>
-                            </div>
-                        ))))}
-                    {/*{searchClassData.map((classInfo) => (*/}
-                    {/*        <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>*/}
-                    {/*            <ClassPreview key={classInfo.classId}*/}
-                    {/*                          title={classInfo.title}*/}
-                    {/*                          username={classInfo.userFullName}*/}
-                    {/*                          tags={classInfo.disciplines}*/}
-                    {/*                          photo={classInfo.imageUrl}*/}
-                    {/*            ></ClassPreview>*/}
-                    {/*        </div>*/}
-                    {/*    ))}*/}
-                </div>
-                <div className='flex justify-between mt-4 md:mt-8'>
-                    <div className='font-bold'>Most popular classes in <span className='text-green-700'>Belarus</span>
+            ) : (
+                <>
+                    <Header/>
+                    <TopSection/>
+                    <div
+                        className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
+                        <div className="flex flex-wrap gap-2 px-4 md:px-8">
+                            <Filter buttonText="Subject" options={disciplines} onApply={handleFilterApply}
+                                    clearAll={handleClearAll} filterName={disciplinesFilterName}/>
+                            <Filter buttonText="Grade" options={grades} onApply={handleFilterApply}
+                                    clearAll={handleClearAll} filterName={gradesFilterName}/>
+                            <Filter buttonText="Language" options={languages} onApply={handleFilterApply}
+                                    clearAll={handleClearAll} filterName={languagesFilterName}/>
+                            <Filter buttonText="Location" options={countries} onApply={handleFilterApply}
+                                    clearAll={handleClearAll} filterName={countriesFilterName}/>
+                        </div>
+                        <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
+                            <Switch/>
+                            <span className="ml-2 md:ml-4">Show only experts</span>
+                        </div>
                     </div>
-                    <div className='text-green-700'>See all</div>
-                </div>
-                <div
-                    className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
+                    <div className="applied-filters-container px-4 md:px-8">
+                        <div className='px-4 md:px-8 pt-2 md:pt-4'>
+                            {currentFilters.map((filter) => (
+                                <span className='pl-2'>
+                            <Tag text={filter} removeTag={true} onChange={() => handleRemoveTag(filter)}/>
+                        </span>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
+                        <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
                      sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                    {teacherProfileData.map((teacher) => (
-                        teacher.classDtos.map((classInfo) => (
-                            <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                <ClassPreview key={classInfo.classId}
-                                              title={classInfo.title}
-                                              username={classInfo.userFullName}
-                                              tags={classInfo.disciplines}
-                                              photo={classInfo.imageUrl}
-                                ></ClassPreview>
+                            {searchClassData.map((teacher) => (
+                                teacher.classDtos.map((classInfo) => (
+                                    <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
+                                        <ClassPreview key={classInfo.classId}
+                                                      title={classInfo.title}
+                                                      username={classInfo.userFullName}
+                                                      tags={classInfo.disciplines}
+                                                      photo={classInfo.imageUrl}
+                                        ></ClassPreview>
+                                    </div>
+                                ))))}
+                        </div>
+                        <div className='flex justify-between mt-4 md:mt-8'>
+                            <div className='font-bold'>Most popular classes in <span
+                                className='text-green-700'>Belarus</span>
                             </div>
-                        ))))}
-                </div>
+                            <div className='text-green-700'>See all</div>
+                        </div>
+                        <div
+                            className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1
+                     sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+                            {teacherProfileData.map((teacher) => (
+                                teacher.classDtos.map((classInfo) => (
+                                    <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
+                                        <ClassPreview key={classInfo.classId}
+                                                      title={classInfo.title}
+                                                      username={classInfo.userFullName}
+                                                      tags={classInfo.disciplines}
+                                                      photo={classInfo.imageUrl}
+                                        ></ClassPreview>
+                                    </div>
+                                ))))}
+                        </div>
 
-                {selectedClass && (
-                    <ClassPreviewModal
-                        headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
-                        classId={selectedClass.classId}
-                        title={selectedClass.title}
-                        username={selectedClass.userFullName}
-                        tags={selectedClass.disciplines}
-                        photo={selectedClass.imageUrl}
-                        handleCloseModal={() => setSelectedClass(null)}
-                    ></ClassPreviewModal>
-                )}
-            </div>
-            {/*    </>*/}
-            {/*)}*/}
+                        {selectedClass && (
+                            <ClassPreviewModal
+                                headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
+                                classId={selectedClass.classId}
+                                title={selectedClass.title}
+                                username={selectedClass.userFullName}
+                                tags={selectedClass.disciplines}
+                                photo={selectedClass.imageUrl}
+                                handleCloseModal={() => setSelectedClass(null)}
+                            ></ClassPreviewModal>
+                        )}
+                    </div>
+                </>
+            )}
         </main>
     );
 }

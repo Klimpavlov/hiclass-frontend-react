@@ -11,14 +11,14 @@ import {RingLoader} from "react-spinners";
 
 
 export default function MyProfile() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false)
-        }, 3000)
-    })
+    // useEffect(() => {
+    //     setLoading(true);
+    //     setTimeout(() => {
+    //         setLoading(false)
+    //     }, 3000)
+    // })
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,17 +33,31 @@ export default function MyProfile() {
 
     const [classData, setClassData] = useState([]);
 
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
+    //
+    // async function getUser() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const userProfile = await getUserProfile(accessToken)
+    //     console.log(userProfile);
+    //
+    //     setClassData(userProfile.classDtos)
+    // }
+
     useEffect(() => {
-        getUser();
+        async function getUser() {
+            const accessToken = localStorage.getItem('accessToken');
+            const userProfile = await getUserProfile(accessToken)
+            console.log(userProfile);
+            setClassData(userProfile.classDtos)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1300)
+        }
+        getUser()
     }, []);
 
-    async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
-        const userProfile = await getUserProfile(accessToken)
-        console.log(userProfile);
-
-        setClassData(userProfile.classDtos)
-    }
 
     return (
         <main className="">
