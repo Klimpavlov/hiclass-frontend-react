@@ -14,7 +14,7 @@ import axios from "axios";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 
 
-const InviteModal = ({username, classId, disciplines, handleCloseModal}) => {
+const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     const router = useRouter()
 
     const [classData, setClassData] = useState([]);

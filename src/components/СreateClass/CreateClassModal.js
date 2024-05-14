@@ -31,7 +31,7 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
         <>
 
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400">
-                <div className="modal-content bg-white p-4 rounded-lg w-4/5">
+                <div className="modal-content bg-white p-4 rounded-lg w-4/5 sm:w-3/5">
                     <CreateClassHeader handleCloseModal={handleCloseModal}/>
                     <CreateClassBody setTitle={setTitle}
                                      setPhoto={setPhoto}

@@ -14,8 +14,10 @@ export default function DialogModal({setIsModalOpen, postDelete}) {
     }
 
     const reject = () => {
-        setIsModalOpen(false);
         toast.current.show({severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000});
+        setTimeout(() => {
+            setIsModalOpen(false);
+        }, 1500)
     }
 
     const confirm1 = () => {

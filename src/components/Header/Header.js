@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
@@ -24,17 +24,27 @@ const Header = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
 
+    const logoutDropdownRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (logoutDropdownRef.current && !logoutDropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+
+    }, []);
+
+
     const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
     const toggleConfirmDialog = () => {
-        setIsConfirmDialogOpen(!isConfirmDialogOpen)
+        setIsConfirmDialogOpen(!isConfirmDialogOpen);
     }
-
-    const handleLogout = () => {
-        // Implement logout logic here
-        console.log("Logout");
-
-    };
 
     const [userAvatar, setUserAvatar] = useState([]);
 
@@ -53,7 +63,7 @@ const Header = () => {
     const [isAvatarOpen, setIsAvatarOpen] = useState(false);
 
     const toggleAvatar = () => {
-        setIsAvatarOpen(!isAvatarOpen)
+        setIsAvatarOpen(!isAvatarOpen);
     }
 
     useEffect(() => {
@@ -94,7 +104,8 @@ const Header = () => {
 
                         />
                     </div>
-                    <Image className={`${isDropdownOpen ? "rotate-180" : ""} cursor-pointer`} src={imgChevronDownSrc} alt="chevron-down"
+                    <Image className={`${isDropdownOpen ? "rotate-180" : ""} cursor-pointer`} src={imgChevronDownSrc}
+                           alt="chevron-down"
                            onClick={toggleDropdown}/>
                     {isDropdownOpen && (
                         <div className="absolute right-5">

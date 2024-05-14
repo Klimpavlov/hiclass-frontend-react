@@ -237,23 +237,27 @@ const SettingsProfileInfo = () => {
                             <InputForm inputFormText='Country' value={country}
                                        onChange={(e) => setCountry(e.target.value)}/>
                             {country !== '' && (
-                                <div>
-                                    {countryData.map((country) => (
-                                        <div key={country} onClick={() => setCountry(country.country)}>
-                                            {country.country}
-                                        </div>
-                                    ))}
+                                <div className="">
+                                    <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
+                                        {countryData.map((country) => (
+                                            <div key={country} onClick={() => setCountry(country.country)}>
+                                                {country.country}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                             <InputForm inputFormText='City' value={city}
                                        onChange={(e) => setCity(e.target.value)}/>
                             {city !== '' && (
-                                <div className='cursor-pointer'>
+                                <div className="">
+                                    <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
                                     {cityData.map((cityItem) => (
                                         <div key={cityItem} onClick={() => setCity(cityItem)}>
                                             {cityItem}
                                         </div>
                                     ))}
+                                    </div>
                                 </div>
                             )}
                             <InputForm inputFormText="Description" value={description}
@@ -267,13 +271,18 @@ const SettingsProfileInfo = () => {
                         <div className='py-8'>
                             <InputForm inputFormText='Institution name' value={institutionName}
                                        onChange={(e) => setInstitutionName(e.target.value)}/>
-                            {orgData.map((feature) => (
-                                <div key={feature.properties.id}
-                                     onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
-                                    <h2>{feature.properties.name}</h2>
-                                    <p>{feature.properties.description}</p>
+                            <div className="">
+                                <div className="py-2 max-h-60 overflow-y-auto">
+                                    {orgData.map((feature) => (
+                                        <div key={feature.properties.id}
+                                             className='cursor-pointer py-2 max-h-60 overflow-y-auto'
+                                             onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
+                                            <h2>{feature.properties.name}</h2>
+                                            <p>{feature.properties.description}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                             <ApplyButton buttonText='Update' onApply={handleUpdateInstitution}/>
                             {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
