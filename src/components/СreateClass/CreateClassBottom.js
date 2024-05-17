@@ -27,7 +27,7 @@ const CreateClassBottom = ({handleCloseModal, handlePostClass}) => {
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="flex items-center gap-6 sm:gap-3 md:gap-4">
                 <ClearAllButton buttonText='Cancel' clearAll={handleClose}/>
-                <ApplyButton buttonText='Create' onApply={handlePost} buttonRef={buttonRef}/>
+                <ApplyButton buttonText='Apply' onApply={handlePost} buttonRef={buttonRef}/>
             </div>
         </div>
     )

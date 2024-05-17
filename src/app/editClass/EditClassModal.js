@@ -37,7 +37,9 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
 
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400">
                 <div className="modal-content bg-white p-4 rounded-lg w-4/5 sm:w-3/5">
-                    <CreateClassHeader handleCloseModal={handleCloseModal}/>
+                    <CreateClassHeader headerText='Edit class'
+                                       handleCloseModal={handleCloseModal}
+                    />
                     <CreateClassBody setTitle={setTitle}
                                      setPhoto={setPhoto}
                                      setSubjects={setSelectedDisciplines}
@@ -46,7 +48,8 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
                                      classId={classId}
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}
-                                       handlePostClass={handlePutEditClass} />
+                                       handlePostClass={handlePutEditClass}
+                    />
                 </div>
             </div>
 
