@@ -28,11 +28,11 @@ const Banner = () => {
     }
 
     return (
-        <div className="flex items-center relative justify-center px-4 md:px-8 py-8 md:py-16 bg-gray-100">
+        <div className="hidden sm:flex items-center relative justify-center px-4 md:px-8 py-8 md:py-16 bg-gray-100">
             <div className="button text-center">
                 <input type="file" onChange={getFile}/>
                 {banner && (
-                    <div className="w-full">
+                    <div className="w-full relative">
                         <Image
                             src={banner}
                             alt="banner photo"

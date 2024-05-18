@@ -13,12 +13,6 @@ import {RingLoader} from "react-spinners";
 export default function MyProfile() {
     const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     setTimeout(() => {
-    //         setLoading(false)
-    //     }, 3000)
-    // })
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 

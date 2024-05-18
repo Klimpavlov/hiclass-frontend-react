@@ -12,7 +12,7 @@ import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
-import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 
 const Header = () => {
 
@@ -39,11 +39,9 @@ const Header = () => {
 
     }, []);
 
-
-    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
-
-    const toggleConfirmDialog = () => {
-        setIsConfirmDialogOpen(!isConfirmDialogOpen);
+    function handleLogout() {
+        localStorage.clear();
+        router.push('/signIn');
     }
 
     const [userAvatar, setUserAvatar] = useState([]);
@@ -81,16 +79,23 @@ const Header = () => {
     }, [isAvatarOpen]);
 
 
+    // mobile button
+    const [nav, setNav] = useState(false);
+
+    const handleNav = () => {
+        setNav(!nav);
+    };
+
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
                 <Image src={imgSrc} alt="hiClass Logo"/>
-                <div className="flex flex-wrap justify-start ml-4">
+                <div className="hidden sm:flex flex-wrap justify-start ml-4">
                     <Link href="/" className="ml-6 my-2">Discover</Link>
                     <Link href="/myProfile" className="ml-6 my-2">My profile</Link>
                 </div>
             </div>
-            <div className="header-right flex items-center gap-6 sm:gap-3 md:gap-4">
+            <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
                 <Image src={imgChatButton} alt="chat-button"/>
                 <div className="flex gap-3 sm:gap-2 md:gap-3">
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12">
@@ -108,26 +113,52 @@ const Header = () => {
                            alt="chevron-down"
                            onClick={toggleDropdown}/>
                     {isDropdownOpen && (
-                        <div className="absolute right-5">
+                        <div className="absolute right-5 top-5 sm:top-2">
                             <button
-                                className="py-2 px-4 sm:py-1 sm:px-2 text-left
+                                className=" py-2 px-4 sm:py-1 sm:px-2 text-left
                                 hover:bg-gray-100 bg-white border border-gray-300
                                  rounded-lg shadow-lg cursor-pointer"
-                                onClick={toggleConfirmDialog}
+                                onClick={handleLogout}
                             >Logout
                             </button>
-                            {isConfirmDialogOpen && (
-                                <DialogModal
-                                    setIsModalOpen={setIsConfirmDialogOpen}
-                                    postDelete={() => setTimeout(() => {
-                                        router.push('/signIn')
-                                    }, 1500)}
-                                />
-                            )}
                         </div>
                     )}
                 </div>
 
+            </div>
+            {/* Mobile Button */}
+            <div onClick={handleNav} className='block sm:hidden z-10'>
+                {nav ? (
+                    <AiOutlineClose size={20} style={{ color: `white` }} />
+                ) : (
+                    <AiOutlineMenu size={20} style={{ color: `black` }} />
+                )}
+            </div>
+            {/* Mobile Menu */}
+            <div
+                className={
+                    nav
+                        ? 'sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'
+                        : 'sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'
+                }
+            >
+                <ul>
+                    <li onClick={handleNav} className='p-4 text-4xl hover:text-white'>
+                        <Link href="/" className='text-white'>Discover</Link>
+                    </li>
+                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
+                        <Link href="/myProfile" className='text-white'>My profile</Link>
+                    </li>
+                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
+                        <Link href="" className='text-white'>Chat</Link>
+                    </li>
+                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
+                        <span className='text-white'
+                            onClick={handleLogout}
+                        >Logout
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
     );
