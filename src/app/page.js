@@ -17,6 +17,7 @@ import {RingLoader} from "react-spinners";
 import {useTurbopack} from "next/dist/client/components/react-dev-overlay/internal/helpers/use-websocket";
 
 
+
 export default function ExplorePage() {
 
     // loader
@@ -196,6 +197,8 @@ export default function ExplorePage() {
         }
     }
 
+
+    // translation
 
     return (
         <main className="">

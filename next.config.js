@@ -7,7 +7,12 @@ module.exports = {
     images: {
         domains: ['s3.eu-north-1.amazonaws.com'],
     },
+    // i18n: {
+    //     locales: ['en', 'fi'],
+    //     defaultLocale: 'en',
+    // }
 }
+
 
 // module.exports = {
 //     images: {
