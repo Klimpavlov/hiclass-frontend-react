@@ -25,7 +25,6 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
     };
 
 
-
     const handleApply = () => {
         onApply(selectedOptions, filterName);
         toggleDropdown();
