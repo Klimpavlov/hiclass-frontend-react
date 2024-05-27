@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Image from "next/image";
-import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
+import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 

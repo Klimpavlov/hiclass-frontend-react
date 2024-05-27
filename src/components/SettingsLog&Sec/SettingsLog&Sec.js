@@ -4,12 +4,12 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import DeleteAccBtn from "@/components/Buttons/DeleteAccBtn";
-import putUpdateEmail from "@/app/updateUser/updateEmail/putUpdateEmail";
-import putUpdatePassword from "@/app/updateUser/updatePassword/putUpdatePassword";
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import putUpdateEmail from "@/app/[locale]/updateUser/updateEmail/putUpdateEmail";
+import putUpdatePassword from "@/app/[locale]/updateUser/updatePassword/putUpdatePassword";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {ConfirmDialog} from "primereact/confirmdialog";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
-import deleteUser from "@/app/deleteUser/deleteUser";
+import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
 import {useRouter} from "next/navigation";
 
 const SettingsLogSec = () => {

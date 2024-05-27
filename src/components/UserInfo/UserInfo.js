@@ -7,7 +7,7 @@ import Tag from "@/components/Tags/Tag";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 
 const UserInfo = () => {
 

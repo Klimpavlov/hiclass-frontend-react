@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
-import putBannerImage from "@/app/putBanner/putBannerImage";
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 
 const Banner = () => {

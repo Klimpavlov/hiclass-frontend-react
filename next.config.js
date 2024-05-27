@@ -1,17 +1,34 @@
 /** @type {import('next').NextConfig} */
-// const nextConfig = {}
-//
-// module.exports = nextConfig
 
-module.exports = {
+// const nextConfig = {};
+//
+// const withNextIntl = require("next-intl/plugin")(
+//     // This is the default (also the `src` folder is supported out of the box)
+//     "./next-i18next.config.js"
+// );
+//
+// module.exports = withNextIntl(nextConfig);
+//
+//
+// module.exports = {
+//     images: {
+//         domains: ['s3.eu-north-1.amazonaws.com'],
+//     },
+// }
+
+
+const nextConfig = {
     images: {
         domains: ['s3.eu-north-1.amazonaws.com'],
     },
-    // i18n: {
-    //     locales: ['en', 'fi'],
-    //     defaultLocale: 'en',
-    // }
-}
+};
+
+const withNextIntl = require("next-intl/plugin")(
+    // This is the default (also the `src` folder is supported out of the box)
+    "./next-i18next.config.js"
+);
+
+module.exports = withNextIntl(nextConfig);
 
 
 // module.exports = {

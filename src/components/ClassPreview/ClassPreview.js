@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import Tag from "@/components/Tags/Tag";
 import imgSrc from '@/components/ClassPreview/class-menu-icon.svg';
-import deleteClass from "@/app/deleteClass/deleteClass";
+import deleteClass from "@/app/[locale]/deleteClass/deleteClass";
 import Image from "next/image";
-import {getClassInfo} from "@/app/api/getClassProfile/getClassInfo";
-import CreateClassModal from "@/components/СreateClass/CreateClassModal";
-import EditClassModal from "@/app/editClass/EditClassModal";
+import EditClassModal from "@/app/[locale]/editClass/EditClassModal";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';

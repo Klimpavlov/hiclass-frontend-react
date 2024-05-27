@@ -4,13 +4,13 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
-import putUpdatePersonalInfo from "@/app/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
+import putUpdatePersonalInfo from "@/app/[locale]/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
 import axios from "axios";
-import {getAvailableLanguages} from "@/app/api/getAvailableLanguages/getAvailableLanguages";
-import {getAvailableDisciplines} from "@/app/api/getAvailableDisciplines/getAvailableDisciplines";
-import putUpdateProfessionalInfo from "@/app/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
-import putUpdateInstitution from "@/app/updateUser/updateInstitution/putUpdateInstitution";
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
+import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
+import putUpdateProfessionalInfo from "@/app/[locale]/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
+import putUpdateInstitution from "@/app/[locale]/updateUser/updateInstitution/putUpdateInstitution";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {RingLoader} from "react-spinners";
 
 const SettingsProfileInfo = () => {

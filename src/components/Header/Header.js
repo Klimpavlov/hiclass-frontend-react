@@ -8,7 +8,7 @@ import imgChatButton from '../Header/tertiary-button.svg';
 import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
-import {getUserProfile} from "@/app/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';

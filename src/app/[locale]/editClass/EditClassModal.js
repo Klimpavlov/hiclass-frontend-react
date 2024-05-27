@@ -7,8 +7,10 @@ import CreateClassBody from "@/components/СreateClass/CreateClassBody";
 import postCreateClass from "@/app/[locale]/postCreateClass/postCreateClass";
 import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
 import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClassImage";
+import putEditClass from "@/app/[locale]/editClass/putEditClass/putEditClass";
+import editClassImage from "@/app/[locale]/editClass/editClassImage/editClassImage";
 
-export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
+export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
 
     const [title, setTitle] = useState('');
     const [grade, setGrade] = useState('');
@@ -16,11 +18,14 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
     const [languages, setLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
-    const handlePostCreateClass = () => {
-        postCreateClass(title, grade, languages, selectedDisciplines)
+    const handlePutEditClass = () => {
+        console.log(title)
+        console.log(selectedDisciplines)
+        putEditClass(classId, title, grade, languages, selectedDisciplines)
         setTimeout(() => {
-            putClassImage(photo);
+            editClassImage(classId, photo);
         }, 2000);
+
 
     };
 
@@ -32,7 +37,7 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
 
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400">
                 <div className="modal-content bg-white p-4 rounded-lg w-4/5 sm:w-3/5">
-                    <CreateClassHeader headerText='Create class'
+                    <CreateClassHeader headerText='Edit class'
                                        handleCloseModal={handleCloseModal}
                     />
                     <CreateClassBody setTitle={setTitle}
@@ -43,7 +48,7 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
                                      classId={classId}
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}
-                                       handlePostClass={handlePostCreateClass}
+                                       handlePostClass={handlePutEditClass}
                     />
                 </div>
             </div>
