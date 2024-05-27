@@ -1,9 +1,11 @@
 'use client';
 
 import React, {useState, useEffect, useRef} from "react";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
+import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
+import imgRUFlag from '../RegistrationHeader/ru.svg'
 import imgChatButton from '../Header/tertiary-button.svg';
 import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
@@ -12,7 +14,8 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
+import {useTranslations} from "next-intl";
 
 const Header = () => {
 
@@ -86,16 +89,56 @@ const Header = () => {
         setNav(!nav);
     };
 
+    //current locale
+
+    const pathname = usePathname();
+
+    // translation
+
+    const t = useTranslations("Header");
+
+    const currentLanguage = pathname.includes('ru') ?
+        <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> : <Image className='rounded' src={imgUKFlag} alt="UK flag"/>;
+
+
+    const [isLanguagesDropdownOpen, setIsLanguagesDropdownOpen] = useState(false);
+
+    const toggleLanguagesDropdown = () => {
+        setIsLanguagesDropdownOpen(!isLanguagesDropdownOpen);
+    }
+
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
                 <Image src={imgSrc} alt="hiClass Logo"/>
                 <div className="hidden sm:flex flex-wrap justify-start ml-4">
-                    <Link href="/" className="ml-6 my-2">Discover</Link>
-                    <Link href="/myProfile" className="ml-6 my-2">My profile</Link>
+                    <Link href="/" className="ml-6 my-2">{t('discover')}</Link>
+                    <Link href="/myProfile" className="ml-6 my-2">{t('myProfile')}</Link>
                 </div>
             </div>
             <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
+
+                <div>
+                    <div className="cursor-pointer"
+                         onClick={toggleLanguagesDropdown}>
+                        {currentLanguage}
+                    </div>
+                    {isLanguagesDropdownOpen && (
+                        <div className="absolute mt-2">
+                            <Link className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border
+                                          border-gray-300 rounded-lg shadow-lg cursor-pointer'
+                                  href="/en" locale="en">
+                                English
+                            </Link>
+                            <Link className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white
+                                 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
+                                  href="/ru" locale="ru">
+                                Russian
+                            </Link>
+                        </div>
+                    )}
+                </div>
+
                 <Image src={imgChatButton} alt="chat-button"/>
                 <div className="flex gap-3 sm:gap-2 md:gap-3">
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12">
@@ -119,7 +162,7 @@ const Header = () => {
                                 hover:bg-gray-100 bg-white border border-gray-300
                                  rounded-lg shadow-lg cursor-pointer"
                                 onClick={handleLogout}
-                            >Logout
+                            >{t('logout')}
                             </button>
                         </div>
                     )}
@@ -129,9 +172,9 @@ const Header = () => {
             {/* Mobile Button */}
             <div onClick={handleNav} className='block sm:hidden z-10'>
                 {nav ? (
-                    <AiOutlineClose size={20} style={{ color: `white` }} />
+                    <AiOutlineClose size={20} style={{color: `white`}}/>
                 ) : (
-                    <AiOutlineMenu size={20} style={{ color: `black` }} />
+                    <AiOutlineMenu size={20} style={{color: `black`}}/>
                 )}
             </div>
             {/* Mobile Menu */}
@@ -144,18 +187,18 @@ const Header = () => {
             >
                 <ul>
                     <li onClick={handleNav} className='p-4 text-4xl hover:text-white'>
-                        <Link href="/" className='text-white'>Discover</Link>
+                        <Link href="/" className='text-white'>{t('discover')}</Link>
                     </li>
                     <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-                        <Link href="/myProfile" className='text-white'>My profile</Link>
+                        <Link href="/myProfile" className='text-white'>{t('myProfile')}</Link>
                     </li>
                     <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-                        <Link href="" className='text-white'>Chat</Link>
+                        <Link href="" className='text-white'>{t('chat')}</Link>
                     </li>
                     <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
                         <span className='text-white'
-                            onClick={handleLogout}
-                        >Logout
+                              onClick={handleLogout}
+                        >{t('logout')}
                         </span>
                     </li>
                 </ul>

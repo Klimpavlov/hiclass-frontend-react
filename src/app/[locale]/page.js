@@ -14,12 +14,18 @@ import {searchRequest} from "@/app/[locale]/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import {RingLoader} from "react-spinners";
-// import { useTranslation } from 'next-i18next';
 import { useTranslations } from "next-intl";
+import ruLocale from '/messages/ru.json';
+import { usePathname } from 'next/navigation';
 import Link from "next/link";
 
 
 export default function ExplorePage() {
+
+    //current locale
+
+    const pathname = usePathname();
+    const currentPathname = pathname.slice(1);
 
     // loader
 
@@ -91,8 +97,10 @@ export default function ExplorePage() {
 
     // disciplines
 
+
     const [disciplines, setDisciplines] = useState([]);
     const disciplinesFilter = 'Disciplines'
+
 
     useEffect(() => {
         getDisciplines()
@@ -101,7 +109,14 @@ export default function ExplorePage() {
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
-        setDisciplines(availableDisciplines);
+        // console.log(Object.values(ruLocale.Disciplines))
+        if (currentPathname === 'ru') {
+            setDisciplines(Object.values(ruLocale.Disciplines))
+        }
+        else {
+            setDisciplines(availableDisciplines);
+        }
+        // setDisciplines(availableDisciplines);
         setDisciplinesFilterName(disciplinesFilter)
     }
 
@@ -128,7 +143,13 @@ export default function ExplorePage() {
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
-        setLanguages(availableLanguages);
+        if (currentPathname === 'ru') {
+            setLanguages(Object.values(ruLocale.Languages))
+        }
+        else {
+            setLanguages(availableLanguages);
+        }
+        // setLanguages(availableLanguages);
         setLanguagesFilterName(languagesFilter)
     }
 
@@ -201,7 +222,8 @@ export default function ExplorePage() {
 
     // translation
 
-    const t = useTranslations("Index");
+    const t = useTranslations("MainPage")
+    const filtersTranslation = useTranslations("Filters");
 
 
     return (
@@ -221,44 +243,21 @@ export default function ExplorePage() {
                 <>
                     <Header/>
                     <TopSection/>
-
-                    <div>
-                        <div>
-                            <Link href="/" locale="en">
-                                In english
-                            </Link>{" "}
-                            |{" "}
-                            <Link href="/" locale="ru">
-                                In Russian
-                            </Link>
-                            <br />
-                            <br />
-                        </div>
-                        <div>
-                            <p>{t("title")}</p>
-                            <p>{t("subtitle")}</p>
-                        </div>
-                        <div>
-                            <br />
-                            {/*<AlertMessage message={t("alertMessage")} />*/}
-                        </div>
-                    </div>
-
                     <div
                         className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                         <div className="flex flex-wrap gap-2 px-4 md:px-8">
-                            <Filter buttonText="Subject" options={disciplines} onApply={handleFilterApply}
+                            <Filter buttonText={filtersTranslation('Subject')} options={disciplines} onApply={handleFilterApply}
                                     clearAll={handleClearAll} filterName={disciplinesFilterName}/>
-                            <Filter buttonText="Grade" options={grades} onApply={handleFilterApply}
+                            <Filter buttonText={filtersTranslation('Grade')} options={grades} onApply={handleFilterApply}
                                     clearAll={handleClearAll} filterName={gradesFilterName}/>
-                            <Filter buttonText="Language" options={languages} onApply={handleFilterApply}
+                            <Filter buttonText={filtersTranslation('Language')} options={languages} onApply={handleFilterApply}
                                     clearAll={handleClearAll} filterName={languagesFilterName}/>
-                            <Filter buttonText="Location" options={countries} onApply={handleFilterApply}
+                            <Filter buttonText={filtersTranslation('Location')} options={countries} onApply={handleFilterApply}
                                     clearAll={handleClearAll} filterName={countriesFilterName}/>
                         </div>
                         <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
                             <Switch/>
-                            <span className="ml-2 md:ml-4">Show only experts</span>
+                            <span className="ml-2 md:ml-4">{t('showOnlyExperts')}</span>
                         </div>
                     </div>
                     <div className="applied-filters-container px-4 md:px-8">
@@ -286,10 +285,10 @@ export default function ExplorePage() {
                                 ))))}
                         </div>
                         <div className='flex justify-between mt-4 md:mt-8'>
-                            <div className='font-bold'>Most popular classes in <span
-                                className='text-green-700'>Belarus</span>
+                            <div className='font-bold'>{t('mostPopularClasses')}<span
+                                className='text-green-700'>{t('Belarus')}</span>
                             </div>
-                            <div className='text-green-700'>See all</div>
+                            <div className='text-green-700'>{t('seeAll')}</div>
                         </div>
                         <div
                             className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1

@@ -1,7 +1,22 @@
 {
-  "Index": {
-    "title": "Hello world!",
-    "subtitle": "How is it going?",
-    "alertMessage": "Something went wrong!"
+  "MainPage": {
+    "showOnlyExperts": "Show only experts",
+    "seeAll": "See all",
+    "mostPopularClasses": "Most popular classes in ",
+    "Belarus": "Belarus"
+  },
+  "Header": {
+    "discover": "Discover",
+    "myProfile": "My profile",
+    "logout": "Logout",
+    "chat": "Chat",
+    "russian": "Russian",
+    "english": "English"
+  },
+  "Filters": {
+    "Subject": "Subject",
+    "Grade": "Grade",
+    "Language": "Language",
+    "Location": "Location"
   }
 }

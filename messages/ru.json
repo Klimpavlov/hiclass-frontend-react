@@ -1,7 +1,71 @@
 {
-  "Index": {
-    "title": "Приввет мир!",
-    "subtitle": "Как дела?",
-    "alertMessage": "Что-то пошло не так!"
+  "MainPage": {
+    "showOnlyExperts": "Только эксперты",
+    "seeAll": "Показать всех",
+    "mostPopularClasses": "Самые популярные классы в ",
+    "Belarus": "Беларуси"
+  },
+  "Header": {
+    "discover": "Главная",
+    "myProfile": "Мой профиль",
+    "logout": "Выйти",
+    "chat": "Сообщения",
+    "russian": "Русский",
+    "english": "Английский"
+  },
+  "Filters": {
+    "Subject": "Предмет",
+    "Grade": "Номер класса",
+    "Language": "Язык",
+    "Location": "Расположение"
+  },
+  "Disciplines": {
+    "Physics": "Физика",
+    "Geography": "География",
+    "Russian literature": "Русская литература",
+    "Chinese as a foreign language": "Китайский язык как иностранный",
+    "Computer science": "Информатика",
+    "Fine arts": "Изобразительное искусство",
+    "Regional studies": "Краеведение",
+    "World art": "Мировое искусство",
+    "Social science": "Социальные науки",
+    "Project-based learning": "Проектная деятельность",
+    "Russian language": "Русский язык",
+    "Economics": "Экономика",
+    "Astronomy": "Астрономия",
+    "Music": "Музыка",
+    "Vacation education": "Каникулярное образование",
+    "English as a foreign language": "Английский язык как иностранный",
+    "Crafts": "Декоративно-прикладное искусство",
+    "Cultural exchange": "Культурный обмен",
+    "Italian as a foreign language": "Итальянский язык как иностранный",
+    "Mathematics": "Математика",
+    "Technology": "Технология",
+    "French as a foreign language": "Французский язык как иностранный",
+    "Chemistry": "Химия",
+    "Spanish as a foreign language": "Испанский язык как иностранный",
+    "History": "История",
+    "German as a foreign language": "Немецкий язык как иностранный",
+    "Biology": "Биология",
+    "Natural science": "Естествознание"
+  },
+  "Languages": {
+    "Belarusian": "Белорусский",
+    "Ukrainian": "Украинский",
+    "Portuguese": "Португальский",
+    "Georgian": "Грузинский",
+    "Kazakh": "Казахский",
+    "Hungarian": "Венгерский",
+    "German": "Немецкий",
+    "Italian": "Итальянский",
+    "Azerbaijani": "Азербайджанский",
+    "English": "Английский",
+    "Armenian": "Армянский",
+    "Russian": "Русский",
+    "Tajik": "Таджикский",
+    "French": "Французский",
+    "Kyrgyz": "Киргизский",
+    "Spanish": "Испанский",
+    "Uzbek": "Узбекский"
   }
 }

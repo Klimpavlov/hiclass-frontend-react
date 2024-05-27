@@ -10,6 +10,7 @@ export async function getAvailableDisciplines(accessToken) {
                 },
             }
         );
+
         return response.data.availableDisciplines;
     } catch (error) {
         console.error(error);
