@@ -100,7 +100,6 @@ const Header = () => {
     const currentLanguage = pathname.includes('ru') ?
         <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> : <Image className='rounded' src={imgUKFlag} alt="UK flag"/>;
 
-
     const [isLanguagesDropdownOpen, setIsLanguagesDropdownOpen] = useState(false);
 
     const toggleLanguagesDropdown = () => {

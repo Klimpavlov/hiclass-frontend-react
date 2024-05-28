@@ -24,12 +24,13 @@
 
 import axios from "axios";
 
-const postVerificationCode = (code) => {
+const postVerificationCode = (email, code) => {
     const accessToken = localStorage.getItem('accessToken')
     const url = 'http://localhost:7280/api/User/verify-email';
     const requestUrl = `${url}?verificationCode=${code}`;
 
     axios.post("http://localhost:7280/api/User/verify-email", {
+        Email: email,
         VerificationCode: code,
     }, {
         headers: {

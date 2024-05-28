@@ -14,7 +14,7 @@ export default function verifyEmail() {
     const email = localStorage.getItem('emailForVerification')
 
     const handleContinue = () => {
-        postVerificationCode(code);
+        postVerificationCode(email, code);
         router.push('/signUp/verifyEmail/isVerified')
     }
 
