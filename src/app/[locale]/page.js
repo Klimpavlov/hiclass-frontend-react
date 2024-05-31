@@ -109,7 +109,7 @@ export default function ExplorePage() {
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
-        console.log(Object.keys(ruLocale.Disciplines))
+        // console.log(Object.keys(ruLocale.Disciplines))
         if (currentPathname === 'ru') {
             setDisciplines(Object.values(ruLocale.Disciplines))
         }

@@ -15,7 +15,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 
 const Header = () => {
 
@@ -92,13 +92,15 @@ const Header = () => {
     //current locale
 
     const pathname = usePathname();
+    const locale = pathname.slice(1,3);
 
     // translation
 
     const t = useTranslations("Header");
 
     const currentLanguage = pathname.includes('ru') ?
-        <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> : <Image className='rounded' src={imgUKFlag} alt="UK flag"/>;
+        <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> :
+        <Image className='rounded' src={imgUKFlag} alt="UK flag"/>;
 
     const [isLanguagesDropdownOpen, setIsLanguagesDropdownOpen] = useState(false);
 
@@ -106,13 +108,20 @@ const Header = () => {
         setIsLanguagesDropdownOpen(!isLanguagesDropdownOpen);
     }
 
+    const changeLanguage = (newLocale) => {
+        const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+        router.push(newPathname);
+    };
+
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
                 <Image src={imgSrc} alt="hiClass Logo"/>
                 <div className="hidden sm:flex flex-wrap justify-start ml-4">
-                    <Link href="/" className="ml-6 my-2">{t('discover')}</Link>
-                    <Link href="/myProfile" className="ml-6 my-2">{t('myProfile')}</Link>
+                    {/*<Link href="/" className="ml-6 my-2">{t('discover')}</Link>*/}
+                    {/*<Link href="/myProfile" className="ml-6 my-2">{t('myProfile')}</Link>*/}
+                    <div className="ml-6 my-2 cursor-pointer" onClick={() => router.push(`/${locale}`)}>{t('discover')}</div>
+                    <div className="ml-6 my-2 cursor-pointer" onClick={() => router.push(`/${locale}/myProfile`)}>{t('myProfile')}</div>
                 </div>
             </div>
             <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
@@ -123,17 +132,27 @@ const Header = () => {
                         {currentLanguage}
                     </div>
                     {isLanguagesDropdownOpen && (
+                        // <div className="absolute mt-2">
+                        //     <Link className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border
+                        //                   border-gray-300 rounded-lg shadow-lg cursor-pointer'
+                        //           href="/en" locale="en">
+                        //         English
+                        //     </Link>
+                        //     <Link className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white
+                        //          border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
+                        //           href="/ru" locale="ru">
+                        //         Russian
+                        //     </Link>
+                        // </div>
                         <div className="absolute mt-2">
-                            <Link className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border
-                                          border-gray-300 rounded-lg shadow-lg cursor-pointer'
-                                  href="/en" locale="en">
+                            <div className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer'
+                                 onClick={() => changeLanguage('en')}>
                                 English
-                            </Link>
-                            <Link className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white
-                                 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
-                                  href="/ru" locale="ru">
+                            </div>
+                            <div className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
+                                 onClick={() => changeLanguage('ru')}>
                                 Russian
-                            </Link>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -207,3 +226,6 @@ const Header = () => {
 };
 
 export default Header
+
+
+
