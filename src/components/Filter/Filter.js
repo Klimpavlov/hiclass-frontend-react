@@ -82,3 +82,5 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
 };
 
 export default Filter;
+
+

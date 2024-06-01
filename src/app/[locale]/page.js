@@ -52,6 +52,40 @@ export default function ExplorePage() {
 
     };
 
+    // disciplines mapping
+
+    const disciplineMapping = {
+        "Физика": "Physics",
+        "География": "Geography",
+        "Русская литература": "Russian literature",
+        "Китайский язык как иностранный": "Chinese as a foreign language",
+        "Информатика": "Computer science",
+        "Изобразительное искусство": "Fine arts",
+        "Краеведение": "Regional studies",
+        "Мировое искусство": "World art",
+        "Социальные науки": "Social science",
+        "Проектная деятельность": "Project-based learning",
+        "Русский язык": "Russian language",
+        "Экономика": "Economics",
+        "Астрономия": "Astronomy",
+        "Музыка": "Music",
+        "Каникулярное образование": "Vacation education",
+        "Английский язык как иностранный": "English as a foreign language",
+        "Декоративно-прикладное искусство": "Crafts",
+        "Культурный обмен": "Cultural exchange",
+        "Итальянский язык как иностранный": "Italian as a foreign language",
+        "Математика": "Mathematics",
+        "Технология": "Technology",
+        "Французский язык как иностранный": "French as a foreign language",
+        "Химия": "Chemistry",
+        "Испанский язык как иностранный": "Spanish as a foreign language",
+        "История": "History",
+        "Немецкий язык как иностранный": "German as a foreign language",
+        "Биология": "Biology",
+        "Естествознание": "Natural science"
+    };
+
+
 
     const handleFilterApply = (selectedFilter, filterName) => {
         // setCurrentFilters(selectedFilter);
@@ -61,13 +95,37 @@ export default function ExplorePage() {
         // setCurrentSearchFilterName(filterName);
 
         const updatedFilters = [...currentFilters, ...selectedFilter];
-        setCurrentFilters(updatedFilters);
 
-        const filterValues = updatedFilters.join(', '); // Concatenate filter values in one line
+        const englishSelectedOptions = updatedFilters.map(option => {
+            if (currentPathname === 'ru') {
+                return disciplineMapping[option] || option; // Если перевод не найден, использовать оригинальное значение
+            }
+            return option;
+        });
+
+        if (currentPathname === 'ru') {
+            setCurrentFilters(englishSelectedOptions) ;
+        }
+
+        else {
+            setCurrentFilters(updatedFilters) ;
+        }
+
+
+        console.log(englishSelectedOptions)
+        const filterValues = updatedFilters.join(', ') || englishSelectedOptions.join(', ') // Concatenate filter values in one line
         setCurrentSearchFilterName(filterName + ': ' + filterValues);
 
-        handleSearchRequest(updatedFilters, filterName);
+        if (currentPathname === 'ru') {
+            handleSearchRequest(englishSelectedOptions, filterName);
+
+        }
+        else {
+            handleSearchRequest(updatedFilters, filterName);
+        }
+        // handleSearchRequest(updatedFilters, filterName);
     };
+    console.log(currentFilters)
 
 
     const handleClearAll = () => {
@@ -87,6 +145,7 @@ export default function ExplorePage() {
 
         const updatedFilters = currentFilters.filter((selectedFilter) => selectedFilter !== filter);
         setCurrentFilters(updatedFilters);
+
 
         const filterValues = updatedFilters.join(', '); // Concatenate filter values in one line
         setCurrentSearchFilterName(currentSearchFilterName.split(':')[0] + ': ' + filterValues);
