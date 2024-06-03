@@ -3,6 +3,7 @@ import Image from "next/image";
 import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import ApplyButton from "@/components/Buttons/ApplyButton";
+import imgSrc from '../Banner/Banner.jpg';
 
 const Banner = () => {
     const [file, setFile] = useState();
@@ -28,24 +29,26 @@ const Banner = () => {
     }
 
     return (
-        <div className="hidden sm:flex items-center relative justify-center px-4 md:px-8 py-8 md:py-16 bg-gray-100">
-            <div className="button text-center">
+        <div className="hidden sm:flex items-center relative justify-center
+         h-60 md:h-64 px-4 md:px-8 py-8 md:py-16 bg-gray-100">
+            <div className="button text-center group">
                 <input type="file" onChange={getFile}/>
-                {banner && (
-                    <div className="w-full relative">
-                        <Image
-                            src={banner}
-                            alt="banner photo"
-                            layout="fill"
-                            objectFit="contain"
-                        />
-                        {/*<div className="absolute">*/}
-                        {/*    <div className="space-x-2">*/}
-                        {/*        <ApplyButton buttonText="change" />*/}
-                        {/*        <ApplyButton buttonText="remove" />*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                    </div>
+                {banner ? (
+                    <Image
+                        src={banner}
+                        alt="banner photo"
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                    />
+                ) : (
+                    <Image
+                        src={imgSrc}
+                        alt="default banner photo"
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                    />
                 )}
                 {file && (
                     <div className="w-full">
@@ -53,13 +56,25 @@ const Banner = () => {
                             src={file}
                             alt="banner photo"
                             layout="fill"
-                            objectFit="contain"
+                            objectFit="cover"
                         />
                     </div>
                 )}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ApplyButton buttonText="Replace" onApply={() => document.querySelector('input[type="file"]').click()}/>
+                </div>
             </div>
         </div>
     );
 };
 
 export default Banner;
+
+
+
+// <div className="absolute">
+//  <div className="space-x-2">
+//    <ApplyButton buttonText="change" />
+//       <ApplyButton buttonText="remove" />
+//    </div>
+// </div>

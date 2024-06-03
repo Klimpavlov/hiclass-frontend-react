@@ -8,6 +8,7 @@ import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Banner from "@/components/Banner/Banner";
 import {RingLoader} from "react-spinners";
+import { MdAnnouncement } from "react-icons/md";
 
 export default function MyProfile() {
     const [loading, setLoading] = useState(true);
@@ -67,7 +68,7 @@ export default function MyProfile() {
             ) : (
                 <>
                     <Header/>
-                    {/*<Banner/>*/}
+                    <Banner/>
                     <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                         <UserInfo/>
                         <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28'>

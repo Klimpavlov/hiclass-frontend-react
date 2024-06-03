@@ -48,13 +48,23 @@ const UserInfo = () => {
 
     return (
         <div className="sm:w-1/3 flex flex-col gap-3">
-            <div className="avatar-container">
+            {/*<div className="avatar-container">*/}
+            {/*    <Image*/}
+            {/*        className="rounded-full w-36 h-36"*/}
+            {/*        src={userAvatar}*/}
+            {/*        alt="user-avatar"*/}
+            {/*        width={200}*/}
+            {/*        height={200}*/}
+            {/*    />*/}
+            {/*</div>*/}
+            <div className="rounded-full overflow-hidden w-36 h-36">
                 <Image
-                    className="rounded-full w-36 h-36"
+                    className="w-full h-full object-cover"
                     src={userAvatar}
                     alt="user-avatar"
-                    width={200}
-                    height={200}
+                    width={144}
+                    height={144}
+                    quality={100}
                 />
             </div>
             <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>

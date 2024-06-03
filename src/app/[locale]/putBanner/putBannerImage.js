@@ -9,7 +9,7 @@ const putBannerImage = (banner) => {
     formData.append('ImageFormFile', banner);
 
     axios
-        .put(`http://localhost:7280/Image/set-user-banner-image/`, formData, {
+        .put(`http://localhost:7280/api/Image/set-user-banner-image/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${accessToken}`,

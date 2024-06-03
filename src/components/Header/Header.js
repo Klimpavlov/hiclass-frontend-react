@@ -159,13 +159,14 @@ const Header = () => {
 
                 <Image src={imgChatButton} alt="chat-button"/>
                 <div className="flex gap-3 sm:gap-2 md:gap-3">
-                    <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12">
+                    <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12 rounded-full overflow-hidden">
                         <Image
-                            className="rounded-full overflow-hidden object-cover w-full h-full"
+                            // className="rounded-full overflow-hidden object-cover w-full h-full"
+                            className="w-full h-full object-cover"
                             src={userAvatar}
                             alt="avatar-header"
-                            width={50}
-                            height={50}
+                            width={100}
+                            height={100}
                             onClick={toggleAvatar}
 
                         />
