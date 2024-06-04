@@ -144,7 +144,7 @@ const Header = () => {
                         //         Russian
                         //     </Link>
                         // </div>
-                        <div className="absolute mt-2">
+                        <div className="absolute mt-2 z-50">
                             <div className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer'
                                  onClick={() => changeLanguage('en')}>
                                 English

@@ -8,6 +8,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import {useTranslations} from "next-intl";
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
 
@@ -48,26 +49,25 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
         }, 1500)
     }
 
-    // // get Class Info
-    //
-    //
-    // useEffect(() => {
-    //     getClass()
-    // }, [])
-    //
-    // async function getClass() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const classInfo = await getClassInfo(accessToken, classId)
-    //     console.log(classInfo)
-    // }
+    // translation
+
+    const t = useTranslations('ClassPreview');
 
     return (
         <div className="class-preview ">
             <div className="class-preview-content">
-                <div className="class-preview-image ">
-                    {/*<Image src={imgSrc} alt="ClassImage" className="w-full h-auto" width={300} height={300}/>*/}
-                    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>
+                {/*<div className="class-preview-image">*/}
+                {/*    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>*/}
+                {/*</div>*/}
+                <div className="class-preview-image w-64 h-40 overflow-hidden rounded-2xl relative">
+                    <Image
+                        src={photo}
+                        alt="ClassImage"
+                        className="object-cover absolute inset-0 w-full h-full rounded-2xl"
+                        layout="fill"
+                    />
                 </div>
+
                 <div className='class-preview-header'>
                     <div className="avatar">{}</div>
                     <div className="username text-black font-bold cursor-pointer">{username}</div>
@@ -93,12 +93,12 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                                         <div className="block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border
                                           border-gray-300 rounded-lg shadow-lg cursor-pointer"
                                              onClick={toggleEditModal}>
-                                            Edit
+                                            {t("editBtn")}
                                         </div>
                                         <div className="w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100
                                          bg-gray-200 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2"
                                              onClick={toggleDeleteDropdown}>
-                                            Delete
+                                            {t("deleteBtn")}
                                         </div>
                                     </div>
                                 )}

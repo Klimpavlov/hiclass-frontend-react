@@ -8,7 +8,7 @@ import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Banner from "@/components/Banner/Banner";
 import {RingLoader} from "react-spinners";
-import { MdAnnouncement } from "react-icons/md";
+import {useTranslations} from "next-intl";
 
 export default function MyProfile() {
     const [loading, setLoading] = useState(true);
@@ -52,6 +52,9 @@ export default function MyProfile() {
         getUser()
     }, []);
 
+    // translation
+
+    const t = useTranslations('MyProfile');
 
     return (
         <main className="">
@@ -71,11 +74,11 @@ export default function MyProfile() {
                     <Banner/>
                     <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                         <UserInfo/>
-                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28'>
+                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0'>
                             <div className='clsCntHeader flex justify-between'>
-                                <div className=''>Classes</div>
+                                <div className=''>{t("classes")}</div>
                                 <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
-                                    + Add class
+                                    + {t("addClass")}
                                 </div>
                             </div>
                             <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>

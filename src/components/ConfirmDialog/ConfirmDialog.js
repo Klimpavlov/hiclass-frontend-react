@@ -40,7 +40,7 @@ export default function DialogModal({setIsModalOpen, postDelete}) {
         <>
             <Toast ref={toast}/>
             <ConfirmDialog/>
-            <div className='fixed inset-0 flex items-center justify-center bg-white'>
+            <div className='fixed inset-0 flex items-center justify-center bg-white z-50'>
                 <div className="card flex flex-wrap gap-2 justify-content-center">
                     <Button onClick={confirm1} icon="pi pi-times" label="Cancel" className="px-5 py-3 mt-4
                              mx-auto rounded-lg text-black bg-white

@@ -4,6 +4,7 @@ import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import imgSrc from '../Banner/Banner.jpg';
+import {useTranslations} from "next-intl";
 
 const Banner = () => {
     const [file, setFile] = useState();
@@ -27,6 +28,10 @@ const Banner = () => {
 
         setBanner(userProfile.bannerImageUrl)
     }
+
+    // translation
+
+    const t = useTranslations("MyProfile");
 
     return (
         <div className="hidden sm:flex items-center relative justify-center
@@ -61,7 +66,7 @@ const Banner = () => {
                     </div>
                 )}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ApplyButton buttonText="Replace" onApply={() => document.querySelector('input[type="file"]').click()}/>
+                    <ApplyButton buttonText={t("replaceBtn")} onApply={() => document.querySelector('input[type="file"]').click()}/>
                 </div>
             </div>
         </div>

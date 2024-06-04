@@ -18,6 +18,8 @@ import { useTranslations } from "next-intl";
 import ruLocale from '/messages/ru.json';
 import { usePathname } from 'next/navigation';
 import Link from "next/link";
+import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 
 
 export default function ExplorePage() {
@@ -52,53 +54,12 @@ export default function ExplorePage() {
 
     };
 
-    // disciplines mapping
-
-    const disciplineMapping = {
-        "Физика": "Physics",
-        "География": "Geography",
-        "Русская литература": "Russian literature",
-        "Китайский язык как иностранный": "Chinese as a foreign language",
-        "Информатика": "Computer science",
-        "Изобразительное искусство": "Fine arts",
-        "Краеведение": "Regional studies",
-        "Мировое искусство": "World art",
-        "Социальные науки": "Social science",
-        "Проектная деятельность": "Project-based learning",
-        "Русский язык": "Russian language",
-        "Экономика": "Economics",
-        "Астрономия": "Astronomy",
-        "Музыка": "Music",
-        "Каникулярное образование": "Vacation education",
-        "Английский язык как иностранный": "English as a foreign language",
-        "Декоративно-прикладное искусство": "Crafts",
-        "Культурный обмен": "Cultural exchange",
-        "Итальянский язык как иностранный": "Italian as a foreign language",
-        "Математика": "Mathematics",
-        "Технология": "Technology",
-        "Французский язык как иностранный": "French as a foreign language",
-        "Химия": "Chemistry",
-        "Испанский язык как иностранный": "Spanish as a foreign language",
-        "История": "History",
-        "Немецкий язык как иностранный": "German as a foreign language",
-        "Биология": "Biology",
-        "Естествознание": "Natural science"
-    };
-
-
-
     const handleFilterApply = (selectedFilter, filterName) => {
-        // setCurrentFilters(selectedFilter);
-        // console.log(selectedFilter)
-        // console.log(filterName)
-        // handleSearchRequest(selectedFilter, filterName)
-        // setCurrentSearchFilterName(filterName);
-
         const updatedFilters = [...currentFilters, ...selectedFilter];
 
         const englishSelectedOptions = updatedFilters.map(option => {
             if (currentPathname === 'ru') {
-                return disciplineMapping[option] || option; // Если перевод не найден, использовать оригинальное значение
+                return disciplinesMapping[option] || languagesMapping[option] || option; // Если перевод не найден, использовать оригинальное значение
             }
             return option;
         });

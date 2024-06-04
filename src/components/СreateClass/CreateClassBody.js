@@ -4,6 +4,7 @@ import Dropdown from "@/components/Dropdowns/Dropdown";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Image from "next/image";
 import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
+import {useTranslations} from "next-intl";
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
@@ -75,10 +76,13 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         setLanguages(availableLanguages);
     }
 
+    const t = useTranslations('CreateClass');
+
+
     return (
         <div className="flex flex-col sm:flex-row gap-5">
             <div className="section-photo w-full sm:w-1/2">
-                <div>Class photo (required)</div>
+                <div>{t("classPhoto")}</div>
                 <div className="w-full border border-black aspect-w-3 aspect-h-4">
                     <div className="border border-black relative">
                         <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
@@ -92,7 +96,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                                 <div
                                     className="flex items-center justify-center w-full h-full
                                      border-2 cursor-pointer">
-                                    + Upload image
+                                    + {t("uploadImage")}
                                 </div>
                             )}
                         </label>
@@ -108,15 +112,15 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <div>Minimum size of "808x632px". GIF files will not animate</div>
             </div>
             <div className='section-info w-full '>
-                <InputForm inputFormText='Title' placeholderText='Class title'
+                <InputForm inputFormText={t("title")} placeholderText='Class title'
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
-                <Dropdown dropdownFormText='Grade' placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
+                <Dropdown dropdownFormText={t("grade")} placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
                           options={grades} onChange={setSelectedGrades}/>
 
-                <Dropdown dropdownFormText='Subjects' placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
+                <Dropdown dropdownFormText={t("subject")} placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
                           options={disciplines} onChange={setSelectedDisciplines}/>
-                <Dropdown dropdownFormText='Languages' placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") :'Class languages'}
+                <Dropdown dropdownFormText={t("language")} placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") :'Class languages'}
                           options={languages} onChange={setSelectedLanguages}/>
             </div>
         </div>

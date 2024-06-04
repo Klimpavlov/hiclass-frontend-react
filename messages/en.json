@@ -18,5 +18,29 @@
     "Grade": "Grade",
     "Language": "Language",
     "Location": "Location"
+  },
+  "MyProfile": {
+    "classes": "Classes",
+    "addClass": "Add class",
+    "replaceBtn": "Replace"
+  },
+  "UserInfo": {
+    "localTime": "local time",
+    "editProfileBtn": "Edit profile"
+  },
+  "ClassPreview": {
+    "editBtn": "Edit",
+    "deleteBtn": "Delete"
+  },
+  "CreateClass": {
+    "headerText": "Create class",
+    "classPhoto": "Class photo",
+    "uploadImage": "Upload image",
+    "title": "Title",
+    "grade": "Grades",
+    "subject": "Subjects",
+    "language": "Languages",
+    "cancelBtn": "Cancel",
+    "applyBtn": "Apply"
   }
 }

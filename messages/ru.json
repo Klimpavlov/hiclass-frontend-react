@@ -19,6 +19,30 @@
     "Language": "Язык",
     "Location": "Расположение"
   },
+  "MyProfile": {
+    "classes": "Классы",
+    "addClass": "Добавить класс",
+    "replaceBtn": "Изменить"
+  },
+  "UserInfo": {
+    "localTime": "местное время",
+    "editProfileBtn": "Редактирование профиля"
+  },
+  "ClassPreview": {
+    "editBtn": "Править",
+    "deleteBtn": "Удалить"
+  },
+  "CreateClass": {
+    "headerText": "Создание класса",
+    "classPhoto": "Фото класса",
+    "uploadImage": "Загрузить фото",
+    "title": "Название",
+    "grade": "Номер класса",
+    "subject": "Предметы",
+    "language": "Языки",
+    "cancelBtn": "Закрыть",
+    "applyBtn": "Подтвердить"
+  },
   "Disciplines": {
     "Physics": "Физика",
     "Geography": "География",

@@ -53,7 +53,7 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName}) => {
             </div>
             {isOpen && (
                 <div className="absolute top-full left-0 mt-2 w-full md:w-80
-                 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs md:max-w-xs">
+                 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs md:max-w-xs z-50">
                     <div className="py-2 max-h-60 overflow-y-auto">
                         {options.map((option, index) => (
                             <div
