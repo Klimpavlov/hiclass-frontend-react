@@ -8,6 +8,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
@@ -15,6 +16,8 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const toast = useRef(null);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -45,7 +48,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
 
     const postDeleteClass = () => {
         setTimeout(() => {
-            deleteClass({classId});
+            deleteClass({classId}, toast);
         }, 1500)
     }
 
@@ -55,6 +58,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
 
     return (
         <div className="class-preview ">
+            <ErrorNotification ref={toast} /> {/* Вставляем компонент уведомлений */}
             <div className="class-preview-content">
                 {/*<div className="class-preview-image">*/}
                 {/*    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>*/}
@@ -67,7 +71,6 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                         layout="fill"
                     />
                 </div>
-
                 <div className='class-preview-header'>
                     <div className="avatar">{}</div>
                     <div className="username text-black font-bold cursor-pointer">{username}</div>
@@ -105,6 +108,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                             </div>
                         </>
                     )}
+
                 </div>
                 {isEditModalOpen && (
                     <EditClassModal
@@ -117,6 +121,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                        classId={classId}
                        setIsModalOpen={setIsDeleteModalOpen}
                        postDelete={postDeleteClass}
+                       toast={toast}
                    />
                 )}
             </div>
