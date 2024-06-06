@@ -18,16 +18,27 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
     const [languages, setLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
-    const handlePutEditClass = () => {
-        console.log(title)
-        console.log(selectedDisciplines)
-        putEditClass(classId, title, grade, languages, selectedDisciplines)
-        setTimeout(() => {
-            editClassImage(classId, photo);
-        }, 2000);
+    // const handlePutEditClass = () => {
+    //     putEditClass(classId, title, grade, languages, selectedDisciplines)
+    //     // setTimeout(() => {
+    //     //     editClassImage(classId, photo);
+    //     // }, 2000);
+    //     if (photo) {
+    //         editClassImage(classId, photo);
+    //     }
+    // };
 
-
-    };
+    const handlePutEditClass = async () => {
+        try {
+            await putEditClass(classId, title, grade, languages, selectedDisciplines);
+            if (photo) {
+               await editClassImage(classId, photo);
+            }
+            window.location.reload()
+        } catch (error) {
+            console.error("Error updating class:", error);
+        }
+    }
 
     const handleCloseModal = () => {
         setIsModalOpen(false);

@@ -12,17 +12,17 @@ const CreateClassBottom = ({handleCloseModal, handlePostClass}) => {
 
     const buttonRef = useRef(null);
 
-    const handleClick = () => {
-        if (buttonRef.current && !buttonRef.current.disabled) {
-            buttonRef.current.disabled = true;
-            // Perform the action
-            // After the action is complete, reset buttonRef.current.disabled to false
-        }
-    };
+    // const handleClick = () => {
+    //     if (buttonRef.current && !buttonRef.current.disabled) {
+    //         buttonRef.current.disabled = true;
+    //         // Perform the action
+    //         // After the action is complete, reset buttonRef.current.disabled to false
+    //     }
+    // };
 
     const handlePost = () => {
         handlePostClass();
-        handleClick()
+        // handleClick()
     }
 
     const t = useTranslations('CreateClass');

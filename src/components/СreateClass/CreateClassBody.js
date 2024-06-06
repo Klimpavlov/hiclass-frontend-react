@@ -6,7 +6,7 @@ import Image from "next/image";
 import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
 
-const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
+const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage, error}) => {
 
     console.log(classId)
 
@@ -18,9 +18,9 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     }, [])
 
     const [initialTitle, setInitialTitle] = useState('')
-    const [initialSubjects, setInitialSubjects] = useState('');
-    const [initialGrades, setInitialGrades] = useState('');
-    const [initialLanguages, setInitialLanguages] = useState('');
+    const [initialSubjects, setInitialSubjects] = useState([]);
+    const [initialGrades, setInitialGrades] = useState([]);
+    const [initialLanguages, setInitialLanguages] = useState([]);
     const [initialPhoto, setInitialPhoto] = useState('');
 
     async function getClass() {
@@ -30,13 +30,11 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
 
         setInitialTitle(classInfo.value.title)
         setInitialSubjects(classInfo.value.disciplines)
-        setInitialGrades(classInfo.value.grade)
+        setInitialGrades([classInfo.value.grade])
         setInitialLanguages(classInfo.value.languages)
         setInitialPhoto(classInfo.value.imageUrl)
 
     }
-
-    console.log(initialTitle)
 
     setTitle(initialTitle)
 

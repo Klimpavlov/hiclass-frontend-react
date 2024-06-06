@@ -9,7 +9,7 @@ import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDiscipline
 import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClassImage";
 import {useTranslations} from "next-intl";
 
-export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
+export default function CreateClassModal({classId, setIsModalOpen, onCreateClass}) {
 
     const [title, setTitle] = useState('');
     const [grade, setGrade] = useState('');
@@ -17,8 +17,14 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
     const [languages, setLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
+    const [error, setError] = useState("");
+
+    const handleCreateClassError = () => {
+        setError("error")
+    }
+
     const handlePostCreateClass = () => {
-        postCreateClass(title, grade, languages, selectedDisciplines)
+        postCreateClass(title, grade, languages, selectedDisciplines, handleCreateClassError)
         setTimeout(() => {
             putClassImage(photo);
         }, 2000);
@@ -47,6 +53,7 @@ export default function CreateClassModal({classId, isModalOpen, setIsModalOpen, 
                                      setGrades={setGrade}
                                      setLanguage={setLanguages}
                                      classId={classId}
+                                     error={error}
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}
                                        handlePostClass={handlePostCreateClass}

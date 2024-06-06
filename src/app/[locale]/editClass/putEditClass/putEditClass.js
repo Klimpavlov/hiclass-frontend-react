@@ -16,12 +16,12 @@ const putEditClass = (classId, title, gradeNumber, languageTitles, disciplineTit
             }
         }
     )
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        // .then(function (response) {
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 }
 
 export default putEditClass

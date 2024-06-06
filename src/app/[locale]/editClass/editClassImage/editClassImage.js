@@ -14,15 +14,15 @@ const editClassImage =  (classId, file) => {
                 Authorization: `Bearer ${accessToken}`,
             },
         })
-        .then(function (response) {
-            console.log(response);
-
-            // page reload
-            window.location.reload()
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        // .then(function (response) {
+        //     console.log(response);
+        //
+        //     // page reload
+        //     window.location.reload()
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 };
 
 export default editClassImage;

@@ -2,7 +2,7 @@ import axios from "axios";
 import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClassImage";
 import {useState} from "react";
 
-const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles) => {
+const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles, handleCreateClassError) => {
 
     const accessToken = localStorage.getItem('accessToken')
 
@@ -27,6 +27,7 @@ const postCreateClass = (title, gradeNumber, languageTitles, disciplineTitles) =
         })
         .catch(function (error) {
             console.log(error);
+            handleCreateClassError()
             // Перенаправление на страницу с ошибкой при ошибке запроса
         });
 }
