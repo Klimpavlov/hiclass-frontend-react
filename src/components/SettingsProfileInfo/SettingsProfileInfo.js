@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import SettingsSection from "@/components/SettingsSection/SettingsSection";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
@@ -12,12 +12,15 @@ import putUpdateProfessionalInfo from "@/app/[locale]/updateUser/updateProfessio
 import putUpdateInstitution from "@/app/[locale]/updateUser/updateInstitution/putUpdateInstitution";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {RingLoader} from "react-spinners";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 const SettingsProfileInfo = () => {
 
     //loading
 
     const [loading, setLoading] = useState(true);
+
+    const toast = useRef(null);
 
     // initial values
 
@@ -112,19 +115,35 @@ const SettingsProfileInfo = () => {
         }
     }
 
-    const handleUpdatePersonalInfo = () => {
-        // console.log(selectedPosition)
-        putUpdatePersonalInfo(firstName, lastName, country, city, description, isTeacher, isExpert)
+    const handleUpdatePersonalInfo = async () => {
+        if (!firstName || !lastName || !country || !city || !description) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+
+        const updatePersonalInfoSuccess = await putUpdatePersonalInfo(firstName, lastName, country, city, description, isTeacher, isExpert, toast)
+
+        if (updatePersonalInfoSuccess) {
+            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Personal information updated', life: 3000 });
+        }
+
     }
 
 
     // institution
 
-    // const [institutionName, setInstitutionName] = useState("");
     const [orgData, setOrgData] = useState([]);
 
-    const handleUpdateInstitution = () => {
-        putUpdateInstitution(institutionName)
+    const handleUpdateInstitution = async () => {
+        if (!institutionName) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+        const updateInstitutionSuccess = await putUpdateInstitution(institutionName, toast);
+
+        if (updateInstitutionSuccess) {
+            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Institution information updated', life: 3000 });
+        }
     };
 
     useEffect(() => {
@@ -184,12 +203,20 @@ const SettingsProfileInfo = () => {
     const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [selectedGrades, setSelectedGrades] = useState([])
 
-    const handleUpdateProfessionalInfo = () => {
-        putUpdateProfessionalInfo(
+    const handleUpdateProfessionalInfo = async () => {
+        if(!selectedLanguages || !selectedDisciplines || !selectedGrades) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+       const updateProfessionalInfoSuccess = await putUpdateProfessionalInfo(
             selectedLanguages.length > 0 ? selectedLanguages : initialLanguages,
             selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines,
             selectedGrades.length > 0 ? selectedGrades : initialGrades
-        );
+        , toast);
+
+        if (updateProfessionalInfoSuccess) {
+            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Professional information updated', life: 3000 });
+        }
     }
 
 
@@ -208,6 +235,7 @@ const SettingsProfileInfo = () => {
             ) : (
                 <>
                     <div className='section-photo'>
+                        <ErrorNotification ref={toast} />
                         <SettingsSection title='Profile photo'
                                          details='Your photo appears on your Profile page and is visible for Brands on your profile preview
                                                   Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.'/>

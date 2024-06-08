@@ -1,12 +1,15 @@
 import axios from "axios";
 
-const putUpdatePersonalInfo = (institution) => {
+const putUpdatePersonalInfo = async (institution, toast) => {
+
+    try {
+
     const accessToken = localStorage.getItem('accessToken');
     const institutionRequest = institution.split(';')
     const institutionTitle = institutionRequest[0];
     const institutionAddress = institution[1]
 
-    axios.put('http://localhost:7280/api/EditUser/institution', {
+   const response = await axios.put('http://localhost:7280/api/EditUser/institution', {
         InstitutionTitle: institutionTitle,
         Address: institutionAddress,
         Types: [
@@ -17,14 +20,17 @@ const putUpdatePersonalInfo = (institution) => {
             Authorization: `Bearer ${accessToken}`,
         }
     })
-        .then(function (response) {
+
             console.log(response);
-            // Перенаправление на другую страницу после успешного выполнения запроса
-        })
-        .catch(function (error) {
+            return true
+    }
+        catch(error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+            if (toast && toast.current) {
+                toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            }
+            return false;
+        }
 };
 
 export default putUpdatePersonalInfo;

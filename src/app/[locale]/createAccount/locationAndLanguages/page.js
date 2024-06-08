@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
@@ -8,8 +8,12 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
+import ErrorNotification from "@/components/Error/ErrorNotification";
+
 
 export default function locationAndLanguages() {
+
+    const toast = useRef(null);
 
     const router = useRouter();
     const [languages, setLanguages] = useState([]);
@@ -81,8 +85,17 @@ export default function locationAndLanguages() {
     }
 
 
+    const handleContinue = () => {
+        if (!country || !city || !selectedLanguages) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+            router.push('/createAccount/institution')
+    }
+
     return (
         <main>
+            <ErrorNotification ref={toast} />
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
@@ -122,7 +135,7 @@ export default function locationAndLanguages() {
                                   onChange={setSelectedLanguages}
                         />
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/institution')}/>
+                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
                 </div>
             </div>
         </main>

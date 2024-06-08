@@ -1,12 +1,14 @@
 'use client';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
-import postCreateAccount from "@/app/[locale]/createAccount/postCreateAccount/postCreateAccount";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function nameForm() {
+
+    const toast = useRef(null);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -16,11 +18,17 @@ export default function nameForm() {
     const router = useRouter();
 
     const handleContinue = async () => {
+        if(!firstName || !lastName) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
         router.push('/createAccount/positionForm');
+
     };
 
     return (
         <main>
+            <ErrorNotification ref={toast} />
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full

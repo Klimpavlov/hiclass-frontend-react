@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const putUpdatePersonalInfo = (firstName, lastName, country, city, description, isTeacher, isExpert) => {
+const putUpdatePersonalInfo = async (firstName, lastName, country, city, description, isTeacher, isExpert, toast) => {
+
+   try{
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/EditUser/personal-info', {
+    const response = await axios.put('http://localhost:7280/api/EditUser/personal-info', {
         IsATeacher: isTeacher,
         IsAnExpert: isExpert,
         FirstName: firstName,
@@ -16,14 +18,17 @@ const putUpdatePersonalInfo = (firstName, lastName, country, city, description, 
             Authorization: `Bearer ${accessToken}`,
         }
     })
-        .then(function (response) {
-            console.log(response);
-            // Перенаправление на другую страницу после успешного выполнения запроса
-        })
-        .catch(function (error) {
-            console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+
+    console.log(response);
+    return true;
+}
+catch (error) {
+    console.log(error);
+    if (toast && toast.current) {
+        toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+    }
+    return false;
+}
 };
 
 export default putUpdatePersonalInfo;
