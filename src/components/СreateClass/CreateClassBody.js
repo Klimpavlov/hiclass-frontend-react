@@ -6,7 +6,7 @@ import Image from "next/image";
 import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
 
-const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage, error}) => {
+const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
     console.log(classId)
 

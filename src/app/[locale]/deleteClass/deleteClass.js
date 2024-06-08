@@ -1,30 +1,3 @@
-// import axios from "axios";
-//
-// const deleteClass = ({classId}, toast) => {
-//
-//     const accessToken = localStorage.getItem('accessToken')
-//
-//     axios.delete(`http://localhost:7280/api/Class/delete-class/${classId}`,  {
-//             headers: {
-//                 Authorization: `Bearer ${accessToken}`,
-//             }
-//         }
-//     )
-//         .then(function (response) {
-//             console.log(response);
-//             window.location.reload()
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//
-//         });
-// }
-//
-// export default deleteClass
-//
-//
-
-
 import axios from "axios";
 
 const deleteClass = async ({ classId }, toast) => {
@@ -50,3 +23,32 @@ const deleteClass = async ({ classId }, toast) => {
 }
 
 export default deleteClass;
+
+
+
+
+// import axios from "axios";
+//
+// const deleteClass = ({classId}, toast) => {
+//
+//     const accessToken = localStorage.getItem('accessToken')
+//
+//     axios.delete(`http://localhost:7280/api/Class/delete-class/${classId}`,  {
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`,
+//             }
+//         }
+//     )
+//         .then(function (response) {
+//             console.log(response);
+//             window.location.reload()
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//
+//         });
+// }
+//
+// export default deleteClass
+//
+//
