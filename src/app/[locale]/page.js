@@ -20,6 +20,7 @@ import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
+import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 
 
 export default function ExplorePage() {
@@ -143,7 +144,7 @@ export default function ExplorePage() {
 
     // grades
 
-    const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const grades = getAvailableGrades();
     const gradesFilter = 'Grades'
     useEffect(() => {
         setGradesFilterName(gradesFilter);

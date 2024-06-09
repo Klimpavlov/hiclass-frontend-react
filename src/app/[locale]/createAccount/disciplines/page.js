@@ -1,14 +1,16 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
 import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function disciplinesForm() {
+    const toast = useRef(null);
 
     const router = useRouter();
     const [disciplines, setDisciplines] = useState([]);
@@ -28,8 +30,17 @@ export default function disciplinesForm() {
         setDisciplines(availableDisciplines);
     }
 
+    const handleContinue = () => {
+        if (selectedDisciplines.length === 0) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+        router.push('/createAccount/grades');
+    }
+
     return (
         <main>
+            <ErrorNotification ref={toast} />
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
@@ -46,7 +57,7 @@ export default function disciplinesForm() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={() => router.push('/createAccount/grades')}/>
+                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
                 </div>
             </div>
         </main>

@@ -1,13 +1,15 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputForm from "@/components/Inputs/InputForm";
 import axios from "axios";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function institutionForm() {
+    const toast = useRef(null);
 
     const router = useRouter()
     const [institutionName, setInstitutionName] = useState('');
@@ -33,12 +35,16 @@ export default function institutionForm() {
 
 
     const handleContinue = () => {
-
+        if (!institutionName) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
         router.push('/createAccount/disciplines');
     };
 
     return (
         <main>
+            <ErrorNotification ref={toast} />
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full

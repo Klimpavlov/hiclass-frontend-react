@@ -86,7 +86,7 @@ export default function locationAndLanguages() {
 
 
     const handleContinue = () => {
-        if (!country || !city || !selectedLanguages) {
+        if (!country || !city || selectedLanguages.length === 0) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
         }

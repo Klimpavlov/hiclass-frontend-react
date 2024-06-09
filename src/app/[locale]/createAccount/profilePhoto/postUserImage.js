@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const postUserImage = (file) => {
+const postUserImage = (file, successRedirect) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const formData = new FormData();
@@ -16,6 +16,7 @@ const postUserImage = (file) => {
         })
         .then(function (response) {
             console.log(response);
+            successRedirect()
         })
         .catch(function (error) {
             console.log(error);

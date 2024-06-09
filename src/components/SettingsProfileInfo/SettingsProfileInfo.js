@@ -8,6 +8,7 @@ import putUpdatePersonalInfo from "@/app/[locale]/updateUser/updatePersonalInfo/
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
 import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
+import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 import putUpdateProfessionalInfo from "@/app/[locale]/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
 import putUpdateInstitution from "@/app/[locale]/updateUser/updateInstitution/putUpdateInstitution";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
@@ -200,7 +201,8 @@ const SettingsProfileInfo = () => {
 
     // grades
 
-    const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    // const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const grades = getAvailableGrades()
     const [selectedGrades, setSelectedGrades] = useState([])
 
     const handleUpdateProfessionalInfo = async () => {
