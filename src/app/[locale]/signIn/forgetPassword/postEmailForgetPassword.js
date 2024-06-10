@@ -13,7 +13,8 @@ const postEmailForgetPassword = async (email, successRedirect, toast) => {
             }
         })
                 console.log(response);
-
+        // const newAccessToken = response.data.value.accessToken;
+        // localStorage.setItem('accessToken', newAccessToken);
         successRedirect()
         return true;
 

@@ -1,22 +1,22 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import InputCalendar from "@/components/Inputs/InputCalendar";
 import InputForm from "@/components/Inputs/InputForm";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postInviteClass from "@/app/[locale]/postInviteClass/postInviteClass";
-import {useRouter} from "next/navigation";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import axios from "axios";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import Image from "next/image";
 import Tag from "@/components/Tags/Tag";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 
 const InviteModal = ({classId, disciplines, handleCloseModal}) => {
-    const router = useRouter()
+    const toast = useRef(null);
 
     const [classData, setClassData] = useState([]);
 
@@ -67,14 +67,17 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
 
     console.log(classSenderId)
 
-    const handlePostInvitation = () => {
+    const handlePostInvitation = async () => {
         console.log(dateOfInvitation)
         console.log(invitationText)
         console.log(classId)
         // alert('Invitation send!')
         // router.push('/')
         // handleCloseModal();
-        postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect)
+        if (!classSenderId || !classId || !dateOfInvitation || !invitationText) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        }
+        await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect, toast)
     }
 
     const successRedirect = () => {
@@ -82,7 +85,9 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     };
 
     return (
-        <div className="class-preview fixed inset-0 flex flex-col items-center justify-center bg-white z-50 overflow-y-auto">
+        <>
+            <ErrorNotification ref={toast}/>
+            <div className="class-preview fixed inset-0 flex flex-col items-center justify-center bg-white z-50 overflow-y-auto">
             <div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
                  onClick={handleCloseModal}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -134,6 +139,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
                 <ApplyButton buttonText="Send call invite" onApply={handlePostInvitation} />
             </div>
         </div>
+        </>
     );
 };
 

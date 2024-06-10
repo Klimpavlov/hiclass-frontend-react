@@ -1,26 +1,31 @@
 import axios from "axios";
-const postInviteClass = (classSenderId, receiverId, dateOfInvitation, invitationText, successRedirect) => {
-    const accessToken = localStorage.getItem('accessToken');
+const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invitationText, successRedirect, toast) => {
 
-    axios.post('http://localhost:7280/api/Invitation/create-invitation', {
-        ClassSenderId: classSenderId,
-        ClassReceiverId: receiverId.toString(),
-        DateOfInvitation: dateOfInvitation,
-        InvitationText: invitationText,
-    }, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
-        .then(function (response) {
-            console.log(response);
-            successRedirect()
-            // Перенаправление на другую страницу после успешного выполнения запроса
-        })
-        .catch(function (error) {
+   try {
+       const accessToken = localStorage.getItem('accessToken');
+
+       const response = await axios.post('http://localhost:7280/api/Invitation/create-invitation', {
+           ClassSenderId: classSenderId,
+           ClassReceiverId: receiverId.toString(),
+           DateOfInvitation: dateOfInvitation,
+           InvitationText: invitationText,
+       }, {
+           headers: {
+               Authorization: `Bearer ${accessToken}`,
+           },
+       })
+
+       console.log(response);
+       successRedirect();
+       return true;
+   }
+   catch (error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+       if (toast && toast.current) {
+           toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+       }
+       return false;
+        }
 };
 
 export default postInviteClass;
