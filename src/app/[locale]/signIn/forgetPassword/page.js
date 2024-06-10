@@ -1,24 +1,31 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postEmailForgetPassword from "@/app/[locale]/signIn/forgetPassword/postEmailForgetPassword";
 import {useRouter} from "next/navigation";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function ForgetPassword() {
+    const toast = useRef(null);
+
     const router = useRouter();
     const [email, setEmail] = useState('');
 
     const successRedirect = () => {
         router.push('/signIn/forgetPassword/resetPasswordCode');
     };
-    const handleContinue = () => {
-        postEmailForgetPassword(email, successRedirect);
+    const handleContinue = async () => {
+        if (!email) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        }
+        await postEmailForgetPassword(email, successRedirect, toast);
     }
     return (
         <div>
+            <ErrorNotification ref={toast}/>
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full

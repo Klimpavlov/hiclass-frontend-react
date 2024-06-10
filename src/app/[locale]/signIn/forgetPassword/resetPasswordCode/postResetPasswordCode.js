@@ -1,23 +1,29 @@
 import axios from "axios";
 
-const postResetPasswordCode = (code, successRedirect) => {
-    const accessToken = localStorage.getItem('accessToken')
+const postResetPasswordCode = async (code, successRedirect, toast) => {
+    try {
 
-    axios.post("http://localhost:7280/api/User/check-reset-password-code", {
-        ResetCode: code,
-    }, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        }
-    })
-        .then(function (response) {
-            console.log(response);
-            successRedirect()
+        const accessToken = localStorage.getItem('accessToken')
+
+        const response = await axios.post("http://localhost:7280/api/User/check-reset-password-code", {
+            ResetCode: code,
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
         })
-        .catch(function (error) {
+
+        console.log(response);
+        successRedirect()
+        return true;
+    }
+        catch (error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+            if (toast && toast.current) {
+                toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            }
+            return false;
+        }
 }
 
 export default postResetPasswordCode

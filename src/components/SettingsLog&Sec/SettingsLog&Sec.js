@@ -23,28 +23,36 @@ const SettingsLogSec = () => {
         getUserInfo()
     }, [])
 
-    const [email, setEmail] = useState('');
 
     async function getUserInfo() {
         const accessToken = localStorage.getItem('accessToken');
         const userProfile = await getUserProfile(accessToken);
-
         setEmail(userProfile.email);
 
     }
 
     //email
 
-    // const [newEmail, setNewEmail] = useState('');
+    const [email, setEmail] = useState('');
     const handleUpdateEmail = () => {
         putUpdateEmail(email)
     }
 
     // password
-
+    const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const handleUpdatePassword = () => {
-        putUpdatePassword(newPassword)
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+    const handleUpdatePassword = async () => {
+        if (newPassword !== confirmNewPassword) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Passwords do not match', life: 3000 });
+        }
+        else if(!oldPassword || !newPassword || !confirmNewPassword) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        }
+        else if(newPassword === confirmNewPassword) {
+            await putUpdatePassword(newPassword, toast)
+        }
     }
 
     // delete account
@@ -55,8 +63,8 @@ const SettingsLogSec = () => {
         setIsDeleteModalOpen(!isDeleteModalOpen);
     }
 
-    const handleDeleteUser = () => {
-        deleteUser(successRedirect, toast)
+    const handleDeleteUser = async () => {
+       await deleteUser(successRedirect, toast)
     }
 
     const successRedirect = () => {
@@ -79,11 +87,13 @@ const SettingsLogSec = () => {
                                  details='Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.'/>
                 <div className='py-8'>
                     <InputForm isPassword={true} inputFormText='Old password'
-                               placeholderText='Enter your old password'/>
+                               placeholderText='Enter your old password'
+                               onChange={(e) => setOldPassword(e.target.value)}/>
                     <InputForm isPassword={true} inputFormText='New password' placeholderText='At least 6 characters'
                                onChange={(e) => setNewPassword(e.target.value)}/>
                     <InputForm isPassword={true} inputFormText='Confirm new password'
-                               placeholderText='Re-enter new password'/>
+                               placeholderText='Re-enter new password'
+                               onChange={(e)=> setConfirmNewPassword(e.target.value)}/>
                     <ApplyButton buttonText='Change password' onApply={handleUpdatePassword}/>
                 </div>
             </div>

@@ -13,7 +13,6 @@ import {useTranslations} from "next-intl";
 export default function MyProfile() {
     const [loading, setLoading] = useState(true);
 
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAddClass = () => {

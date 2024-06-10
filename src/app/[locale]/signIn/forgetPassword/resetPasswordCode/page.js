@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
@@ -8,13 +8,20 @@ import postVerificationCode from "@/app/[locale]/signUp/verifyEmail/postVerifica
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import postResetPasswordCode from "@/app/[locale]/signIn/forgetPassword/resetPasswordCode/postResetPasswordCode";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function resetPasswordCode() {
+    const toast = useRef(null);
+
     const router = useRouter();
     const [code, setCode] = useState();
 
-    const handleContinue = () => {
-        postResetPasswordCode(code, successRedirect);
+    const handleContinue = async () => {
+        if (!code) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        }
+        console.log(code)
+        await postResetPasswordCode(code, successRedirect, toast);
     }
 
     const successRedirect = () => {
@@ -23,6 +30,7 @@ export default function resetPasswordCode() {
 
     return (
         <main>
+            <ErrorNotification ref={toast}/>
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full

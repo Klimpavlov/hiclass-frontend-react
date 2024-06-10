@@ -1,23 +1,28 @@
 import axios from "axios";
 
-const putUpdatePassword = (password) => {
+const putUpdatePassword = async (password, toast) => {
+    try {
+
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/EditUser/password', {
+        const response = await axios.put('http://localhost:7280/api/EditUser/password', {
         Password: password,
     }, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         }
     })
-        .then(function (response) {
+
             console.log(response);
-            // Перенаправление на другую страницу после успешного выполнения запроса
-        })
-        .catch(function (error) {
-            console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+        toast.current.show({severity: 'info', summary: 'Confirmed', detail: 'New password successfully created', life: 3000});
+        return true;
+        }
+        catch (error) {
+            if (toast && toast.current) {
+                toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            }
+            return false;
+        }
 };
 
 export default putUpdatePassword;

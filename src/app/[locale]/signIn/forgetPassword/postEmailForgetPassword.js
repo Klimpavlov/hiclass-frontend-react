@@ -1,24 +1,28 @@
 import axios from "axios";
 
-const postEmailForgetPassword = (email, successRedirect) => {
-    const accessToken = localStorage.getItem('accessToken')
+const postEmailForgetPassword = async (email, successRedirect, toast) => {
+    try {
 
-    axios.post('http://localhost:7280/api/User/forgot-password', {
-        Email: email
-    }, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        }
-    })
-        .then(function (response) {
-            console.log(response);
+        const accessToken = localStorage.getItem('accessToken')
 
-            successRedirect()
+        const response = await axios.post('http://localhost:7280/api/User/forgot-password', {
+            Email: email
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
         })
-        .catch(function (error) {
-            console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+                console.log(response);
+
+        successRedirect()
+        return true;
+
+    } catch (error) {
+        console.log(error);
+        if (toast && toast.current) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+        }
+        return false;    }
 }
 
 export default postEmailForgetPassword

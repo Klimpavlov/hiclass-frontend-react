@@ -1,13 +1,16 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {useRouter} from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postResetPassword from "@/app/[locale]/signIn/forgetPassword/resetPasswordCode/resetPassword/postResetPassword";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function resetPassword() {
+    const toast = useRef(null);
+
     const router = useRouter();
 
     const [password, setPassword] = useState("");
@@ -16,14 +19,17 @@ export default function resetPassword() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
 
-    const handleResetPassword = () => {
+    const handleResetPassword = async () => {
         if (password.length < 6) {
-            setPasswordError("Password must be at least 6 characters")
+            // setPasswordError("Password must be at least 6 characters")
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Password must be at least 6 characters', life: 3000 });
         }
         if (confirmPassword !== password) {
-            setConfirmPasswordError("Wrong password")
+            // setConfirmPasswordError("Wrong password")
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Wrong password provided', life: 3000 });
+
         }
-        postResetPassword(password, successRedirect)
+        await postResetPassword(password, successRedirect, toast)
     }
 
     const successRedirect = () => {
@@ -32,6 +38,7 @@ export default function resetPassword() {
 
     return (
         <main>
+            <ErrorNotification ref={toast}/>
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
