@@ -1,23 +1,27 @@
 import axios from "axios";
 
-const putUpdateEmail = (email) => {
-    const accessToken = localStorage.getItem('accessToken');
+const putUpdateEmail = async (email, toast) => {
+    try {
+        const accessToken = localStorage.getItem('accessToken');
 
-    axios.put('http://localhost:7280/api/EditUser/email', {
-        Email: email,
-    }, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        }
-    })
-        .then(function (response) {
-            console.log(response);
-            // Перенаправление на другую страницу после успешного выполнения запроса
+        const response = await axios.put('http://localhost:7280/api/EditUser/email', {
+            Email: email,
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
         })
-        .catch(function (error) {
+
+        console.log(response);
+        return true;
+    }
+       catch (error) {
             console.log(error);
-            // Перенаправление на страницу с ошибкой при ошибке запроса
-        });
+           if (toast && toast.current) {
+               toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+           }
+           return false;
+        }
 };
 
 export default putUpdateEmail;

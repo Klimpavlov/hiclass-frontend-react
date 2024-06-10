@@ -34,8 +34,21 @@ const SettingsLogSec = () => {
     //email
 
     const [email, setEmail] = useState('');
+
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
     const handleUpdateEmail = () => {
-        putUpdateEmail(email)
+        if(!email) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
+        }
+        if (!validateEmail(email)) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: "Please enter a valid email address", life: 3000 });
+            return;
+        }
+        putUpdateEmail(email, toast)
     }
 
     // password
