@@ -1,11 +1,13 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTitles, toast) => {
 
     try {
         const accessToken = localStorage.getItem('accessToken')
+        const localhost = getLocalhost();
 
-       const response = await axios.post('http://localhost:7280/api/Class/create-class', {
+        const response = await axios.post(`http://${localhost}/api/Class/create-class`, {
                 Title: title,
                 GradeNumber: gradeNumber,
                 LanguageTitles: languageTitles,

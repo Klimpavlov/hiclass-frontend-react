@@ -1,8 +1,11 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+
 export async function getUserProfile(accessToken) {
     try {
+        const localhost = getLocalhost();
         const response = await axios.get(
-            "http://localhost:7280/api/User/userprofile",
+            `http://${localhost}/api/User/userprofile`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`

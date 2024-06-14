@@ -42,7 +42,6 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
         }
     }
 
-
     const [dateOfInvitation, setDateOfInvitation] = useState('');
     const [invitationText, setInvitationText] = useState('');
 
@@ -68,20 +67,18 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     console.log(classSenderId)
 
     const handlePostInvitation = async () => {
-        console.log(dateOfInvitation)
-        console.log(invitationText)
-        console.log(classId)
-        // alert('Invitation send!')
-        // router.push('/')
-        // handleCloseModal();
-        if (!classSenderId || !classId || !dateOfInvitation || !invitationText) {
+        if (!classSenderId || !dateOfInvitation || !invitationText) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
         }
-        await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect, toast)
+        const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect, toast)
+
+        if (postInvitationSuccess) {
+            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Invitation successfully created', life: 3000 });
+        }
     }
 
     const successRedirect = () => {
-        alert('Invitation send!')
+        handleCloseModal();
     };
 
     return (
@@ -97,7 +94,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
             </div>
             <div className="header-title">Invite for a call</div>
             <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
-                <div className='dropdowns'>
+                <div className='dropdowns sm:flex justify-between'>
                     <Dropdown dropdownFormText='Subject' placeholderText='Select subject'
                               options={disciplines}
                               onChange={setSelectedDisciplines}

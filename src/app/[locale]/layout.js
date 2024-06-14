@@ -13,8 +13,7 @@ export default async function RootLayout({
                                              children,
                                              params: {locale}
                                          }) {
-    // Providing all messages to the client
-    // side is the easiest way to get started
+
     const messages = await getMessages();
 
     return (
@@ -27,7 +26,6 @@ export default async function RootLayout({
         </html>
     );
 }
-
 
 
 // prev layout file (before i18n)

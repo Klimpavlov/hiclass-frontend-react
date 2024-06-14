@@ -19,14 +19,16 @@ export default function resetPasswordCode() {
     const handleContinue = async () => {
         if (!code) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
         }
         console.log(code)
-        await postResetPasswordCode(code, successRedirect, toast);
+
+        const successResetPasswordCode = await postResetPasswordCode(code, toast);
+        if (successResetPasswordCode) {
+            router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
+        }
     }
 
-    const successRedirect = () => {
-        router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
-    }
 
     return (
         <main>

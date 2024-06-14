@@ -1,8 +1,10 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const postLoginData = (email, password, successRedirect, handleLoginError) => {
+    const localhost = getLocalhost();
 
-    axios.post('http://localhost:7280/api/User/login', {
+    axios.post(`http://${localhost}/api/User/login`, {
         Email: email,
         Password: password
     })

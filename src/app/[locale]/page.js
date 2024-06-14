@@ -21,6 +21,7 @@ import Link from "next/link";
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 
 export default function ExplorePage() {
@@ -56,36 +57,29 @@ export default function ExplorePage() {
     };
 
     const handleFilterApply = (selectedFilter, filterName) => {
-        const updatedFilters = [...currentFilters, ...selectedFilter];
+        const updatedFilters = [...new Set([...currentFilters, ...selectedFilter])];
 
         const englishSelectedOptions = updatedFilters.map(option => {
             if (currentPathname === 'ru') {
-                return disciplinesMapping[option] || languagesMapping[option] || option; // Если перевод не найден, использовать оригинальное значение
+                return disciplinesMapping[option] || languagesMapping[option] || option;
             }
             return option;
         });
 
         if (currentPathname === 'ru') {
-            setCurrentFilters(englishSelectedOptions) ;
+            setCurrentFilters(englishSelectedOptions);
+        } else {
+            setCurrentFilters(updatedFilters);
         }
 
-        else {
-            setCurrentFilters(updatedFilters) ;
-        }
-
-
-        console.log(englishSelectedOptions)
-        const filterValues = updatedFilters.join(', ') || englishSelectedOptions.join(', ') // Concatenate filter values in one line
+        const filterValues = updatedFilters.join(', ') || englishSelectedOptions.join(', ');
         setCurrentSearchFilterName(filterName + ': ' + filterValues);
 
         if (currentPathname === 'ru') {
             handleSearchRequest(englishSelectedOptions, filterName);
-
-        }
-        else {
+        } else {
             handleSearchRequest(updatedFilters, filterName);
         }
-        // handleSearchRequest(updatedFilters, filterName);
     };
     console.log(currentFilters)
 
@@ -219,12 +213,13 @@ export default function ExplorePage() {
 
     async function handleSearchRequest(selectedFilters, filterName) {
         const accessToken = localStorage.getItem('accessToken');
+        const localhost = getLocalhost();
 
         const queryParameters = selectedFilters.map(filterValue => `${filterName}=${filterValue}`).join('&');
 
         console.log(selectedFilters)
 
-        const searchUrl = `http://localhost:7280/api/Search/search-request?${queryParameters}`;
+        const searchUrl = `http://${localhost}/api/Search/search-request?${queryParameters}`;
 
         try {
             const response = await searchRequest(accessToken, searchUrl);

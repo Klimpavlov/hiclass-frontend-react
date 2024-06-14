@@ -23,18 +23,19 @@ export default function resetPassword() {
         if (password.length < 6) {
             // setPasswordError("Password must be at least 6 characters")
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Password must be at least 6 characters', life: 3000 });
+            return;
         }
-        if (confirmPassword !== password) {
+        else if (confirmPassword !== password) {
             // setConfirmPasswordError("Wrong password")
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Wrong password provided', life: 3000 });
-
+            return;
         }
-        await postResetPassword(password, successRedirect, toast)
-    }
+        const resetSuccess = await postResetPassword(password, toast);
 
-    const successRedirect = () => {
-        router.push('/signIn');
-    };
+        if (resetSuccess) {
+            router.push('/signIn');
+        }
+    }
 
     return (
         <main>

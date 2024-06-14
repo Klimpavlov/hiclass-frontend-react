@@ -1,9 +1,11 @@
 import axios from 'axios';
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 export async function getAvailableDisciplines(accessToken) {
     try {
+        const localhost = getLocalhost();
         const response = await axios.get(
-            'http://localhost:7280/api/StaticDataSources/get-available-disciplines',
+            `http://${localhost}/api/StaticDataSources/get-available-disciplines`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

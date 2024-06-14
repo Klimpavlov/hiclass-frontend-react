@@ -1,11 +1,13 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postResetPassword = async (code, successRedirect, toast) => {
+const postResetPassword = async (password, toast) => {
     try {
         const accessToken = localStorage.getItem('accessToken')
+        const localhost = getLocalhost();
 
-        const response = await axios.post("http://localhost:7280/api/User/reset-password", {
-            Password: code,
+        const response = await axios.post(`http://${localhost}/api/User/reset-password`, {
+            Password: password,
         }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -13,7 +15,6 @@ const postResetPassword = async (code, successRedirect, toast) => {
         })
 
         console.log(response);
-        successRedirect()
         return true;
     }
         catch (error) {

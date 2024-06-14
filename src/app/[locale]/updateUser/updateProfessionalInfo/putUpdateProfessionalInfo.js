@@ -1,11 +1,13 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const putUpdateProfessionalInfo = async (selectedLanguages, selectedDisciplines, selectedGrades, toast) => {
 
     try {
         const accessToken = localStorage.getItem('accessToken');
+        const localhost = getLocalhost();
 
-        const response = axios.put('http://localhost:7280/api/EditUser/professional-info', {
+        const response = axios.put(`http://${localhost}/api/EditUser/professional-info`, {
             Languages: selectedLanguages,
             Disciplines: selectedDisciplines,
             Grades: selectedGrades

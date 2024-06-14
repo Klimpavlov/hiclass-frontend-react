@@ -1,10 +1,12 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invitationText, successRedirect, toast) => {
 
    try {
        const accessToken = localStorage.getItem('accessToken');
+       const localhost = getLocalhost();
 
-       const response = await axios.post('http://localhost:7280/api/Invitation/create-invitation', {
+       const response = await axios.post(`http://${localhost}/api/Invitation/create-invitation`, {
            ClassSenderId: classSenderId,
            ClassReceiverId: receiverId.toString(),
            DateOfInvitation: dateOfInvitation,

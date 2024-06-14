@@ -1,10 +1,12 @@
 import axios from "axios";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const putEditClass = (classId, title, gradeNumber, languageTitles, disciplineTitles) => {
 
     const accessToken = localStorage.getItem('accessToken')
+    const localhost = getLocalhost();
 
-    axios.put(`http://localhost:7280/api/Class/edit-class/${classId}`, {
+    axios.put(`http://${localhost}/api/Class/edit-class/${classId}`, {
             Title: title,
             GradeNumber: gradeNumber,
             LanguageTitles: languageTitles,

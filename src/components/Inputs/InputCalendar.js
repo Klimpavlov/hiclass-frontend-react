@@ -11,14 +11,14 @@ const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
     };
 
     return (
-        <div className="w-full">
+        <div className="">
             {inputFormText}
             <label htmlFor="Input" className='flex justify-between'>
                 <DatePicker
                     selected={selectedDate}
                     onChange={handleDateChange}
-                    dateFormat="MM/dd/yyyy"
-                    className="w-full flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 "
+                    dateFormat="dd/MM/yyyy"
+                    className="w-full py-3 px-5 rounded-lg border border-gray-400"
                     placeholderText={placeholderText}
                     customInput={
                         <input

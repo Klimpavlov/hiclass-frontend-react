@@ -23,10 +23,18 @@ const UserInfo = () => {
     const [disciplineTitles, setDisciplineTitles] = useState([]);
 
     const [userAvatar, setUserAvatar] = useState([]);
+    const [localTime, setLocalTime] = useState('');
 
 
     useEffect(() => {
         getUser();
+        const interval = setInterval(() => {
+            setLocalTime(getLocalTime());
+        }, 60000);
+
+        setLocalTime(getLocalTime());
+
+        return () => clearInterval(interval);
     }, []);
 
     async function getUser() {
@@ -47,21 +55,22 @@ const UserInfo = () => {
 
     }
 
+    // local time
+
+    const getLocalTime = () => {
+        const date = new Date();
+        const options = {
+            hour: '2-digit',
+            minute: '2-digit',
+        };
+        return new Intl.DateTimeFormat([], options).format(date);
+    };
     // translation
 
     const t = useTranslations("UserInfo");
 
     return (
         <div className="sm:w-1/3 flex flex-col gap-3">
-            {/*<div className="avatar-container">*/}
-            {/*    <Image*/}
-            {/*        className="rounded-full w-36 h-36"*/}
-            {/*        src={userAvatar}*/}
-            {/*        alt="user-avatar"*/}
-            {/*        width={200}*/}
-            {/*        height={200}*/}
-            {/*    />*/}
-            {/*</div>*/}
             <div className="rounded-full overflow-hidden w-36 h-36">
                 <Image
                     className="w-full h-full object-cover"
@@ -77,7 +86,7 @@ const UserInfo = () => {
             <div className="languages">Speaks {languageTitles.join(", ")}</div>
             <div className='aboutUser '>{userDescription}</div>
             <div className='country'>{city}, {country}</div>
-            <div className='time'>14:10 {t("localTime")}</div>
+            <div className='time'>{localTime} {t("localTime")}</div>
             <div className='w-full'>
                 <EditProfileButton buttonText={t("editProfileBtn")}/>
             </div>

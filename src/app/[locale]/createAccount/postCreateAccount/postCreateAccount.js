@@ -1,8 +1,10 @@
 import axios from 'axios';
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const postCreateAccount = async (successRedirect, toast) => {
     try {
         const accessToken = localStorage.getItem('accessToken');
+        const localhost = getLocalhost();
 
         const firstName = localStorage.getItem('firstName');
         const lastName = localStorage.getItem('lastName');
@@ -44,7 +46,7 @@ const postCreateAccount = async (successRedirect, toast) => {
         };
 
         console.log(requestData)
-        const response = await axios.put('http://localhost:7280/api/User/create-account', requestData, {
+        const response = await axios.put(`http://${localhost}/api/User/create-account`, requestData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${accessToken}`,
