@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
@@ -9,11 +9,15 @@ import {useRouter} from "next/navigation";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import axios from "axios";
 import {RingLoader} from "react-spinners";
+import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function otherUserProfile() {
 
     //loader
     const [loading, setLoading] = useState(true);
+
+    const toast = useRef(null);
 
 
     const [firstName, setUserFirstName] = useState([]);
@@ -29,6 +33,17 @@ export default function otherUserProfile() {
     const [userAvatar, setUserAvatar] = useState([]);
     const [classData, setClassData] = useState([]);
     const otherUserId = localStorage.getItem('selectedUserId')
+
+
+    // select class for invitation
+
+    const [selectedClass, setSelectedClass] = useState(null);
+
+    const handleClassClick = (selectedClass) => {
+        setSelectedClass(selectedClass);
+        // localStorage.setItem('selectedUserId', teacher.userId);
+
+    };
 
     useEffect(() => {
 
@@ -84,6 +99,7 @@ export default function otherUserProfile() {
                 </div>
             ) : (
                 <>
+                    <ErrorNotification ref={toast}/>
                     <Header/>
                     <TopSection/>
                     <div className='flex flex-col sm:flex-row p-4 md:p-28'>
@@ -94,6 +110,7 @@ export default function otherUserProfile() {
                                        userAvatar={userAvatar}
                                        country={country}
                                        disciplines={disciplineTitles}
+                                       toast={toast}
                         />
                         <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
                             <div className='clsCntHeader flex justify-between'>
@@ -104,7 +121,7 @@ export default function otherUserProfile() {
                             </div>
                             <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
                                 {classData.map((defaultClass) => (
-                                    <div key={defaultClass.classId}>
+                                    <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>
                                         <ClassPreview key={defaultClass.classId}
                                                       title={defaultClass.title}
                                                       username={defaultClass.userFullName}
@@ -115,6 +132,17 @@ export default function otherUserProfile() {
                                 ))}
                             </div>
                         </div>
+                        {selectedClass && (
+                            <ClassPreviewModal
+                                headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
+                                classId={selectedClass.classId}
+                                title={selectedClass.title}
+                                username={selectedClass.userFullName}
+                                tags={selectedClass.disciplines}
+                                photo={selectedClass.imageUrl}
+                                handleCloseModal={() => setSelectedClass(null)}
+                            ></ClassPreviewModal>
+                        )}
                     </div>
                 </>
             )}

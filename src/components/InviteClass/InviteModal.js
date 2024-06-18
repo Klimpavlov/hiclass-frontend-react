@@ -13,10 +13,12 @@ import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import Image from "next/image";
 import Tag from "@/components/Tags/Tag";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 
 const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     const toast = useRef(null);
+    const localhost = getLocalhost();
 
     const [classData, setClassData] = useState([]);
 
@@ -28,7 +30,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
         const accessToken = localStorage.getItem('accessToken');
         try {
             const response = await axios.get(
-                "http://localhost:7280/api/User/userprofile",
+                `http://${localhost}/api/User/userprofile`,
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`

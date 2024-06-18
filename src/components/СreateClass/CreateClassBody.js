@@ -5,17 +5,24 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Image from "next/image";
 import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
+import ruLocale from "../../../messages/ru.json";
+import {usePathname} from "next/navigation";
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
     console.log(classId)
 
-// get Class Info
+    //current locale
+    const pathname = usePathname();
+    const currentPathname = pathname.slice(1);
+
+    // get Class Info
 
 
     useEffect(() => {
         getClass()
     }, [])
+
 
     const [initialTitle, setInitialTitle] = useState('')
     const [initialSubjects, setInitialSubjects] = useState([]);
@@ -60,18 +67,24 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
 
     useEffect(() => {
-        getUserDisciplines()
+        getUserInfo()
     }, []);
 
-    async function getUserDisciplines() {
+    async function getUserInfo() {
         const accessToken = localStorage.getItem('accessToken');
         const userProfile = await getUserProfile(accessToken);
         const availableDisciplines = userProfile.disciplineTitles;
         const availableGrades = userProfile.gradeNumbers;
         const availableLanguages = userProfile.languageTitles;
-        setDisciplines(availableDisciplines);
+        if (currentPathname === 'ru') {
+            setLanguages(Object.values(ruLocale.Languages));
+            setDisciplines(Object.values(ruLocale.Disciplines))
+        } else {
+            setLanguages(availableLanguages);
+            setDisciplines(availableDisciplines);
+        }
+
         setGrade(availableGrades);
-        setLanguages(availableLanguages);
     }
 
     const t = useTranslations('CreateClass');
@@ -113,12 +126,15 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <InputForm inputFormText={t("title")} placeholderText='Class title'
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
-                <Dropdown dropdownFormText={t("grade")} placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
+                <Dropdown dropdownFormText={t("grade")}
+                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
                           options={grades} onChange={setSelectedGrades}/>
 
-                <Dropdown dropdownFormText={t("subject")} placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
+                <Dropdown dropdownFormText={t("subject")}
+                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
                           options={disciplines} onChange={setSelectedDisciplines}/>
-                <Dropdown dropdownFormText={t("language")} placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") :'Class languages'}
+                <Dropdown dropdownFormText={t("language")}
+                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : 'Class languages'}
                           options={languages} onChange={setSelectedLanguages}/>
             </div>
         </div>

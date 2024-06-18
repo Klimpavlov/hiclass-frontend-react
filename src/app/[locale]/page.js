@@ -271,10 +271,10 @@ export default function ExplorePage() {
                             <Filter buttonText={filtersTranslation('Location')} options={countries} onApply={handleFilterApply}
                                     clearAll={handleClearAll} filterName={countriesFilterName}/>
                         </div>
-                        <div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">
-                            <Switch/>
-                            <span className="ml-2 md:ml-4">{t('showOnlyExperts')}</span>
-                        </div>
+                        {/*<div className="show-experts px-4 md:px-8 flex items-center mt-4 md:mt-0">*/}
+                        {/*    <Switch/>*/}
+                        {/*    <span className="ml-2 md:ml-4">{t('showOnlyExperts')}</span>*/}
+                        {/*</div>*/}
                     </div>
                     <div className="applied-filters-container px-4 md:px-8">
                         <div className='px-4 md:px-8 pt-2 md:pt-4'>

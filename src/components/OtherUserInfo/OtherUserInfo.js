@@ -10,7 +10,7 @@ import UserProfileChatBtn from "@/components/Buttons/UserProfileChatBtn";
 import UserProfileSendInviteBtn from "@/components/Buttons/UserProfileSendInvite";
 import Image from "next/image";
 
-const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescription, country, disciplines}) => {
+const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescription, country, disciplines, toast}) => {
 
 
     return (
@@ -31,7 +31,7 @@ const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescrip
             <div className="languages">Speaks {languageTitles.join(", ")}</div>
             <div className='aboutUser '>{userDescription}</div>
             <div className='country'></div>
-            <div className='w-full'><UserProfileSendInviteBtn buttonText='Send invite'/></div>
+            <div className='w-full'><UserProfileSendInviteBtn toast={toast} buttonText='Send invite'/></div>
             <div className='w-full'><UserProfileChatBtn buttonText='Chat with '/></div>
             <div className='location'>{country}</div>
             <div className='tags flex flex-wrap gap-2'>
