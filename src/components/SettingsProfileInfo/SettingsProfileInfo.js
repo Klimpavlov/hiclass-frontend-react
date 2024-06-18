@@ -14,6 +14,11 @@ import putUpdateInstitution from "@/app/[locale]/updateUser/updateInstitution/pu
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {RingLoader} from "react-spinners";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import Image from "next/image";
+import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
+import imgSrc from "@/components/Banner/Banner.jpg";
+import putEditUserImage from "@/app/[locale]/updateUser/updateUserImage/putUpdateUserImage";
+import {useTranslations} from "next-intl";
 
 const SettingsProfileInfo = () => {
 
@@ -39,6 +44,8 @@ const SettingsProfileInfo = () => {
     const [initialDisciplines, setInitialDisciplines] = useState([]);
     const [initialGrades, setInitialGrades] = useState([]);
 
+    const [userAvatar, setUserAvatar] = useState([]);
+
     useEffect(() => {
         async function getUserInfo() {
             const accessToken = localStorage.getItem('accessToken');
@@ -60,6 +67,8 @@ const SettingsProfileInfo = () => {
             setInitialDisciplines(userProfile.disciplineTitles);
             setInitialGrades(userProfile.gradeNumbers);
 
+            setUserAvatar(userProfile.imageUrl)
+
             setTimeout(() => {
                 setLoading(false)
             }, 1300);
@@ -68,6 +77,30 @@ const SettingsProfileInfo = () => {
         getUserInfo()
     }, [])
 
+
+    // change user photo
+
+    // const [file, setFile] = useState();
+
+    async function getFile(event) {
+        if (!userAvatar) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: 'Something went wrong', life: 3000});
+            return;
+        }
+        const selectedFile = event.target.files[0];
+
+        const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);
+
+        if (updateUserImageSuccess) {
+            toast.current.show({
+                severity: 'info',
+                summary: 'Success',
+                detail: 'User avatar is updated',
+                life: 3000
+            });
+        }
+        // setFile(URL.createObjectURL(selectedFile));
+    }
 
     // teacher/expert
 
@@ -118,14 +151,19 @@ const SettingsProfileInfo = () => {
 
     const handleUpdatePersonalInfo = async () => {
         if (!firstName || !lastName || !country || !city || !description) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
 
         const updatePersonalInfoSuccess = await putUpdatePersonalInfo(firstName, lastName, country, city, description, isTeacher, isExpert, toast)
 
         if (updatePersonalInfoSuccess) {
-            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Personal information updated', life: 3000 });
+            toast.current.show({
+                severity: 'info',
+                summary: 'Success',
+                detail: 'Personal information updated',
+                life: 3000
+            });
         }
 
     }
@@ -137,13 +175,18 @@ const SettingsProfileInfo = () => {
 
     const handleUpdateInstitution = async () => {
         if (!institutionName) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
         const updateInstitutionSuccess = await putUpdateInstitution(institutionName, toast);
 
         if (updateInstitutionSuccess) {
-            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Institution information updated', life: 3000 });
+            toast.current.show({
+                severity: 'info',
+                summary: 'Success',
+                detail: 'Institution information updated',
+                life: 3000
+            });
         }
     };
 
@@ -206,20 +249,30 @@ const SettingsProfileInfo = () => {
     const [selectedGrades, setSelectedGrades] = useState([])
 
     const handleUpdateProfessionalInfo = async () => {
-        if(!selectedLanguages || !selectedDisciplines || !selectedGrades) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        if (!selectedLanguages || !selectedDisciplines || !selectedGrades) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
-       const updateProfessionalInfoSuccess = await putUpdateProfessionalInfo(
+        const updateProfessionalInfoSuccess = await putUpdateProfessionalInfo(
             selectedLanguages.length > 0 ? selectedLanguages : initialLanguages,
             selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines,
             selectedGrades.length > 0 ? selectedGrades : initialGrades
-        , toast);
+            , toast);
 
         if (updateProfessionalInfoSuccess) {
-            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Professional information updated', life: 3000 });
+            toast.current.show({
+                severity: 'info',
+                summary: 'Success',
+                detail: 'Professional information updated',
+                life: 3000
+            });
         }
     }
+
+
+    // translation
+
+    const t = useTranslations('MyProfile');
 
 
     return (
@@ -236,14 +289,40 @@ const SettingsProfileInfo = () => {
                 </div>
             ) : (
                 <>
-                    <div className='section-photo'>
-                        <ErrorNotification ref={toast} />
+                    <div className='section-photo py-8'>
+                        <ErrorNotification ref={toast}/>
                         <SettingsSection title='Profile photo'
                                          details='Your photo appears on your Profile page and is visible for Brands on your profile preview
                                                   Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.'/>
-                        <div className='change photo'>
-                            <div className='photo'></div>
-                            <div className='changephotoBtn'></div>
+                        <div className="button group pt-5">
+                            <input className='hidden' type="file" onChange={getFile}/>
+                            {userAvatar ? (
+                                <div className="rounded-full overflow-hidden w-36 h-36">
+                                    <Image
+                                        className="w-full h-full object-cover"
+                                        src={userAvatar}
+                                        alt="user-avatar"
+                                        width={144}
+                                        height={144}
+                                        quality={100}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="rounded-full overflow-hidden w-36 h-36">
+                                    <Image
+                                        className="w-full h-full object-cover"
+                                        src={imgSrc}
+                                        alt="default user-avatar"
+                                        width={144}
+                                        height={144}
+                                        quality={100}
+                                    />
+                                </div>
+                            )}
+                            <div className="">
+                                <ApplyButton buttonText={t("replaceBtn")}
+                                             onApply={() => document.querySelector('input[type="file"]').click()}/>
+                            </div>
                         </div>
                     </div>
                     <div className='section-aboutMe py-8'>
@@ -282,11 +361,11 @@ const SettingsProfileInfo = () => {
                             {city !== '' && (
                                 <div className="">
                                     <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
-                                    {cityData.map((cityItem) => (
-                                        <div key={cityItem} onClick={() => setCity(cityItem)}>
-                                            {cityItem}
-                                        </div>
-                                    ))}
+                                        {cityData.map((cityItem) => (
+                                            <div key={cityItem} onClick={() => setCity(cityItem)}>
+                                                {cityItem}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             )}
