@@ -7,6 +7,8 @@ import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
 import ruLocale from "../../../messages/ru.json";
 import {usePathname} from "next/navigation";
+import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
@@ -17,7 +19,6 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const currentPathname = pathname.slice(1);
 
     // get Class Info
-
 
     useEffect(() => {
         getClass()
@@ -66,6 +67,8 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
 
+
+
     useEffect(() => {
         getUserInfo()
     }, []);
@@ -76,19 +79,23 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         const availableDisciplines = userProfile.disciplineTitles;
         const availableGrades = userProfile.gradeNumbers;
         const availableLanguages = userProfile.languageTitles;
+        //
+        // setLanguages(availableLanguages);
+        // setDisciplines(availableDisciplines);
+        // setGrade(availableGrades);
+
         if (currentPathname === 'ru') {
+            setDisciplines(Object.values(ruLocale.Disciplines));
             setLanguages(Object.values(ruLocale.Languages));
-            setDisciplines(Object.values(ruLocale.Disciplines))
         } else {
-            setLanguages(availableLanguages);
             setDisciplines(availableDisciplines);
+            setLanguages(availableLanguages);
         }
 
         setGrade(availableGrades);
     }
 
     const t = useTranslations('CreateClass');
-
 
     return (
         <div className="flex flex-col sm:flex-row gap-5">

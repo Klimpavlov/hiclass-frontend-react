@@ -150,7 +150,7 @@ const SettingsProfileInfo = () => {
     }
 
     const handleUpdatePersonalInfo = async () => {
-        if (!firstName || !lastName || !country || !city || !description) {
+        if (!firstName || !lastName || !country || !city) {
             toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
