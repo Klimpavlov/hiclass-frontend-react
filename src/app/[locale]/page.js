@@ -367,6 +367,8 @@ import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.j
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -388,6 +390,109 @@ export default function ExplorePage() {
         getCountries();
         defaultSearch();
     }, []);
+
+    //firebase
+
+    useEffect(() => {
+        // Ваши функции getDisciplines, getLanguages, getCountries, defaultSearch
+
+        const getAccessToken = async () => {
+            try {
+                const response = await fetch('/api/getAccessToken');
+                const data = await response.json();
+                if (data.accessToken) {
+                    console.log('Access Token:', data.accessToken);
+                } else {
+                    console.error('Failed to get access token');
+                }
+            } catch (error) {
+                console.error('Error getting access token:', error);
+            }
+        };
+
+        getAccessToken();
+    }, []);
+
+    useEffect(() => {
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+            authDomain: "hiclass-ff338.firebaseapp.com",
+            projectId: "hiclass-ff338",
+            storageBucket: "hiclass-ff338.appspot.com",
+            messagingSenderId: "526521652695",
+            appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    messaging.useServiceWorker(registration);
+                    return registration.update().then(() => {
+                        if (registration.active) {
+                            console.log('Service Worker is active');
+                            requestNotificationPermission().then(getTokenAndSave);
+                        } else {
+                            console.error('Service Worker is not active');
+                        }
+                    });
+                }).catch((err) => {
+                console.log('Service Worker registration failed:', err);
+            });
+        }
+
+        function requestNotificationPermission() {
+            return new Promise((resolve, reject) => {
+                const permissionResult = Notification.requestPermission((result) => {
+                    resolve(result);
+                });
+
+                if (permissionResult) {
+                    permissionResult.then(resolve, reject);
+                }
+            }).then((permissionResult) => {
+                if (permissionResult !== 'granted') {
+                    throw new Error('Permission not granted for Notification');
+                }
+            });
+        }
+
+        // Добавьте обработчик для входящих сообщений
+        onMessage(messaging, (payload) => {
+            console.log('Message received. ', payload);
+            // Customize notification here
+            const notificationTitle = payload.notification.title;
+            const notificationOptions = {
+                body: payload.notification.body,
+                icon: payload.notification.icon
+            };
+
+            new Notification(notificationTitle, notificationOptions);
+        });
+
+        // Получите регистрационный токен и сохраните его при необходимости
+        const getTokenAndSave = async () => {
+            try {
+                const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
+                if (currentToken) {
+                    console.log('Device token:', currentToken);
+                    // Save or send the token to your server for later use
+                } else {
+                    console.log('No registration token available. Request permission to generate one.');
+                }
+            } catch (err) {
+                console.log('An error occurred while retrieving token. ', err);
+            }
+        };
+
+        getTokenAndSave();
+
+        // Опционально: запросите разрешение на отправку уведомлений здесь
+    }, []);
+
 
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
