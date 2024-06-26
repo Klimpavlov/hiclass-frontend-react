@@ -1,12 +1,13 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postLoginData = (email, password, successRedirect, handleLoginError) => {
+const postLoginData = (email, password, successRedirect, handleLoginError, deviceToken) => {
     const localhost = getLocalhost();
 
     axios.post(`http://${localhost}/api/User/login`, {
         Email: email,
-        Password: password
+        Password: password,
+        DeviceToken: deviceToken
     })
         .then(function (response) {
             const accessToken = response.data.value.accessToken;

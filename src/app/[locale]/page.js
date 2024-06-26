@@ -369,6 +369,8 @@ import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailab
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -432,32 +434,9 @@ export default function ExplorePage() {
             });
         }
 
-        // function requestPermission() {
-        //     console.log("Requesting permission...");
-        //     Notification.requestPermission().then((permission) => {
-        //         if (permission === "granted") {
-        //             console.log("Notification permission granted.");
-        //             getToken(messaging, {
-        //                 vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4",
-        //             }).then((currentToken) => {
-        //                 if (currentToken) {
-        //                     console.log("currentToken: ", currentToken);
-        //                 } else {
-        //                     console.log("Can not get token");
-        //                 }
-        //             });
-        //         } else {
-        //             console.log("Do not have permission!");
-        //         }
-        //     });
-        // }
-        //
-        // requestPermission();
-
         const requestPermission = async () => {
             const permission = await Notification.requestPermission();
             if (permission === "granted") {
-                // Generate Device Token for notification
                 const token = await getToken(messaging, {
                     vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4",
                 });
@@ -465,7 +444,8 @@ export default function ExplorePage() {
             } else if (permission === "denied") {
                 console.log("Denied for the notification");
             }
-        }
+        };
+
         requestPermission();
 
         // Handle incoming messages while the app is in the foreground
@@ -473,14 +453,13 @@ export default function ExplorePage() {
             console.log('Message received:', payload);
             const { title, body, icon } = payload.notification;
 
-            // Display the notification
+            // Display the notification using Web Notifications API
             if (Notification.permission === 'granted') {
                 new Notification(title, { body, icon });
             }
         });
 
-        // Получите регистрационный токен и сохраните его при необходимости
-        const getTokenAndSave = async () => {
+        const getDeviceTokenAndSave = async () => {
             try {
                 const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
                 if (currentToken) {
@@ -494,11 +473,24 @@ export default function ExplorePage() {
             }
         };
 
-        getTokenAndSave();
-    }, []);
+        getDeviceTokenAndSave();
+
+    }, [])
 
 
-    async function getDisciplines() {
+    // get notifications
+
+    async function getNotifications() {
+        const accessToken = localStorage.getItem('accessToken');
+        const notifications = await getAllNotifications(accessToken)
+        console.log(notifications);
+
+    }
+    getNotifications()
+
+
+
+async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
         setDisciplines(currentPathname === 'ru' ? Object.values(ruLocale.Disciplines) : availableDisciplines);

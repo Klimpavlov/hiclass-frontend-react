@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
+
 
 const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
     const [selectedDate, setSelectedDate] = useState(value);
@@ -23,7 +25,7 @@ const InputCalendar = ({inputFormText, placeholderText, value, onChange}) => {
                     customInput={
                         <input
                             className="w-full flex justify-center items-center py-3 px-5 rounded-lg border border-gray-400 "
-                            value={selectedDate ? selectedDate.toDateString() : ""}
+                            value={selectedDate ? format(selectedDate, "dd/MM/yyyy") : ""}
                             onChange={() => {
                             }}
                         />

@@ -14,6 +14,8 @@ import Image from "next/image";
 import Tag from "@/components/Tags/Tag";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import { format } from "date-fns";
+
 
 
 const InviteModal = ({classId, disciplines, handleCloseModal}) => {
@@ -52,7 +54,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     };
 
     const handleDateChange = (date) => {
-        setDateOfInvitation(date);
+        const formattedDate = format(date, "MM/dd/yyyy");
+        setDateOfInvitation(formattedDate);
     };
 
     // const [disciplines, setDisciplines] = useState([]);
@@ -72,6 +75,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
         if (!classSenderId || !dateOfInvitation || !invitationText) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
         }
+        console.log(dateOfInvitation)
+
         const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect, toast)
 
         if (postInvitationSuccess) {

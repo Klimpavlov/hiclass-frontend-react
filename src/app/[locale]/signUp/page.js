@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useRouter } from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
@@ -9,6 +9,8 @@ import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Link from "next/link";
 import postSignUp from "@/app/[locale]/signUp/postSignUp/postSignUp";
+import {initializeApp} from "firebase/app";
+import {getMessaging, getToken} from "firebase/messaging";
 
 export default function SignUp() {
     const router = useRouter();
@@ -22,6 +24,39 @@ export default function SignUp() {
 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
+
+    const [deviceToken, setDeviceToken] = useState('');
+
+    useEffect(() => {
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+            authDomain: "hiclass-ff338.firebaseapp.com",
+            projectId: "hiclass-ff338",
+            storageBucket: "hiclass-ff338.appspot.com",
+            messagingSenderId: "526521652695",
+            appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+
+        const getDeviceTokenAndSave = async () => {
+            try {
+                const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
+                if (currentToken) {
+                    console.log('Device token:', currentToken);
+                    setDeviceToken(currentToken)
+                } else {
+                    console.log('No registration token available. Request permission to generate one.');
+                }
+            } catch (err) {
+                console.log('An error occurred while retrieving token. ', err);
+            }
+        };
+
+        getDeviceTokenAndSave();
+    }, [])
 
     const validateEmail = (email) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,7 +74,7 @@ export default function SignUp() {
         if (confirmPassword !== password) {
             setConfirmPasswordError("Wrong password")
         }
-        postSignUp(email, password, successRedirect)
+        postSignUp(email, password, deviceToken, successRedirect)
     }
 
     const successRedirect = () => {
