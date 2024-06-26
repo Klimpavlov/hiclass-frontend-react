@@ -391,11 +391,8 @@ export default function ExplorePage() {
         defaultSearch();
     }, []);
 
-    //firebase
-
+    // Firebase
     useEffect(() => {
-        // Ваши функции getDisciplines, getLanguages, getCountries, defaultSearch
-
         const getAccessToken = async () => {
             try {
                 const response = await fetch('/api/getAccessToken');
@@ -430,47 +427,56 @@ export default function ExplorePage() {
             navigator.serviceWorker.register('/firebase-messaging-sw.js')
                 .then((registration) => {
                     console.log('Service Worker registered with scope:', registration.scope);
-                    messaging.useServiceWorker(registration);
-                    return registration.update().then(() => {
-                        if (registration.active) {
-                            console.log('Service Worker is active');
-                            requestNotificationPermission().then(getTokenAndSave);
-                        } else {
-                            console.error('Service Worker is not active');
-                        }
-                    });
                 }).catch((err) => {
                 console.log('Service Worker registration failed:', err);
             });
         }
 
-        function requestNotificationPermission() {
-            return new Promise((resolve, reject) => {
-                const permissionResult = Notification.requestPermission((result) => {
-                    resolve(result);
+        // function requestPermission() {
+        //     console.log("Requesting permission...");
+        //     Notification.requestPermission().then((permission) => {
+        //         if (permission === "granted") {
+        //             console.log("Notification permission granted.");
+        //             getToken(messaging, {
+        //                 vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4",
+        //             }).then((currentToken) => {
+        //                 if (currentToken) {
+        //                     console.log("currentToken: ", currentToken);
+        //                 } else {
+        //                     console.log("Can not get token");
+        //                 }
+        //             });
+        //         } else {
+        //             console.log("Do not have permission!");
+        //         }
+        //     });
+        // }
+        //
+        // requestPermission();
+
+        const requestPermission = async () => {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+                // Generate Device Token for notification
+                const token = await getToken(messaging, {
+                    vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4",
                 });
-
-                if (permissionResult) {
-                    permissionResult.then(resolve, reject);
-                }
-            }).then((permissionResult) => {
-                if (permissionResult !== 'granted') {
-                    throw new Error('Permission not granted for Notification');
-                }
-            });
+                console.log("Token Gen", token);
+            } else if (permission === "denied") {
+                console.log("Denied for the notification");
+            }
         }
+        requestPermission();
 
-        // Добавьте обработчик для входящих сообщений
+        // Handle incoming messages while the app is in the foreground
         onMessage(messaging, (payload) => {
-            console.log('Message received. ', payload);
-            // Customize notification here
-            const notificationTitle = payload.notification.title;
-            const notificationOptions = {
-                body: payload.notification.body,
-                icon: payload.notification.icon
-            };
+            console.log('Message received:', payload);
+            const { title, body, icon } = payload.notification;
 
-            new Notification(notificationTitle, notificationOptions);
+            // Display the notification
+            if (Notification.permission === 'granted') {
+                new Notification(title, { body, icon });
+            }
         });
 
         // Получите регистрационный токен и сохраните его при необходимости
@@ -489,8 +495,6 @@ export default function ExplorePage() {
         };
 
         getTokenAndSave();
-
-        // Опционально: запросите разрешение на отправку уведомлений здесь
     }, []);
 
 
