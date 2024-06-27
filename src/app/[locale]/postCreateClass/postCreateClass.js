@@ -4,6 +4,7 @@ import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTitles, toast) => {
 
     try {
+        console.log(gradeNumber);
         const accessToken = localStorage.getItem('accessToken')
         const localhost = getLocalhost();
 

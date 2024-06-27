@@ -1,30 +1,32 @@
 import axios from 'axios';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const editClassImage =  (classId, file) => {
-    const accessToken = localStorage.getItem('accessToken');
-    const localhost = getLocalhost();
+const editClassImage = async (classId, file, toast) => {
+    try {
 
-    const formData = new FormData();
+        const accessToken = localStorage.getItem('accessToken');
+        const localhost = getLocalhost();
 
-    formData.append('ImageFormFile', file);
+        const formData = new FormData();
 
-    axios
-        .put(`http://${localhost}/api/Image/edit-class-image/${classId}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
-        // .then(function (response) {
-        //     console.log(response);
-        //
-        //     // page reload
-        //     window.location.reload()
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        formData.append('ImageFormFile', file);
+
+        const response = axios.put(`http://${localhost}/api/Image/edit-class-image/${classId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+        console.log(response)
+        return true;
+    }
+    catch (error) {
+        console.log(error);
+        if (toast && toast.current) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+        }
+        return false;
+    }
 };
 
 export default editClassImage;

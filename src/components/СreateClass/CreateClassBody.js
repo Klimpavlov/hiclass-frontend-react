@@ -135,14 +135,14 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
                           placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
-                          options={grades} onChange={setSelectedGrades}/>
+                          options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText={t("subject")}
                           placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
-                          options={disciplines} onChange={setSelectedDisciplines}/>
+                          options={disciplines} initialSelectedOptions={initialSubjects} onChange={setSelectedDisciplines}/>
                 <Dropdown dropdownFormText={t("language")}
                           placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : 'Class languages'}
-                          options={languages} onChange={setSelectedLanguages}/>
+                          options={languages} initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
             </div>
         </div>
     )

@@ -1,29 +1,34 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const putEditClass = (classId, title, gradeNumber, languageTitles, disciplineTitles) => {
+const putEditClass = async (classId, title, gradeNumber, languageTitles, disciplineTitles, toast) => {
 
-    const accessToken = localStorage.getItem('accessToken')
-    const localhost = getLocalhost();
+    try {
+        const accessToken = localStorage.getItem('accessToken')
+        const localhost = getLocalhost();
 
-    axios.put(`http://${localhost}/api/Class/edit-class/${classId}`, {
-            Title: title,
-            GradeNumber: gradeNumber,
-            LanguageTitles: languageTitles,
-            DisciplineTitles: disciplineTitles
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${accessToken}`,
+        const response = await axios.put(`http://${localhost}/api/Class/edit-class/${classId}`, {
+                Title: title,
+                GradeNumber: gradeNumber,
+                LanguageTitles: languageTitles,
+                DisciplineTitles: disciplineTitles
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                }
             }
+        )
+        console.log(response);
+        return true;
+    }
+    catch (error) {
+        console.log(error);
+        if (toast && toast.current) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
         }
-    )
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        return false;
+    }
 }
 
 export default putEditClass

@@ -1,6 +1,6 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invitationText, successRedirect, toast) => {
+const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invitationText, toast) => {
 
    try {
        const accessToken = localStorage.getItem('accessToken');
@@ -18,7 +18,6 @@ const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invi
        })
 
        console.log(response);
-       successRedirect();
        return true;
    }
    catch (error) {

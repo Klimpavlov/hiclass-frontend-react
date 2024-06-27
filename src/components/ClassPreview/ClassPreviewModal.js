@@ -39,18 +39,23 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                     <div className='class-preview-text text-xl font-bold'>{headerText}</div>
                     {/*<ApplyButton buttonText='Invite class' onApply={handleOpenInviteModal}/>*/}
                 </div>
-                <div className='class-preview-username&avatar my-4'>
+                <div className='class-preview-username&avatar my-4 flex items-center'>
                     <div className="avatar">{}</div>
                     <div className="username text-black text-sm font-bold cursor-pointer" onClick={handleOpenUserProfile}>{username}</div>
                 </div>
-                <div className="class-preview-image ">
-                    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>
+                <div className="class-preview-image w-64 h-40 overflow-hidden rounded-2xl relative">
+                    <Image
+                        src={photo}
+                        alt="ClassImage"
+                        className="object-cover absolute inset-0 w-full h-full rounded-2xl"
+                        layout="fill"
+                    />
                 </div>
-                <div className='class-preview-header'>
+                <div className='class-preview-header flex justify-between items-center'>
                     <div className="avatar">{}</div>
                 </div>
                 <div className="class-preview-text"> {title}</div>
-                <div className="class-preview-footer flex justify-between">
+                <div className="class-preview-footer flex justify-between items-center mt-4">
                     <div className="class-preview-tags flex flex-wrap gap-2">
                         {tags.map((title) => (
                             <Tag key={title} text={title}></Tag>

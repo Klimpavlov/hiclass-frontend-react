@@ -66,7 +66,6 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     const handleClassClick = (classId) => {
         // console.log(classId)
         setClassSenderId(classId)
-        // Дополнительная логика с обработкой id класса
     };
 
     console.log(classSenderId)
@@ -74,19 +73,21 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
     const handlePostInvitation = async () => {
         if (!classSenderId || !dateOfInvitation || !invitationText) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            return;
         }
         console.log(dateOfInvitation)
 
-        const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, successRedirect, toast)
+        const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, toast)
 
         if (postInvitationSuccess) {
             toast.current.show({ severity: 'info', summary: 'Success', detail: 'Invitation successfully created', life: 3000 });
+
         }
     }
 
-    const successRedirect = () => {
-        handleCloseModal();
-    };
+    // const successRedirect = () => {
+    //     handleCloseModal();
+    // };
 
     return (
         <>

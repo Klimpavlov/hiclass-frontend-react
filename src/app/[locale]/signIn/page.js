@@ -3,7 +3,7 @@
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
 import FacebookButton from "@/components/Buttons/FacebookButton";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postLoginData from "@/app/[locale]/signIn/postLogin/postLoginData";
@@ -12,19 +12,22 @@ import {useRouter} from "next/navigation";
 import ExplorePage from "@/app/[locale]/page";
 import {getMessaging, getToken} from "firebase/messaging";
 import {initializeApp} from "firebase/app";
+import putUpdatePersonalInfo from "@/app/[locale]/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function SignIn() {
     const router = useRouter();
 
+    const toast = useRef(null);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [emailDirty, setEmailDirty] = useState(false);
-    const [passwordDirty, setPasswordDirty] = useState(false);
+    // const [emailDirty, setEmailDirty] = useState(false);
+    // const [passwordDirty, setPasswordDirty] = useState(false);
     // const [emailError, setEmailError] = useState('field is empty');
     // const [passwordError, setPasswordError] = useState("field is empty");
-    const [formSubmitted, setFormSubmitted] = useState(false);
-    const [loginError, setLoginError] = useState("");
+    // const [formSubmitted, setFormSubmitted] = useState(false);
+    // const [loginError, setLoginError] = useState("");
 
     const [deviceToken, setDeviceToken] = useState('');
 
@@ -58,15 +61,29 @@ export default function SignIn() {
 
     getDeviceTokenAndSave();
     }, [])
-    const handleLoginError = () => {
-        setLoginError("Invalid email or password");
+    // const handleLoginError = () => {
+    //     setLoginError("Invalid email or password");
+    //
+    // };
+    const handleSignIn = async () => {
+        // setEmailDirty(true);
+        // setPasswordDirty(true);
+        // setFormSubmitted(true);
+        if (!email || !password) {
+            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            return;
+        }
 
-    };
-    const handleSignIn = () => {
-        setEmailDirty(true);
-        setPasswordDirty(true);
-        postLoginData(email, password, successRedirect, handleLoginError, deviceToken);
-        setFormSubmitted(true);
+        const successLogin = await postLoginData(email, password, successRedirect, deviceToken, toast);
+
+        if (successLogin) {
+            toast.current.show({
+                severity: 'info',
+                summary: 'Success',
+                detail: 'Success login',
+                life: 3000
+            });
+        }
     };
 
     const successRedirect = () => {
@@ -77,6 +94,7 @@ export default function SignIn() {
     return (
         <main className="">
             <RegistrationHeader/>
+            <ErrorNotification ref={toast}/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
@@ -88,7 +106,7 @@ export default function SignIn() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            {loginError && <div className="text-red-700">{loginError}</div>}
+                            {/*{loginError && <div className="text-red-700">{loginError}</div>}*/}
                             <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}/>

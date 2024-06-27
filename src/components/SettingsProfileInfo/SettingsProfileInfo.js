@@ -43,6 +43,7 @@ const SettingsProfileInfo = () => {
     const [initialLanguages, setInitialLanguages] = useState([]);
     const [initialDisciplines, setInitialDisciplines] = useState([]);
     const [initialGrades, setInitialGrades] = useState([]);
+    const [initialPosition, setInitialPosition] = useState([])
 
     const [userAvatar, setUserAvatar] = useState([]);
 
@@ -103,8 +104,16 @@ const SettingsProfileInfo = () => {
     }
 
     // teacher/expert
-
     const position = ['teacher', 'expert'];
+
+    useEffect(() => {
+        setInitialPosition(isTeacher ? "teacher" : (isExpert ? "expert" : ""));
+    }, [isTeacher, isExpert]);
+
+    const initialPositionArray = [initialPosition]
+
+    console.log(initialPositionArray)
+    console.log(initialDisciplines)
 
 
     // country
@@ -337,7 +346,9 @@ const SettingsProfileInfo = () => {
                             <Dropdown
                                 dropdownFormText="I’m a/am"
                                 options={position}
-                                placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
+                                // placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
+                                placeholderText={initialPositionArray.length > 0 ? initialPositionArray.join(", ") : "Select position"}
+                                initialSelectedOptions={initialPositionArray}
                                 onChange={(selectedOptions) => {
                                     setIsTeacher(selectedOptions.includes("teacher"));
                                     setIsExpert(selectedOptions.includes("expert"));
@@ -403,14 +414,15 @@ const SettingsProfileInfo = () => {
                         <div className='py-8'>
                             <Dropdown dropdownFormText='Areas of work'
                                       placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
-                                      options={disciplines} onChange={setSelectedDisciplines}/>
+                                      options={disciplines} initialSelectedOptions={initialDisciplines} onChange={setSelectedDisciplines}/>
                             <Dropdown dropdownFormText='Grades'
                                       placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
                                       options={grades}
+                                      initialSelectedOptions={initialGrades}
                                       onChange={setSelectedGrades}/>
                             <Dropdown dropdownFormText='Languages'
                                       placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
-                                      options={languages} onChange={setSelectedLanguages}/>
+                                      options={languages}  initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
                             <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
                         </div>
                     </div>
