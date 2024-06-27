@@ -6,11 +6,19 @@ import imgSrc from "@/components/Filter/chevron-down.svg";
 
 const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedOptions, onChange  }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState([initialSelectedOptions]);
+
+    const initialSelectedState = initialSelectedOptions ? [initialSelectedOptions] : [];
+    const [selectedOptions, setSelectedOptions] = useState(initialSelectedState);
 
     useEffect(() => {
-        setSelectedOptions(initialSelectedOptions)
+        setSelectedOptions(initialSelectedOptions ? initialSelectedOptions : []);
     }, [initialSelectedOptions]);
+
+    // const [selectedOptions, setSelectedOptions] = useState([initialSelectedOptions])
+    //
+    // useEffect(() => {
+    //     setSelectedOptions(initialSelectedOptions)
+    // }, [initialSelectedOptions]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
