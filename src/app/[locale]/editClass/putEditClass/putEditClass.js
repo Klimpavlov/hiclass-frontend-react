@@ -6,10 +6,14 @@ const putEditClass = async (classId, title, gradeNumber, languageTitles, discipl
     try {
         const accessToken = localStorage.getItem('accessToken')
         const localhost = getLocalhost();
+        console.log(gradeNumber);
+        const gradeNumberString = gradeNumber.toString()
+        console.log(gradeNumberString);
+
 
         const response = await axios.put(`http://${localhost}/api/Class/edit-class/${classId}`, {
                 Title: title,
-                GradeNumber: gradeNumber,
+                GradeNumber: gradeNumberString,
                 LanguageTitles: languageTitles,
                 DisciplineTitles: disciplineTitles
             }, {

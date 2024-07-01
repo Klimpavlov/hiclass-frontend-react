@@ -12,8 +12,6 @@ import languagesMapping from "../../../mapping/languagesMapping/languagesMapping
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
-    console.log(classId)
-
     //current locale
     const pathname = usePathname();
     const currentPathname = pathname.slice(1);

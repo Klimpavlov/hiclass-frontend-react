@@ -58,7 +58,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
 
     return (
         <div className="class-preview ">
-            <ErrorNotification ref={toast} /> {/* Вставляем компонент уведомлений */}
+            <ErrorNotification ref={toast} />
             <div className="class-preview-content">
                 {/*<div className="class-preview-image">*/}
                 {/*    <Image src={photo} alt="ClassImage" className="rounded-2xl" width={300} height={300}/>*/}
@@ -92,7 +92,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                                     onClick={toggleDropdown}
                                 />
                                 {isDropdownOpen && (
-                                    <div className="absolute">
+                                    <div className="absolute z-50">
                                         <div className="block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border
                                           border-gray-300 rounded-lg shadow-lg cursor-pointer"
                                              onClick={toggleEditModal}>
