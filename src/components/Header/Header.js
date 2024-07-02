@@ -17,11 +17,18 @@ import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {useLocale, useTranslations} from "next-intl";
 
-const Header = () => {
+const Header = ({notifications}) => {
 
     const router = useRouter();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const [isNotification, setIsNotification] = useState(false);
+    const [notificationInfo, setNotificationInfo] = useState(false);
+    console.log(notifications)
+    useEffect(() => {
+        setNotificationInfo(notifications);
+    }, [notifications]);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -81,6 +88,11 @@ const Header = () => {
         };
     }, [isAvatarOpen]);
 
+    // notification window
+
+    function handleNotification() {
+        setIsNotification(!isNotification);
+    }
 
     // mobile button
     const [nav, setNav] = useState(false);
@@ -92,7 +104,7 @@ const Header = () => {
     //current locale
 
     const pathname = usePathname();
-    const locale = pathname.slice(1,3);
+    const locale = pathname.slice(1, 3);
 
     // translation
 
@@ -120,8 +132,10 @@ const Header = () => {
                 <div className="hidden sm:flex flex-wrap justify-start ml-4">
                     {/*<Link href="/" className="ml-6 my-2">{t('discover')}</Link>*/}
                     {/*<Link href="/myProfile" className="ml-6 my-2">{t('myProfile')}</Link>*/}
-                    <div className="ml-6 my-2 cursor-pointer" onClick={() => router.push(`/${locale}`)}>{t('discover')}</div>
-                    <div className="ml-6 my-2 cursor-pointer" onClick={() => router.push(`/${locale}/myProfile`)}>{t('myProfile')}</div>
+                    <div className="ml-6 my-2 cursor-pointer"
+                         onClick={() => router.push(`/${locale}`)}>{t('discover')}</div>
+                    <div className="ml-6 my-2 cursor-pointer"
+                         onClick={() => router.push(`/${locale}/myProfile`)}>{t('myProfile')}</div>
                 </div>
             </div>
             <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
@@ -145,19 +159,41 @@ const Header = () => {
                         //     </Link>
                         // </div>
                         <div className="absolute mt-2 z-50">
-                            <div className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer'
-                                 onClick={() => changeLanguage('en')}>
+                            <div
+                                className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer'
+                                onClick={() => changeLanguage('en')}>
                                 English
                             </div>
-                            <div className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
-                                 onClick={() => changeLanguage('ru')}>
+                            <div
+                                className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
+                                onClick={() => changeLanguage('ru')}>
                                 Russian
                             </div>
                         </div>
                     )}
                 </div>
 
-                <Image src={imgChatButton} alt="chat-button"/>
+                <Image src={imgChatButton} alt="chat-button" onClick={handleNotification} className='cursor-pointer'/>
+                {isNotification && (
+                    <div className='absolute border-black text-green-700'>
+                        {isNotification && (
+                            <div className='absolute right-0 mt-2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>
+                                <div className='py-2 px-4 border-b border-gray-200 text-lg font-semibold'>Notifications</div>
+                                <div className='max-h-60 overflow-y-auto'>
+                                    {notificationInfo.length > 0 ? (
+                                        notificationInfo.map((notification, index) => (
+                                            <div key={index} className='py-2 px-4 text-slate-400 hover:bg-gray-100'>
+                                                {notification}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className='py-2 px-4 text-gray-500'>No notifications</div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div className="flex gap-3 sm:gap-2 md:gap-3">
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12 rounded-full overflow-hidden">
                         <Image
