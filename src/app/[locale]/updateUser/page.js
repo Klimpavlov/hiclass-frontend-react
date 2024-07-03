@@ -6,6 +6,7 @@ import BackButton from "@/components/Buttons/BackButton";
 import SettingsProfileInfo from "@/components/SettingsProfileInfo/SettingsProfileInfo";
 import SettingsLogSec from "@/components/SettingsLog&Sec/SettingsLog&Sec";
 import axios from "axios";
+import {useTranslations} from "next-intl";
 
 
 export default function EditProfile() {
@@ -24,14 +25,19 @@ export default function EditProfile() {
         content = <SettingsLogSec/>;
     }
 
+    // translation
+
+    const t = useTranslations('UpdateUser');
+
+
 
     return (
         <main>
             <Header/>
             <div className='p-4 md:p-28'>
                 <div className='button&filters pb-10'>
-                    <BackButton/>
-                    <div className='py-4 md:py-10 text-2xl md:text-4xl font-normal'>Settings</div>
+                    <BackButton buttonText={t("backBtn")}/>
+                    <div className='py-4 md:py-10 text-2xl md:text-4xl font-normal'>{t("settings")}</div>
                     <div className='filters text-base font-medium'>
                         <span
                             className={`${
@@ -39,7 +45,7 @@ export default function EditProfile() {
                             } cursor-pointer`}
                             onClick={() => handleSelectedFilter("profile")}
                         >
-              Profile info
+              {t("profileInfo")}
             </span>
                         <span
                             className={`${

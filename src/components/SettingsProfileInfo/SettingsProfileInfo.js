@@ -281,7 +281,7 @@ const SettingsProfileInfo = () => {
 
     // translation
 
-    const t = useTranslations('MyProfile');
+    const t = useTranslations('SettingsProfileInfo');
 
 
     return (
@@ -300,9 +300,8 @@ const SettingsProfileInfo = () => {
                 <>
                     <div className='section-photo py-8'>
                         <ErrorNotification ref={toast}/>
-                        <SettingsSection title='Profile photo'
-                                         details='Your photo appears on your Profile page and is visible for Brands on your profile preview
-                                                  Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.'/>
+                        <SettingsSection title={t("profilePhoto")}
+                                         details={t("photoDetails")}/>
                         <div className="button group pt-5">
                             <input className='hidden' type="file" onChange={getFile}/>
                             {userAvatar ? (
@@ -335,7 +334,7 @@ const SettingsProfileInfo = () => {
                         </div>
                     </div>
                     <div className='section-aboutMe py-8'>
-                        <SettingsSection title='About me' details='Add a brief description for your profile'/>
+                        <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
                         <div className='py-8'>
                             <div className='flex flex-col md:flex-row justify-between'>
                                 <InputForm inputFormText='First name' value={firstName}

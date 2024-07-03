@@ -27,6 +27,12 @@
     "addClass": "Add class",
     "replaceBtn": "Replace"
   },
+  "UpdateUser": {
+    "settings": "Settings",
+    "profileInfo": "Profile info",
+    "backBtn": "Back",
+    "replaceBtn": "Replace"
+  },
   "UserInfo": {
     "localTime": "local time",
     "editProfileBtn": "Edit profile"

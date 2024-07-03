@@ -17,7 +17,7 @@ import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {useLocale, useTranslations} from "next-intl";
 
-const Header = ({notifications}) => {
+const Header = ({notifications, testNotifications}) => {
 
     const router = useRouter();
 
@@ -25,10 +25,13 @@ const Header = ({notifications}) => {
 
     const [isNotification, setIsNotification] = useState(false);
     const [notificationInfo, setNotificationInfo] = useState(false);
+    // const [hasNewNotification, setHasNewNotification] = useState(false);
+
     console.log(notifications)
     useEffect(() => {
-        setNotificationInfo(notifications);
-    }, [notifications]);
+        setNotificationInfo(notifications,testNotifications);
+        // setHasNewNotification(true);
+    }, [notifications, testNotifications]);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -194,6 +197,26 @@ const Header = ({notifications}) => {
                         )}
                     </div>
                 )}
+                {/*<div className="relative">*/}
+                {/*    <Image src={imgChatButton} alt="chat-button" onClick={handleNotification} className='cursor-pointer' />*/}
+                {/*    {hasNewNotification && <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>}*/}
+                {/*            {isNotification && (*/}
+                {/*                <div className='absolute right-0 mt-2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>*/}
+                {/*                    <div className='py-2 px-4 border-b border-gray-200 text-lg text-green-700'>Notifications</div>*/}
+                {/*                    <div className='max-h-60 overflow-y-auto'>*/}
+                {/*                        {notificationInfo.length > 0 ? (*/}
+                {/*                            notificationInfo.map((notification, index) => (*/}
+                {/*                                <div key={index} className='py-2 px-4 text-slate-400 hover:bg-gray-100'>*/}
+                {/*                                    {notification}*/}
+                {/*                                </div>*/}
+                {/*                            ))*/}
+                {/*                        ) : (*/}
+                {/*                            <div className='py-2 px-4 text-gray-500'>No notifications</div>*/}
+                {/*                        )}*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            )}*/}
+                {/*</div>*/}
                 <div className="flex gap-3 sm:gap-2 md:gap-3">
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12 rounded-full overflow-hidden">
                         <Image

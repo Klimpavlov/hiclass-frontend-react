@@ -138,6 +138,10 @@ export default function ExplorePage() {
 
 
     // get notifications from api
+
+    useEffect(() => {
+        getNotifications()
+    }, [])
     async function getNotifications() {
         const accessToken = localStorage.getItem('accessToken');
         const notificationsFromApi = await getAllNotifications(accessToken);
@@ -148,10 +152,6 @@ export default function ExplorePage() {
 
 
     }
-
-    useEffect(() => {
-        getNotifications()
-    }, [])
 
 
     // show current notifications
@@ -260,7 +260,7 @@ async function getDisciplines() {
             ) : (
                 <>
                     <ErrorNotification ref={toast} />
-                    <Header notifications={receivedNotifications}/>
+                    <Header notifications={receivedNotifications} testNotifications={notification}/>
                     <TopSection/>
                     <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                         <div className="flex flex-wrap gap-2 px-4 md:px-8">
