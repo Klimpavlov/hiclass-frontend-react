@@ -30,8 +30,52 @@
   "UpdateUser": {
     "settings": "Settings",
     "profileInfo": "Profile info",
+    "loginSecurity": "Login & Security",
     "backBtn": "Back",
     "replaceBtn": "Replace"
+  },
+  "SettingsProfileInfo": {
+    "backBtn": "Назад",
+    "replaceBtn": "Replace",
+    "profilePhoto": "Фото профиля",
+    "photoDetails": "Your photo appears on your Profile page and is visible for Brands on your profile preview\n Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.",
+    "aboutMe": "About me",
+    "aboutMeDetails": "Add a brief description for your profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "i`m": "I’m a/am",
+    "selectPosition": "Select position",
+    "teacher": "teacher",
+    "expert": "expert",
+    "country": "Country",
+    "city": "City",
+    "description": "Description",
+    "update": "Update",
+    "positionVerification": "Position verification",
+    "positionVerificationDetails": "For your security, we need you to verify your identity",
+    "institutionName": "Institution name",
+    "professionalInfo": "Professional details",
+    "professionalInfoDetails": "Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.",
+    "areasOfWork": "Areas of work",
+    "grades": "Grades",
+    "languages": "Languages"
+  },
+  "LoginSecurity": {
+    "email": "Email address",
+    "emailDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "update": "Update",
+    "resetPassword": "Password reset",
+    "resetPasswordDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "oldPassword": "Old password",
+    "enterOldPassword": "Enter your old password",
+    "newPassword": "New password",
+    "enterNewPassword": "At least 6 characters",
+    "confirmNewPassword": "Confirm new password",
+    "reEnterNewPassword": "Re-enter new password",
+    "changePassword": "Change password"
+
+
+
   },
   "UserInfo": {
     "localTime": "local time",

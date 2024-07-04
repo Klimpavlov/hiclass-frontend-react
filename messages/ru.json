@@ -30,16 +30,50 @@
   "UpdateUser": {
     "settings": "Настройки",
     "profileInfo": "Информация профиля",
+    "loginSecurity": "Вход в систему и безопасность",
     "backBtn": "Назад",
     "replaceBtn": "Изменить"
   },
   "SettingsProfileInfo": {
     "backBtn": "Назад",
+    "replaceBtn": "Изменить",
     "profilePhoto": "Фото профиля",
     "photoDetails": "Your photo appears on your Profile page and is visible for Brands on your profile preview\n Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.",
-    "aboutMe": "About me",
+    "aboutMe": "Обо мне",
     "aboutMeDetails": "Add a brief description for your profile",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "i`m": "Должность",
+    "selectPosition": "Выберите должность",
+    "teacher": "учитель",
+    "expert": "эксперт",
+    "country": "Страна",
+    "city": "Город",
+    "description": "Описание",
+    "update": "Обновить",
+    "positionVerification": "Проверка местоположения",
+    "positionVerificationDetails": "В целях вашей безопасности нам необходимо, чтобы вы подтвердили свою личность",
+    "institutionName": "Название учреждения",
+    "professionalInfo": "Профессиональные сведения",
+    "professionalInfoDetails": "Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.",
+    "areasOfWork": "Направления работы",
+    "grades": "Номер класса",
+    "languages": "Языки"
 
+  },
+  "LoginSecurity": {
+    "email": "Адрес электронной почты",
+    "emailDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "update": "Обновить",
+    "resetPassword": "Сброс пароля",
+    "resetPasswordDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "oldPassword": "Старый пароль",
+    "enterOldPassword": "Введите ваш старый пароль",
+    "newPassword": "Новый пароль",
+    "enterNewPassword": "Не менее 6 символов",
+    "confirmNewPassword": "Подтвердите новый пароль",
+    "reEnterNewPassword": "Повторно введите новый пароль",
+    "changePassword": "Измените пароль"
 
   },
   "UserInfo": {

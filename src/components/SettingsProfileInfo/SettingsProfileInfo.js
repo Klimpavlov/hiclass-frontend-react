@@ -337,13 +337,13 @@ const SettingsProfileInfo = () => {
                         <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
                         <div className='py-8'>
                             <div className='flex flex-col md:flex-row justify-between'>
-                                <InputForm inputFormText='First name' value={firstName}
+                                <InputForm inputFormText={t("firstName")} value={firstName}
                                            onChange={(e) => setFirstName(e.target.value)}/>
-                                <InputForm inputFormText='Last name' value={lastName}
+                                <InputForm inputFormText={t("lastName")} value={lastName}
                                            onChange={(e) => setLastName(e.target.value)}/>
                             </div>
                             <Dropdown
-                                dropdownFormText="I’m a/am"
+                                dropdownFormText={t("i`m")}
                                 options={position}
                                 // placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
                                 placeholderText={initialPositionArray.length > 0 ? initialPositionArray.join(", ") : "Select position"}
@@ -353,7 +353,7 @@ const SettingsProfileInfo = () => {
                                     setIsExpert(selectedOptions.includes("expert"));
                                 }}
                             />
-                            <InputForm inputFormText='Country' value={country}
+                            <InputForm inputFormText={t("country")} value={country}
                                        onChange={(e) => setCountry(e.target.value)}/>
                             {country !== '' && (
                                 <div className="">
@@ -366,7 +366,7 @@ const SettingsProfileInfo = () => {
                                     </div>
                                 </div>
                             )}
-                            <InputForm inputFormText='City' value={city}
+                            <InputForm inputFormText={t("city")} value={city}
                                        onChange={(e) => setCity(e.target.value)}/>
                             {city !== '' && (
                                 <div className="">
@@ -379,16 +379,16 @@ const SettingsProfileInfo = () => {
                                     </div>
                                 </div>
                             )}
-                            <InputForm inputFormText="Description" value={description}
+                            <InputForm inputFormText={t("description")} value={description}
                                        onChange={(e) => setDescription(e.target.value)}/>
-                            <ApplyButton buttonText='Update' onApply={handleUpdatePersonalInfo}/>
+                            <ApplyButton buttonText={t("update")} onApply={handleUpdatePersonalInfo}/>
                         </div>
                     </div>
                     <div className='section-pos-verif py-8'>
-                        <SettingsSection title='Position verification'
-                                         details='For your security, we need you to verify your identity'/>
+                        <SettingsSection title={t("positionVerification")}
+                                         details={t("positionVerificationDetails")}/>
                         <div className='py-8'>
-                            <InputForm inputFormText='Institution name' value={institutionName}
+                            <InputForm inputFormText={t("institutionName")} value={institutionName}
                                        onChange={(e) => setInstitutionName(e.target.value)}/>
                             <div className="">
                                 <div className="py-2 max-h-60 overflow-y-auto">
@@ -402,27 +402,27 @@ const SettingsProfileInfo = () => {
                                     ))}
                                 </div>
                             </div>
-                            <ApplyButton buttonText='Update' onApply={handleUpdateInstitution}/>
+                            <ApplyButton buttonText={t("update")} onApply={handleUpdateInstitution}/>
                             {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
                     </div>
                     <div className='section-prof-details py-8'>
-                        <SettingsSection title='Professional details'
-                                         details='Lorem ipsum dolor sit amet consectetur. Euismod nunc cursus risus at egestas. Nec mi.'
+                        <SettingsSection title={t("professionalInfo")}
+                                         details={t("professionalInfoDetails")}
                         />
                         <div className='py-8'>
-                            <Dropdown dropdownFormText='Areas of work'
+                            <Dropdown dropdownFormText={t("areasOfWork")}
                                       placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
                                       options={disciplines} initialSelectedOptions={initialDisciplines} onChange={setSelectedDisciplines}/>
-                            <Dropdown dropdownFormText='Grades'
+                            <Dropdown dropdownFormText={t("grades")}
                                       placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
                                       options={grades}
                                       initialSelectedOptions={initialGrades}
                                       onChange={setSelectedGrades}/>
-                            <Dropdown dropdownFormText='Languages'
+                            <Dropdown dropdownFormText={t("languages")}
                                       placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
                                       options={languages}  initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
-                            <ApplyButton buttonText='Update' onApply={handleUpdateProfessionalInfo}/>
+                            <ApplyButton buttonText={t("update")} onApply={handleUpdateProfessionalInfo}/>
                         </div>
                     </div>
                 </>

@@ -30,7 +30,6 @@ export default function EditProfile() {
     const t = useTranslations('UpdateUser');
 
 
-
     return (
         <main>
             <Header/>
@@ -45,7 +44,7 @@ export default function EditProfile() {
                             } cursor-pointer`}
                             onClick={() => handleSelectedFilter("profile")}
                         >
-              {t("profileInfo")}
+                            {t("profileInfo")}
             </span>
                         <span
                             className={`${
@@ -53,7 +52,7 @@ export default function EditProfile() {
                             } pl-6 cursor-pointer`}
                             onClick={() => handleSelectedFilter("security")}
                         >
-              Login & Security
+                            {t("loginSecurity")}
             </span>
                     </div>
                 </div>

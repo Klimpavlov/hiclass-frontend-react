@@ -12,6 +12,8 @@ import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
 import {useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
+
 
 const SettingsLogSec = () => {
 
@@ -84,28 +86,32 @@ const SettingsLogSec = () => {
         router.push("/signUp");
     };
 
+    // translation
+
+    const t = useTranslations('LoginSecurity');
+
     return (
         <>
             <div className='section-email py-8'>
                 <ErrorNotification ref={toast}/>
-                <SettingsSection title='Email address'
-                                 details='Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.'/>
+                <SettingsSection title={t("email")}
+                                 details={t("emailDetails")}/>
                 <div className='py-8'>
-                    <InputForm inputFormText='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <ApplyButton buttonText='Update' onApply={handleUpdateEmail}/>
+                    <InputForm inputFormText={t("email")} value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <ApplyButton buttonText={t("update")} onApply={handleUpdateEmail}/>
                 </div>
             </div>
             <div className='section-pass-reset py-8'>
-                <SettingsSection title='Password reset'
-                                 details='Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.'/>
+                <SettingsSection title={t("resetPassword")}
+                                 details={t("resetPasswordDetails")}/>
                 <div className='py-8'>
-                    <InputForm isPassword={true} inputFormText='Old password'
-                               placeholderText='Enter your old password'
+                    <InputForm isPassword={true} inputFormText={t("oldPassword")}
+                               placeholderText={t("enterOldPassword")}
                                onChange={(e) => setOldPassword(e.target.value)}/>
-                    <InputForm isPassword={true} inputFormText='New password' placeholderText='At least 6 characters'
+                    <InputForm isPassword={true} inputFormText={t("newPassword")} placeholderText={t("enterNewPassword")}
                                onChange={(e) => setNewPassword(e.target.value)}/>
-                    <InputForm isPassword={true} inputFormText='Confirm new password'
-                               placeholderText='Re-enter new password'
+                    <InputForm isPassword={true} inputFormText={t("confirmNewPassword")}
+                               placeholderText={t("reEnterNewPassword")}
                                onChange={(e)=> setConfirmNewPassword(e.target.value)}/>
                     <ApplyButton buttonText='Change password' onApply={handleUpdatePassword}/>
                 </div>
