@@ -8,7 +8,7 @@ import InviteModal from "@/components/InviteClass/InviteModal";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import {useRouter} from "next/navigation";
 
-const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId, photo}) => {
+const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
     const router = useRouter()
 
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -70,7 +70,8 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 <InviteModal username={username}
                              classId={classId}
                              disciplines={tags}
-                             handleCloseModal={() => setIsInviteModalOpen(false)}/>
+                             handleCloseModal={() => setIsInviteModalOpen(false)}
+                             handleCloseClassPreviewModal={handleCloseClassPreviewModal}/>
             )}
         </div>
     );

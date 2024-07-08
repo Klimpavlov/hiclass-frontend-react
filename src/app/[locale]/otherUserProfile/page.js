@@ -141,6 +141,7 @@ export default function otherUserProfile() {
                                 tags={selectedClass.disciplines}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
+                                handleCloseClassPreviewModal={() => setSelectedClass(null)}
                             ></ClassPreviewModal>
                         )}
                     </div>

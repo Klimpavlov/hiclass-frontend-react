@@ -6,7 +6,7 @@ import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '../RegistrationHeader/ru.svg'
-import imgChatButton from '../Header/tertiary-button.svg';
+import imgNotificationBtn from '../Header/notification-bell.svg';
 import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
@@ -16,8 +16,10 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {useLocale, useTranslations} from "next-intl";
+import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
+import postUpdateInvitationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
 
-const Header = ({notifications, testNotifications}) => {
+const Header = ({testNotifications}) => {
 
     const router = useRouter();
 
@@ -25,13 +27,16 @@ const Header = ({notifications, testNotifications}) => {
 
     const [isNotification, setIsNotification] = useState(false);
     const [notificationInfo, setNotificationInfo] = useState(false);
+
+    const [receivedNotifications, setReceivedNotifications] = useState('');
+
     // const [hasNewNotification, setHasNewNotification] = useState(false);
 
-    console.log(notifications)
     useEffect(() => {
-        setNotificationInfo(notifications,testNotifications);
+        setNotificationInfo(receivedNotifications, testNotifications);
         // setHasNewNotification(true);
-    }, [notifications, testNotifications]);
+    }, [receivedNotifications, testNotifications]);
+    console.log(receivedNotifications)
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -95,6 +100,28 @@ const Header = ({notifications, testNotifications}) => {
 
     function handleNotification() {
         setIsNotification(!isNotification);
+    }
+
+    // get notifications from api
+
+    useEffect(() => {
+        getNotifications()
+    }, [])
+
+    async function getNotifications() {
+        const accessToken = localStorage.getItem('accessToken');
+        const notificationsFromApi = await getAllNotifications(accessToken);
+        console.log(notificationsFromApi);
+        setReceivedNotifications(notificationsFromApi.map((notification) => (
+            notification.message
+
+        )))
+    }
+
+    // isRead notification
+
+    async function markAsRead() {
+        await postUpdateInvitationStatus()
     }
 
     // mobile button
@@ -176,17 +203,27 @@ const Header = ({notifications, testNotifications}) => {
                     )}
                 </div>
 
-                <Image src={imgChatButton} alt="chat-button" onClick={handleNotification} className='cursor-pointer'/>
+                <Image src={imgNotificationBtn} alt="chat-button" onClick={handleNotification} className='cursor-pointer'/>
                 {isNotification && (
                     <div className='absolute border-black text-green-700'>
                         {isNotification && (
-                            <div className='absolute right-0 mt-2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>
-                                <div className='py-2 px-4 border-b border-gray-200 text-lg font-semibold'>Notifications</div>
+                            <div
+                                className='absolute right-0 mt-2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>
+                                <div
+                                    className='py-2 px-4 border-b border-gray-200 text-lg font-semibold'>Notifications
+                                </div>
                                 <div className='max-h-60 overflow-y-auto'>
                                     {notificationInfo.length > 0 ? (
                                         notificationInfo.map((notification, index) => (
-                                            <div key={index} className='py-2 px-4 text-slate-400 hover:bg-gray-100'>
-                                                {notification}
+                                            <div key={index}
+                                                 className='relative py-2 px-4 hover:bg-gray-100 text-slate-600'
+                                                 onClick={markAsRead}
+                                            >
+                                                <div className='p-2 rounded text-sm cursor-pointer'>{notification}
+                                                    {/*{unread && <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>}*/}
+                                                    <span className="absolute right-6 h-3 w-3 bg-blue-500 rounded-full"></span>
+                                                </div>
+
                                             </div>
                                         ))
                                     ) : (

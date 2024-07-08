@@ -72,10 +72,10 @@
     "enterNewPassword": "At least 6 characters",
     "confirmNewPassword": "Confirm new password",
     "reEnterNewPassword": "Re-enter new password",
-    "changePassword": "Change password"
-
-
-
+    "changePassword": "Change password",
+    "deleteAccount": "Delete account",
+    "deleteAccountDetails": "You will not be able to resotre your account",
+    "deleteAccountBtn": "Delete account"
   },
   "UserInfo": {
     "localTime": "local time",

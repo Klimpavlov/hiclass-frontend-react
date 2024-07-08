@@ -73,7 +73,10 @@
     "enterNewPassword": "Не менее 6 символов",
     "confirmNewPassword": "Подтвердите новый пароль",
     "reEnterNewPassword": "Повторно введите новый пароль",
-    "changePassword": "Измените пароль"
+    "changePassword": "Измените пароль",
+    "deleteAccount": "Удаление аккаунта",
+    "deleteAccountDetails": "Вы не сможете восстановить свою учетную запись",
+    "deleteAccountBtn": "Удалить аккаунт"
 
   },
   "UserInfo": {

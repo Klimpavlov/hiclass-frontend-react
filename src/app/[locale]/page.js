@@ -44,7 +44,7 @@ export default function ExplorePage() {
     const [countries, setCountries] = useState([]);
 
     const [notification, setNotification] = useState('')
-    const [receivedNotifications, setReceivedNotifications] = useState('');
+    // const [receivedNotifications, setReceivedNotifications] = useState('');
 
     useEffect(() => {
         getDisciplines();
@@ -139,19 +139,17 @@ export default function ExplorePage() {
 
     // get notifications from api
 
-    useEffect(() => {
-        getNotifications()
-    }, [])
-    async function getNotifications() {
-        const accessToken = localStorage.getItem('accessToken');
-        const notificationsFromApi = await getAllNotifications(accessToken);
-        console.log(notificationsFromApi);
-        setReceivedNotifications( notificationsFromApi.map((notification) => (
-            notification.message
-        )))
-
-
-    }
+    // useEffect(() => {
+    //     getNotifications()
+    // }, [])
+    // async function getNotifications() {
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     const notificationsFromApi = await getAllNotifications(accessToken);
+    //     console.log(notificationsFromApi);
+    //     setReceivedNotifications( notificationsFromApi.map((notification) => (
+    //         notification.message
+    //     )))
+    // }
 
 
     // show current notifications
@@ -260,7 +258,7 @@ async function getDisciplines() {
             ) : (
                 <>
                     <ErrorNotification ref={toast} />
-                    <Header notifications={receivedNotifications} testNotifications={notification}/>
+                    <Header testNotifications={notification}/>
                     <TopSection/>
                     <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                         <div className="flex flex-wrap gap-2 px-4 md:px-8">
@@ -331,6 +329,7 @@ async function getDisciplines() {
                                 tags={selectedClass.disciplines}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
+                                handleCloseClassPreviewModal={() => setSelectedClass(null)}
                             ></ClassPreviewModal>
                         )}
                     </div>

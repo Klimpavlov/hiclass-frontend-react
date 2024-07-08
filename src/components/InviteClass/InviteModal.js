@@ -18,7 +18,7 @@ import { format } from "date-fns";
 
 
 
-const InviteModal = ({classId, disciplines, handleCloseModal}) => {
+const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPreviewModal}) => {
     const toast = useRef(null);
     const localhost = getLocalhost();
 
@@ -81,7 +81,10 @@ const InviteModal = ({classId, disciplines, handleCloseModal}) => {
 
         if (postInvitationSuccess) {
             toast.current.show({ severity: 'info', summary: 'Success', detail: 'Invitation successfully created', life: 3000 });
-
+            setTimeout(()=> {
+                handleCloseModal()
+                handleCloseClassPreviewModal();
+            }, 1500)
         }
     }
 

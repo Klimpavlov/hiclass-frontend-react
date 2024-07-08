@@ -113,13 +113,13 @@ const SettingsLogSec = () => {
                     <InputForm isPassword={true} inputFormText={t("confirmNewPassword")}
                                placeholderText={t("reEnterNewPassword")}
                                onChange={(e)=> setConfirmNewPassword(e.target.value)}/>
-                    <ApplyButton buttonText='Change password' onApply={handleUpdatePassword}/>
+                    <ApplyButton buttonText={t("changePassword")} onApply={handleUpdatePassword}/>
                 </div>
             </div>
             <div className='section-pass-reset py-8'>
-                <SettingsSection title='Delete account' details='You will not be able to resotre your account'/>
+                <SettingsSection title={t("deleteAccount")} details={t("deleteAccountDetails")}/>
                 <div className=''>
-                    <DeleteAccBtn buttonText='Delete account' onApply={toggleDeleteModal}/>
+                    <DeleteAccBtn buttonText={t("deleteAccountBtn")} onApply={toggleDeleteModal}/>
                 </div>
                 {isDeleteModalOpen && (
                     <DialogModal setIsModalOpen={setIsDeleteModalOpen}
