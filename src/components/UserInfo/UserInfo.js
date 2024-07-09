@@ -9,6 +9,10 @@ import Link from "next/link";
 import Image from "next/image";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {useTranslations} from "next-intl";
+import imgLocalCountry from "@/components/UserInfo/pinCountry.svg"
+import imgLocalTime from "@/components/UserInfo/localTime.svg"
+import imgInstitution from "@/components/UserInfo/institutionAddress.svg"
+import imgLightning from "@/components/UserInfo/lightning.svg"
 
 const UserInfo = () => {
 
@@ -24,7 +28,9 @@ const UserInfo = () => {
 
     const [userAvatar, setUserAvatar] = useState([]);
     const [localTime, setLocalTime] = useState('');
+    const [isExpert, setIsExpert] = useState('')
 
+    console.log(isExpert)
 
     useEffect(() => {
         getUser();
@@ -50,6 +56,8 @@ const UserInfo = () => {
         setCity(userProfile.cityTitle);
         setInstitution(userProfile.institution.title + ', ' + userProfile.institution.address);
         setDisciplineTitles(userProfile.disciplineTitles);
+
+        setIsExpert(userProfile.isAnExpert)
 
         setUserAvatar(userProfile.imageUrl)
 
@@ -81,24 +89,41 @@ const UserInfo = () => {
                     quality={100}
                 />
             </div>
+            {isExpert === true && (
+                <div className='flex'>
+                    <div className='flex border rounded-xl border-cyan-600 py-1 px-2 my-6 w-auto'>
+                        <Image src={imgLightning} alt={imgLightning}/>
+                        <div className='ml-2 text-sky-800'>Available as an expert</div>
+                    </div>
+                </div>
+            )}
             <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>
             <div className='raiting'></div>
             <div className="languages">Speaks {languageTitles.join(", ")}</div>
             <div className='aboutUser '>{userDescription}</div>
-            <div className='country'>{city}, {country}</div>
-            <div className='time'>{localTime} {t("localTime")}</div>
+            <div className='localCountry-container flex'>
+                <Image src={imgLocalCountry} alt={country}/>
+                <div className='country ml-2'>{city}, {country}</div>
+            </div>
+            <div className='localTime-container flex'>
+                <Image src={imgLocalTime} alt={localTime}/>
+                <div className='time ml-2'>{localTime} {t("localTime")}</div>
+            </div>
             <div className='w-full'>
                 <EditProfileButton buttonText={t("editProfileBtn")}/>
             </div>
-            <div className="show-experts flex items-center">
-                <Switch/>
-                <span className="pl-2 sm:pl-4">Available as an expert</span>
-            </div>
+            {/*<div className="show-experts flex items-center">*/}
+            {/*    <Switch/>*/}
+            {/*    <span className="pl-2 sm:pl-4">Available as an expert</span>*/}
+            {/*</div>*/}
             <div className='flex justify-between'>
                 <div>Position</div>
                 <div className='text-green-800'>Verify</div>
             </div>
-            <div className='location'>{institution}</div>
+            <div className='institutionAddress-container flex'>
+                <Image src={imgInstitution} alt={institution}/>
+                <div className='location ml-2'>{institution}</div>
+            </div>
             <div className='tags flex flex-wrap gap-2'>
                 {disciplineTitles.map((title) => (
                     <Tag key={title} text={title}></Tag>

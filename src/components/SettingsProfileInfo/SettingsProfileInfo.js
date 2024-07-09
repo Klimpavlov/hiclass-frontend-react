@@ -107,13 +107,21 @@ const SettingsProfileInfo = () => {
     const position = ['teacher', 'expert'];
 
     useEffect(() => {
-        setInitialPosition(isTeacher ? "teacher" : (isExpert ? "expert" : ""));
+        let positions = [];
+        if (isTeacher) {
+            positions.push("teacher");
+        }
+        if (isExpert) {
+            positions.push("expert");
+        }
+        setInitialPosition(positions);
     }, [isTeacher, isExpert]);
 
-    const initialPositionArray = [initialPosition]
+    const initialPositionArray = initialPosition;
 
-    console.log(initialPositionArray)
-    console.log(initialDisciplines)
+
+    // console.log(initialPositionArray)
+    // console.log(initialDisciplines)
 
 
     // country
@@ -336,12 +344,12 @@ const SettingsProfileInfo = () => {
                     <div className='section-aboutMe py-8'>
                         <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
                         <div className='py-8'>
-                            <div className='flex flex-col md:flex-row justify-between'>
+                            {/*<div className='flex flex-col md:flex-row justify-between'>*/}
                                 <InputForm inputFormText={t("firstName")} value={firstName}
                                            onChange={(e) => setFirstName(e.target.value)}/>
                                 <InputForm inputFormText={t("lastName")} value={lastName}
                                            onChange={(e) => setLastName(e.target.value)}/>
-                            </div>
+                            {/*</div>*/}
                             <Dropdown
                                 dropdownFormText={t("i`m")}
                                 options={position}

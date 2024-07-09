@@ -73,7 +73,14 @@ export default function ExplorePage() {
     }, []);
 
     useEffect(() => {
-       //firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+            authDomain: "hiclass-ff338.firebaseapp.com",
+            projectId: "hiclass-ff338",
+            storageBucket: "hiclass-ff338.appspot.com",
+            messagingSenderId: "526521652695",
+            appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+        };
 
         const app = initializeApp(firebaseConfig);
         const messaging = getMessaging(app);
@@ -98,7 +105,8 @@ export default function ExplorePage() {
                 const permission = await Notification.requestPermission();
                 if (permission === "granted") {
                     const token = await getToken(messaging, {
-//vapid key                    });
+                        vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4"
+                    });
                     console.log("Token Generated:", token);
                 } else {
                     console.error("Notification permission denied");
@@ -112,7 +120,7 @@ export default function ExplorePage() {
 
         const getDeviceTokenAndSave = async () => {
             try {
-                const currentToken = await getToken(messaging, { //vapid key });
+                const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
                 if (currentToken) {
                     console.log('Device token:', currentToken);
                     // Save or send the token to your server for later use
