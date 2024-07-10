@@ -1,12 +1,15 @@
 'use client';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import classNames from "classnames";
 
-const Switch = () => {
-    const [isSelected, setIsSelected] = useState(true);
+const Switch = ({isExpert}) => {
+    const [isSelected, setIsSelected] = useState(isExpert);
+    useEffect(() => {
+        setIsSelected(isExpert);
+    }, [isExpert]);
+
     return (
         <div
-            onClick={()=> setIsSelected(!isSelected)}
             className={classNames('flex w-10 h-5 bg-gray-600 rounded-full', {
             'bg-green-700' : isSelected,
         })}>

@@ -188,26 +188,14 @@ const Header = ({testNotifications}) => {
                         {currentLanguage}
                     </div>
                     {isLanguagesDropdownOpen && (
-                        // <div className="absolute mt-2">
-                        //     <Link className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border
-                        //                   border-gray-300 rounded-lg shadow-lg cursor-pointer'
-                        //           href="/en" locale="en">
-                        //         English
-                        //     </Link>
-                        //     <Link className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white
-                        //          border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
-                        //           href="/ru" locale="ru">
-                        //         Russian
-                        //     </Link>
-                        // </div>
-                        <div className="absolute mt-2 z-50">
+                        <div className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
                             <div
-                                className='block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer'
+                                className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>
                                 English
                             </div>
                             <div
-                                className='w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-green-200 bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2'
+                                className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('ru')}>
                                 Russian
                             </div>

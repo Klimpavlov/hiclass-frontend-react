@@ -112,10 +112,10 @@ const UserInfo = () => {
             <div className='w-full'>
                 <EditProfileButton buttonText={t("editProfileBtn")}/>
             </div>
-            {/*<div className="show-experts flex items-center">*/}
-            {/*    <Switch/>*/}
-            {/*    <span className="pl-2 sm:pl-4">Available as an expert</span>*/}
-            {/*</div>*/}
+            <div className="show-experts flex items-center py-3">
+                <Switch isExpert={isExpert}/>
+                <span className="pl-2 sm:pl-4">Available as an expert</span>
+            </div>
             <div className='flex justify-between'>
                 <div>Position</div>
                 <div className='text-green-800'>Verify</div>

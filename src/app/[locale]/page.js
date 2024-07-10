@@ -26,6 +26,7 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -99,40 +100,6 @@ export default function ExplorePage() {
                     console.error('Service Worker registration failed:', err);
                 });
         }
-
-        const requestPermission = async () => {
-            try {
-                const permission = await Notification.requestPermission();
-                if (permission === "granted") {
-                    const token = await getToken(messaging, {
-                        vapidKey: "BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4"
-                    });
-                    console.log("Token Generated:", token);
-                } else {
-                    console.error("Notification permission denied");
-                }
-            } catch (error) {
-                console.error("Error requesting permission:", error);
-            }
-        };
-
-        requestPermission();
-
-        const getDeviceTokenAndSave = async () => {
-            try {
-                const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
-                if (currentToken) {
-                    console.log('Device token:', currentToken);
-                    // Save or send the token to your server for later use
-                } else {
-                    console.log('No registration token available. Request permission to generate one.');
-                }
-            } catch (err) {
-                console.log('An error occurred while retrieving token. ', err);
-            }
-        };
-
-        getDeviceTokenAndSave();
 
     }, [])
 

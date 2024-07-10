@@ -92,14 +92,12 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                                     onClick={toggleDropdown}
                                 />
                                 {isDropdownOpen && (
-                                    <div className="absolute z-50">
-                                        <div className="block w-20 py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100 bg-gray-200 border
-                                          border-gray-300 rounded-lg shadow-lg cursor-pointer"
+                                    <div className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
+                                        <div className="px-2 sm:pr-20 hover:text-green-700 cursor-pointer hover:bg-green-50"
                                              onClick={toggleEditModal}>
                                             {t("editBtn")}
                                         </div>
-                                        <div className="w-20 block py-2 px-4 sm:py-1 sm:px-2 text-left hover:bg-gray-100
-                                         bg-gray-200 border border-gray-300 rounded-lg shadow-lg cursor-pointer mt-2"
+                                        <div className="px-2 sm:pr-20 hover:text-green-700 cursor-pointer hover:bg-green-50 mt-2"
                                              onClick={toggleDeleteDropdown}>
                                             {t("deleteBtn")}
                                         </div>
