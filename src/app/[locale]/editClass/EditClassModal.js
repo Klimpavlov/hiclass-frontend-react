@@ -10,6 +10,7 @@ import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClass
 import putEditClass from "@/app/[locale]/editClass/putEditClass/putEditClass";
 import editClassImage from "@/app/[locale]/editClass/editClassImage/editClassImage";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
 
@@ -66,13 +67,16 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    const t = useTranslations('EditClass');
+
     return (
         <>
 
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400 z-50">
                 <ErrorNotification ref={toast} />
                 <div className="modal-content bg-white p-4 rounded-lg w-4/5 sm:w-3/5">
-                    <CreateClassHeader headerText='Edit class'
+                    <CreateClassHeader headerText={t("headerText")}
                                        handleCloseModal={handleCloseModal}
                     />
                     <CreateClassBody setTitle={setTitle}

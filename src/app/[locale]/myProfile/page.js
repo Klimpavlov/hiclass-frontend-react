@@ -9,8 +9,13 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Banner from "@/components/Banner/Banner";
 import {RingLoader} from "react-spinners";
 import {useTranslations} from "next-intl";
+import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import {usePathname} from "next/navigation";
 
 export default function MyProfile() {
+
+    const pathname = usePathname();
+
     const [loading, setLoading] = useState(true);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,7 +56,15 @@ export default function MyProfile() {
         getUser()
     }, []);
 
+
     // translation
+
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru/myProfile') {
+            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines;
+    };
 
     const t = useTranslations('MyProfile');
 
@@ -87,7 +100,7 @@ export default function MyProfile() {
                                             classId={defaultClass.classId}
                                             title={defaultClass.title}
                                             username={defaultClass.userFullName}
-                                            tags={defaultClass.disciplines}
+                                            tags={translateDisciplines(defaultClass.disciplines)}
                                             photo={defaultClass.imageUrl}
                                             showDropdown={true}
                                         ></ClassPreview>

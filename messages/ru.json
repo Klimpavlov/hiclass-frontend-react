@@ -81,7 +81,8 @@
   },
   "UserInfo": {
     "localTime": "местное время",
-    "editProfileBtn": "Редактирование профиля"
+    "editProfileBtn": "Редактирование профиля",
+    "availableAsAnExpert": "Доступен в качестве эксперта"
   },
   "ClassPreview": {
     "editBtn": "Править",
@@ -97,6 +98,9 @@
     "language": "Языки",
     "cancelBtn": "Закрыть",
     "applyBtn": "Подтвердить"
+  },
+  "EditClass": {
+    "headerText": "Редактирование класса"
   },
   "Disciplines": {
     "Physics": "Физика",

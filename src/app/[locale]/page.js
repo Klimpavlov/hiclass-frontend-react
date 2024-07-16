@@ -163,6 +163,16 @@ async function getDisciplines() {
             ...prevFilters,
             [filterName]: selectedOptions
         }));
+
+        // const translatedOptions = currentPathname === 'ru'
+        //     ? selectedOptions.map(option => disciplinesMapping[option] || languagesMapping[option])
+        //     : selectedOptions;
+        //
+        // handleSearchRequest({
+        //     ...currentFilters,
+        //     [filterName]: translatedOptions
+        // });
+
         handleSearchRequest({
             ...currentFilters,
             [filterName]: selectedOptions
@@ -207,6 +217,14 @@ async function getDisciplines() {
         console.log(searchUrl)
     };
 
+    //translation
+    const translateDisciplines
+        = (disciplines) => {
+        if (currentPathname === 'ru') {
+            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines;
+    };
     const t = useTranslations("MainPage");
     const filtersTranslation = useTranslations("Filters");
 
@@ -268,7 +286,7 @@ async function getDisciplines() {
                             {searchClassData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={classInfo.disciplines} photo={classInfo.imageUrl}/>
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={translateDisciplines(classInfo.disciplines)} photo={classInfo.imageUrl}/>
                                     </div>
                                 ))
                             ))}
@@ -281,7 +299,7 @@ async function getDisciplines() {
                             {teacherProfileData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={classInfo.disciplines} photo={classInfo.imageUrl}/>
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={translateDisciplines(classInfo.disciplines)} photo={classInfo.imageUrl}/>
                                     </div>
                                 ))
                             ))}
@@ -293,7 +311,7 @@ async function getDisciplines() {
                                 classId={selectedClass.classId}
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
-                                tags={selectedClass.disciplines}
+                                tags={translateDisciplines(selectedClass.disciplines)}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
@@ -305,3 +323,4 @@ async function getDisciplines() {
         </main>
     );
 }
+

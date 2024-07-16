@@ -79,7 +79,8 @@
   },
   "UserInfo": {
     "localTime": "local time",
-    "editProfileBtn": "Edit profile"
+    "editProfileBtn": "Edit profile",
+    "availableAsAnExpert": "Available as an expert"
   },
   "ClassPreview": {
     "editBtn": "Edit",
@@ -95,5 +96,8 @@
     "language": "Languages",
     "cancelBtn": "Cancel",
     "applyBtn": "Apply"
+  },
+  "EditClass": {
+    "headerText": "Edit class"
   }
 }
