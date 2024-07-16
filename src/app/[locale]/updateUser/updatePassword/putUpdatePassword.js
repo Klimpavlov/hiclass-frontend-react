@@ -1,7 +1,7 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const putUpdatePassword = async (password, toast) => {
+const putUpdatePassword = async (oldPassword, newPassword, toast) => {
     try {
 
         const accessToken = localStorage.getItem('accessToken');
@@ -9,7 +9,8 @@ const putUpdatePassword = async (password, toast) => {
 
 
         const response = await axios.put(`http://${localhost}/api/EditUser/password`, {
-            Password: password,
+            OldPassword: oldPassword,
+            Password: newPassword,
         }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,

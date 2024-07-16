@@ -66,7 +66,7 @@ const SettingsLogSec = () => {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
         }
         else if(newPassword === confirmNewPassword) {
-            await putUpdatePassword(newPassword, toast)
+            await putUpdatePassword(oldPassword, newPassword, toast)
         }
     }
 
