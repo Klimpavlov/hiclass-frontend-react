@@ -82,7 +82,8 @@
   "UserInfo": {
     "localTime": "местное время",
     "editProfileBtn": "Редактирование профиля",
-    "availableAsAnExpert": "Доступен в качестве эксперта"
+    "availableAsAnExpert": "Доступен в качестве эксперта",
+    "speaks": "говорит на {languages}"
   },
   "ClassPreview": {
     "editBtn": "Править",

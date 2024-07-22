@@ -5,14 +5,17 @@ import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import axios from "axios";
 import {RingLoader} from "react-spinners";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 
 export default function otherUserProfile() {
+
+    const pathname = usePathname();
 
     //loader
     const [loading, setLoading] = useState(true);
@@ -67,7 +70,7 @@ export default function otherUserProfile() {
                 setCountry(response.data.value.countryTitle);
                 setCity(response.data.value.cityTitle);
                 setInstitution(response.data.value.institution.title);
-                setDisciplineTitles(response.data.value.disciplineTitles);
+                setDisciplineTitles(translateDisciplines(response.data.value.disciplineTitles));
 
                 setUserAvatar(response.data.value.imageUrl)
                 setClassData(response.data.value.classDtos)
@@ -84,6 +87,14 @@ export default function otherUserProfile() {
 
         getOtherUser();
     }, []);
+
+    // Function to translate discipline titles if localization is "ru"
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru/otherUserProfile') {
+            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines;
+    };
 
     return (
         <main className="">
@@ -125,7 +136,7 @@ export default function otherUserProfile() {
                                         <ClassPreview key={defaultClass.classId}
                                                       title={defaultClass.title}
                                                       username={defaultClass.userFullName}
-                                                      tags={defaultClass.disciplines}
+                                                      tags={translateDisciplines(defaultClass.disciplines)}
                                                       photo={defaultClass.imageUrl}
                                         ></ClassPreview>
                                     </div>

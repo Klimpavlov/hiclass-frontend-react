@@ -80,7 +80,8 @@
   "UserInfo": {
     "localTime": "local time",
     "editProfileBtn": "Edit profile",
-    "availableAsAnExpert": "Available as an expert"
+    "availableAsAnExpert": "Available as an expert",
+    "speaks": "speaks {languages}"
   },
   "ClassPreview": {
     "editBtn": "Edit",
