@@ -83,7 +83,14 @@
     "localTime": "местное время",
     "editProfileBtn": "Редактирование профиля",
     "availableAsAnExpert": "Доступен в качестве эксперта",
-    "speaks": "говорит на {languages}"
+    "speaks": "Говорит на {languages}"
+  },
+  "OtherUserProfile": {
+    "classes": "Классы",
+    "speaks": "Говорит на {languages}",
+    "sendInvite": "Отправить приглашение",
+    "chatWith": "Начать переписку"
+
   },
   "ClassPreview": {
     "editBtn": "Править",

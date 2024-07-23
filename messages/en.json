@@ -81,7 +81,13 @@
     "localTime": "local time",
     "editProfileBtn": "Edit profile",
     "availableAsAnExpert": "Available as an expert",
-    "speaks": "speaks {languages}"
+    "speaks": "Speaks {languages}"
+  },
+  "OtherUserProfile": {
+    "classes": "Classes",
+    "speaks": "Speaks {languages}",
+    "sendInvite": "Send invite",
+    "chatWith": "Chat with"
   },
   "ClassPreview": {
     "editBtn": "Edit",

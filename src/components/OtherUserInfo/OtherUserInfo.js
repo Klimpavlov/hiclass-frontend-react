@@ -9,8 +9,10 @@ import Link from "next/link";
 import UserProfileChatBtn from "@/components/Buttons/UserProfileChatBtn";
 import UserProfileSendInviteBtn from "@/components/Buttons/UserProfileSendInvite";
 import Image from "next/image";
+import {useTranslations} from "next-intl";
 
 const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescription, country, disciplines, toast}) => {
+    const t = useTranslations("OtherUserProfile");
 
 
     return (
@@ -28,11 +30,11 @@ const OtherUserInfo = ({username, languageTitles, email, userAvatar, userDescrip
             <div className='username text-4xl whitespace-pre-line'>{username}</div>
             <div className='raiting'></div>
             <div className='email text-gray-600'>{email}</div>
-            <div className="languages">Speaks {languageTitles.join(", ")}</div>
+            <div className="languages">{t("speaks", {languages: languageTitles.join(", ")})}</div>
             <div className='aboutUser '>{userDescription}</div>
             <div className='country'></div>
-            <div className='w-full'><UserProfileSendInviteBtn toast={toast} buttonText='Send invite'/></div>
-            <div className='w-full'><UserProfileChatBtn buttonText='Chat with '/></div>
+            <div className='w-full'><UserProfileSendInviteBtn toast={toast} buttonText={t("sendInvite")}/></div>
+            <div className='w-full'><UserProfileChatBtn buttonText={t("chatWith")}/></div>
             <div className='location'>{country}</div>
             <div className='tags flex flex-wrap gap-2'>
                 {disciplines.map((title) => (

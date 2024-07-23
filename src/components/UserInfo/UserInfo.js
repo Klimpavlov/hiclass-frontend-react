@@ -14,6 +14,7 @@ import imgLocalTime from "@/components/UserInfo/localTime.svg"
 import imgInstitution from "@/components/UserInfo/institutionAddress.svg"
 import imgLightning from "@/components/UserInfo/lightning.svg"
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import {usePathname} from "next/navigation";
 const UserInfo = () => {
     const pathname = usePathname();
@@ -52,25 +53,26 @@ const UserInfo = () => {
 
         setFirstname(userProfile.firstName);
         setLastname(userProfile.lastName);
-        setLanguageTitles(userProfile.languageTitles);
+        // setLanguageTitles(translateLanguages(userProfile.languageTitles));
+        setLanguageTitles(translateUserInfo(userProfile.languageTitles, languagesMapping));
         setUserDescription(userProfile.description);
         setCountry(userProfile.countryTitle);
         setCity(userProfile.cityTitle);
         setInstitution(userProfile.institution.title + ', ' + userProfile.institution.address);
-        setDisciplineTitles(translateDisciplines(userProfile.disciplineTitles));
+        // setDisciplineTitles(translateDisciplines(userProfile.disciplineTitles));
+        setDisciplineTitles(translateUserInfo(userProfile.disciplineTitles, disciplinesMapping));
 
         setIsExpert(userProfile.isAnExpert);
 
         setUserAvatar(userProfile.imageUrl);
     }
 
-    // Function to translate discipline titles if localization is "ru"
-    const translateDisciplines = (disciplines) => {
-        if (pathname === '/ru/myProfile') {
-            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+    const translateUserInfo = (items, mappingFile) => {
+        if (pathname.includes('ru')){
+            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
         }
-        return disciplines;
-    };
+        return items;
+    }
 
     // local time
 

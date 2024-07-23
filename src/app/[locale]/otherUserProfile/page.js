@@ -12,6 +12,8 @@ import {RingLoader} from "react-spinners";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
+import {useTranslations} from "next-intl";
 
 export default function otherUserProfile() {
 
@@ -65,12 +67,12 @@ export default function otherUserProfile() {
                 setUserFirstName(response.data.value.firstName)
                 setUserLastName(response.data.value.lastName)
                 setEmail(response.data.value.email)
-                setLanguageTitles(response.data.value.languageTitles);
+                setLanguageTitles(translateUserInfo(response.data.value.languageTitles, languagesMapping));
                 setUserDescription(response.data.value.description);
                 setCountry(response.data.value.countryTitle);
                 setCity(response.data.value.cityTitle);
                 setInstitution(response.data.value.institution.title);
-                setDisciplineTitles(translateDisciplines(response.data.value.disciplineTitles));
+                setDisciplineTitles(translateUserInfo(response.data.value.disciplineTitles, disciplinesMapping));
 
                 setUserAvatar(response.data.value.imageUrl)
                 setClassData(response.data.value.classDtos)
@@ -89,12 +91,14 @@ export default function otherUserProfile() {
     }, []);
 
     // Function to translate discipline titles if localization is "ru"
-    const translateDisciplines = (disciplines) => {
-        if (pathname === '/ru/otherUserProfile') {
-            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+    const translateUserInfo = (items, mappingFile) => {
+        if (pathname.includes('ru')){
+            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
         }
-        return disciplines;
-    };
+        return items;
+    }
+
+    const t = useTranslations("OtherUserProfile");
 
     return (
         <main className="">
@@ -125,7 +129,7 @@ export default function otherUserProfile() {
                         />
                         <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
                             <div className='clsCntHeader flex justify-between'>
-                                <div className=''>Classes</div>
+                                <div className=''>{t("classes")}</div>
                                 <div className='text-green-700 cursor-pointer'>
 
                                 </div>
@@ -136,7 +140,7 @@ export default function otherUserProfile() {
                                         <ClassPreview key={defaultClass.classId}
                                                       title={defaultClass.title}
                                                       username={defaultClass.userFullName}
-                                                      tags={translateDisciplines(defaultClass.disciplines)}
+                                                      tags={translateUserInfo(defaultClass.disciplines, disciplinesMapping)}
                                                       photo={defaultClass.imageUrl}
                                         ></ClassPreview>
                                     </div>
