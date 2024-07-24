@@ -82,7 +82,8 @@ export default function SignIn() {
                         </div>
                         <InputForm inputFormText={t("password")} placeholderText={t("placeholderPassword")}
                                    optionalFormText={t("forgotPassword")}
-                                   link='/signIn/forgetPassword'
+                                   // link='/signIn/forgetPassword'
+                                    link={`/${locale}/signIn/forgetPassword`}
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}

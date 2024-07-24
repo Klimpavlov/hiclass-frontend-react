@@ -22,6 +22,12 @@
     "placeholderConfirmPassword": "Re-enter your password",
     "ContinueBtn": "Continue"
   },
+  "ForgetPassword": {
+    "forgotPassword": "Forgot password?",
+    "mainText": "Type in the email you used to register in Hi,class.\n We’ll send you a link to create your new password.",
+    "email": "Email",
+    "ContinueBtn": "Continue"
+  },
   "MainPage": {
     "showOnlyExperts": "Show only experts",
     "seeAll": "See all",
