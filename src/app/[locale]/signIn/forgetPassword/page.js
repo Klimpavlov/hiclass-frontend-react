@@ -35,7 +35,7 @@ export default function ForgetPassword() {
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
                     <div className="text-4xl whitespace-pre-line">{t("forgotPassword")}</div>
-                    <div className="text-center">
+                    <div className="">
                         {t("mainText")}
                     </div>
                     <div className="inputs w-full my-4">

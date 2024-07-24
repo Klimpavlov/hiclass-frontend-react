@@ -26,7 +26,73 @@
     "forgotPassword": "Forgot password?",
     "mainText": "Type in the email you used to register in Hi,class.\n We’ll send you a link to create your new password.",
     "email": "Email",
-    "ContinueBtn": "Continue"
+    "ContinueBtn": "Continue",
+    "resetPasswordCode": "Verify your email address",
+    "verificationLinkText": "We’ve sent a verification link to ",
+    "clickLinkText": "Click the link to complete the verification process. If you don’t see it you may\n   need to check your spam folder.",
+    "verificationCode": "Verification code",
+    "placeholderVerificationCode": "Enter verification code",
+    "resetPassword": "Reset password",
+    "setupNewPassword": "Set up your new password to log in to Hi,class",
+    "password": "Password",
+    "placeholderPassword": "At least 6 characters",
+    "confirmPassword": "Confirm password",
+    "placeholderConfirmPassword": "Re-enter your password",
+    "changePassword": "Change password"
+  },
+  "CreateAccount": {
+    "NameForm": {
+      "nameFormHeader": "Your full name",
+      "nameFormText": "Enter your first and last name to get your account up and running.",
+      "firstName": "First name",
+      "placeholderFirstName": "Enter your first name",
+      "lastName": "Last name",
+      "placeholderLastName": "Enter your last name",
+      "ContinueBtn": "Continue"
+    },
+    "PositionForm": {
+      "welcome": "Welcome !",
+      "positionFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "teacherForm": "I’m a teacher",
+      "aboutTeacherForm": "As a teacher you can add your classes and organise lessons, as well as join lessons as an expert in your field.",
+      "expertForm": "I’m an expert",
+      "aboutExpertForm": "As an expert you can connect with teacher and join lessons.",
+      "ContinueBtn": "Continue"
+    },
+    "LocationAndLanguages": {
+      "welcome": "Welcome !",
+      "locationFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "country": "Country",
+      "city": "City",
+      "languages": "Languages",
+      "placeholderLanguages": "Select languages that you speak",
+      "ContinueBtn": "Continue"
+    },
+    "Institution": {
+      "welcome": "Welcome !",
+      "institutionFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "institution": "Institution name",
+      "ContinueBtn": "Continue"
+    },
+    "Disciplines": {
+      "welcome": "Welcome !",
+      "disciplinesFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "areasOfWork": "Areas of work",
+      "placeholderAreas": "Select..",
+      "ContinueBtn": "Continue"
+    },
+    "Grades": {
+      "welcome": "Welcome !",
+      "gradesFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "grades": "Grades",
+      "placeholderGrades": "Select grades..",
+      "ContinueBtn": "Continue"
+    },
+    "ProfilePhoto": {
+      "nearlyThere": "Nearly there!",
+      "profilePhotoText": "Last but not least, a profile photo will let people know who they are connecting with",
+      "finishBtn": "Finish"
+    }
   },
   "MainPage": {
     "showOnlyExperts": "Show only experts",

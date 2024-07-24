@@ -6,6 +6,7 @@ import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHead
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputRadioForm from "@/components/Inputs/InputRadioForm";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 
 export default function PositionForm() {
@@ -25,34 +26,37 @@ export default function PositionForm() {
         router.push('/createAccount/locationAndLanguages');
     };
 
+    const t = useTranslations("CreateAccount.PositionForm")
+
+
     return (
         <main>
             <ErrorNotification ref={toast} />
             <RegistrationHeader />
             <div className="flex flex-col items-center justify-center">
                 <div className="content flex flex-col items-center gap-8 w-full max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Welcome !</div>
-                    <div className=" ">
-                        It’s great to have you with us! To help us optimise your experience, tell us what you plan to use WonderWorld for.
+                    <div className="text-4xl whitespace-pre-line">{t("welcome")}</div>
+                    <div className="">
+                        {t("positionFormText")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full">
                         <div className="my-4">
                             <InputRadioForm
-                                inputFormText="I’m a teacher"
-                                inputAboutFormText="As a teacher you can add your classes and organise lessons, as well as join lessons as an expert in your field."
+                                inputFormText={t("teacherForm")}
+                                inputAboutFormText={t("aboutTeacherForm")}
                                 checked={isTeacher}
                                 onChange={(value) => setIsTeacher(value)}
                             />
                         </div>
                         <InputRadioForm
-                            inputFormText="I’m an expert"
-                            inputAboutFormText="As an expert you can connect with teacher and join lessons."
+                            inputFormText={t("expertForm")}
+                            inputAboutFormText={t("aboutExpertForm")}
                             checked={isExpert}
                             onChange={(value) => setIsExpert(value)}
                         />
                     </div>
-                    <ContinueButton buttonText="Continue" onClick={handleContinue} />
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} />
                 </div>
             </div>
         </main>

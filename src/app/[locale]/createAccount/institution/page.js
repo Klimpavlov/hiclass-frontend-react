@@ -7,6 +7,7 @@ import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputForm from "@/components/Inputs/InputForm";
 import axios from "axios";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function institutionForm() {
     const toast = useRef(null);
@@ -42,6 +43,9 @@ export default function institutionForm() {
         router.push('/createAccount/disciplines');
     };
 
+    const t = useTranslations("CreateAccount.Institution")
+
+
     return (
         <main>
             <ErrorNotification ref={toast} />
@@ -49,14 +53,13 @@ export default function institutionForm() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Welcome !</div>
-                    <div className=" ">It’s great to have you with us! To help us optimise your
-                        experience, tell us what you plan to use WonderWorld for.
+                    <div className="text-4xl whitespace-pre-line">{t("welcome")}</div>
+                    <div className="">{t("institutionFormText")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText='Institution name' value={institutionName}
+                            <InputForm inputFormText={t("institution")} value={institutionName}
                                        onChange={(e) => setInstitutionName(e.target.value)}/>
                             {orgData.map((feature) => (
                                 <div key={feature.properties.id}
@@ -67,7 +70,7 @@ export default function institutionForm() {
                             ))}
                         </div>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </main>
