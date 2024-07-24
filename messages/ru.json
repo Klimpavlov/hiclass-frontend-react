@@ -1,4 +1,27 @@
 {
+  "SignIn": {
+    "signIn": "Войти",
+    "newTo": "Новичок в Hi,class? ",
+    "signUp": "Зарегестрироваться",
+    "googleBtn": "Продолжите с Google",
+    "facebookBtn": "Продолжите с Facebook",
+    "email": "Элеткронная почта",
+    "password": "Пароль",
+    "forgotPassword": "Забыл пароль",
+    "placeholderPassword": "Введите пароль",
+    "signInBtn": "Войти"
+  },
+  "SignUp": {
+    "topText": "Присоединяйтесь к Hi,class",
+    "formText": "Уже являетесь участником? ",
+    "signIn": "Войти",
+    "email": "Элеткронная почта",
+    "password": "Пароль",
+    "placeholderPassword": "Не менее 6 символов",
+    "confirmPassword": "Подтвердите пароль",
+    "placeholderConfirmPassword": "Повторно введите пароль",
+    "ContinueBtn": "Продолжить"
+  },
   "MainPage": {
     "showOnlyExperts": "Только эксперты",
     "seeAll": "Показать всех",
@@ -110,6 +133,21 @@
   "EditClass": {
     "headerText": "Редактирование класса"
   },
+  "InviteModal": {
+    "mainText": "Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .",
+    "inviteBtn": "Пригласить класс",
+    "inviteModalText": "Пригласить на звонок",
+    "subject": "Предмет",
+    "placeholderSubject": "Выберите предмет",
+    "date": "Дата",
+    "placeholderDate": "Выберите дату",
+    "message": "Сообщение",
+    "placeholderMessage": "Напишите несколько слов о своем занятии, которое вы предлагаете для проведения встречи",
+    "selectClass": "Выберите свой класс",
+    "cancelBtn": "Закрыть",
+    "sendInviteBtn": "Отправить приглашение"
+  },
+
   "Disciplines": {
     "Physics": "Физика",
     "Geography": "География",

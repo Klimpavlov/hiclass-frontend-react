@@ -1,4 +1,27 @@
 {
+  "SignIn": {
+    "signIn": "Sign in",
+    "newTo": "New to Hi,class? ",
+    "signUp": "Sign up",
+    "googleBtn": "Continue with Google",
+    "facebookBtn": "Continue with Facebook",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password",
+    "placeholderPassword": "Enter your password",
+    "signInBtn": "Sign in"
+  },
+  "SignUp": {
+    "topText": "Join Hi,class",
+    "formText": "Already a member? ",
+    "signIn": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "placeholderPassword": "At least 6 characters",
+    "confirmPassword": "Confirm password",
+    "placeholderConfirmPassword": "Re-enter your password",
+    "ContinueBtn": "Continue"
+  },
   "MainPage": {
     "showOnlyExperts": "Show only experts",
     "seeAll": "See all",
@@ -106,5 +129,19 @@
   },
   "EditClass": {
     "headerText": "Edit class"
+  },
+  "InviteModal": {
+    "mainText": "Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .",
+    "inviteBtn": "Invite class",
+    "inviteModalText": "Invite for a call",
+    "subject": "Subject",
+    "placeholderSubject": "Select subject",
+    "date": "Date",
+    "placeholderDate": "Select date",
+    "message": "Message",
+    "placeholderMessage": "Write a few words about your activity that you suggest for the meeting",
+    "selectClass": "Select your class",
+    "cancelBtn": "Cancel",
+    "sendInviteBtn": "Send call invite"
   }
 }

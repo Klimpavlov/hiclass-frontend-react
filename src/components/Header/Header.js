@@ -7,7 +7,6 @@ import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '../RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
-import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
@@ -329,6 +328,3 @@ const Header = ({testNotifications}) => {
 };
 
 export default Header
-
-
-

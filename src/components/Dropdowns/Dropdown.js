@@ -45,7 +45,8 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
         <div className="relative">
             {dropdownFormText}
             <div
-                className="flex justify-between py-3 px-5 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white shadow-xs text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6"
+                className="flex justify-between py-3 px-5 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white
+                 shadow-xs text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6 cursor-pointer"
                 onClick={toggleDropdown}
             >
                 <div className="">{displayText}</div>
