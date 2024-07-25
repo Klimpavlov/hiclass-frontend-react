@@ -1,4 +1,8 @@
 {
+  "Position": {
+    "teacher": "учитель",
+    "expert": "эксперт"
+  },
   "SignIn": {
     "signIn": "Войти",
     "newTo": "Новичок в Hi,class? ",

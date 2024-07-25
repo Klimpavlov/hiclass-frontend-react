@@ -9,6 +9,8 @@ import ruLocale from "../../../messages/ru.json";
 import {usePathname} from "next/navigation";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
@@ -35,9 +37,9 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         console.log(classInfo)
 
         setInitialTitle(classInfo.value.title)
-        setInitialSubjects(classInfo.value.disciplines)
+        setInitialSubjects(translateItems(classInfo.value.disciplines, disciplinesMapping))
         setInitialGrades([classInfo.value.grade])
-        setInitialLanguages(classInfo.value.languages)
+        setInitialLanguages(translateItems(classInfo.value.languages, languagesMapping))
         setInitialPhoto(classInfo.value.imageUrl)
 
     }
@@ -92,6 +94,15 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
 
         setGrade(availableGrades);
     }
+
+    //translation
+    const translateItems = (items, mappingFile) => {
+        if (pathname.includes('ru')){
+            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
+        }
+        return items;
+    }
+
 
     const t = useTranslations('CreateClass');
 
