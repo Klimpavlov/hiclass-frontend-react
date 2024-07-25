@@ -20,7 +20,20 @@
     "placeholderPassword": "At least 6 characters",
     "confirmPassword": "Confirm password",
     "placeholderConfirmPassword": "Re-enter your password",
-    "ContinueBtn": "Continue"
+    "ContinueBtn": "Continue",
+    "VerifyEmail": {
+      "verifyFormText": "Verify your email address",
+      "sendLinkTo": "We’ve sent a verification link to ",
+      "clickLink": "Click the link to complete the verification process. If you don’t see it you may\n need to check your spam folder.",
+      "verificationCode": "Verification code",
+      "placeholderVerificationCode": "Enter verification code",
+      "ContinueBtn": "Continue"
+    },
+    "IsVerified": {
+     "isVerifiedTopText": "Email address verified!",
+      "isVerifiedMainText": "You have successfully verified your email address.",
+      "ContinueBtn": "Continue"
+    }
   },
   "ForgetPassword": {
     "forgotPassword": "Forgot password?",

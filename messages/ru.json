@@ -20,7 +20,20 @@
     "placeholderPassword": "Не менее 6 символов",
     "confirmPassword": "Подтвердите пароль",
     "placeholderConfirmPassword": "Повторно введите пароль",
-    "ContinueBtn": "Продолжить"
+    "ContinueBtn": "Продолжить",
+    "VerifyEmail": {
+      "verifyFormText": "Подтвердите свой адрес электронной почты",
+      "sendLinkTo": "Мы отправили ссылку для подтверждения ",
+      "clickLink": "Нажмите на ссылку, чтобы завершить процесс проверки. Если вы его не видите, возможно, вам нужно проверить папку со спамом.",
+      "verificationCode": "Проверочный код",
+      "placeholderVerificationCode": "Введите проверочный код",
+      "ContinueBtn": "Продолжить"
+    },
+    "IsVerified": {
+      "isVerifiedTopText": "Адрес электронной почты подтвержден!",
+      "isVerifiedMainText": "Вы успешно подтвердили свой адрес электронной почты",
+      "ContinueBtn": "Продолжить"
+    }
   },
   "ForgetPassword": {
     "forgotPassword": "Забыли пароль?",
