@@ -79,19 +79,9 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         const availableDisciplines = userProfile.disciplineTitles;
         const availableGrades = userProfile.gradeNumbers;
         const availableLanguages = userProfile.languageTitles;
-        //
-        // setLanguages(availableLanguages);
-        // setDisciplines(availableDisciplines);
-        // setGrade(availableGrades);
 
-        if (currentPathname === 'ru') {
-            setDisciplines(Object.values(ruLocale.Disciplines));
-            setLanguages(Object.values(ruLocale.Languages));
-        } else {
-            setDisciplines(availableDisciplines);
-            setLanguages(availableLanguages);
-        }
-
+        setLanguages(translateItems(availableLanguages, languagesMapping));
+        setDisciplines(translateItems(availableDisciplines, disciplinesMapping));
         setGrade(availableGrades);
     }
 
@@ -143,14 +133,14 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
-                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
+                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : t("selectGrade")}
                           options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText={t("subject")}
-                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
+                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : t("selectSubject")}
                           options={disciplines} initialSelectedOptions={initialSubjects} onChange={setSelectedDisciplines}/>
                 <Dropdown dropdownFormText={t("language")}
-                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : 'Class languages'}
+                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : t("selectLanguage")}
                           options={languages} initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
             </div>
         </div>

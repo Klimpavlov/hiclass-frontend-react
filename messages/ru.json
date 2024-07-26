@@ -217,7 +217,10 @@
     "subject": "Предметы",
     "language": "Языки",
     "cancelBtn": "Закрыть",
-    "applyBtn": "Подтвердить"
+    "applyBtn": "Подтвердить",
+    "selectGrade": "Выберите номер класса",
+    "selectSubject": "Выберите предмет",
+    "selectLanguage": "Выберите язык"
   },
   "EditClass": {
     "headerText": "Редактирование класса"

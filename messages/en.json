@@ -214,7 +214,10 @@
     "subject": "Subjects",
     "language": "Languages",
     "cancelBtn": "Cancel",
-    "applyBtn": "Apply"
+    "applyBtn": "Apply",
+    "selectGrade": "Select grade",
+    "selectSubject": "Select subject",
+    "selectLanguage": "Select languages"
   },
   "EditClass": {
     "headerText": "Edit class"
