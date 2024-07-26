@@ -22,6 +22,7 @@ import {useTranslations} from "next-intl";
 import {usePathname} from "next/navigation";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
 
 const SettingsProfileInfo = () => {
@@ -72,8 +73,8 @@ const SettingsProfileInfo = () => {
 
             setInstitutionName(userProfile.institution.title)
 
-            setInitialLanguages(translateItems(userProfile.languageTitles, languagesMapping));
-            setInitialDisciplines(translateItems(userProfile.disciplineTitles, disciplinesMapping));
+            setInitialLanguages(translateItems(userProfile.languageTitles, languagesMapping, pathname));
+            setInitialDisciplines(translateItems(userProfile.disciplineTitles, disciplinesMapping, pathname));
             setInitialGrades(userProfile.gradeNumbers);
 
             setUserAvatar(userProfile.imageUrl)
@@ -247,7 +248,7 @@ const SettingsProfileInfo = () => {
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
-        setLanguages(translateItems(availableLanguages, languagesMapping));
+        setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
 
     // disciplines
@@ -265,7 +266,7 @@ const SettingsProfileInfo = () => {
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
-        setDisciplines(translateItems(availableDisciplines, disciplinesMapping));
+        setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }
 
 
@@ -315,12 +316,6 @@ const SettingsProfileInfo = () => {
 
 
     //translation
-    const translateItems = (items, mappingFile) => {
-        if (pathname.includes('ru')){
-            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
-        }
-        return items;
-    }
 
     const t = useTranslations('SettingsProfileInfo');
 

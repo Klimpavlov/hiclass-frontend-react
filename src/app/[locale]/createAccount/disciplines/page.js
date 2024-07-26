@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
@@ -9,8 +9,11 @@ import axios from "axios";
 import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
+import disciplinesMapping from "/Users/a111/Desktop/hiclass-frontend-react/mapping/disciplinesMapping/disciplinesMapping.json"
 
 export default function disciplinesForm() {
+    const pathname = usePathname();
     const toast = useRef(null);
 
     const router = useRouter();
@@ -28,7 +31,7 @@ export default function disciplinesForm() {
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
-        setDisciplines(availableDisciplines);
+        setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }
 
     const handleContinue = () => {

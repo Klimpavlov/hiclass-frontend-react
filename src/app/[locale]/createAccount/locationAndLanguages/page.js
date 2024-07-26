@@ -10,10 +10,12 @@ import axios from "axios";
 import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
-
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
+import languagesMapping from "/Users/a111/Desktop/hiclass-frontend-react/mapping/languagesMapping/languagesMapping.json";
+import {usePathname} from "next/navigation";
 
 export default function locationAndLanguages() {
-
+    const pathname = usePathname();
     const toast = useRef(null);
 
     const router = useRouter();
@@ -32,7 +34,7 @@ export default function locationAndLanguages() {
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
-        setLanguages(availableLanguages);
+        setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
 
 
@@ -55,14 +57,6 @@ export default function locationAndLanguages() {
 
     async function getLocation(countrySearchText, citySearchText) {
         try {
-            // if (countrySearchText === '') {
-            //     setCountryData([]);
-            //     return;
-            // }
-            // if (citySearchText === '') {
-            //     setCityData([]);
-            //     return;
-            // }
             const response = await axios.get(
                 `https://countriesnow.space/api/v0.1/countries`
             );

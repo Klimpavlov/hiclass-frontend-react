@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
@@ -11,6 +11,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 
 export default function gradesForm() {
+    const pathname = usePathname()
     const toast = useRef(null);
 
     const router = useRouter();
@@ -27,7 +28,7 @@ export default function gradesForm() {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
         }
-        const success = await postCreateAccount(successRedirect, toast);
+        const success = await postCreateAccount(successRedirect, toast, pathname);
         if (success) {
             successRedirect();
         }
