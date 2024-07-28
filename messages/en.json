@@ -199,7 +199,8 @@
     "classes": "Classes",
     "speaks": "Speaks {languages}",
     "sendInvite": "Send invite",
-    "chatWith": "Chat with"
+    "chatWith": "Chat with",
+    "availableAsAnExpert": "Available as an expert"
   },
   "ClassPreview": {
     "editBtn": "Edit",

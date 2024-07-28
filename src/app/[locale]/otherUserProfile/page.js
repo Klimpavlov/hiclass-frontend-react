@@ -34,6 +34,7 @@ export default function otherUserProfile() {
     const [city, setCity] = useState('');
     const [institution, setInstitution] = useState('');
     const [disciplineTitles, setDisciplineTitles] = useState([]);
+    const [isExpert, setIsExpert] = useState('')
 
     const [userAvatar, setUserAvatar] = useState([]);
     const [classData, setClassData] = useState([]);
@@ -74,6 +75,7 @@ export default function otherUserProfile() {
                 setInstitution(response.data.value.institution.title);
                 setDisciplineTitles(translateUserInfo(response.data.value.disciplineTitles, disciplinesMapping));
 
+                setIsExpert(response.data.value.isAnExpert);
                 setUserAvatar(response.data.value.imageUrl)
                 setClassData(response.data.value.classDtos)
 
@@ -119,6 +121,7 @@ export default function otherUserProfile() {
                     <TopSection/>
                     <div className='flex flex-col sm:flex-row p-4 md:p-28'>
                         <OtherUserInfo username={firstName + ' ' + lastName}
+                                       isExpert={isExpert}
                                        email={email}
                                        languageTitles={languageTitles}
                                        userDescription={userDescription}

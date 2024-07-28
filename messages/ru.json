@@ -201,8 +201,8 @@
     "classes": "Классы",
     "speaks": "Говорит на {languages}",
     "sendInvite": "Отправить приглашение",
-    "chatWith": "Начать переписку"
-
+    "chatWith": "Начать переписку",
+    "availableAsAnExpert": "Доступен в качестве эксперта"
   },
   "ClassPreview": {
     "editBtn": "Править",
