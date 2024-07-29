@@ -6,7 +6,7 @@ const postResetPassword = async (password, toast) => {
         const accessToken = localStorage.getItem('accessToken')
         const localhost = getLocalhost();
 
-        const response = await axios.post(`http://${localhost}/api/User/reset-password`, {
+        const response = await axios.post(`http://${localhost}/api/Authentication/reset-password`, {
             Password: password,
         }, {
             headers: {

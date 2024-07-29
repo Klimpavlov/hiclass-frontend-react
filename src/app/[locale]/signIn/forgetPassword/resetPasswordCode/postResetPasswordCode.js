@@ -7,7 +7,7 @@ const postResetPasswordCode = async (code, toast) => {
         const localhost = getLocalhost();
 
 
-        const response = await axios.post(`http://${localhost}/api/User/check-reset-password-code`, {
+        const response = await axios.post(`http://${localhost}/api/Authentication/check-reset-password-code`, {
             ResetCode: code,
         }, {
             headers: {

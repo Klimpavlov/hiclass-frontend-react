@@ -6,7 +6,7 @@ const postEmailForgetPassword = async (email, successRedirect, toast) => {
         const accessToken = localStorage.getItem('accessToken')
         const localhost = getLocalhost();
 
-        const response = await axios.post(`http://${localhost}/api/User/forgot-password`, {
+        const response = await axios.post(`http://${localhost}/api/Authentication/forgot-password`, {
             Email: email
         }, {
             headers: {

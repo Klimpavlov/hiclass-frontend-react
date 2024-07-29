@@ -32,30 +32,29 @@ export default function MyProfile() {
     const [classData, setClassData] = useState([]);
 
     // useEffect(() => {
-    //     getUser();
+    //     async function getUser() {
+    //         const accessToken = localStorage.getItem('accessToken');
+    //         const userProfile = await getUserProfile(accessToken)
+    //         console.log(userProfile);
+    //         setClassData(userProfile.classDtos)
+    //         setTimeout(() => {
+    //             setLoading(false)
+    //         }, 1300)
+    //     }
+    //     getUser()
     // }, []);
-    //
-    // async function getUser() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const userProfile = await getUserProfile(accessToken)
-    //     console.log(userProfile);
-    //
-    //     setClassData(userProfile.classDtos)
-    // }
 
     useEffect(() => {
-        async function getUser() {
-            const accessToken = localStorage.getItem('accessToken');
-            const userProfile = await getUserProfile(accessToken)
-            console.log(userProfile);
-            setClassData(userProfile.classDtos)
-            setTimeout(() => {
-                setLoading(false)
-            }, 1300)
-        }
-        getUser()
+         async function fetchUserProfile() {
+             const userProfile = await getUserProfile();
+             console.log(userProfile);
+             setClassData(userProfile.classDtos)
+             setTimeout(() => {
+                 setLoading(false)
+             }, 1300)
+         }
+        fetchUserProfile();
     }, []);
-
 
     // translation
 
