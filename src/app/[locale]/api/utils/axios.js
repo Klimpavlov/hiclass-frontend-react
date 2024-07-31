@@ -9,9 +9,12 @@ const apiClient = axios.create({
 // Функция для получения нового access token с помощью refresh token
 const refreshAccessToken = async () => {
     try {
+        const refreshToken = sessionStorage.getItem('refreshToken');
+        const deviceToken = localStorage.getItem('deviceToken')
+
         const response = await apiClient.post('/Authentication/refresh-token', {
-            refreshToken: 'ВАШ_REFRESH_TOKEN',
-            deviceToken: ''
+            refreshToken: refreshToken,
+            deviceToken: deviceToken
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -19,7 +22,9 @@ const refreshAccessToken = async () => {
         });
         console.log(response);
         const newAccessToken = response.data.value.accessToken;
+        const newRefreshToken = response.data.value.refreshToken;
         sessionStorage.setItem('accessToken', newAccessToken);
+        sessionStorage.setItem('refreshToken', newRefreshToken);
         return newAccessToken;
     } catch (error) {
         console.error('Unable to refresh access token:', error);

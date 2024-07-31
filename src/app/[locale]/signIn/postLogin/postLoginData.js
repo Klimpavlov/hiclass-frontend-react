@@ -45,9 +45,12 @@ const postLoginData = async (email, password, successRedirect, deviceToken, toas
         });
 
         const accessToken = response.data.value.accessToken;
+        const refreshToken = response.data.value.refreshToken;
 
         // Сохраните accessToken в памяти
         sessionStorage.setItem('accessToken', accessToken);
+        sessionStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('deviceToken', deviceToken)
 
         successRedirect();
         return true;

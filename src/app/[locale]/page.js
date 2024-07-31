@@ -149,8 +149,8 @@ async function getDisciplines() {
     }
 
     async function defaultSearch() {
-        const accessToken = localStorage.getItem('accessToken');
-        const defaultSearchData = await getDefaultSearch(accessToken);
+        // const accessToken = localStorage.getItem('accessToken');
+        const defaultSearchData = await getDefaultSearch();
         setTeacherProfileData(defaultSearchData.teacherProfilesByCountry);
         setLoading(false);
     }

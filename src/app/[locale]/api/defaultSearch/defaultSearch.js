@@ -1,20 +1,13 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from '../utils/axios';
 
-export async function getDefaultSearch(accessToken) {
+export async function getDefaultSearch() {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/Search/default-search-request`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        const response = await apiClient.get('/Search/default-search-request');
         return response.data;
     } catch (error) {
         console.error(error);
-        return [];
+        throw error;
     }
 }
+
+
