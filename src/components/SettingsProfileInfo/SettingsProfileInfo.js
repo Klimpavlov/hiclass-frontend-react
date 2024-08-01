@@ -58,8 +58,7 @@ const SettingsProfileInfo = () => {
 
     useEffect(() => {
         async function getUserInfo() {
-            const accessToken = localStorage.getItem('accessToken');
-            const userProfile = await getUserProfile(accessToken);
+            const userProfile = await getUserProfile();
 
             console.log(userProfile)
 

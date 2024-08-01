@@ -22,7 +22,9 @@ export default function ForgetPassword() {
         if (!email) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
         }
+        localStorage.setItem('forgetPasswordEmail', email)
         await postEmailForgetPassword(email, successRedirect, toast);
+
     }
 
     const t = useTranslations("ForgetPassword");

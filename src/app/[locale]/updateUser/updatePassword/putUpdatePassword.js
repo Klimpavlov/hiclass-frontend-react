@@ -1,20 +1,9 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-
+import apiClient from "@/app/[locale]/api/utils/axios";
 const putUpdatePassword = async (oldPassword, newPassword, toast) => {
     try {
-
-        const accessToken = localStorage.getItem('accessToken');
-        const localhost = getLocalhost();
-
-
-        const response = await axios.put(`http://${localhost}/api/EditUser/password`, {
+        const response = await apiClient.put('/EditUser/password', {
             OldPassword: oldPassword,
             Password: newPassword,
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
         })
 
         console.log(response);

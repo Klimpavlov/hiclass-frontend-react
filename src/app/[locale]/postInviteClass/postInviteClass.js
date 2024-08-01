@@ -5,7 +5,7 @@ const postInviteClass = async (classSenderId, receiverId, dateOfInvitation, invi
    try {
 
 
-       const response = await apiClient('/Invitation/create-invitation', {
+       const response = await apiClient.post('/Invitation/create-invitation', {
            ClassSenderId: classSenderId,
            ClassReceiverId: receiverId.toString(),
            DateOfInvitation: dateOfInvitation,

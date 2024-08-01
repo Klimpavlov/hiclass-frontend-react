@@ -1,18 +1,10 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postUpdateNotificationStatus = async (notificationId, status, toast) => {
     try {
-        const accessToken = localStorage.getItem('accessToken');
-        const localhost = getLocalhost();
-
-        const response = await axios.post(`http://${localhost}/api/Notifications/update-notification-status`, {
+        const response = await apiClient.post('/Notifications/update-notification-status', {
             NotificationId: notificationId,
             Status: status,
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
         });
 
         console.log(response);

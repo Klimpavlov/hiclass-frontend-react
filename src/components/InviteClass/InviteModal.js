@@ -16,6 +16,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import { format } from "date-fns";
 import {useTranslations} from "next-intl";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 
 
@@ -30,17 +31,9 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
     }, []);
 
     async function userProfile() {
-        const accessToken = localStorage.getItem('accessToken');
         try {
-            const response = await axios.get(
-                `http://${localhost}/api/User/userprofile`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            // console.log(response);
+            const response = await apiClient.get(
+                '/User/userprofile',);
             setClassData(response.data.value.classDtos)
         } catch (error) {
             console.error(error);

@@ -1,21 +1,14 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const putEditUserImage = async (userImage, toast) => {
     try {
-
-        const accessToken = localStorage.getItem('accessToken')
-        const localhost = getLocalhost();
-
         const formData = new FormData();
-
         formData.append('ImageFormFile', userImage);
 
-        const response = await axios
-            .put(`http://${localhost}/api/Image/edit-user-image/`, formData, {
+        const response = await apiClient
+            .put('/Image/edit-user-image/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${accessToken}`,
                 },
             })
 

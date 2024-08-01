@@ -1,27 +1,19 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const putUpdatePersonalInfo = async (institution, toast) => {
 
     try {
-        const accessToken = localStorage.getItem('accessToken');
-        const localhost = getLocalhost();
-
         const institutionRequest = institution.split(';')
         const institutionTitle = institutionRequest[0];
         const institutionAddress = institution[1]
 
-        const response = await axios.put(`http://${localhost}/api/EditUser/institution`, {
+        const response = await apiClient.put('/EditUser/institution', {
             InstitutionTitle: institutionTitle,
             Address: institutionAddress,
             Types: [
                 "School"
             ]
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
-        })
+        });
 
         console.log(response);
         return true

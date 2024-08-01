@@ -1,17 +1,9 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const putUpdateEmail = async (email, toast) => {
     try {
-        const accessToken = localStorage.getItem('accessToken');
-        const localhost = getLocalhost();
-
-        const response = await axios.put(`http://${localhost}/api/EditUser/email`, {
+        const response = await apiClient.put('/EditUser/email', {
             Email: email,
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
         })
 
         console.log(response);

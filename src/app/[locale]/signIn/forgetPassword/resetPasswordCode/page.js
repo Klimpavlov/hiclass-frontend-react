@@ -16,6 +16,7 @@ export default function resetPasswordCode() {
 
     const router = useRouter();
     const [code, setCode] = useState();
+    const resetPasswordEmail = localStorage.getItem('forgetPasswordEmail')
 
     const handleContinue = async () => {
         if (!code) {
@@ -24,7 +25,7 @@ export default function resetPasswordCode() {
         }
         console.log(code)
 
-        const successResetPasswordCode = await postResetPasswordCode(code, toast);
+        const successResetPasswordCode = await postResetPasswordCode(resetPasswordEmail, code, toast);
         if (successResetPasswordCode) {
             router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
         }
