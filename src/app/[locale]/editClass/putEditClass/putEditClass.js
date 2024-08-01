@@ -1,17 +1,15 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const putEditClass = async (classId, title, gradeNumber, languageTitles, disciplineTitles, toast) => {
 
     try {
-        const accessToken = localStorage.getItem('accessToken')
-        const localhost = getLocalhost();
+
         console.log(gradeNumber);
         const gradeNumberString = gradeNumber.toString()
         console.log(gradeNumberString);
 
 
-        const response = await axios.put(`http://${localhost}/api/Class/edit-class/${classId}`, {
+        const response = await apiClient.put(`/Class/edit-class/${classId}`, {
                 Title: title,
                 GradeNumber: gradeNumberString,
                 LanguageTitles: languageTitles,
@@ -19,7 +17,6 @@ const putEditClass = async (classId, title, gradeNumber, languageTitles, discipl
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
                 }
             }
         )

@@ -14,6 +14,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import {useTranslations} from "next-intl";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 export default function otherUserProfile() {
 
@@ -54,16 +55,8 @@ export default function otherUserProfile() {
     useEffect(() => {
 
         async function getOtherUser() {
-            const accessToken = localStorage.getItem('accessToken');
             try {
-                const response = await axios.get(
-                    `http://localhost:7280/api/User/other-userprofile/${otherUserId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    }
-                );
+                const response = await apiClient.get(`/User/other-userprofile/${otherUserId}`);
                 console.log(response)
                 setUserFirstName(response.data.value.firstName)
                 setUserLastName(response.data.value.lastName)

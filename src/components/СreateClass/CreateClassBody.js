@@ -32,8 +32,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [initialPhoto, setInitialPhoto] = useState('');
 
     async function getClass() {
-        const accessToken = localStorage.getItem('accessToken');
-        const classInfo = await getClassInfo(accessToken, classId)
+        const classInfo = await getClassInfo(classId)
         console.log(classInfo)
 
         setInitialTitle(classInfo.value.title)
@@ -74,8 +73,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     }, []);
 
     async function getUserInfo() {
-        const accessToken = localStorage.getItem('accessToken');
-        const userProfile = await getUserProfile(accessToken);
+        const userProfile = await getUserProfile();
         const availableDisciplines = userProfile.disciplineTitles;
         const availableGrades = userProfile.gradeNumbers;
         const availableLanguages = userProfile.languageTitles;

@@ -47,7 +47,7 @@ const UserInfo = () => {
     }, []);
 
     async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
         // const userProfile = await getUserProfile(accessToken);
         const userProfile = await getUserProfile();
 

@@ -1,20 +1,14 @@
 import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-
-export async function getClassInfo(accessToken, classId) {
+import apiClient from "@/app/[locale]/api/utils/axios";
+export async function getClassInfo(classId) {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/Class/class-profile/${classId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
+
+        const response = await apiClient.get(
+            `/Class/class-profile/${classId}`
         );
         return response.data;
     } catch (error) {
         console.error(error);
-        return [];
+       throw error;
     }
 }
