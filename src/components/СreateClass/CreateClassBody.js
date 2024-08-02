@@ -49,8 +49,17 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [selectedImage, setSelectedImage] = useState(null);
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        setSelectedImage(URL.createObjectURL(file));
-        setPhoto(file ? file : initialPhoto);
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        // setSelectedImage(URL.createObjectURL(file));
+        // setPhoto(file ? file : initialPhoto);
+
+        if (file && allowedTypes.includes(file.type)) {
+            setSelectedImage(URL.createObjectURL(file));
+            setPhoto(file ? file : initialPhoto);
+        } else {
+            alert("Please upload an image file (jpeg, jpg, png).");
+        }
 
     };
 
@@ -119,12 +128,12 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                     <input
                         type="file"
                         id="uploadImage"
-                        accept="image/*"
+                        accept="image/jpeg,image/png,image/jpg"
                         onChange={handleImageUpload}
                         className="hidden"
                     />
                 </div>
-                <div>Minimum size of "808x632px". GIF files will not animate</div>
+                <div>{t("uploadImageText")}</div>
             </div>
             <div className='section-info w-full '>
                 <InputForm inputFormText={t("title")} placeholderText='Class title'

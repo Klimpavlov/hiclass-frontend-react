@@ -6,9 +6,18 @@ const AddProfilePhoto = ({ onFileSelected }) => {
     const [file, setFile] = useState();
 
     function getFile(event) {
+        // const selectedFile = event.target.files[0];
+        // setFile(URL.createObjectURL(selectedFile));
+        // onFileSelected(selectedFile); // Вызов функции onFileSelected с выбранным файлом
+
         const selectedFile = event.target.files[0];
-        setFile(URL.createObjectURL(selectedFile));
-        onFileSelected(selectedFile); // Вызов функции onFileSelected с выбранным файлом
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (selectedFile && allowedTypes.includes(selectedFile.type)) {
+            setFile(URL.createObjectURL(selectedFile));
+            onFileSelected(selectedFile);
+        } else {
+            alert("Please upload an image file (jpeg, jpg, png).");
+        }
     }
 
     return (
@@ -29,7 +38,7 @@ const AddProfilePhoto = ({ onFileSelected }) => {
             <input
                 type="file"
                 id="uploadImage"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/jpg"
                 onChange={getFile}
                 className="hidden"
             />
