@@ -1,16 +1,10 @@
-import axios from "axios";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const deleteUser = async (successRedirect, toast) => {
 
     try {
-        const accessToken = localStorage.getItem('accessToken')
 
-        const response = axios.delete('http://localhost:7280/api/User/delete-user/', {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
-        )
+        const response = apiClient.delete('/User/delete-user/')
 
         console.log(response);
         toast.current.show({severity: 'info', summary: 'Confirmed', detail: 'User successfully deleted', life: 3000});

@@ -7,6 +7,7 @@ import postInviteClass from "@/app/[locale]/postInviteClass/postInviteClass";
 import InviteModal from "@/components/InviteClass/InviteModal";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import {useRouter} from "next/navigation";
+import {useTranslations} from "next-intl";
 
 const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
     const router = useRouter()
@@ -25,6 +26,8 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
         router.push('/otherUserProfile')
         // setIsProfileOpen(true);
     };
+
+    const t = useTranslations("InviteModal");
 
     return (
         <div className="class-preview fixed inset-0 flex items-center justify-center bg-white z-50 overflow-y-auto">
@@ -62,7 +65,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                         ))}
                     </div>
                     <div>
-                        <ApplyButton buttonText='Invite class' onApply={handleOpenInviteModal}/>
+                        <ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal}/>
                     </div>
                 </div>
             </div>

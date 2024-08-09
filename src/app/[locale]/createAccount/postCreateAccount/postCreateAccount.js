@@ -1,8 +1,13 @@
 import axios from 'axios';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+import languagesMapping from "../../../../../mapping/languagesMapping/languagesMapping.json";
+import disciplinesMapping from "../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import {usePathname} from "next/navigation";
 
-const postCreateAccount = async (successRedirect, toast) => {
+const postCreateAccount = async (successRedirect, toast, pathname) => {
     try {
+
         const accessToken = localStorage.getItem('accessToken');
         const localhost = getLocalhost();
 
@@ -28,6 +33,16 @@ const postCreateAccount = async (successRedirect, toast) => {
         const grades = localStorage.getItem('grades');
         const gradesArray = grades.split(',').map(Number);
 
+        //translate if necessary
+
+        let languagesToSend = languagesArray;
+        let disciplinesToSend = disciplinesArray;
+
+        if (pathname.includes('ru')) {
+            languagesToSend = reverseTranslateItems(languagesArray, languagesMapping);
+            disciplinesToSend = reverseTranslateItems(disciplinesArray, disciplinesMapping);
+        }
+
         const requestData = {
             FirstName: firstName,
             LastName: lastName,
@@ -40,8 +55,8 @@ const postCreateAccount = async (successRedirect, toast) => {
                 Address: institutionAddress,
                 Title: institutionTitle
             },
-            DisciplineTitles: disciplinesArray,
-            LanguageTitles: languagesArray,
+            DisciplineTitles: disciplinesToSend,
+            LanguageTitles: languagesToSend,
             GradesEnumerable: gradesArray,
         };
 

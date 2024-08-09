@@ -5,6 +5,7 @@ import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHead
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function nameForm() {
 
@@ -26,6 +27,8 @@ export default function nameForm() {
 
     };
 
+    const t = useTranslations("CreateAccount.NameForm")
+
     return (
         <main>
             <ErrorNotification ref={toast} />
@@ -33,22 +36,22 @@ export default function nameForm() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Your full name</div>
-                    <div className=" ">Enter your first and last name to get your account up and running.</div>
+                    <div className="text-4xl whitespace-pre-line">{t("nameFormHeader")}</div>
+                    <div className="">{t("nameFormText")}</div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText="First name" placeholderText="Enter your first name"
+                            <InputForm inputFormText={t("firstName")} placeholderText={t("placeholderFirstName")}
                                        value={firstName}
                                        onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
-                        <InputForm inputFormText="Last name" placeholderText="Enter your last name"
+                        <InputForm inputFormText={t("lastName")} placeholderText={t("placeholderLastName")}
                                    value={lastName}
                                    onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
-                            <ContinueButton buttonText='Continue' onClick={handleContinue}/>
+                            <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </main>

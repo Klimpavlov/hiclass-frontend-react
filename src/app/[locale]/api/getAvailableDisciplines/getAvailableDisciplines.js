@@ -1,21 +1,12 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from '../utils/axios';
 
-export async function getAvailableDisciplines(accessToken) {
+export async function getAvailableDisciplines() {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/StaticDataSources/get-available-disciplines`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
-
+        const response = await apiClient.get('/StaticDataSources/get-available-disciplines');
         return response.data.availableDisciplines;
     } catch (error) {
         console.error(error);
-        return [];
+        throw error;
     }
 }
+

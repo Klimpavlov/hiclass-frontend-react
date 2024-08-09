@@ -1,4 +1,116 @@
 {
+  "Position": {
+    "teacher": "teacher",
+    "expert": "expert"
+  },
+  "SignIn": {
+    "signIn": "Sign in",
+    "newTo": "New to Hi,class? ",
+    "signUp": "Sign up",
+    "googleBtn": "Continue with Google",
+    "facebookBtn": "Continue with Facebook",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password",
+    "placeholderPassword": "Enter your password",
+    "signInBtn": "Sign in"
+  },
+  "SignUp": {
+    "topText": "Join Hi,class",
+    "formText": "Already a member? ",
+    "signIn": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "placeholderPassword": "At least 6 characters",
+    "confirmPassword": "Confirm password",
+    "placeholderConfirmPassword": "Re-enter your password",
+    "ContinueBtn": "Continue",
+    "VerifyEmail": {
+      "verifyFormText": "Verify your email address",
+      "sendLinkTo": "We’ve sent a verification link to ",
+      "clickLink": "Click the link to complete the verification process. If you don’t see it you may\n need to check your spam folder.",
+      "verificationCode": "Verification code",
+      "placeholderVerificationCode": "Enter verification code",
+      "ContinueBtn": "Continue"
+    },
+    "IsVerified": {
+     "isVerifiedTopText": "Email address verified!",
+      "isVerifiedMainText": "You have successfully verified your email address.",
+      "ContinueBtn": "Continue"
+    }
+  },
+  "ForgetPassword": {
+    "forgotPassword": "Forgot password?",
+    "mainText": "Type in the email you used to register in Hi,class.\n We’ll send you a link to create your new password.",
+    "email": "Email",
+    "ContinueBtn": "Continue",
+    "resetPasswordCode": "Verify your email address",
+    "verificationLinkText": "We’ve sent a verification link to ",
+    "clickLinkText": "Click the link to complete the verification process. If you don’t see it you may\n   need to check your spam folder.",
+    "verificationCode": "Verification code",
+    "placeholderVerificationCode": "Enter verification code",
+    "resetPassword": "Reset password",
+    "setupNewPassword": "Set up your new password to log in to Hi,class",
+    "password": "Password",
+    "placeholderPassword": "At least 6 characters",
+    "confirmPassword": "Confirm password",
+    "placeholderConfirmPassword": "Re-enter your password",
+    "changePassword": "Change password"
+  },
+  "CreateAccount": {
+    "NameForm": {
+      "nameFormHeader": "Your full name",
+      "nameFormText": "Enter your first and last name to get your account up and running.",
+      "firstName": "First name",
+      "placeholderFirstName": "Enter your first name",
+      "lastName": "Last name",
+      "placeholderLastName": "Enter your last name",
+      "ContinueBtn": "Continue"
+    },
+    "PositionForm": {
+      "welcome": "Welcome !",
+      "positionFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "teacherForm": "I’m a teacher",
+      "aboutTeacherForm": "As a teacher you can add your classes and organise lessons, as well as join lessons as an expert in your field.",
+      "expertForm": "I’m an expert",
+      "aboutExpertForm": "As an expert you can connect with teacher and join lessons.",
+      "ContinueBtn": "Continue"
+    },
+    "LocationAndLanguages": {
+      "welcome": "Welcome !",
+      "locationFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "country": "Country",
+      "city": "City",
+      "languages": "Languages",
+      "placeholderLanguages": "Select languages that you speak",
+      "ContinueBtn": "Continue"
+    },
+    "Institution": {
+      "welcome": "Welcome !",
+      "institutionFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "institution": "Institution name",
+      "ContinueBtn": "Continue"
+    },
+    "Disciplines": {
+      "welcome": "Welcome !",
+      "disciplinesFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "areasOfWork": "Areas of work",
+      "placeholderAreas": "Select..",
+      "ContinueBtn": "Continue"
+    },
+    "Grades": {
+      "welcome": "Welcome !",
+      "gradesFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
+      "grades": "Grades",
+      "placeholderGrades": "Select grades..",
+      "ContinueBtn": "Continue"
+    },
+    "ProfilePhoto": {
+      "nearlyThere": "Nearly there!",
+      "profilePhotoText": "Last but not least, a profile photo will let people know who they are connecting with",
+      "finishBtn": "Finish"
+    }
+  },
   "MainPage": {
     "showOnlyExperts": "Show only experts",
     "seeAll": "See all",
@@ -38,7 +150,7 @@
     "backBtn": "Назад",
     "replaceBtn": "Replace",
     "profilePhoto": "Profile photo",
-    "photoDetails": "Your photo appears on your Profile page and is visible for Brands on your profile preview\n Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.",
+    "photoDetails": "Your photo appears on your Profile page and is visible for Brands on your profile preview\n Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG, JPEG.",
     "aboutMe": "About me",
     "aboutMeDetails": "Add a brief description for your profile",
     "firstName": "First name",
@@ -79,7 +191,16 @@
   },
   "UserInfo": {
     "localTime": "local time",
-    "editProfileBtn": "Edit profile"
+    "editProfileBtn": "Edit profile",
+    "availableAsAnExpert": "Available as an expert",
+    "speaks": "Speaks {languages}"
+  },
+  "OtherUserProfile": {
+    "classes": "Classes",
+    "speaks": "Speaks {languages}",
+    "sendInvite": "Send invite",
+    "chatWith": "Chat with",
+    "availableAsAnExpert": "Available as an expert"
   },
   "ClassPreview": {
     "editBtn": "Edit",
@@ -89,11 +210,32 @@
     "headerText": "Create class",
     "classPhoto": "Class photo",
     "uploadImage": "Upload image",
+    "uploadImageText": "Please upload an image file (jpeg, jpg, png).",
     "title": "Title",
     "grade": "Grades",
     "subject": "Subjects",
     "language": "Languages",
     "cancelBtn": "Cancel",
-    "applyBtn": "Apply"
+    "applyBtn": "Apply",
+    "selectGrade": "Select grade",
+    "selectSubject": "Select subject",
+    "selectLanguage": "Select languages"
+  },
+  "EditClass": {
+    "headerText": "Edit class"
+  },
+  "InviteModal": {
+    "mainText": "Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .",
+    "inviteBtn": "Invite class",
+    "inviteModalText": "Invite for a call",
+    "subject": "Subject",
+    "placeholderSubject": "Select subject",
+    "date": "Date",
+    "placeholderDate": "Select date",
+    "message": "Message",
+    "placeholderMessage": "Write a few words about your activity that you suggest for the meeting",
+    "selectClass": "Select your class",
+    "cancelBtn": "Cancel",
+    "sendInviteBtn": "Send call invite"
   }
 }

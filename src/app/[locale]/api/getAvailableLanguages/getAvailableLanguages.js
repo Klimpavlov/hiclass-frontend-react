@@ -1,20 +1,10 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-
-export async function getAvailableLanguages(accessToken) {
+import apiClient from "@/app/[locale]/api/utils/axios";
+export async function getAvailableLanguages() {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/StaticDataSources/get-available-languages`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        const response = await apiClient.get('/StaticDataSources/get-available-languages');
         return response.data.availableLanguages;
     } catch (error) {
         console.error(error);
-        return [];
+        throw error;
     }
 }

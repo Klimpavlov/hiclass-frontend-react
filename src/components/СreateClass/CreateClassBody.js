@@ -9,6 +9,8 @@ import ruLocale from "../../../messages/ru.json";
 import {usePathname} from "next/navigation";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {
 
@@ -30,14 +32,13 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [initialPhoto, setInitialPhoto] = useState('');
 
     async function getClass() {
-        const accessToken = localStorage.getItem('accessToken');
-        const classInfo = await getClassInfo(accessToken, classId)
+        const classInfo = await getClassInfo(classId)
         console.log(classInfo)
 
         setInitialTitle(classInfo.value.title)
-        setInitialSubjects(classInfo.value.disciplines)
+        setInitialSubjects(translateItems(classInfo.value.disciplines, disciplinesMapping))
         setInitialGrades([classInfo.value.grade])
-        setInitialLanguages(classInfo.value.languages)
+        setInitialLanguages(translateItems(classInfo.value.languages, languagesMapping))
         setInitialPhoto(classInfo.value.imageUrl)
 
     }
@@ -48,8 +49,17 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const [selectedImage, setSelectedImage] = useState(null);
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        setSelectedImage(URL.createObjectURL(file));
-        setPhoto(file ? file : initialPhoto);
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        // setSelectedImage(URL.createObjectURL(file));
+        // setPhoto(file ? file : initialPhoto);
+
+        if (file && allowedTypes.includes(file.type)) {
+            setSelectedImage(URL.createObjectURL(file));
+            setPhoto(file ? file : initialPhoto);
+        } else {
+            alert("Please upload an image file (jpeg, jpg, png).");
+        }
 
     };
 
@@ -72,26 +82,24 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     }, []);
 
     async function getUserInfo() {
-        const accessToken = localStorage.getItem('accessToken');
-        const userProfile = await getUserProfile(accessToken);
+        const userProfile = await getUserProfile();
         const availableDisciplines = userProfile.disciplineTitles;
         const availableGrades = userProfile.gradeNumbers;
         const availableLanguages = userProfile.languageTitles;
-        //
-        // setLanguages(availableLanguages);
-        // setDisciplines(availableDisciplines);
-        // setGrade(availableGrades);
 
-        if (currentPathname === 'ru') {
-            setDisciplines(Object.values(ruLocale.Disciplines));
-            setLanguages(Object.values(ruLocale.Languages));
-        } else {
-            setDisciplines(availableDisciplines);
-            setLanguages(availableLanguages);
-        }
-
+        setLanguages(translateItems(availableLanguages, languagesMapping));
+        setDisciplines(translateItems(availableDisciplines, disciplinesMapping));
         setGrade(availableGrades);
     }
+
+    //translation
+    const translateItems = (items, mappingFile) => {
+        if (pathname.includes('ru')){
+            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
+        }
+        return items;
+    }
+
 
     const t = useTranslations('CreateClass');
 
@@ -120,26 +128,26 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                     <input
                         type="file"
                         id="uploadImage"
-                        accept="image/*"
+                        accept="image/jpeg,image/png,image/jpg"
                         onChange={handleImageUpload}
                         className="hidden"
                     />
                 </div>
-                <div>Minimum size of "808x632px". GIF files will not animate</div>
+                <div>{t("uploadImageText")}</div>
             </div>
             <div className='section-info w-full '>
                 <InputForm inputFormText={t("title")} placeholderText='Class title'
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
-                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : 'Select grade'}
+                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : t("selectGrade")}
                           options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText={t("subject")}
-                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : "Select subject"}
+                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : t("selectSubject")}
                           options={disciplines} initialSelectedOptions={initialSubjects} onChange={setSelectedDisciplines}/>
                 <Dropdown dropdownFormText={t("language")}
-                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : 'Class languages'}
+                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : t("selectLanguage")}
                           options={languages} initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
             </div>
         </div>

@@ -9,12 +9,14 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 import postResetPasswordCode from "@/app/[locale]/signIn/forgetPassword/resetPasswordCode/postResetPasswordCode";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function resetPasswordCode() {
     const toast = useRef(null);
 
     const router = useRouter();
     const [code, setCode] = useState();
+    const resetPasswordEmail = localStorage.getItem('forgetPasswordEmail')
 
     const handleContinue = async () => {
         if (!code) {
@@ -23,12 +25,13 @@ export default function resetPasswordCode() {
         }
         console.log(code)
 
-        const successResetPasswordCode = await postResetPasswordCode(code, toast);
+        const successResetPasswordCode = await postResetPasswordCode(resetPasswordEmail, code, toast);
         if (successResetPasswordCode) {
             router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
         }
     }
 
+    const t = useTranslations("ForgetPassword");
 
     return (
         <main>
@@ -37,23 +40,22 @@ export default function resetPasswordCode() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Verify your email address</div>
-                    <div className=" ">We’ve sent a verification link to <span className='user-email'>...</span>
+                    <div className="text-4xl whitespace-pre-line text-center">{t("resetPasswordCode")}</div>
+                    <div className="">{t("verificationLinkText")}<span className='user-email'>...</span>
                     </div>
-                    <div className='text-center'>Click the link to complete the verification process. If you don’t see it you may
-                        need to check your spam folder.
+                    <div className='text-center'>{t("clickLinkText")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText="Verification code" placeholderText="Enter verification code"
+                            <InputForm inputFormText={t("verificationCode")} placeholderText={t("placeholderVerificationCode")}
                                        value={code}
                                        onChange={(e) => setCode(e.target.value)}
 
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText="Continue" onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </main>

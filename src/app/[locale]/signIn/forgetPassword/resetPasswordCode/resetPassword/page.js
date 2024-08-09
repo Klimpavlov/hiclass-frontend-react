@@ -7,6 +7,7 @@ import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postResetPassword from "@/app/[locale]/signIn/forgetPassword/resetPasswordCode/resetPassword/postResetPassword";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function resetPassword() {
     const toast = useRef(null);
@@ -37,6 +38,8 @@ export default function resetPassword() {
         }
     }
 
+    const t = useTranslations("ForgetPassword")
+
     return (
         <main>
             <ErrorNotification ref={toast}/>
@@ -44,18 +47,18 @@ export default function resetPassword() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Reset password</div>
-                    <div className="text-center">Set up your new password to log in to Wonder World</div>
+                    <div className="text-4xl whitespace-pre-line">{t("resetPassword")}</div>
+                    <div className="text-center">{t("setupNewPassword")}</div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
-                        <InputForm inputFormText="Password" placeholderText="At least 6 characters"
+                        <InputForm inputFormText={t("password")} placeholderText={t("placeholderPassword")}
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
                                    error={passwordError}
                         />
                         <div className="my-4">
-                            <InputForm inputFormText="Confirm password" placeholderText="Re-enter your password"
+                            <InputForm inputFormText={t("confirmPassword")} placeholderText={t("placeholderConfirmPassword")}
                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                        isPassword={true}
                                        error={confirmPasswordError}
@@ -63,7 +66,7 @@ export default function resetPassword() {
 
                         </div>
                     </div>
-                    <ContinueButton buttonText="Change password" onClick={handleResetPassword}/>
+                    <ContinueButton buttonText={t("changePassword")} onClick={handleResetPassword}/>
                 </div>
             </div>
         </main>

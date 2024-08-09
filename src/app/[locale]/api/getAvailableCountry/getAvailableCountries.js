@@ -1,20 +1,10 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-
+import apiClient from "@/app/[locale]/api/utils/axios";
 export async function getAvailableCountries(accessToken) {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/StaticDataSources/get-available-country-locations`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        const response = await apiClient.get('/StaticDataSources/get-available-country-locations');
         return response.data.countryTitles;
     } catch (error) {
         console.error(error);
-        return [];
+        throw error
     }
 }

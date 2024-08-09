@@ -19,6 +19,11 @@ import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
 import imgSrc from "@/components/Banner/Banner.jpg";
 import putEditUserImage from "@/app/[locale]/updateUser/updateUserImage/putUpdateUserImage";
 import {useTranslations} from "next-intl";
+import {usePathname} from "next/navigation";
+import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
 
 const SettingsProfileInfo = () => {
 
@@ -27,6 +32,10 @@ const SettingsProfileInfo = () => {
     const [loading, setLoading] = useState(true);
 
     const toast = useRef(null);
+
+    // locale
+    const pathname = usePathname();
+
 
     // initial values
 
@@ -49,8 +58,7 @@ const SettingsProfileInfo = () => {
 
     useEffect(() => {
         async function getUserInfo() {
-            const accessToken = localStorage.getItem('accessToken');
-            const userProfile = await getUserProfile(accessToken);
+            const userProfile = await getUserProfile();
 
             console.log(userProfile)
 
@@ -64,8 +72,8 @@ const SettingsProfileInfo = () => {
 
             setInstitutionName(userProfile.institution.title)
 
-            setInitialLanguages(userProfile.languageTitles);
-            setInitialDisciplines(userProfile.disciplineTitles);
+            setInitialLanguages(translateItems(userProfile.languageTitles, languagesMapping, pathname));
+            setInitialDisciplines(translateItems(userProfile.disciplineTitles, disciplinesMapping, pathname));
             setInitialGrades(userProfile.gradeNumbers);
 
             setUserAvatar(userProfile.imageUrl)
@@ -105,6 +113,8 @@ const SettingsProfileInfo = () => {
 
     // teacher/expert
     const position = ['teacher', 'expert'];
+    // const positionTranslation = useTranslations('Position');
+
 
     useEffect(() => {
         let positions = [];
@@ -237,7 +247,7 @@ const SettingsProfileInfo = () => {
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
-        setLanguages(availableLanguages);
+        setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
 
     // disciplines
@@ -255,7 +265,7 @@ const SettingsProfileInfo = () => {
     async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
-        setDisciplines(availableDisciplines);
+        setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }
 
 
@@ -270,11 +280,28 @@ const SettingsProfileInfo = () => {
             toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
+        console.log(selectedLanguages)
+
+        let languagesToSend = selectedLanguages;
+        let disciplinesToSend = selectedDisciplines;
+
+        if (pathname.includes('ru')) {
+            languagesToSend = reverseTranslateItems(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages, languagesMapping);
+            disciplinesToSend = reverseTranslateItems(selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines, disciplinesMapping);
+        }
+
         const updateProfessionalInfoSuccess = await putUpdateProfessionalInfo(
-            selectedLanguages.length > 0 ? selectedLanguages : initialLanguages,
-            selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines,
-            selectedGrades.length > 0 ? selectedGrades : initialGrades
-            , toast);
+            languagesToSend.length > 0 ? languagesToSend : initialLanguages,
+            disciplinesToSend.length > 0 ? disciplinesToSend : initialDisciplines,
+            selectedGrades.length > 0 ? selectedGrades : initialGrades,
+            toast
+        );
+
+        // const updateProfessionalInfoSuccess = await putUpdateProfessionalInfo(
+        //     selectedLanguages.length > 0 ? selectedLanguages : initialLanguages,
+        //     selectedDisciplines.length > 0 ? selectedDisciplines : initialDisciplines,
+        //     selectedGrades.length > 0 ? selectedGrades : initialGrades
+        //     , toast);
 
         if (updateProfessionalInfoSuccess) {
             toast.current.show({
@@ -287,10 +314,9 @@ const SettingsProfileInfo = () => {
     }
 
 
-    // translation
+    //translation
 
     const t = useTranslations('SettingsProfileInfo');
-
 
     return (
         <main className="">

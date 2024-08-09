@@ -9,24 +9,37 @@ import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDiscipline
 import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClassImage";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import {usePathname} from "next/navigation";
 
 export default function CreateClassModal({classId, setIsModalOpen, onCreateClass}) {
 
     const [title, setTitle] = useState('');
     const [grade, setGrade] = useState('');
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
-    const [languages, setLanguages] = useState('');
+    const [selectedLanguages, setSelectedLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
+    const pathname = usePathname()
     const toast = useRef(null);
 
     const handlePostCreateClass = async () => {
-        if (!title || !grade || !selectedDisciplines || !languages || !photo) {
+        if (!title || !grade || !selectedDisciplines || !selectedLanguages || !photo) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
         }
 
-        const createClassSuccess = await postCreateClass(title, grade, languages, selectedDisciplines, toast);
+        let languagesToSend = selectedLanguages;
+        let disciplinesToSend = selectedDisciplines;
+
+        if (pathname.includes('ru')) {
+            languagesToSend = reverseTranslateItems(selectedLanguages, languagesMapping);
+            disciplinesToSend = reverseTranslateItems(selectedDisciplines, disciplinesMapping);
+        }
+
+        const createClassSuccess = await postCreateClass(title, grade, languagesToSend, disciplinesToSend, toast);
         if (createClassSuccess) {
             const uploadImageSuccess = await putClassImage(photo, toast);
             if (uploadImageSuccess) {
@@ -57,7 +70,7 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
                                      setPhoto={setPhoto}
                                      setSubjects={setSelectedDisciplines}
                                      setGrades={setGrade}
-                                     setLanguage={setLanguages}
+                                     setLanguage={setSelectedLanguages}
                                      classId={classId}
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}

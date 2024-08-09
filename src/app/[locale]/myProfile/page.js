@@ -9,8 +9,13 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import Banner from "@/components/Banner/Banner";
 import {RingLoader} from "react-spinners";
 import {useTranslations} from "next-intl";
+import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import {usePathname} from "next/navigation";
 
 export default function MyProfile() {
+
+    const pathname = usePathname();
+
     const [loading, setLoading] = useState(true);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,31 +32,38 @@ export default function MyProfile() {
     const [classData, setClassData] = useState([]);
 
     // useEffect(() => {
-    //     getUser();
+    //     async function getUser() {
+    //         const accessToken = localStorage.getItem('accessToken');
+    //         const userProfile = await getUserProfile(accessToken)
+    //         console.log(userProfile);
+    //         setClassData(userProfile.classDtos)
+    //         setTimeout(() => {
+    //             setLoading(false)
+    //         }, 1300)
+    //     }
+    //     getUser()
     // }, []);
-    //
-    // async function getUser() {
-    //     const accessToken = localStorage.getItem('accessToken');
-    //     const userProfile = await getUserProfile(accessToken)
-    //     console.log(userProfile);
-    //
-    //     setClassData(userProfile.classDtos)
-    // }
 
     useEffect(() => {
-        async function getUser() {
-            const accessToken = localStorage.getItem('accessToken');
-            const userProfile = await getUserProfile(accessToken)
-            console.log(userProfile);
-            setClassData(userProfile.classDtos)
-            setTimeout(() => {
-                setLoading(false)
-            }, 1300)
-        }
-        getUser()
+         async function fetchUserProfile() {
+             const userProfile = await getUserProfile();
+             console.log(userProfile);
+             setClassData(userProfile.classDtos)
+             setTimeout(() => {
+                 setLoading(false)
+             }, 1300)
+         }
+        fetchUserProfile();
     }, []);
 
     // translation
+
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru/myProfile') {
+            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines;
+    };
 
     const t = useTranslations('MyProfile');
 
@@ -87,7 +99,7 @@ export default function MyProfile() {
                                             classId={defaultClass.classId}
                                             title={defaultClass.title}
                                             username={defaultClass.userFullName}
-                                            tags={defaultClass.disciplines}
+                                            tags={translateDisciplines(defaultClass.disciplines)}
                                             photo={defaultClass.imageUrl}
                                             showDropdown={true}
                                         ></ClassPreview>

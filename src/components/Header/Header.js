@@ -7,7 +7,6 @@ import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '../RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
-import imgAvatarSrc from '../Header/avatar40x40_Online.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
@@ -29,6 +28,14 @@ const Header = ({testNotifications}) => {
     const [notificationInfo, setNotificationInfo] = useState(false);
 
     const [receivedNotifications, setReceivedNotifications] = useState('');
+
+    const handleNavigation = (href) => {
+        if (pathname === href) {
+            window.location.reload();
+        } else {
+            router.push(href);
+        }
+    };
 
     // const [hasNewNotification, setHasNewNotification] = useState(false);
 
@@ -152,6 +159,7 @@ const Header = ({testNotifications}) => {
 
     const t = useTranslations("Header");
 
+
     const currentLanguage = pathname.includes('ru') ?
         <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> :
         <Image className='rounded' src={imgUKFlag} alt="UK flag"/>;
@@ -170,14 +178,22 @@ const Header = ({testNotifications}) => {
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
-                <Image src={imgSrc} alt="hiClass Logo"/>
+                <Image src={imgSrc} alt="hiClass Logo" className='cursor-pointer'
+                       onClick={() => handleNavigation(`/${locale}`)}
+                />
                 <div className="hidden sm:flex flex-wrap justify-start ml-4">
-                    {/*<Link href="/" className="ml-6 my-2">{t('discover')}</Link>*/}
-                    {/*<Link href="/myProfile" className="ml-6 my-2">{t('myProfile')}</Link>*/}
-                    <div className="ml-6 my-2 cursor-pointer"
-                         onClick={() => router.push(`/${locale}`)}>{t('discover')}</div>
-                    <div className="ml-6 my-2 cursor-pointer"
-                         onClick={() => router.push(`/${locale}/myProfile`)}>{t('myProfile')}</div>
+                    <div
+                        className="ml-6 my-2 cursor-pointer"
+                        onClick={() => handleNavigation(`/${locale}`)}
+                    >
+                        {t('discover')}
+                    </div>
+                    <div
+                        className="ml-6 my-2 cursor-pointer"
+                        onClick={() => handleNavigation(`/${locale}/myProfile`)}
+                    >
+                        {t('myProfile')}
+                    </div>
                 </div>
             </div>
             <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
@@ -188,7 +204,8 @@ const Header = ({testNotifications}) => {
                         {currentLanguage}
                     </div>
                     {isLanguagesDropdownOpen && (
-                        <div className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
+                        <div
+                            className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>
@@ -328,6 +345,3 @@ const Header = ({testNotifications}) => {
 };
 
 export default Header
-
-
-

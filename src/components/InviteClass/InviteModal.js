@@ -15,6 +15,8 @@ import Tag from "@/components/Tags/Tag";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import { format } from "date-fns";
+import {useTranslations} from "next-intl";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 
 
@@ -29,17 +31,9 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
     }, []);
 
     async function userProfile() {
-        const accessToken = localStorage.getItem('accessToken');
         try {
-            const response = await axios.get(
-                `http://${localhost}/api/User/userprofile`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                }
-            );
-            // console.log(response);
+            const response = await apiClient.get(
+                '/User/userprofile',);
             setClassData(response.data.value.classDtos)
         } catch (error) {
             console.error(error);
@@ -88,9 +82,9 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
         }
     }
 
-    // const successRedirect = () => {
-    //     handleCloseModal();
-    // };
+
+    const t = useTranslations("InviteModal");
+
 
     return (
         <>
@@ -103,14 +97,14 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </div>
-            <div className="header-title">Invite for a call</div>
+            <div className="header-title">{t("inviteModalText")}</div>
             <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
                 <div className='dropdowns sm:flex justify-between'>
-                    <Dropdown dropdownFormText='Subject' placeholderText='Select subject'
+                    <Dropdown dropdownFormText={t("subject")} placeholderText={t("placeholderSubject")}
                               options={disciplines}
                               onChange={setSelectedDisciplines}
                     />
-                    <InputCalendar inputFormText='Date' placeholderText='Select date'
+                    <InputCalendar inputFormText={t("date")} placeholderText={t("placeholderDate")}
                                    value={dateOfInvitation}
                                    onChange={handleDateChange}/>
                     {/*<InputForm inputFormText='Start time' placeholderText='Enter time'/>*/}
@@ -118,7 +112,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                 </div>
             </div>
             <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
-                <InputForm inputFormText='Message' placeholderText='Write a few words about your activity that you suggest for the meeting'
+                <InputForm inputFormText={t("message")} placeholderText={t("placeholderMessage")}
                            value={invitationText}
                            onChange={(e) => (setInvitationText(e.target.value))}/>
             </div>
@@ -143,8 +137,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                 ))}
             </div>
             <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
-                <ClearAllButton buttonText="Cancel" clearAll={handleCancel} />
-                <ApplyButton buttonText="Send call invite" onApply={handlePostInvitation} />
+                <ClearAllButton buttonText={t("cancelBtn")} clearAll={handleCancel} />
+                <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation} />
             </div>
         </div>
         </>

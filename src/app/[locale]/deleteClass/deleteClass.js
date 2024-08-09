@@ -1,13 +1,11 @@
 import axios from "axios";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const deleteClass = async ({ classId }, toast) => {
-    const accessToken = localStorage.getItem('accessToken');
 
     try {
-        const response = await axios.delete(`http://localhost:7280/api/Class/delete-class/${classId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            }
+        const response = await apiClient.delete(`/Class/delete-class/${classId}`, {
+
         });
         console.log(response);
         toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'Class successfully deleted', life: 3000 });

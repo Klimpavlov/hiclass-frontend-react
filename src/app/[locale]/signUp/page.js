@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect, useState, useRef} from "react";
-import { useRouter } from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
 import FacebookButton from "@/components/Buttons/FacebookButton";
@@ -13,9 +13,14 @@ import {initializeApp} from "firebase/app";
 import {getMessaging, getToken} from "firebase/messaging";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import postLoginData from "@/app/[locale]/signIn/postLogin/postLoginData";
+import {useTranslations} from "next-intl";
 
 export default function SignUp() {
     const router = useRouter();
+
+    const pathname = usePathname();
+    const locale = pathname.slice(1, 3);
+
     const toast = useRef(null);
 
     const [email, setEmail] = useState("");
@@ -46,7 +51,7 @@ export default function SignUp() {
 
         const getDeviceTokenAndSave = async () => {
             try {
-                const currentToken = await getToken(messaging, { vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4' });
+                const currentToken = await getToken(messaging, {vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4'});
                 if (currentToken) {
                     console.log('Device token:', currentToken);
                     setDeviceToken(currentToken)
@@ -66,7 +71,7 @@ export default function SignUp() {
         return emailPattern.test(email);
     };
 
-    const handleSignUp = async() => {
+    const handleSignUp = async () => {
         // if (!validateEmail(email)) {
         //     setEmailError("Please enter a valid email address");
         //     return;
@@ -81,13 +86,23 @@ export default function SignUp() {
         if (!email || !password || !confirmPassword) {
             toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
-        } else if(!validateEmail(email)) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please enter a valid email address', life: 3000});
+        } else if (!validateEmail(email)) {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please enter a valid email address',
+                life: 3000
+            });
             return;
         } else if (password.length < 6) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Password must be at least 6 characters', life: 3000});
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Password must be at least 6 characters',
+                life: 3000
+            });
             return;
-        } else  if (confirmPassword !== password) {
+        } else if (confirmPassword !== password) {
             toast.current.show({severity: 'error', summary: 'Error', detail: 'Wrong confirm-password', life: 3000});
             return;
         }
@@ -108,6 +123,8 @@ export default function SignUp() {
         router.push('/signUp/verifyEmail');
     };
 
+    const t = useTranslations("SignUp");
+
     return (
         <main>
             <RegistrationHeader/>
@@ -115,28 +132,32 @@ export default function SignUp() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Join Hi,class</div>
-                    <div className=" ">Already a member? <Link className='text-green-800' href="/signIn">Sign in</Link>
+                    <div className="text-4xl whitespace-pre-line text-center">{t("topText")}</div>
+                    <div className=" ">{t("formText")}
+                        {/*<Link className='text-green-800' href="/signIn">{t("signIn")}</Link>*/}
+                        <span className='text-green-800 cursor-pointer'
+                              onClick={() => router.push(`/${locale}/signIn`)}>{t("signIn")}</span>
                     </div>
                     <GoogleButton/>
                     <FacebookButton/>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText="Email" placeholderText="awesomeperson@email.com"
+                            <InputForm inputFormText={t("email")} placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
                                        error={emailError}
                             />
                         </div>
-                        <InputForm inputFormText="Password" placeholderText="At least 6 characters"
+                        <InputForm inputFormText={t("password")} placeholderText={t("placeholderPassword")}
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
                                    error={passwordError}
                         />
                         <div className="my-4">
-                            <InputForm inputFormText="Confirm password" placeholderText="Re-enter your password"
+                            <InputForm inputFormText={t("confirmPassword")}
+                                       placeholderText={t("placeholderConfirmPassword")}
                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                        isPassword={true}
                                        error={confirmPasswordError}
@@ -144,7 +165,7 @@ export default function SignUp() {
 
                         </div>
                     </div>
-                    <ContinueButton buttonText="Continue" onClick={handleSignUp}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
                 </div>
             </div>
         </main>

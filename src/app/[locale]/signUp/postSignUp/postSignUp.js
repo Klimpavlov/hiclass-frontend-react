@@ -6,7 +6,7 @@ const postSignUpData = async (email, password, deviceToken, successRedirect, toa
 
         const localhost = getLocalhost();
 
-        await axios.post(`http://${localhost}/api/User/register`, {
+        await axios.post(`http://${localhost}/api/Authentication/register`, {
             Email: email,
             Password: password,
             DeviceToken: deviceToken

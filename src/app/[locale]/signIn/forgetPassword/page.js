@@ -7,6 +7,7 @@ import ContinueButton from "@/components/Buttons/ContinueButton";
 import postEmailForgetPassword from "@/app/[locale]/signIn/forgetPassword/postEmailForgetPassword";
 import {useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {useTranslations} from "next-intl";
 
 export default function ForgetPassword() {
     const toast = useRef(null);
@@ -21,8 +22,13 @@ export default function ForgetPassword() {
         if (!email) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
         }
+        localStorage.setItem('forgetPasswordEmail', email)
         await postEmailForgetPassword(email, successRedirect, toast);
+
     }
+
+    const t = useTranslations("ForgetPassword");
+
     return (
         <div>
             <ErrorNotification ref={toast}/>
@@ -30,20 +36,19 @@ export default function ForgetPassword() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Forgot password?</div>
-                    <div className="text-center">
-                        Type in the email you used to register in Wonder World.
-                        We’ll send you a link to create your new password.
+                    <div className="text-4xl whitespace-pre-line">{t("forgotPassword")}</div>
+                    <div className="">
+                        {t("mainText")}
                     </div>
                     <div className="inputs w-full my-4">
                         <InputForm
-                            inputFormText='Email'
+                            inputFormText={t("email")}
                             placeholderText="awesomeperson@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <ContinueButton buttonText="Continue" onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </div>

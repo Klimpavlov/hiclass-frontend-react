@@ -1,4 +1,116 @@
 {
+  "Position": {
+    "teacher": "учитель",
+    "expert": "эксперт"
+  },
+  "SignIn": {
+    "signIn": "Войти",
+    "newTo": "Новичок в Hi,class? ",
+    "signUp": "Зарегестрироваться",
+    "googleBtn": "Продолжите с Google",
+    "facebookBtn": "Продолжите с Facebook",
+    "email": "Элеткронная почта",
+    "password": "Пароль",
+    "forgotPassword": "Забыл пароль",
+    "placeholderPassword": "Введите пароль",
+    "signInBtn": "Войти"
+  },
+  "SignUp": {
+    "topText": "Присоединяйтесь к Hi,class",
+    "formText": "Уже являетесь участником? ",
+    "signIn": "Войти",
+    "email": "Элеткронная почта",
+    "password": "Пароль",
+    "placeholderPassword": "Не менее 6 символов",
+    "confirmPassword": "Подтвердите пароль",
+    "placeholderConfirmPassword": "Повторно введите пароль",
+    "ContinueBtn": "Продолжить",
+    "VerifyEmail": {
+      "verifyFormText": "Подтвердите свой адрес электронной почты",
+      "sendLinkTo": "Мы отправили ссылку для подтверждения ",
+      "clickLink": "Нажмите на ссылку, чтобы завершить процесс проверки. Если вы его не видите, возможно, вам нужно проверить папку со спамом.",
+      "verificationCode": "Проверочный код",
+      "placeholderVerificationCode": "Введите проверочный код",
+      "ContinueBtn": "Продолжить"
+    },
+    "IsVerified": {
+      "isVerifiedTopText": "Адрес электронной почты подтвержден!",
+      "isVerifiedMainText": "Вы успешно подтвердили свой адрес электронной почты",
+      "ContinueBtn": "Продолжить"
+    }
+  },
+  "ForgetPassword": {
+    "forgotPassword": "Забыли пароль?",
+    "mainText": "Введите адрес электронной почты, который вы использовали при регистрации в Hi,class.\n Мы вышлем вам ссылку для создания нового пароля.",
+    "email": "Элеткронная почта",
+    "ContinueBtn": "Продолжить",
+    "resetPasswordCode": "Подтвердите свой адрес электронной почты",
+    "verificationLinkText": "Мы отправили ссылку для подтверждения по адресу ",
+    "clickLinkText": "Перейдите по ссылке, чтобы завершить процесс проверки. Если вы ее не видите, возможно, вам\nстоит проверить папку со спамом.",
+    "verificationCode": "Код подтверждения",
+    "placeholderVerificationCode": "Введите код подтверждения",
+    "resetPassword": "Сбросьте пароль",
+    "setupNewPassword": "Установите новый пароль для входа в Hi, class",
+    "password": "Пароль",
+    "placeholderPassword": "Не менее 6 символов",
+    "confirmPassword": "Подтвердите пароль",
+    "placeholderConfirmPassword": "Повторно введите свой пароль",
+    "changePassword": "Изменить пароль"
+  },
+  "CreateAccount": {
+    "NameForm": {
+      "nameFormHeader": "Ваше полное имя",
+      "nameFormText": "Введите ваши имя и фамилию, чтобы запустить вашу учетную запись.",
+      "firstName": "Имя",
+      "placeholderFirstName": "Введите ваше имя",
+      "lastName": "Фамилия",
+      "placeholderLastName": "Введите вашу фамилию",
+      "ContinueBtn": "Продолжить"
+    },
+    "PositionForm": {
+      "welcome": "Добро пожаловать !",
+      "positionFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
+      "teacherForm": "Я учитель",
+      "aboutTeacherForm": "Как преподаватель вы можете добавлять свои классы и организовывать уроки, а также присоединяться к урокам в качестве эксперта в своей области.",
+      "expertForm": "Я эксперт",
+      "aboutExpertForm": "Как эксперт, вы можете связаться с преподавателем и присоединиться к урокам.",
+      "ContinueBtn": "Продолжить"
+    },
+    "LocationAndLanguages": {
+      "welcome": "Добро пожаловать !",
+      "locationFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
+      "country": "Страна",
+      "city": "Город",
+      "languages": "Языки",
+      "placeholderLanguages": "Выберите языки, на которых вы говорите",
+      "ContinueBtn": "Продолжить"
+    },
+    "Institution": {
+      "welcome": "Добро пожаловать !",
+      "institutionFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
+      "institution": "Название учреждения",
+      "ContinueBtn": "Продолжить"
+    },
+    "Disciplines": {
+      "welcome": "Добро пожаловать !",
+      "disciplinesFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
+      "areasOfWork": "Направления работы",
+      "placeholderAreas": "Выберите..",
+      "ContinueBtn": "Продолжить"
+    },
+    "Grades": {
+      "welcome": "Добро пожаловать !",
+      "gradesFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
+      "grades": "Номера классов",
+      "placeholderGrades": "Выберите номера классов..",
+      "ContinueBtn": "Продолжить"
+    },
+    "ProfilePhoto": {
+      "nearlyThere": "Почти у цели!",
+      "profilePhotoText": "И последнее, но не менее важное: фотография профиля позволит людям узнать, с кем они общаются",
+      "finishBtn": "Готово"
+    }
+  },
   "MainPage": {
     "showOnlyExperts": "Только эксперты",
     "seeAll": "Показать всех",
@@ -38,7 +150,7 @@
     "backBtn": "Назад",
     "replaceBtn": "Изменить",
     "profilePhoto": "Фото профиля",
-    "photoDetails": "Your photo appears on your Profile page and is visible for Brands on your profile preview\n Recommended size: Square, at least 1000 pixels per side. File type: JPG, PNG or GIF.",
+    "photoDetails": "Ваша фотография появится на странице вашего профиля и будет доступна для просмотра брендами в предварительном просмотре вашего профиля. \n Рекомендуемый размер: Квадратный, не менее 1000 пикселей со стороны. Тип файла: JPG, PNG, JPEG.",
     "aboutMe": "Обо мне",
     "aboutMeDetails": "Add a brief description for your profile",
     "firstName": "Имя",
@@ -81,7 +193,16 @@
   },
   "UserInfo": {
     "localTime": "местное время",
-    "editProfileBtn": "Редактирование профиля"
+    "editProfileBtn": "Редактирование профиля",
+    "availableAsAnExpert": "Доступен в качестве эксперта",
+    "speaks": "Говорит на {languages}"
+  },
+  "OtherUserProfile": {
+    "classes": "Классы",
+    "speaks": "Говорит на {languages}",
+    "sendInvite": "Отправить приглашение",
+    "chatWith": "Начать переписку",
+    "availableAsAnExpert": "Доступен в качестве эксперта"
   },
   "ClassPreview": {
     "editBtn": "Править",
@@ -91,13 +212,35 @@
     "headerText": "Создание класса",
     "classPhoto": "Фото класса",
     "uploadImage": "Загрузить фото",
+    "uploadImageText": "Пожалуйста, загрузите файл изображения (jpeg, jpg, png).",
     "title": "Название",
     "grade": "Номер класса",
     "subject": "Предметы",
     "language": "Языки",
     "cancelBtn": "Закрыть",
-    "applyBtn": "Подтвердить"
+    "applyBtn": "Подтвердить",
+    "selectGrade": "Выберите номер класса",
+    "selectSubject": "Выберите предмет",
+    "selectLanguage": "Выберите язык"
   },
+  "EditClass": {
+    "headerText": "Редактирование класса"
+  },
+  "InviteModal": {
+    "mainText": "Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .",
+    "inviteBtn": "Пригласить класс",
+    "inviteModalText": "Пригласить на звонок",
+    "subject": "Предмет",
+    "placeholderSubject": "Выберите предмет",
+    "date": "Дата",
+    "placeholderDate": "Выберите дату",
+    "message": "Сообщение",
+    "placeholderMessage": "Напишите несколько слов о своем занятии, которое вы предлагаете для проведения встречи",
+    "selectClass": "Выберите свой класс",
+    "cancelBtn": "Закрыть",
+    "sendInviteBtn": "Отправить приглашение"
+  },
+
   "Disciplines": {
     "Physics": "Физика",
     "Geography": "География",

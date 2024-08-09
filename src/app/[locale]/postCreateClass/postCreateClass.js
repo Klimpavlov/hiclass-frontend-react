@@ -1,14 +1,12 @@
 import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTitles, toast) => {
 
     try {
         console.log(gradeNumber);
-        const accessToken = localStorage.getItem('accessToken')
-        const localhost = getLocalhost();
 
-        const response = await axios.post(`http://${localhost}/api/Class/create-class`, {
+        const response = await apiClient.post(`/Class/create-class`, {
                 Title: title,
                 GradeNumber: gradeNumber,
                 LanguageTitles: languageTitles,
@@ -16,7 +14,6 @@ const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTit
             }, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${accessToken}`,
                 }
             }
         )

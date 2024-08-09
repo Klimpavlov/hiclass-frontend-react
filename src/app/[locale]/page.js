@@ -23,10 +23,12 @@ import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailab
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
+import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -130,25 +132,25 @@ export default function ExplorePage() {
 
 async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
-        const availableDisciplines = await getAvailableDisciplines(accessToken);
+        const availableDisciplines = await getAvailableDisciplines();
         setDisciplines(currentPathname === 'ru' ? Object.values(ruLocale.Disciplines) : availableDisciplines);
     }
 
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
-        const availableLanguages = await getAvailableLanguages(accessToken);
+        const availableLanguages = await getAvailableLanguages();
         setLanguages(currentPathname === 'ru' ? Object.values(ruLocale.Languages) : availableLanguages);
     }
 
     async function getCountries() {
         const accessToken = localStorage.getItem('accessToken');
-        const availableCountries = await getAvailableCountries(accessToken);
+        const availableCountries = await getAvailableCountries();
         setCountries(availableCountries);
     }
 
     async function defaultSearch() {
-        const accessToken = localStorage.getItem('accessToken');
-        const defaultSearchData = await getDefaultSearch(accessToken);
+        // const accessToken = localStorage.getItem('accessToken');
+        const defaultSearchData = await getDefaultSearch();
         setTeacherProfileData(defaultSearchData.teacherProfilesByCountry);
         setLoading(false);
     }
@@ -163,6 +165,7 @@ async function getDisciplines() {
             ...prevFilters,
             [filterName]: selectedOptions
         }));
+
         handleSearchRequest({
             ...currentFilters,
             [filterName]: selectedOptions
@@ -180,10 +183,6 @@ async function getDisciplines() {
             [filterName]: currentFilters[filterName].filter(value => value !== filterValue)
         };
 
-        if (updatedFilters[filterName].length === 0) {
-            delete updatedFilters[filterName];
-        }
-
         setCurrentFilters(updatedFilters);
         handleSearchRequest(updatedFilters);
     };
@@ -192,11 +191,35 @@ async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const localhost = getLocalhost();
 
-        const queryParameters = Object.entries(filters).flatMap(([filterName, filterValues]) =>
-            filterValues.map(value => `${filterName}=${encodeURIComponent(value)}`)
-        ).join('&');
+        const getMappingFile = (filterName) => {
+            if (filterName === 'Disciplines') {
+                return disciplinesMapping;
+            }
+            if (filterName === 'Languages') {
+                return languagesMapping;
+            }
+            return null;
+        };
 
-        const searchUrl = `http://${localhost}/api/Search/search-request?${queryParameters}`;
+        const reverseLanguagesDisciplines = (items, mappingFile) => {
+            return items.map(item => mappingFile[item] || item);
+        };
+
+        const queryParameters = Object.entries(filters).flatMap(([filterName, filterValues]) => {
+            const mappingFile = getMappingFile(filterName);
+            let translatedValues = filterValues;
+
+            if (pathname.includes('ru') && mappingFile) {
+                translatedValues = reverseLanguagesDisciplines(filterValues, mappingFile);
+            }
+
+            // Выводим translatedValues в консоль
+            console.log(`Filter name: ${filterName}`, translatedValues);
+            return translatedValues.map(value => `${filterName}=${encodeURIComponent(value)}`);
+        }).join('&');
+
+        // const searchUrl = `http://${localhost}/api/Search/search-request?${queryParameters}`;
+        const searchUrl = `/Search/search-request?${queryParameters}`;
 
         try {
             const response = await searchRequest(accessToken, searchUrl);
@@ -204,8 +227,13 @@ async function getDisciplines() {
         } catch (error) {
             console.error(error);
         }
-        console.log(searchUrl)
+        console.log(searchUrl);
     };
+
+
+
+
+    //translation
 
     const t = useTranslations("MainPage");
     const filtersTranslation = useTranslations("Filters");
@@ -268,7 +296,9 @@ async function getDisciplines() {
                             {searchClassData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={classInfo.disciplines} photo={classInfo.imageUrl}/>
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
+                                                      tags={translateItems(classInfo.disciplines, disciplinesMapping, pathname)} photo={classInfo.imageUrl}
+                                        />
                                     </div>
                                 ))
                             ))}
@@ -281,7 +311,9 @@ async function getDisciplines() {
                             {teacherProfileData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName} tags={classInfo.disciplines} photo={classInfo.imageUrl}/>
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
+                                                      tags={translateItems(classInfo.disciplines, disciplinesMapping, pathname)} photo={classInfo.imageUrl}
+                                        />
                                     </div>
                                 ))
                             ))}
@@ -293,7 +325,7 @@ async function getDisciplines() {
                                 classId={selectedClass.classId}
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
-                                tags={selectedClass.disciplines}
+                                tags={translateItems(selectedClass.disciplines, disciplinesMapping, pathname)}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
@@ -305,3 +337,4 @@ async function getDisciplines() {
         </main>
     );
 }
+

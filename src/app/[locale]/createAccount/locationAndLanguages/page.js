@@ -9,10 +9,13 @@ import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
 import ErrorNotification from "@/components/Error/ErrorNotification";
-
+import {useTranslations} from "next-intl";
+import {translateItems} from "@/app/[locale]/translateItems/translateItems";
+import languagesMapping from "/Users/a111/Desktop/hiclass-frontend-react/mapping/languagesMapping/languagesMapping.json";
+import {usePathname} from "next/navigation";
 
 export default function locationAndLanguages() {
-
+    const pathname = usePathname();
     const toast = useRef(null);
 
     const router = useRouter();
@@ -31,7 +34,7 @@ export default function locationAndLanguages() {
     async function getLanguages() {
         const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
-        setLanguages(availableLanguages);
+        setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
 
 
@@ -54,14 +57,6 @@ export default function locationAndLanguages() {
 
     async function getLocation(countrySearchText, citySearchText) {
         try {
-            // if (countrySearchText === '') {
-            //     setCountryData([]);
-            //     return;
-            // }
-            // if (citySearchText === '') {
-            //     setCityData([]);
-            //     return;
-            // }
             const response = await axios.get(
                 `https://countriesnow.space/api/v0.1/countries`
             );
@@ -93,6 +88,8 @@ export default function locationAndLanguages() {
             router.push('/createAccount/institution')
     }
 
+    const t = useTranslations("CreateAccount.LocationAndLanguages")
+
     return (
         <main>
             <ErrorNotification ref={toast} />
@@ -100,14 +97,13 @@ export default function locationAndLanguages() {
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-                    <div className="text-4xl whitespace-pre-line">Welcome !</div>
-                    <div className="text-center">It’s great to have you with us! To help us optimise your
-                        experience, tell us what you plan to use WonderWorld for.
+                    <div className="text-4xl whitespace-pre-line">{t("welcome")}</div>
+                    <div className="">{t("locationFormText")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText='Country' value={country}
+                            <InputForm inputFormText={t("country")} value={country}
                                        onChange={(e) => setCountry(e.target.value)}/>
                             {country !== '' && (
                                 <div className='cursor-pointer'>
@@ -118,7 +114,7 @@ export default function locationAndLanguages() {
                                     ))}
                                 </div>
                             )}
-                            <InputForm inputFormText='City' value={city}
+                            <InputForm inputFormText={t("city")} value={city}
                                        onChange={(e) => setCity(e.target.value)}/>
                             {city !== '' && (
                                 <div className='cursor-pointer'>
@@ -130,12 +126,12 @@ export default function locationAndLanguages() {
                                 </div>
                             )}
                         </div>
-                        <Dropdown dropdownFormText='Languages' placeholderText='Select languages that you speak'
+                        <Dropdown dropdownFormText={t("languages")} placeholderText={t("placeholderLanguages")}
                                   options={languages}
                                   onChange={setSelectedLanguages}
                         />
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </main>

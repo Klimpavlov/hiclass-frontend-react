@@ -13,8 +13,11 @@ import imgLocalCountry from "@/components/UserInfo/pinCountry.svg"
 import imgLocalTime from "@/components/UserInfo/localTime.svg"
 import imgInstitution from "@/components/UserInfo/institutionAddress.svg"
 import imgLightning from "@/components/UserInfo/lightning.svg"
-
+import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
+import {usePathname} from "next/navigation";
 const UserInfo = () => {
+    const pathname = usePathname();
 
     const [firstname, setFirstname] = useState('');
     localStorage.setItem('userName', firstname)
@@ -44,23 +47,33 @@ const UserInfo = () => {
     }, []);
 
     async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
-        const userProfile = await getUserProfile(accessToken)
+        // const accessToken = localStorage.getItem('accessToken');
+        // const userProfile = await getUserProfile(accessToken);
+        const userProfile = await getUserProfile();
+
         console.log(userProfile);
 
         setFirstname(userProfile.firstName);
-        setLastname(userProfile.lastName)
-        setLanguageTitles(userProfile.languageTitles);
+        setLastname(userProfile.lastName);
+        // setLanguageTitles(translateLanguages(userProfile.languageTitles));
+        setLanguageTitles(translateUserInfo(userProfile.languageTitles, languagesMapping));
         setUserDescription(userProfile.description);
         setCountry(userProfile.countryTitle);
         setCity(userProfile.cityTitle);
         setInstitution(userProfile.institution.title + ', ' + userProfile.institution.address);
-        setDisciplineTitles(userProfile.disciplineTitles);
+        // setDisciplineTitles(translateDisciplines(userProfile.disciplineTitles));
+        setDisciplineTitles(translateUserInfo(userProfile.disciplineTitles, disciplinesMapping));
 
-        setIsExpert(userProfile.isAnExpert)
+        setIsExpert(userProfile.isAnExpert);
 
-        setUserAvatar(userProfile.imageUrl)
+        setUserAvatar(userProfile.imageUrl);
+    }
 
+    const translateUserInfo = (items, mappingFile) => {
+        if (pathname.includes('ru')){
+            return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
+        }
+        return items;
     }
 
     // local time
@@ -73,6 +86,7 @@ const UserInfo = () => {
         };
         return new Intl.DateTimeFormat([], options).format(date);
     };
+
     // translation
 
     const t = useTranslations("UserInfo");
@@ -93,13 +107,16 @@ const UserInfo = () => {
                 <div className='flex'>
                     <div className='flex border rounded-xl border-cyan-600 py-1 px-2 my-6 w-auto'>
                         <Image src={imgLightning} alt={imgLightning}/>
-                        <div className='ml-2 text-sky-800'>Available as an expert</div>
+                        <div className='ml-2 text-sky-800'>{t('availableAsAnExpert')}</div>
                     </div>
                 </div>
             )}
             <div className='username text-4xl whitespace-pre-line'>{firstname} {lastname}</div>
             <div className='raiting'></div>
-            <div className="languages">Speaks {languageTitles.join(", ")}</div>
+            <div className="languages">
+                {/*Speaks {languageTitles.join(", ")}*/}
+                {t("speaks", {languages: languageTitles.join(", ")})}
+            </div>
             <div className='aboutUser '>{userDescription}</div>
             <div className='localCountry-container flex'>
                 <Image src={imgLocalCountry} alt={country}/>
@@ -112,10 +129,10 @@ const UserInfo = () => {
             <div className='w-full'>
                 <EditProfileButton buttonText={t("editProfileBtn")}/>
             </div>
-            <div className="show-experts flex items-center py-3">
-                <Switch isExpert={isExpert}/>
-                <span className="pl-2 sm:pl-4">Available as an expert</span>
-            </div>
+            {/*<div className="show-experts flex items-center py-3">*/}
+            {/*    <Switch isExpert={isExpert}/>*/}
+            {/*    <span className="pl-2 sm:pl-4">{t('availableAsAnExpert')}</span>*/}
+            {/*</div>*/}
             <div className='flex justify-between'>
                 <div>Position</div>
                 <div className='text-green-800'>Verify</div>
