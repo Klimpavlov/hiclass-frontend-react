@@ -1,11 +1,28 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 
 const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedOptions, onChange  }) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    // close prev dropdowns & outside click
+
+    let dropdownRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false)
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+
+    }, [])
 
     const initialSelectedState = initialSelectedOptions ? [initialSelectedOptions] : [];
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedState);
@@ -42,7 +59,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
 
 
     return (
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
             {dropdownFormText}
             <div
                 className="flex justify-between py-3 px-5 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white
