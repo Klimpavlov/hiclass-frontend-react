@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from "@/components/Header/hiClass_logo.svg";
@@ -14,6 +14,21 @@ const RegistrationHeader = () => {
 
     const pathname = usePathname();
     const locale = pathname.slice(1, 3);
+
+    let languageRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (languageRef.current && !languageRef.current.contains(event.target)) {
+                setIsLanguagesDropdownOpen(false)
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+
+    }, [])
 
     const currentLanguage = pathname.includes('ru') ?
         <Image className='rounded w-5 h-5' src={imgRUFlag} alt="RU flag"/> :
@@ -38,7 +53,7 @@ const RegistrationHeader = () => {
                 {/*<Image src={imgFlagUK} alt="english logo"></Image>*/}
                 {/*<div>English</div>*/}
                 <div>
-                    <div className="cursor-pointer"
+                    <div className="cursor-pointer" ref={languageRef}
                          onClick={toggleLanguagesDropdown}>
                         {currentLanguage}
                     </div>

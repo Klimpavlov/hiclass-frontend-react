@@ -29,6 +29,29 @@ const Header = ({testNotifications}) => {
 
     const [receivedNotifications, setReceivedNotifications] = useState('');
 
+    let languageRef = useRef(null);
+    let notificationRef = useRef(null);
+    const logoutDropdownRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (languageRef.current && !languageRef.current.contains(event.target)) {
+                setIsLanguagesDropdownOpen(false)
+            }
+            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+                setIsNotification(false)
+            }
+            if (logoutDropdownRef.current && !logoutDropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+
+    }, [])
+
     const handleNavigation = (href) => {
         if (pathname === href) {
             window.location.reload();
@@ -49,20 +72,6 @@ const Header = ({testNotifications}) => {
         setIsDropdownOpen(!isDropdownOpen);
     }
 
-    const logoutDropdownRef = useRef(null);
-
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (logoutDropdownRef.current && !logoutDropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);
-            }
-        }
-
-        document.addEventListener('click', handleClickOutside);
-
-        return () => document.removeEventListener('click', handleClickOutside);
-
-    }, []);
 
     function handleLogout() {
         localStorage.clear();
@@ -198,14 +207,13 @@ const Header = ({testNotifications}) => {
             </div>
             <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
 
-                <div>
+                <div ref={languageRef}>
                     <div className="cursor-pointer"
                          onClick={toggleLanguagesDropdown}>
                         {currentLanguage}
                     </div>
                     {isLanguagesDropdownOpen && (
-                        <div
-                            className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
+                        <div className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>
@@ -219,7 +227,7 @@ const Header = ({testNotifications}) => {
                         </div>
                     )}
                 </div>
-                <div className="relative">
+                <div className="relative" ref={notificationRef}>
                     <Image src={imgNotificationBtn} alt="chat-button" onClick={handleNotification}
                            className='cursor-pointer'/>
                     {notificationInfo && (
@@ -276,7 +284,7 @@ const Header = ({testNotifications}) => {
                 {/*                </div>*/}
                 {/*            )}*/}
                 {/*</div>*/}
-                <div className="flex gap-3 sm:gap-2 md:gap-3">
+                <div className="flex gap-3 sm:gap-2 md:gap-3" ref={logoutDropdownRef}>
                     <div className="aspect-w-1 aspect-h-1 sm:w-12 sm:h-12 rounded-full overflow-hidden">
                         <Image
                             // className="rounded-full overflow-hidden object-cover w-full h-full"
