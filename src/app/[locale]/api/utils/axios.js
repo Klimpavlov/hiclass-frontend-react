@@ -6,10 +6,11 @@ const apiClient = axios.create({
     baseURL: `http://${getLocalhost()}/api`,
 });
 
-// Функция для получения нового access token с помощью refresh token
+//Функция для получения нового access token с помощью refresh token
 const refreshAccessToken = async () => {
     try {
-        const refreshToken = sessionStorage.getItem('refreshToken');
+        // const refreshToken = sessionStorage.getItem('refreshToken');
+        const refreshToken = getCookie('refreshToken');
         const deviceToken = localStorage.getItem('deviceToken')
 
         const response = await apiClient.post('/Authentication/refresh-token', {
@@ -24,13 +25,15 @@ const refreshAccessToken = async () => {
         const newAccessToken = response.data.value.accessToken;
         const newRefreshToken = response.data.value.refreshToken;
         sessionStorage.setItem('accessToken', newAccessToken);
-        sessionStorage.setItem('refreshToken', newRefreshToken);
+        // sessionStorage.setItem('refreshToken', newRefreshToken);
+        setCookie('refreshToken', newRefreshToken, 7);
         return newAccessToken;
     } catch (error) {
         console.error('Unable to refresh access token:', error);
         throw error;
     }
 };
+
 
 // Интерсептор запроса для добавления access token в заголовки
 apiClient.interceptors.request.use(async (config) => {
@@ -61,5 +64,26 @@ apiClient.interceptors.response.use((response) => {
     }
     return Promise.reject(error);
 });
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; HttpOnly; path=/";
+}
 
 export default apiClient;

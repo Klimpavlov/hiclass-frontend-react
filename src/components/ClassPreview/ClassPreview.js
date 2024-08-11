@@ -57,7 +57,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
     const t = useTranslations('ClassPreview');
 
     return (
-        <div className="class-preview ">
+        <div className="class-preview w-64">
             <ErrorNotification ref={toast} />
             <div className="class-preview-content">
                 {/*<div className="class-preview-image">*/}
