@@ -123,6 +123,7 @@
   "Header": {
     "discover": "Главная",
     "myProfile": "Мой профиль",
+    "editProfile": "Редактирование профиля",
     "logout": "Выйти",
     "chat": "Сообщения",
     "russian": "Русский",

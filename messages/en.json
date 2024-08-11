@@ -123,6 +123,7 @@
   "Header": {
     "discover": "Discover",
     "myProfile": "My profile",
+    "editProfile": "Edit profile",
     "logout": "Logout",
     "chat": "Chat",
     "russian": "Russian",
