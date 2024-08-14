@@ -1,5 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging-compat.js');
+// import { getAuth } from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -13,6 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+// export const auth = getAuth(firebase.initializeApp(firebaseConfig))
 
 // Initialize Firebase Messaging
 const messaging = firebase.messaging();

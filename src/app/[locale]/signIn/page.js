@@ -12,10 +12,17 @@ import {usePathname, useRouter} from "next/navigation";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import ExplorePage from "@/app/[locale]/page";
 import {getMessaging, getToken} from "firebase/messaging";
+
+
 import {initializeApp} from "firebase/app";
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
+
+
 import putUpdatePersonalInfo from "@/app/[locale]/updateUser/updatePersonalInfo/putUpdatePersonalInfo";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
 
 export default function SignIn() {
     const router = useRouter();
@@ -29,6 +36,45 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
 
     const deviceToken = useDeviceToken();
+
+
+
+    // useEffect(() => {
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+            authDomain: "hiclass-ff338.firebaseapp.com",
+            projectId: "hiclass-ff338",
+            storageBucket: "hiclass-ff338.appspot.com",
+            messagingSenderId: "526521652695",
+            appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        //
+        // export { auth, provider };
+
+    // }, [])
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const userToken = result.user.accessToken;
+            // const idToken = await user.getIdToken(); // Получаем токен ID
+            console.log(result)
+            const deviceToken = localStorage.getItem('deviceToken'); // Извлекаем токен устройства
+
+            // Отправляем токен на сервер
+            await postGoogleLoginData(userToken, deviceToken, successRedirect);
+
+        } catch (error) {
+            console.error('Error signing in:', error);
+        }
+    };
+
+
+
 
     const handleSignIn = async () => {
         // setEmailDirty(true);
@@ -70,7 +116,7 @@ export default function SignIn() {
                         <span className='text-green-800 cursor-pointer'
                               onClick={() => router.push(`/${locale}/signUp`)}>{t("signUp")}</span>
                     </div>
-                    <GoogleButton/>
+                    <GoogleButton onClick={handleGoogleSignIn} />
                     <FacebookButton/>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
