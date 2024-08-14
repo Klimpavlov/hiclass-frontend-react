@@ -53,7 +53,6 @@ apiClient.interceptors.response.use((response) => {
     return response;
 }, async (error) => {
     const originalRequest = error.config;
-    // const router = useRouter()
     if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
@@ -62,7 +61,7 @@ apiClient.interceptors.response.use((response) => {
             return apiClient(originalRequest);
         } catch (refreshError) {
             console.error('Unable to refresh access token:', refreshError);
-            // router.push('/signIn');
+            window.location.href = '/signIn';
             // Логика выхода из системы или перенаправление на страницу логина
         }
     }

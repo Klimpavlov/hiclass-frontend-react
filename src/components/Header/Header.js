@@ -80,20 +80,18 @@ const Header = ({testNotifications}) => {
 
     const handleLogout = async () => {
         try {
-            localStorage.clear();
-            sessionStorage.clear();
             // clearCookie('refreshToken');
             const deviceToken = localStorage.getItem('deviceToken');
-            await postLogout(deviceToken);
+            await postLogout(deviceToken, successRedirect);
             router.push('/signIn');
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
 
-    // const successRedirect = () => {
-    //     router.push('/signIn');
-    // };
+    const successRedirect = () => {
+        router.push('/signIn');
+    };
 
     const [userAvatar, setUserAvatar] = useState([]);
 
