@@ -17,6 +17,7 @@ import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {useLocale, useTranslations} from "next-intl";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import postUpdateNotificationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
+import postLogout from "@/app/[locale]/signOut/postLogout";
 
 const Header = ({testNotifications}) => {
 
@@ -73,11 +74,26 @@ const Header = ({testNotifications}) => {
     }
 
 
-    function handleLogout() {
-        localStorage.clear();
-        sessionStorage.clear()
-        router.push('/signIn');
-    }
+    // function clearCookie(name) {
+    //     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; Secure; SameSite=Strict`;
+    // }
+
+    const handleLogout = async () => {
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+            // clearCookie('refreshToken');
+            const deviceToken = localStorage.getItem('deviceToken');
+            await postLogout(deviceToken);
+            router.push('/signIn');
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
+    // const successRedirect = () => {
+    //     router.push('/signIn');
+    // };
 
     const [userAvatar, setUserAvatar] = useState([]);
 
@@ -92,26 +108,6 @@ const Header = ({testNotifications}) => {
 
         setUserAvatar(userProfile.imageUrl)
     }
-
-    const [isAvatarOpen, setIsAvatarOpen] = useState(false);
-
-    const toggleAvatar = () => {
-        setIsAvatarOpen(!isAvatarOpen);
-    }
-
-    useEffect(() => {
-        const closeAvatar = () => {
-            setIsAvatarOpen(false);
-        };
-
-        if (isAvatarOpen) {
-            window.addEventListener("click", closeAvatar);
-        }
-
-        return () => {
-            window.removeEventListener("click", closeAvatar);
-        };
-    }, [isAvatarOpen]);
 
     // notification window
 

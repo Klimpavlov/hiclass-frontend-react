@@ -16,8 +16,8 @@ const postLoginData = async (email, password, successRedirect, deviceToken, toas
 
         // Сохраните accessToken в памяти
         sessionStorage.setItem('accessToken', accessToken);
-        // sessionStorage.setItem('refreshToken', refreshToken);
-        setCookie('refreshToken', refreshToken, 7);
+        sessionStorage.setItem('refreshToken', refreshToken);
+        // setCookie('refreshToken', refreshToken, 7);
         localStorage.setItem('deviceToken', deviceToken)
 
         successRedirect();
@@ -31,15 +31,15 @@ const postLoginData = async (email, password, successRedirect, deviceToken, toas
     }
 }
 
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; HttpOnly; path=/";
-}
+// function setCookie(name, value, days) {
+//     let expires = "";
+//     if (days) {
+//         const date = new Date();
+//         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+//         expires = "; expires=" + date.toUTCString();
+//     }
+//     document.cookie = name + "=" + (value || "") + expires + "; path=/";
+// }
 
 export default postLoginData;
 
