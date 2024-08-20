@@ -1,7 +1,7 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postGoogleLoginData = async (token, deviceToken, successRedirect) => {
+const postGoogleLoginData = async (token, deviceToken) => {
     try {
         const localhost = getLocalhost();
 
@@ -20,7 +20,7 @@ const postGoogleLoginData = async (token, deviceToken, successRedirect) => {
         // setCookie('refreshToken', refreshToken, 7);
         localStorage.setItem('deviceToken', deviceToken)
 
-        successRedirect();
+
         return true;
     } catch (error) {
         console.error('Error during Google login request:', error);

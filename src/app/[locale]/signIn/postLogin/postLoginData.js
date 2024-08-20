@@ -1,7 +1,7 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postLoginData = async (email, password, successRedirect, deviceToken, toast) => {
+const postLoginData = async (email, password, deviceToken, successRedirect, toast) => {
     try {
         const localhost = getLocalhost();
 
