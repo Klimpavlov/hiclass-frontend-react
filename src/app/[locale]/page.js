@@ -4,7 +4,6 @@ import React, {useEffect, useRef, useState} from "react";
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
 import Filter from "@/components/Filter/Filter";
-import Switch from "@/components/Buttons/SwitchButton";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
@@ -230,8 +229,6 @@ async function getDisciplines() {
         }
         console.log(searchUrl);
     };
-
-
 
 
     //translation

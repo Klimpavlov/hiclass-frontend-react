@@ -83,16 +83,17 @@ export default function MyProfile() {
                 <>
                     <Header/>
                     <Banner/>
-                    <div className='flex flex-col sm:flex-row p-4 md:p-20'>
+                    <div className='flex flex-col sm:flex-row p-4 md:p-10'>
                         <UserInfo/>
-                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0'>
+                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-10  lg:ml-28 sm:mr-0'>
                             <div className='clsCntHeader flex justify-between'>
                                 <div className=''>{t("classes")}</div>
                                 <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
                                     + {t("addClass")}
                                 </div>
                             </div>
-                            <div className='clsCntMain sm:grid grid-cols-2 gap-6 flex flex-col'>
+                            <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+                            {/*    <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">*/}
                                 {classData.map((defaultClass) => (
                                     <div key={defaultClass.classId}>
                                         <ClassPreview
