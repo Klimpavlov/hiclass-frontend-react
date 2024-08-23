@@ -92,7 +92,7 @@ export default function MyProfile() {
                                     + {t("addClass")}
                                 </div>
                             </div>
-                            <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
+                            <div className='clsCntMain sm:grid grid-cols-2 gap-6 flex flex-col'>
                                 {classData.map((defaultClass) => (
                                     <div key={defaultClass.classId}>
                                         <ClassPreview

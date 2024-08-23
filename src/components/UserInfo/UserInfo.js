@@ -133,10 +133,10 @@ const UserInfo = () => {
             {/*    <Switch isExpert={isExpert}/>*/}
             {/*    <span className="pl-2 sm:pl-4">{t('availableAsAnExpert')}</span>*/}
             {/*</div>*/}
-            <div className='flex justify-between'>
-                <div>Position</div>
-                <div className='text-green-800'>Verify</div>
-            </div>
+            {/*<div className='flex justify-between'>*/}
+            {/*    <div>Position</div>*/}
+            {/*    <div className='text-green-800'>Verify</div>*/}
+            {/*</div>*/}
             <div className='institutionAddress-container flex'>
                 <Image src={imgInstitution} alt={institution}/>
                 <div className='location ml-2'>{institution}</div>

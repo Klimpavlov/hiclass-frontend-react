@@ -110,7 +110,7 @@ export default function SignIn() {
                               onClick={() => router.push(`/${locale}/signUp`)}>{t("signUp")}</span>
                     </div>
                     <GoogleButton onClick={handleGoogleSignIn} />
-                    <FacebookButton/>
+                    {/*<FacebookButton/>*/}
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">

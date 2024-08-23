@@ -13,6 +13,7 @@ import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
 import {useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import postReverifyEmail from "@/app/[locale]/updateUser/updateEmail/reverifyEmail/postReverifyEmail";
 
 
 const SettingsLogSec = () => {
@@ -33,7 +34,7 @@ const SettingsLogSec = () => {
 
     }
 
-    //email
+    //update email
 
     const [email, setEmail] = useState('');
 
@@ -41,7 +42,7 @@ const SettingsLogSec = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailPattern.test(email);
     };
-    const handleUpdateEmail = () => {
+    const handleUpdateEmail = async () => {
         if(!email) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
@@ -50,7 +51,13 @@ const SettingsLogSec = () => {
             toast.current.show({ severity: 'error', summary: 'Error', detail: "Please enter a valid email address", life: 3000 });
             return;
         }
-        putUpdateEmail(email, toast)
+
+        const success= await putUpdateEmail(email, toast)
+
+        if (success) {
+            postReverifyEmail(email, toast)
+        }
+
     }
 
     // password
