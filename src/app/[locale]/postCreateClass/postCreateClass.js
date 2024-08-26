@@ -6,11 +6,14 @@ const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTit
     try {
         console.log(gradeNumber);
 
+        const disciplinesString = disciplineTitles.join(',');
+        console.log(disciplinesString)
+
         const response = await apiClient.post(`/Class/create-class`, {
                 Title: title,
                 GradeNumber: gradeNumber,
                 LanguageTitles: languageTitles,
-                DisciplineTitles: disciplineTitles
+                DisciplineTitle: disciplinesString
             }, {
                 headers: {
                     'Content-Type': 'multipart/form-data',

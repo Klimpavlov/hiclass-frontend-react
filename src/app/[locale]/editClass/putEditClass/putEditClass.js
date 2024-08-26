@@ -7,13 +7,15 @@ const putEditClass = async (classId, title, gradeNumber, languageTitles, discipl
         console.log(gradeNumber);
         const gradeNumberString = gradeNumber.toString()
         console.log(gradeNumberString);
+        console.log(disciplineTitles.join(','));
 
+        const disciplinesString = disciplineTitles.join(',');
 
         const response = await apiClient.put(`/Class/edit-class/${classId}`, {
                 Title: title,
                 GradeNumber: gradeNumberString,
                 LanguageTitles: languageTitles,
-                DisciplineTitles: disciplineTitles
+                DisciplineTitles: disciplinesString
             }, {
                 headers: {
                     'Content-Type': 'application/json',

@@ -36,9 +36,9 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         console.log(classInfo)
 
         setInitialTitle(classInfo.value.title)
-        setInitialSubjects(translateItems(classInfo.value.disciplines, disciplinesMapping))
+        setInitialSubjects(translateDisciplines(classInfo.value.disciplineTitle))
         setInitialGrades([classInfo.value.grade])
-        setInitialLanguages(translateItems(classInfo.value.languages, languagesMapping))
+        setInitialLanguages(translateItems(classInfo.value.languageTitles, languagesMapping))
         setInitialPhoto(classInfo.value.imageUrl)
 
     }
@@ -99,6 +99,13 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         }
         return items;
     }
+
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru/myProfile') {
+            return disciplines.split(',').map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines.split(',');
+    };
 
 
     const t = useTranslations('CreateClass');

@@ -60,9 +60,9 @@ export default function MyProfile() {
 
     const translateDisciplines = (disciplines) => {
         if (pathname === '/ru/myProfile') {
-            return disciplines.map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+            return disciplines.split(',').map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
         }
-        return disciplines;
+        return disciplines.split(',');
     };
 
     const t = useTranslations('MyProfile');
@@ -94,18 +94,22 @@ export default function MyProfile() {
                             </div>
                             <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
                             {/*    <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">*/}
-                                {classData.map((defaultClass) => (
-                                    <div key={defaultClass.classId}>
-                                        <ClassPreview
-                                            classId={defaultClass.classId}
-                                            title={defaultClass.title}
-                                            username={defaultClass.userFullName}
-                                            tags={translateDisciplines(defaultClass.disciplines)}
-                                            photo={defaultClass.imageUrl}
-                                            showDropdown={true}
-                                        ></ClassPreview>
-                                    </div>
-                                ))}
+                                {classData.map((defaultClass) => {
+                                    const translatedTags = translateDisciplines(defaultClass.disciplineTitle);
+
+                                    return (
+                                        <div key={defaultClass.classId}>
+                                            <ClassPreview
+                                                classId={defaultClass.classId}
+                                                title={defaultClass.title}
+                                                username={defaultClass.userFullName}
+                                                tags={translatedTags}
+                                                photo={defaultClass.imageUrl}
+                                                showDropdown={true}
+                                            ></ClassPreview>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>

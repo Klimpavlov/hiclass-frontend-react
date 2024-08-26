@@ -154,6 +154,7 @@ async function getDisciplines() {
         setTeacherProfileData(defaultSearchData.teacherProfilesByCountry);
         setLoading(false);
     }
+console.log(teacherProfileData)
 
     const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
@@ -230,6 +231,13 @@ async function getDisciplines() {
         console.log(searchUrl);
     };
 
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru') {
+            return disciplines.split(',').map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines.split(',');
+    };
+
 
     //translation
 
@@ -295,7 +303,7 @@ async function getDisciplines() {
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
                                         <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
-                                                      tags={translateItems(classInfo.disciplines, disciplinesMapping, pathname)} photo={classInfo.imageUrl}
+                                                      tags={translateDisciplines(classInfo.disciplineTitle)} photo={classInfo.imageUrl}
                                         />
                                     </div>
                                 ))
@@ -310,7 +318,7 @@ async function getDisciplines() {
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
                                         <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
-                                                      tags={translateItems(classInfo.disciplines, disciplinesMapping, pathname)} photo={classInfo.imageUrl}
+                                                      tags={translateDisciplines(classInfo.disciplineTitle)} photo={classInfo.imageUrl}
                                         />
                                     </div>
                                 ))
@@ -323,7 +331,7 @@ async function getDisciplines() {
                                 classId={selectedClass.classId}
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
-                                tags={translateItems(selectedClass.disciplines, disciplinesMapping, pathname)}
+                                tags={translateDisciplines(selectedClass.disciplineTitle)}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}

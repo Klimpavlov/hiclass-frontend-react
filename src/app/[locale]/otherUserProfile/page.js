@@ -93,6 +93,13 @@ export default function otherUserProfile() {
         return items;
     }
 
+    const translateDisciplines = (disciplines) => {
+        if (pathname === '/ru/otherUserProfile') {
+            return disciplines.split(',').map(discipline => Object.keys(disciplinesMapping).find(key => disciplinesMapping[key] === discipline) || discipline);
+        }
+        return disciplines.split(',');
+    };
+
     const t = useTranslations("OtherUserProfile");
 
     return (
@@ -136,7 +143,7 @@ export default function otherUserProfile() {
                                         <ClassPreview key={defaultClass.classId}
                                                       title={defaultClass.title}
                                                       username={defaultClass.userFullName}
-                                                      tags={translateUserInfo(defaultClass.disciplines, disciplinesMapping)}
+                                                      tags={translateDisciplines(defaultClass.disciplineTitle)}
                                                       photo={defaultClass.imageUrl}
                                         ></ClassPreview>
                                     </div>
@@ -149,7 +156,7 @@ export default function otherUserProfile() {
                                 classId={selectedClass.classId}
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
-                                tags={selectedClass.disciplines}
+                                tags={translateDisciplines(selectedClass.disciplineTitle)}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
