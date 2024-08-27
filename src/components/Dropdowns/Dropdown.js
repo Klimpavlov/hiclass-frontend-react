@@ -4,25 +4,21 @@ import React, {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 
-const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedOptions, onChange  }) => {
+const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedOptions, onChange, isSingleSelect = false }) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    // close prev dropdowns & outside click
-
-    let dropdownRef = useRef(null);
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsOpen(false)
+                setIsOpen(false);
             }
         }
 
         document.addEventListener('click', handleClickOutside);
 
         return () => document.removeEventListener('click', handleClickOutside);
-
-    }, [])
+    }, []);
 
     const initialSelectedState = initialSelectedOptions ? [initialSelectedOptions] : [];
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedState);
@@ -31,32 +27,30 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
         setSelectedOptions(initialSelectedOptions ? initialSelectedOptions : []);
     }, [initialSelectedOptions]);
 
-    // const [selectedOptions, setSelectedOptions] = useState([initialSelectedOptions])
-    //
-    // useEffect(() => {
-    //     setSelectedOptions(initialSelectedOptions)
-    // }, [initialSelectedOptions]);
-
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
     const handleOptionClick = (option) => {
-        const isOptionSelected = selectedOptions.includes(option);
-
-        if (isOptionSelected) {
-            const updatedOptions = selectedOptions.filter((selectedOption) => selectedOption !== option);
-            setSelectedOptions(updatedOptions);
-            onChange(updatedOptions);
+        if (isSingleSelect) {
+            setSelectedOptions([option]);
+            onChange([option]);
         } else {
-            const updatedOptions = [...selectedOptions, option];
-            setSelectedOptions(updatedOptions);
-            onChange(updatedOptions);
+            const isOptionSelected = selectedOptions.includes(option);
+
+            if (isOptionSelected) {
+                const updatedOptions = selectedOptions.filter((selectedOption) => selectedOption !== option);
+                setSelectedOptions(updatedOptions);
+                onChange(updatedOptions);
+            } else {
+                const updatedOptions = [...selectedOptions, option];
+                setSelectedOptions(updatedOptions);
+                onChange(updatedOptions);
+            }
         }
     };
 
     const displayText = selectedOptions.length > 0 ? selectedOptions.join(", ") : placeholderText;
-
 
     return (
         <div className="relative" ref={dropdownRef}>
@@ -71,7 +65,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
             </div>
             {isOpen && (
                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                <div className="py-2 max-h-60 overflow-y-auto">
+                    <div className="py-2 max-h-60 overflow-y-auto">
                         {options.map((option, index) => (
                             <div
                                 className="py-3 px-3 flex items-center justify-between cursor-pointer"
@@ -81,7 +75,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
                             >
                                 <span className="">{option}</span>
                                 <input type='checkbox' checked={selectedOptions.includes(option)}
-                                       onChange={()=>handleOptionClick(option)}/>
+                                       onChange={() => handleOptionClick(option)}/>
                             </div>
                         ))}
                     </div>
