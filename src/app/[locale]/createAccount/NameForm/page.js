@@ -1,7 +1,7 @@
 'use client';
 import React, {useRef, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import ErrorNotification from "@/components/Error/ErrorNotification";

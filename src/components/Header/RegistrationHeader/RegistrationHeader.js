@@ -2,9 +2,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from "@/components/Header/hiClass_logo.svg";
-import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
-import imgRUFlag from '../RegistrationHeader/ru.svg'
+import imgUKFlag from './FlagUnited Kingdom.svg'
+import imgRUFlag from './ru.svg'
 import Link from "next/link";
+import {useTranslations} from "next-intl";
 
 
 const RegistrationHeader = () => {
@@ -44,6 +45,9 @@ const RegistrationHeader = () => {
         const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
         router.push(newPathname);
     };
+
+    const t = useTranslations("Header");
+
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             <div className="header-left flex items-center">
@@ -62,12 +66,12 @@ const RegistrationHeader = () => {
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>
-                                English
+                                {t('english')}
                             </div>
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('ru')}>
-                                Russian
+                                {t('russian')}
                             </div>
                         </div>
                     )}

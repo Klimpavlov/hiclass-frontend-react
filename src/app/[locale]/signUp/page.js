@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState, useRef} from "react";
 import {usePathname, useRouter} from 'next/navigation';
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
 import FacebookButton from "@/components/Buttons/FacebookButton";
 import InputForm from "@/components/Inputs/InputForm";

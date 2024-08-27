@@ -4,8 +4,8 @@ import React, {useState, useEffect, useRef} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import Image from "next/image";
 import imgSrc from '../Header/hiClass_logo.svg';
-import imgUKFlag from '../RegistrationHeader/FlagUnited Kingdom.svg'
-import imgRUFlag from '../RegistrationHeader/ru.svg'
+import imgUKFlag from '@/components/Header/RegistrationHeader/FlagUnited Kingdom.svg'
+import imgRUFlag from '@/components/Header/RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
 import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'

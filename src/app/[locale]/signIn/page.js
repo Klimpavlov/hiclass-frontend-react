@@ -1,6 +1,6 @@
 'use client';
 
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
 import FacebookButton from "@/components/Buttons/FacebookButton";
 import React, {useEffect, useRef, useState} from "react";

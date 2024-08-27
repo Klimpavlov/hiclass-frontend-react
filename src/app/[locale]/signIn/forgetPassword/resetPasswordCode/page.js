@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect, useRef, useState} from "react";
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postVerificationCode from "@/app/[locale]/signUp/verifyEmail/postVerificationCode/postVerificationCode";

@@ -2,7 +2,7 @@
 
 import React, {useRef, useState} from 'react';
 import {useRouter} from "next/navigation";
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputRadioForm from "@/components/Inputs/InputRadioForm";
 import ErrorNotification from "@/components/Error/ErrorNotification";

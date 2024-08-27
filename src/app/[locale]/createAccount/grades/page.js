@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import {usePathname, useRouter} from "next/navigation";
-import RegistrationHeader from "@/components/RegistrationHeader/RegistrationHeader";
+import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import postCreateAccount from "@/app/[locale]/createAccount/postCreateAccount/postCreateAccount";

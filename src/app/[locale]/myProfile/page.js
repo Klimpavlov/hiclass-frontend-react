@@ -83,7 +83,7 @@ export default function MyProfile() {
                 <>
                     <Header/>
                     <Banner/>
-                    <div className='flex flex-col sm:flex-row p-4 md:p-10'>
+                    <div className='flex flex-col sm:flex-row p-4 lg:p-20 md:p-10'>
                         <UserInfo/>
                         <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-10  lg:ml-28 sm:mr-0'>
                             <div className='clsCntHeader flex justify-between'>
