@@ -127,7 +127,9 @@
     "logout": "Выйти",
     "chat": "Сообщения",
     "russian": "Русский",
-    "english": "Английский"
+    "english": "Английский",
+    "notifications": "Уведомления"
+
   },
   "Filters": {
     "Subject": "Предмет",

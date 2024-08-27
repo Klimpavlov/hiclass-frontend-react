@@ -214,12 +214,12 @@ const Header = ({testNotifications}) => {
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>
-                                English
+                                {t('english')}
                             </div>
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('ru')}>
-                                Russian
+                                {t('russian')}
                             </div>
                         </div>
                     )}
@@ -239,7 +239,7 @@ const Header = ({testNotifications}) => {
                             <div
                                 className='absolute right-0 mt-2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>
                                 <div
-                                    className='py-2 px-4 border-b border-gray-200 text-lg font-semibold'>Notifications
+                                    className='py-2 px-4 border-b border-gray-200 text-lg font-semibold'>{t('notifications')}
                                 </div>
                                 <div className='max-h-60 overflow-y-auto'>
                                     {receivedNotifications.map((notification) => (

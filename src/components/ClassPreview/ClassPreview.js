@@ -88,7 +88,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                                 <Image
                                     src={imgSrc}
                                     alt="menu-icon"
-                                    className="cursor-pointer"
+                                    className="relative cursor-pointer"
                                     onClick={toggleDropdown}
                                 />
                                 {isDropdownOpen && (

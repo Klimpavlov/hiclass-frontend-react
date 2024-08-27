@@ -127,7 +127,8 @@
     "logout": "Logout",
     "chat": "Chat",
     "russian": "Russian",
-    "english": "English"
+    "english": "English",
+    "notifications": "Notifications"
   },
   "Filters": {
     "Subject": "Subject",
