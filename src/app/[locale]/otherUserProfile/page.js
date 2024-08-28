@@ -130,14 +130,14 @@ export default function otherUserProfile() {
                                        disciplines={disciplineTitles}
                                        toast={toast}
                         />
-                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-0 lg:ml-28 sm:mr-0 lg:mr-28 '>
+                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-10  lg:ml-28 sm:mr-0'>
                             <div className='clsCntHeader flex justify-between'>
                                 <div className=''>{t("classes")}</div>
                                 <div className='text-green-700 cursor-pointer'>
 
                                 </div>
                             </div>
-                            <div className='clsCntMain sm:grid grid-cols-2 gap-4 flex flex-col'>
+                            <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
                                 {classData.map((defaultClass) => (
                                     <div key={defaultClass.classId} onClick={() => handleClassClick(defaultClass)}>
                                         <ClassPreview key={defaultClass.classId}
