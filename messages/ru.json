@@ -243,7 +243,10 @@
     "cancelBtn": "Закрыть",
     "sendInviteBtn": "Отправить приглашение"
   },
-
+  "Filter": {
+    "clearAllBtn": "Очистить все",
+    "applyBtn": "Подтвердить"
+  },
   "Disciplines": {
     "Physics": "Физика",
     "Geography": "География",

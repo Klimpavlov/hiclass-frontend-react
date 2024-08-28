@@ -239,5 +239,9 @@
     "selectClass": "Select your class",
     "cancelBtn": "Cancel",
     "sendInviteBtn": "Send call invite"
+  },
+  "Filter": {
+    "clearAllBtn": "Clear all",
+    "applyBtn": "Apply"
   }
 }

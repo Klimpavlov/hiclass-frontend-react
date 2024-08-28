@@ -154,6 +154,19 @@ const Header = ({testNotifications}) => {
         setNav(!nav);
     };
 
+    const openNavRef = useRef(null)
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (openNavRef.current && !openNavRef.current.contains(event.target)) {
+                setNav(false)
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => document.removeEventListener('click', handleClickOutside);
+
+    }, [])
     //current locale
 
     const pathname = usePathname();
@@ -201,8 +214,7 @@ const Header = ({testNotifications}) => {
                     </div>
                 </div>
             </div>
-            <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
-
+            <div className='flex items-center gap-6 sm:gap-3 md:gap-4'>
                 <div ref={languageRef}>
                     <div className="cursor-pointer"
                          onClick={toggleLanguagesDropdown}>
@@ -224,6 +236,7 @@ const Header = ({testNotifications}) => {
                         </div>
                     )}
                 </div>
+                <div className="header-right hidden sm:flex items-center gap-6 sm:gap-3 md:gap-4 ">
                 <div className="relative" ref={notificationRef}>
                     <Image src={imgNotificationBtn} alt="chat-button" onClick={handleNotification}
                            className='cursor-pointer'/>
@@ -303,36 +316,43 @@ const Header = ({testNotifications}) => {
             {/* Mobile Button */}
             <div onClick={handleNav} className='block sm:hidden z-10'>
                 {nav ? (
-                    <AiOutlineClose size={20} style={{color: `white`}}/>
+                    <AiOutlineClose size={20} style={{color: `black`}}/>
                 ) : (
                     <AiOutlineMenu size={20} style={{color: `black`}}/>
                 )}
             </div>
             {/* Mobile Menu */}
+            {/*<div*/}
+            {/*    className={*/}
+            {/*        nav*/}
+            {/*            ? 'sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'*/}
+            {/*            : 'sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'*/}
+            {/*    }*/}
+            {/*>*/}
             <div
-                className={
-                    nav
-                        ? 'sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'
-                        : 'sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300'
-                }
+                className={`${
+                    nav ? 'max-h-screen' : 'max-h-0'
+                } absolute top-24 left-0 right-0 mx-3 flex flex-col justify-start items-start bg-black border border-none rounded-3xl ease-in-out duration-700 delay-75 shadow-2xl overflow-hidden`}
+
             >
-                <ul>
-                    <li onClick={handleNav} className='p-4 text-4xl hover:text-white'>
-                        <Link href="/" className='text-white'>{t('discover')}</Link>
-                    </li>
-                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-                        <Link href="/myProfile" className='text-white'>{t('myProfile')}</Link>
-                    </li>
-                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
-                        <Link href="" className='text-white'>{t('chat')}</Link>
-                    </li>
-                    <li onClick={handleNav} className='p-4 text-4xl hover:text-gray-500'>
+                    <ul>
+                        <li onClick={handleNav} className='p-4 text-xl transition-colors duration-500 hover:text-white'>
+                            <Link href="/" className='text-white'>{t('discover')}</Link>
+                        </li>
+                        <li onClick={handleNav} className='p-4 text-xl transition-colors duration-500 hover:text-white'>
+                            <Link href="/myProfile" className='text-white'>{t('myProfile')}</Link>
+                        </li>
+                        {/*<li onClick={handleNav} className='p-4 text-xl transition-colors duration-500 hover:text-white'>*/}
+                        {/*    <Link href="" className='text-white'>{t('chat')}</Link>*/}
+                        {/*</li>*/}
+                        <li onClick={handleNav} className='p-4 text-xl transition-colors duration-500 hover:text-white'>
                         <span className='text-white'
                               onClick={handleLogout}
                         >{t('logout')}
                         </span>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+            </div>
             </div>
         </div>
     );

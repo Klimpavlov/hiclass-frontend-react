@@ -5,6 +5,7 @@ import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
+import {useTranslations} from "next-intl";
 
 const Filter = ({buttonText, onApply, options, clearAll, filterName, currentFilters}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +57,9 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName, currentFilt
         toggleDropdown();
     };
 
+    const t = useTranslations("Filter")
+
+
     return (
         <div className="relative" ref={filterRef}>
             <div className="flex justify-between py-2 px-4 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white shadow-xs text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6 cursor-pointer" onClick={toggleDropdown}>
@@ -76,8 +80,8 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName, currentFilt
                         ))}
                     </div>
                     <div className="flex flex-col md:flex-row justify-between px-3 py-2">
-                        <ApplyButton buttonText='Apply' onApply={handleApply}/>
-                        <ClearAllButton buttonText='Clear all' clearAll={handleClearAll}/>
+                        <ApplyButton buttonText={t("applyBtn")} onApply={handleApply}/>
+                        <ClearAllButton buttonText={t("clearAllBtn")} clearAll={handleClearAll}/>
                     </div>
                 </div>
             )}
