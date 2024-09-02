@@ -9,9 +9,11 @@ import postCreateAccount from "@/app/[locale]/createAccount/postCreateAccount/po
 import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
 export default function gradesForm() {
     const pathname = usePathname()
+    const deviceToken = useDeviceToken();
     const toast = useRef(null);
 
     const router = useRouter();
@@ -28,7 +30,7 @@ export default function gradesForm() {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
         }
-        const success = await postCreateAccount(successRedirect, toast, pathname);
+        const success = await postCreateAccount(successRedirect, toast, pathname, deviceToken);
         if (success) {
             successRedirect();
         }

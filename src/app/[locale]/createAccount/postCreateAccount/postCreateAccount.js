@@ -4,10 +4,10 @@ import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTransl
 import languagesMapping from "../../../../../mapping/languagesMapping/languagesMapping.json";
 import disciplinesMapping from "../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
+import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
-const postCreateAccount = async (successRedirect, toast, pathname) => {
+const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) => {
     try {
-
         const accessToken = localStorage.getItem('accessToken');
         const localhost = getLocalhost();
 
@@ -44,6 +44,7 @@ const postCreateAccount = async (successRedirect, toast, pathname) => {
         }
 
         const requestData = {
+            DeviceToken: deviceToken,
             FirstName: firstName,
             LastName: lastName,
             IsATeacher: isTeacher,
