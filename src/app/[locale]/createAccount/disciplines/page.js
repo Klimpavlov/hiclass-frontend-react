@@ -10,7 +10,7 @@ import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDiscipline
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
-import disciplinesMapping from "/Users/a111/Desktop/hiclass-frontend-react/mapping/disciplinesMapping/disciplinesMapping.json"
+import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json"
 
 export default function disciplinesForm() {
     const pathname = usePathname();
