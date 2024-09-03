@@ -11,7 +11,7 @@ import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/ge
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
-import languagesMapping from "/Users/a111/Desktop/hiclass-frontend-react/mapping/languagesMapping/languagesMapping.json";
+import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import {usePathname} from "next/navigation";
 
 export default function locationAndLanguages() {
