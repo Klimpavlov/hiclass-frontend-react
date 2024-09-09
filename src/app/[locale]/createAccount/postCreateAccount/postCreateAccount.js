@@ -8,8 +8,9 @@ import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
 const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) => {
     try {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = sessionStorage.getItem('accessToken');
         const localhost = getLocalhost();
+        console.log(accessToken)
 
         const firstName = localStorage.getItem('firstName');
         const lastName = localStorage.getItem('lastName');

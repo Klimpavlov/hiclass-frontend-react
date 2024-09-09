@@ -6,9 +6,9 @@ export const getUserProfile = async () => {
         return response.data.value;
     } catch (error) {
         console.error('Error fetching user profile:', error);
-        // if (error.response && error.response.status === 403) {
-        //     window.location.href ='/signUp';
-        // }
+        if (error.response && error.response.status === 403) {
+            window.location.href ='/createAccount/NameForm';
+        }
 
         throw error;
     }

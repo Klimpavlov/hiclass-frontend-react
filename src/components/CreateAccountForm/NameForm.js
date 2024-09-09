@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import InputForm from "@/components/Inputs/InputForm";
-import postCreateAccount from "@/app/[locale]/createAccount/postCreateAccount/postCreateAccount";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 
 const NameForm = ({title, subtitle}) => {

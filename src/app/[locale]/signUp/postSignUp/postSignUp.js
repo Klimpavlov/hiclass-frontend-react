@@ -13,10 +13,14 @@ const postSignUpData = async (email, password, deviceToken, successRedirect, toa
         })
             .then(function (response) {
                 const accessToken = response.data.value.accessToken;
+                const refreshToken = response.data.value.refreshToken;
                 console.log(response);
                 console.log(response.data.value.accessToken)
-                localStorage.setItem('accessToken', accessToken);
-
+                // localStorage.setItem('accessToken', accessToken);
+                sessionStorage.setItem('accessToken', accessToken);
+                sessionStorage.setItem('refreshToken', refreshToken);
+                // setCookie('refreshToken', refreshToken, 7);
+                localStorage.setItem('deviceToken', deviceToken)
                 successRedirect()
             })
     }

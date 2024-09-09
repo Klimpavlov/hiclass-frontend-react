@@ -2,7 +2,7 @@ import axios from 'axios';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
 const postUserImage = (file, successRedirect) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem('accessToken');
     const localhost = getLocalhost();
 
     const formData = new FormData();
