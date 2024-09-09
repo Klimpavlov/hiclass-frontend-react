@@ -88,6 +88,10 @@ export default function locationAndLanguages() {
             router.push('/createAccount/institution')
     }
 
+    // const preventCitySearch = () => {
+    //     // toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in country field', life: 3000 });
+    // }
+
     const t = useTranslations("CreateAccount.LocationAndLanguages")
 
     return (
@@ -103,10 +107,10 @@ export default function locationAndLanguages() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            <InputForm inputFormText={t("country")} value={country}
+                            <InputForm inputFormText={t("country")} value={country} placeholderText='Choose country'
                                        onChange={(e) => setCountry(e.target.value)}/>
                             {country !== '' && (
-                                <div className='cursor-pointer'>
+                                <div className='cursor-pointer py-2 max-h-60 overflow-y-auto'>
                                     {countryData.map((countryItem) => (
                                         <div key={countryItem} onClick={() => setCountry(countryItem.country)}>
                                             {countryItem.country}
@@ -114,10 +118,10 @@ export default function locationAndLanguages() {
                                     ))}
                                 </div>
                             )}
-                            <InputForm inputFormText={t("city")} value={city}
+                            <InputForm inputFormText={t("city")} value={city} placeholderText='Choose city'
                                        onChange={(e) => setCity(e.target.value)}/>
                             {city !== '' && (
-                                <div className='cursor-pointer'>
+                                <div className='cursor-pointer py-2 max-h-60 overflow-y-auto'>
                                     {cityData.map((cityItem) => (
                                         <div key={cityItem} onClick={() => setCity(cityItem)}>
                                             {cityItem}

@@ -22,8 +22,7 @@ export default async function RootLayout({
     return (
         <html lang={locale}>
         <head>
-            <link rel="icon" href="/favicon.svg"/>
-
+            <link rel="icon" href="/favicon-main.svg"/>
         </head>
         <body className={`${inter.className} overflow-x-hidden`}>
         <NextIntlClientProvider messages={messages}>
