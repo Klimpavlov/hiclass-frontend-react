@@ -429,13 +429,29 @@ const SettingsProfileInfo = () => {
                                     {orgData.map((feature) => (
                                         <div key={feature.properties.id}
                                              className='cursor-pointer py-2 max-h-60 overflow-y-auto'
-                                             onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
+                                             onClick={() => setInstitutionName(feature.properties.name + '; ' + feature.properties.description)}>
                                             <h2>{feature.properties.name}</h2>
                                             <p>{feature.properties.description}</p>
                                         </div>
                                     ))}
                                 </div>
                             </div>
+                            {/*{institutionName && (<div className="">*/}
+                            {/*        <div className="py-2 max-h-60 overflow-y-auto">*/}
+                            {/*            {orgData.map((feature) => (*/}
+                            {/*                <div key={feature.properties.id}*/}
+                            {/*                     className='cursor-pointer py-2 max-h-60 overflow-y-auto'*/}
+                            {/*                     onClick={() => {*/}
+                            {/*                         setInstitutionName(feature.properties.name + '; ' + feature.properties.description);*/}
+                            {/*                         setOrgData([]); // скрываем список после выбора*/}
+                            {/*                     }}>*/}
+                            {/*                    <h2>{feature.properties.name}</h2>*/}
+                            {/*                    <p>{feature.properties.description}</p>*/}
+                            {/*                </div>*/}
+                            {/*            ))}*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
                             <ApplyButton buttonText={t("update")} onApply={handleUpdateInstitution}/>
                             {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
