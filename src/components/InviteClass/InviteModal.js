@@ -116,7 +116,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                            value={invitationText}
                            onChange={(e) => (setInvitationText(e.target.value))}/>
             </div>
-            <div>Select your class</div>
+            <div>{t('selectClass')}</div>
             <div className='select-your-class max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col'>
                 {classData.map((defaultClass) => (
                     <div key={defaultClass.classId}

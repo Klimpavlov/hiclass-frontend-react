@@ -413,8 +413,10 @@ const SettingsProfileInfo = () => {
                                     </div>
                                 </div>
                             )}
-                            <InputForm inputFormText={t("description")} value={description}
-                                       onChange={(e) => setDescription(e.target.value)}/>
+                            <InputForm inputFormText={t("description")} value={description} placeholderText={t('descriptionPlaceholder')}
+                                       onChange={(e) => setDescription(e.target.value)}
+                                       hasMaxLength={true}
+                                       maxLength={200}/>
                             <ApplyButton buttonText={t("update")} onApply={handleUpdatePersonalInfo}/>
                         </div>
                     </div>

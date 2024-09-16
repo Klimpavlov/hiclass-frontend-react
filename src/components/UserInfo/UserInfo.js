@@ -117,7 +117,7 @@ const UserInfo = () => {
                 {/*Speaks {languageTitles.join(", ")}*/}
                 {t("speaks", {languages: languageTitles.join(", ")})}
             </div>
-            <div className='aboutUser '>{userDescription}</div>
+            <div className='w-full break-words whitespace-pre-wrap'>{userDescription}</div>
             <div className='localCountry-container flex'>
                 <Image src={imgLocalCountry} alt={country}/>
                 <div className='country ml-2'>{city}, {country}</div>
