@@ -57,13 +57,14 @@ export default function SignIn() {
             const userToken = result.user.accessToken;
             console.log(result)
 
-            await postGoogleLoginData(userToken, deviceToken);
 
-            // const success = await postGoogleLoginData(userToken, deviceToken);
+            // await postGoogleLoginData(userToken, deviceToken);
 
-            // if (success) {
-            //     successRedirect();
-            // }
+            const success = await postGoogleLoginData(userToken, deviceToken);
+
+            if (success) {
+                successRedirect();
+            }
 
         } catch (error) {
             console.error('Error signing in:', error);

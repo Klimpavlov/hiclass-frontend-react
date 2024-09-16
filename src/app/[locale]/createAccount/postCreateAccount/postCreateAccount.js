@@ -53,7 +53,7 @@ const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) 
             CityLocation: city,
             CountryLocation: country,
             InstitutionDto: {
-                Types: 'School',
+                Types: ["School"],
                 Address: institutionAddress,
                 Title: institutionTitle
             },
