@@ -25,9 +25,16 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
     const pathname = usePathname()
     const toast = useRef(null);
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handlePostCreateClass = async () => {
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+
         if (!title || !grade || !selectedDisciplines || !selectedLanguages || !photo) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            setIsSubmitting(false);
             return;
         }
 
@@ -47,6 +54,7 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
                 window.location.reload();
             }
         }
+        setIsSubmitting(false);
     };
 
     const handleCloseModal = () => {
@@ -75,6 +83,7 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
                     />
                     <CreateClassBottom handleCloseModal={handleCloseModal}
                                        handlePostClass={handlePostCreateClass}
+
                     />
                 </div>
             </div>

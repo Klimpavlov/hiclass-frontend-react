@@ -218,6 +218,7 @@
     "uploadImage": "Загрузить фото",
     "uploadImageText": "Пожалуйста, загрузите файл изображения (jpeg, jpg, png).",
     "title": "Название",
+    "placeholderClassTitle": "Название класса",
     "grade": "Номер класса",
     "subject": "Предметы",
     "language": "Языки",

@@ -143,7 +143,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <div>{t("uploadImageText")}</div>
             </div>
             <div className='section-info w-full '>
-                <InputForm inputFormText={t("title")} placeholderText='Class title'
+                <InputForm inputFormText={t("title")} placeholderText={t("placeholderClassTitle")}
                            value={initialTitle}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}

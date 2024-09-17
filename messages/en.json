@@ -215,6 +215,7 @@
     "uploadImage": "Upload image",
     "uploadImageText": "Please upload an image file (jpeg, jpg, png).",
     "title": "Title",
+    "placeholderClassTitle": "Class title",
     "grade": "Grades",
     "subject": "Subjects",
     "language": "Languages",
