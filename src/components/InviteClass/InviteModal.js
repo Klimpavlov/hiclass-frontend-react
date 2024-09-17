@@ -56,7 +56,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
 
 
-    const [classSenderId, setClassSenderId] = useState([])
+    const [classSenderId, setClassSenderId] = useState('')
     const handleClassClick = (classId) => {
         // console.log(classId)
         setClassSenderId(classId)
@@ -65,11 +65,26 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
     console.log(classSenderId)
 
     const handlePostInvitation = async () => {
-        if (!classSenderId || !dateOfInvitation || !invitationText) {
+        console.log('classSenderId:', classSenderId);
+        console.log('dateOfInvitation:', dateOfInvitation);
+        console.log('invitationText:', invitationText);
+        if (!classSenderId && (!dateOfInvitation || !invitationText)) {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please fill in all fields',
+                life: 3000
+            });
+            return;
+        }
+        if (!classSenderId) {
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please choose/create a class before sending the invitation', life: 3000 });
+            return;
+        }
+        if (!dateOfInvitation || !invitationText) {
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
             return;
         }
-        console.log(dateOfInvitation)
 
         const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, toast)
 

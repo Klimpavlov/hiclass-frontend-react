@@ -1,11 +1,8 @@
 import Image from "next/image";
-import imgSrc from "@/components/ClassPreview/class-preview-image.svg";
 import Tag from "@/components/Tags/Tag";
 import React, {useState} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
-import postInviteClass from "@/app/[locale]/postInviteClass/postInviteClass";
 import InviteModal from "@/components/InviteClass/InviteModal";
-import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
 
