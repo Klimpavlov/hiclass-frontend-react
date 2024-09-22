@@ -205,6 +205,7 @@ const SettingsProfileInfo = () => {
             toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
             return;
         }
+        console.log(institutionName)
         const updateInstitutionSuccess = await putUpdateInstitution(institutionName, toast);
 
         if (updateInstitutionSuccess) {
@@ -271,7 +272,6 @@ const SettingsProfileInfo = () => {
 
     // grades
 
-    // const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const grades = getAvailableGrades()
     const [selectedGrades, setSelectedGrades] = useState([])
 

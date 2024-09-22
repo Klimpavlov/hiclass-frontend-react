@@ -31,19 +31,6 @@ export default function MyProfile() {
 
     const [classData, setClassData] = useState([]);
 
-    // useEffect(() => {
-    //     async function getUser() {
-    //         const accessToken = localStorage.getItem('accessToken');
-    //         const userProfile = await getUserProfile(accessToken)
-    //         console.log(userProfile);
-    //         setClassData(userProfile.classDtos)
-    //         setTimeout(() => {
-    //             setLoading(false)
-    //         }, 1300)
-    //     }
-    //     getUser()
-    // }, []);
-
     useEffect(() => {
          async function fetchUserProfile() {
              const userProfile = await getUserProfile();

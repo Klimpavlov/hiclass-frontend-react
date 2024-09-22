@@ -18,10 +18,12 @@ import {useLocale, useTranslations} from "next-intl";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import postUpdateNotificationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
 import postLogout from "@/app/[locale]/signOut/postLogout";
+import {RingLoader} from "react-spinners";
 
 const Header = ({testNotifications}) => {
 
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -53,9 +55,11 @@ const Header = ({testNotifications}) => {
 
     }, [])
 
-    const handleNavigation = (href) => {
+    const handleNavigation = async (href) => {
         if (pathname === href) {
-            window.location.reload();
+            setLoading(true);
+            await router.refresh();
+            setLoading(false);
         } else {
             router.push(href);
         }
@@ -193,6 +197,19 @@ const Header = ({testNotifications}) => {
     };
 
     return (
+        <main className="">
+            {loading ? (
+                <div className='flex items-center justify-center h-screen'>
+                    <RingLoader
+                        color={'#36d7b7'}
+                        loading={loading}
+                        size={150}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            ) : (
+                <>
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
             {/*<Menubar model={items} />*/}
             <div className="header-left flex items-center">
@@ -355,7 +372,11 @@ const Header = ({testNotifications}) => {
             </div>
             </div>
         </div>
-    );
-};
+                </>
+            )}
+        </main>
+    )
+        ;
+}
 
 export default Header
