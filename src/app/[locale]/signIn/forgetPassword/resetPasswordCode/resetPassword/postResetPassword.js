@@ -10,6 +10,10 @@ const postResetPassword = async (password, toast) => {
         })
 
         console.log(response);
+        const accessToken = response.data.value.accessToken;
+        const refreshToken = response.data.value.refreshToken;
+        sessionStorage.setItem('accessToken', accessToken);
+        sessionStorage.setItem('refreshToken', refreshToken);
         return true;
     }
         catch (error) {
