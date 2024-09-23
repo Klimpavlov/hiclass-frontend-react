@@ -1,8 +1,12 @@
 import React from 'react';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
+import {useTranslations} from "next-intl";
 
 export default function DialogModal({ setIsModalOpen, postDelete, toast }) {
+
+    const t = useTranslations("DialogModal");
+    const rejectModal = useTranslations("DialogModal.RejectLogic");
     const accept = async () => {
         await postDelete();
         setTimeout(() => {
@@ -11,7 +15,7 @@ export default function DialogModal({ setIsModalOpen, postDelete, toast }) {
     };
 
     const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        toast.current.show({ severity: 'warn', summary: rejectModal('Rejected'), detail: rejectModal('YouRejected'), life: 3000 });
         setTimeout(() => {
             setIsModalOpen(false);
         }, 1500);
@@ -19,13 +23,15 @@ export default function DialogModal({ setIsModalOpen, postDelete, toast }) {
 
     const confirm2 = () => {
         confirmDialog({
-            message: 'Do you want to proceed?',
-            header: 'Confirmation',
+            message: t("Proceed"),
+            header: t("Confirmation"),
             icon: 'pi pi-info-circle',
             defaultFocus: 'reject',
             acceptClassName: 'p-button-danger',
             accept,
-            reject
+            reject,
+            acceptLabel: t("Yes"),
+            rejectLabel: t("No"),
         });
     };
 
@@ -34,8 +40,8 @@ export default function DialogModal({ setIsModalOpen, postDelete, toast }) {
             <ConfirmDialog />
             <div className='fixed inset-0 flex items-center justify-center bg-white z-50'>
                 <div className="card flex flex-wrap gap-2 justify-content-center">
-                    <Button onClick={() => setIsModalOpen(false)} icon="pi pi-times" label="Cancel" className="px-5 py-3 mt-4 mx-auto rounded-lg text-black bg-white text-sm font-medium shadow-xs"></Button>
-                    <Button onClick={confirm2} icon="pi pi-check" label="Continue" className='px-5 py-3 mt-4 mx-auto rounded-lg bg-green-800 text-white text-sm font-medium shadow-xs'></Button>
+                    <Button onClick={() => setIsModalOpen(false)} icon="pi pi-times" label={t("Cancel")} className="px-5 py-3 mt-4 mx-auto rounded-lg text-black bg-white text-sm font-medium shadow-xs"></Button>
+                    <Button onClick={confirm2} icon="pi pi-check" label={t("Continue")} className='px-5 py-3 mt-4 mx-auto rounded-lg bg-green-800 text-white text-sm font-medium shadow-xs'></Button>
                 </div>
             </div>
         </>

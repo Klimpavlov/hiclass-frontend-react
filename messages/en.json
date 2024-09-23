@@ -245,5 +245,17 @@
   "Filter": {
     "clearAllBtn": "Clear all",
     "applyBtn": "Apply"
+  },
+  "DialogModal": {
+    "Cancel": "Cancel",
+    "Continue": "Continue",
+    "Confirmation": "Confirmation",
+    "Proceed": "Do you want to proceed?",
+    "Yes": "Yes",
+    "No": "No",
+    "RejectLogic": {
+      "Rejected": "Rejected",
+      "YouRejected": "You have rejected"
+    }
   }
 }

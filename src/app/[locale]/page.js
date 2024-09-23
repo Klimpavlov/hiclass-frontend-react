@@ -311,7 +311,7 @@ console.log(teacherProfileData)
                         </div>
                         <div className='flex justify-between mt-4 md:mt-8'>
                             <div className='font-bold'>{t('mostPopularClasses')}<span className='text-green-700'>{t('Belarus')}</span></div>
-                            <div className='text-green-700'>{t('seeAll')}</div>
+                            {/*<div className='text-green-700'>{t('seeAll')}</div>*/}
                         </div>
                         <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                             {teacherProfileData.map((teacher) => (

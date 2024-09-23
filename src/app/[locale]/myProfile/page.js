@@ -24,24 +24,46 @@ export default function MyProfile() {
         setIsModalOpen(true);
     };
 
-    const handleCreateClass = () => {
-        setIsModalOpen(false);
-    };
-
-
     const [classData, setClassData] = useState([]);
 
+    // const handleCreateClass = () => {
+    //     setIsModalOpen(false);
+    // };
+
+
+    // useEffect(() => {
+    //     async function fetchUserProfile() {
+    //         const userProfile = await getUserProfile();
+    //         console.log(userProfile);
+    //         setClassData(userProfile.classDtos)
+    //         setTimeout(() => {
+    //             setLoading(false)
+    //         }, 1300)
+    //     }
+    //     fetchUserProfile();
+    // }, []);
+
+    const fetchUserProfile = async () => {
+        try {
+            setLoading(true); // Устанавливаем состояние загрузки перед запросом
+            const userProfile = await getUserProfile();
+            console.log(userProfile);
+            setClassData(userProfile.classDtos);
+        } catch (error) {
+            console.error("Failed to fetch user profile", error);
+        } finally {
+            setLoading(false); // Отключаем состояние загрузки после завершения запроса
+        }
+    };
+
     useEffect(() => {
-         async function fetchUserProfile() {
-             const userProfile = await getUserProfile();
-             console.log(userProfile);
-             setClassData(userProfile.classDtos)
-             setTimeout(() => {
-                 setLoading(false)
-             }, 1300)
-         }
         fetchUserProfile();
     }, []);
+
+    const handleCreateClass = () => {
+        fetchUserProfile();
+        setIsModalOpen(false);
+    };
 
     // translation
 

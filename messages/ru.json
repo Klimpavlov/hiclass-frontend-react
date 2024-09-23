@@ -133,7 +133,7 @@
   },
   "Filters": {
     "Subject": "Предмет",
-    "Grade": "Номер класса",
+    "Grade": "Класс",
     "Language": "Язык",
     "Location": "Расположение"
   },
@@ -297,5 +297,17 @@
     "Kyrgyz": "Киргизский",
     "Spanish": "Испанский",
     "Uzbek": "Узбекский"
+  },
+  "DialogModal": {
+    "Cancel": "Закрыть",
+    "Continue": "Продолжить",
+    "Confirmation": "Подтверждение",
+    "Proceed": "Вы хотите продолжить?",
+    "Yes": "Да",
+    "No": "Нет",
+    "RejectLogic": {
+      "Rejected": "Отклонено",
+      "YouRejected": "Вы отклонили действие"
+    }
   }
 }
