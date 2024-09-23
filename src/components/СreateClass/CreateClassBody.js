@@ -21,7 +21,9 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     // get Class Info
 
     useEffect(() => {
-        getClass()
+        if (classId) {
+            getClass()
+        }
     }, [])
 
 
@@ -42,6 +44,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         setInitialPhoto(classInfo.value.imageUrl)
 
     }
+
 
     setTitle(initialTitle)
 
