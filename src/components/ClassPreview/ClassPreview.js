@@ -11,7 +11,7 @@ import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 
-const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => {
+const ClassPreview = ({classId, title, username, tags, photo, showDropdown, userAvatar}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -71,9 +71,17 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown}) => 
                         layout="fill"
                     />
                 </div>
-                <div className='class-preview-header'>
-                    <div className="avatar">{}</div>
-                    <div className="username text-black font-bold cursor-pointer">{username}</div>
+                <div className='class-preview-header flex items-center mt-1'>
+                    <div className='relative w-8 h-8 rounded-full overflow-hidden'>
+                        <Image
+                            src={userAvatar}
+                            alt="userAvatar"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-full"
+                        />
+                    </div>
+                    <div className="username text-black font-bold cursor-pointer ml-1">{username}</div>
                 </div>
                 <div className="class-preview-text"> {title}</div>
                 <div className="class-preview-footer flex justify-between">

@@ -145,6 +145,7 @@ export default function otherUserProfile() {
                                                       username={defaultClass.userFullName}
                                                       tags={translateDisciplines(defaultClass.disciplineTitle)}
                                                       photo={defaultClass.imageUrl}
+                                                      userAvatar={userAvatar}
                                         ></ClassPreview>
                                     </div>
                                 ))}

@@ -308,6 +308,10 @@
     "RejectLogic": {
       "Rejected": "Отклонено",
       "YouRejected": "Вы отклонили действие"
+    },
+    "Error": {
+      "error": "Ошибка",
+      "emptyFields": "Заполните все поля"
     }
   }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 
-const InputForm = ({inputFormText, optionalFormText, placeholderText, value, link, onChange, isPassword, error, hasMaxLength, maxLength}) => {
+const InputForm = ({inputFormText, optionalFormText, placeholderText, value, link,
+                       onChange, isPassword, error, hasMaxLength, maxLength, isTextarea, onFocus}) => {
 
     const inputType = isPassword ? 'password' : 'text';
 
@@ -13,15 +14,29 @@ const InputForm = ({inputFormText, optionalFormText, placeholderText, value, lin
                 {optionalFormText && <Link href={link} className='text-green-800 cursor-pointer'>{optionalFormText}</Link>}
             </div>
             <label htmlFor="Input">
-                <input className="input flex justify-center items-center py-3 px-5
-                 rounded-lg border border-gray-400 w-full"
-                       type={inputType}
-                       placeholder={placeholderText}
-                       value={value}
-                       onChange={onChange}
-                       maxLength={hasMaxLength ? maxLength : undefined}
-
-                />
+                {isTextarea ? (
+                    <textarea
+                        className="input flex justify-center items-center py-3 px-5
+                        rounded-lg border border-gray-400 w-full resize-none"
+                        placeholder={placeholderText}
+                        value={value}
+                        onChange={onChange}
+                        onFocus={onFocus}
+                        maxLength={hasMaxLength ? maxLength : undefined}
+                        rows={5}
+                    />
+                ) : (
+                    <input
+                        className="input flex justify-center items-center py-3 px-5
+                        rounded-lg border border-gray-400 w-full"
+                        type={inputType}
+                        placeholder={placeholderText}
+                        value={value}
+                        onChange={onChange}
+                        onFocus={onFocus}
+                        maxLength={hasMaxLength ? maxLength : undefined}
+                    />
+                )}
                 {error && <div className='text-red-700'>{error}</div>}
             </label>
             {hasMaxLength && (

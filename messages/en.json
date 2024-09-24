@@ -256,6 +256,10 @@
     "RejectLogic": {
       "Rejected": "Rejected",
       "YouRejected": "You have rejected"
+    },
+    "Error": {
+      "error": "Error",
+      "emptyFields": "Please fill in all fields"
     }
   }
 }

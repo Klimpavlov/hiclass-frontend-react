@@ -13,21 +13,22 @@ import {searchRequest} from "@/app/[locale]/api/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
 import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import {RingLoader} from "react-spinners";
-import { useTranslations } from "next-intl";
+import {useTranslations} from "next-intl";
 import ruLocale from '/messages/ru.json';
-import { usePathname } from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
-import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import {initializeApp} from 'firebase/app';
+import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -123,13 +124,13 @@ export default function ExplorePage() {
     // show current notifications
     useEffect(() => {
         if (notification) {
-            toast.current.show({ severity: 'info', summary: 'Notification', detail: `${notification}`, life: 3000 });
+            toast.current.show({severity: 'info', summary: 'Notification', detail: `${notification}`, life: 3000});
             console.log(notification);
         }
     }, [notification]);
 
 
-async function getDisciplines() {
+    async function getDisciplines() {
         const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines();
         setDisciplines(currentPathname === 'ru' ? Object.values(ruLocale.Disciplines) : availableDisciplines);
@@ -154,12 +155,37 @@ async function getDisciplines() {
         setTeacherProfileData(defaultSearchData.teacherProfilesByCountry);
         setLoading(false);
     }
-console.log(teacherProfileData)
+
+    console.log(teacherProfileData)
 
     const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
         localStorage.setItem('selectedUserId', teacher.userId);
     };
+
+    // // get user`s avatars
+    //
+    // const [userAvatar, setUserAvatar] = useState([]);
+    // const otherUserId = localStorage.getItem('selectedUserId');
+    //
+    // useEffect(() => {
+    //     async function getOtherUser() {
+    //         try {
+    //             const response = await apiClient.get(`/User/other-userprofile/${otherUserId}`);
+    //             console.log(response)
+    //             setUserAvatar(response.data.value.imageUrl)
+    //             setTimeout(() => {
+    //                 setLoading(false);
+    //             }, 1300)
+    //
+    //
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    //
+    //     getOtherUser();
+    // }, []);
 
     const handleFilterApply = (selectedOptions, filterName) => {
         setCurrentFilters(prevFilters => ({
@@ -258,10 +284,11 @@ console.log(teacherProfileData)
                 </div>
             ) : (
                 <>
-                    <ErrorNotification ref={toast} />
+                    <ErrorNotification ref={toast}/>
                     <Header testNotifications={notification}/>
                     <TopSection/>
-                    <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
+                    <div
+                        className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
                         <div className="flex flex-wrap gap-2 px-4 md:px-8">
                             <Filter buttonText={filtersTranslation('Subject')}
                                     options={disciplines} onApply={handleFilterApply}
@@ -291,34 +318,44 @@ console.log(teacherProfileData)
                             {Object.entries(currentFilters).flatMap(([filterName, filterValues]) =>
                                 filterValues.map(filterValue => (
                                     <span key={`${filterName}-${filterValue}`} className='pl-2'>
-                                        <Tag text={filterValue} removeTag={true} onChange={() => handleRemoveTag(filterName, filterValue)}/>
+                                        <Tag text={filterValue} removeTag={true}
+                                             onChange={() => handleRemoveTag(filterName, filterValue)}/>
                                     </span>
                                 ))
                             )}
                         </div>
                     </div>
                     <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
-                        <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+                        <div
+                            className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                             {searchClassData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
-                                                      tags={translateDisciplines(classInfo.disciplineTitle)} photo={classInfo.imageUrl}
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title}
+                                                      username={classInfo.userFullName}
+                                                      tags={translateDisciplines(classInfo.disciplineTitle)}
+                                                      photo={classInfo.imageUrl}
+                                                      userAvatar={teacher.imageUrl}
                                         />
                                     </div>
                                 ))
                             ))}
                         </div>
                         <div className='flex justify-between mt-4 md:mt-8'>
-                            <div className='font-bold'>{t('mostPopularClasses')}<span className='text-green-700'>{t('Belarus')}</span></div>
+                            <div className='font-bold'>{t('mostPopularClasses')}<span
+                                className='text-green-700'>{t('Belarus')}</span></div>
                             {/*<div className='text-green-700'>{t('seeAll')}</div>*/}
                         </div>
-                        <div className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+                        <div
+                            className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                             {teacherProfileData.map((teacher) => (
                                 teacher.classDtos.map((classInfo) => (
                                     <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title} username={classInfo.userFullName}
-                                                      tags={translateDisciplines(classInfo.disciplineTitle)} photo={classInfo.imageUrl}
+                                        <ClassPreview key={classInfo.classId} title={classInfo.title}
+                                                      username={classInfo.userFullName}
+                                                      tags={translateDisciplines(classInfo.disciplineTitle)}
+                                                      photo={classInfo.imageUrl}
+                                                      userAvatar={teacher.imageUrl}
                                         />
                                     </div>
                                 ))

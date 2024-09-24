@@ -106,6 +106,7 @@ import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTransl
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
+import {RingLoader} from "react-spinners";
 
 export default function CreateClassModal({classId, setIsModalOpen, onCreateClass}) {
 
@@ -162,6 +163,18 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
     // translation
 
     const t = useTranslations('CreateClass');
+
+    // if (loading) return (
+    //     <div className='flex items-center justify-center h-screen'>
+    //         <RingLoader
+    //             color={'#36d7b7'}
+    //             loading={loading}
+    //             size={150}
+    //             aria-label="Loading Spinner"
+    //             data-testid="loader"
+    //         />
+    //     </div>
+    // );
 
     return (
         <>

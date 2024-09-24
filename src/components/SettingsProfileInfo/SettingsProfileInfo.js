@@ -56,6 +56,10 @@ const SettingsProfileInfo = () => {
 
     const [userAvatar, setUserAvatar] = useState([]);
 
+    const [isInstitutionInputActive, setIsInstitutionInputActive] = useState(false);
+    const [isCountryInputActive, setIsCountryInputActive] = useState(false);
+    const [isCityInputActive, setIsCityInputActive] = useState(false);
+
     useEffect(() => {
         async function getUserInfo() {
             const userProfile = await getUserProfile();
@@ -371,10 +375,10 @@ const SettingsProfileInfo = () => {
                         <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
                         <div className='py-8'>
                             {/*<div className='flex flex-col md:flex-row justify-between'>*/}
-                                <InputForm inputFormText={t("firstName")} value={firstName}
-                                           onChange={(e) => setFirstName(e.target.value)}/>
-                                <InputForm inputFormText={t("lastName")} value={lastName}
-                                           onChange={(e) => setLastName(e.target.value)}/>
+                            <InputForm inputFormText={t("firstName")} value={firstName}
+                                       onChange={(e) => setFirstName(e.target.value)}/>
+                            <InputForm inputFormText={t("lastName")} value={lastName}
+                                       onChange={(e) => setLastName(e.target.value)}/>
                             {/*</div>*/}
                             <Dropdown
                                 dropdownFormText={t("i`m")}
@@ -388,35 +392,49 @@ const SettingsProfileInfo = () => {
                                 }}
                             />
                             <InputForm inputFormText={t("country")} value={country}
-                                       onChange={(e) => setCountry(e.target.value)}/>
+                                       onChange={(e) => setCountry(e.target.value)}
+                                       onFocus={() => setIsCountryInputActive(true)}/>
                             {country !== '' && (
                                 <div className="">
-                                    <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
-                                        {countryData.map((country) => (
-                                            <div key={country} onClick={() => setCountry(country.country)}>
-                                                {country.country}
-                                            </div>
-                                        ))}
-                                    </div>
+                                    {isCountryInputActive && (
+                                        <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
+                                            {countryData.map((country) => (
+                                                <div key={country} onClick={() => {
+                                                    setCountry(country.country);
+                                                    setIsCountryInputActive(false);
+                                                }}>
+                                                    {country.country}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                             <InputForm inputFormText={t("city")} value={city}
-                                       onChange={(e) => setCity(e.target.value)}/>
+                                       onChange={(e) => setCity(e.target.value)}
+                                       onFocus={() => setIsCityInputActive(true)}/>
                             {city !== '' && (
                                 <div className="">
-                                    <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
-                                        {cityData.map((cityItem) => (
-                                            <div key={cityItem} onClick={() => setCity(cityItem)}>
-                                                {cityItem}
-                                            </div>
-                                        ))}
-                                    </div>
+                                    {isCityInputActive && (
+                                        <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
+                                            {cityData.map((cityItem) => (
+                                                <div key={cityItem} onClick={() => {
+                                                    setCity(cityItem);
+                                                    setIsCityInputActive(false)
+                                                }}>
+                                                    {cityItem}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
-                            <InputForm inputFormText={t("description")} value={description} placeholderText={t('descriptionPlaceholder')}
+                            <InputForm inputFormText={t("description")} value={description}
+                                       placeholderText={t('descriptionPlaceholder')}
                                        onChange={(e) => setDescription(e.target.value)}
+                                       isTextarea={true}
                                        hasMaxLength={true}
-                                       maxLength={200}/>
+                                       maxLength={250}/>
                             <ApplyButton buttonText={t("update")} onApply={handleUpdatePersonalInfo}/>
                         </div>
                     </div>
@@ -425,35 +443,25 @@ const SettingsProfileInfo = () => {
                                          details={t("positionVerificationDetails")}/>
                         <div className='py-8'>
                             <InputForm inputFormText={t("institutionName")} value={institutionName}
-                                       onChange={(e) => setInstitutionName(e.target.value)}/>
+                                       onChange={(e) => setInstitutionName(e.target.value)}
+                                       onFocus={() => setIsInstitutionInputActive(true)}/>
                             <div className="">
-                                <div className="py-2 max-h-60 overflow-y-auto">
-                                    {orgData.map((feature) => (
-                                        <div key={feature.properties.id}
-                                             className='cursor-pointer py-2 max-h-60 overflow-y-auto'
-                                             onClick={() => setInstitutionName(feature.properties.name + '; ' + feature.properties.description)}>
-                                            <h2>{feature.properties.name}</h2>
-                                            <p>{feature.properties.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
+                                {isInstitutionInputActive && institutionName && (
+                                    <div className="py-2 max-h-60 overflow-y-auto">
+                                        {orgData.map((feature) => (
+                                            <div key={feature.properties.id}
+                                                 className='cursor-pointer py-2 max-h-60 overflow-y-auto'
+                                                 onClick={() => {
+                                                     setInstitutionName(feature.properties.name + '; ' + feature.properties.description);
+                                                     setIsInstitutionInputActive(false);
+                                                 }}>
+                                                <h2>{feature.properties.name}</h2>
+                                                <p>{feature.properties.description}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                            {/*{institutionName && (<div className="">*/}
-                            {/*        <div className="py-2 max-h-60 overflow-y-auto">*/}
-                            {/*            {orgData.map((feature) => (*/}
-                            {/*                <div key={feature.properties.id}*/}
-                            {/*                     className='cursor-pointer py-2 max-h-60 overflow-y-auto'*/}
-                            {/*                     onClick={() => {*/}
-                            {/*                         setInstitutionName(feature.properties.name + '; ' + feature.properties.description);*/}
-                            {/*                         setOrgData([]); // скрываем список после выбора*/}
-                            {/*                     }}>*/}
-                            {/*                    <h2>{feature.properties.name}</h2>*/}
-                            {/*                    <p>{feature.properties.description}</p>*/}
-                            {/*                </div>*/}
-                            {/*            ))}*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
                             <ApplyButton buttonText={t("update")} onApply={handleUpdateInstitution}/>
                             {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
@@ -465,7 +473,8 @@ const SettingsProfileInfo = () => {
                         <div className='py-8'>
                             <Dropdown dropdownFormText={t("areasOfWork")}
                                       placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
-                                      options={disciplines} initialSelectedOptions={initialDisciplines} onChange={setSelectedDisciplines}/>
+                                      options={disciplines} initialSelectedOptions={initialDisciplines}
+                                      onChange={setSelectedDisciplines}/>
                             <Dropdown dropdownFormText={t("grades")}
                                       placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : "Select grades"}
                                       options={grades}
@@ -473,7 +482,8 @@ const SettingsProfileInfo = () => {
                                       onChange={setSelectedGrades}/>
                             <Dropdown dropdownFormText={t("languages")}
                                       placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : "Select languages"}
-                                      options={languages}  initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
+                                      options={languages} initialSelectedOptions={initialLanguages}
+                                      onChange={setSelectedLanguages}/>
                             <ApplyButton buttonText={t("update")} onApply={handleUpdateProfessionalInfo}/>
                         </div>
                     </div>

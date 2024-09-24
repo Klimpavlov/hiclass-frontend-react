@@ -25,6 +25,7 @@ export default function MyProfile() {
     };
 
     const [classData, setClassData] = useState([]);
+    const [userAvatar, setUserAvatar] = useState([]);
 
     // const handleCreateClass = () => {
     //     setIsModalOpen(false);
@@ -49,6 +50,7 @@ export default function MyProfile() {
             const userProfile = await getUserProfile();
             console.log(userProfile);
             setClassData(userProfile.classDtos);
+            setUserAvatar(userProfile.imageUrl)
         } catch (error) {
             console.error("Failed to fetch user profile", error);
         } finally {
@@ -114,6 +116,7 @@ export default function MyProfile() {
                                                 tags={translatedTags}
                                                 photo={defaultClass.imageUrl}
                                                 showDropdown={true}
+                                                userAvatar={userAvatar}
                                             ></ClassPreview>
                                         </div>
                                     );
