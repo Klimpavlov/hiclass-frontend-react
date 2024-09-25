@@ -26,6 +26,7 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
     // translation
     const t = useTranslations("InviteModal");
     const toastErrorTranslation = useTranslations("DialogModal.Error");
+    const toastInvitationTranslation = useTranslations("DialogModal.Invitation")
 
     const [classData, setClassData] = useState([]);
 
@@ -83,8 +84,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
         if (!classSenderId) {
             toast.current.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Please choose/create a class before sending the invitation',
+                summary: toastInvitationTranslation("error"),
+                detail: toastInvitationTranslation("emptyClassError"),
                 life: 3000
             });
             return;
@@ -100,8 +101,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
         if (postInvitationSuccess) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Invitation successfully created',
+                summary: toastInvitationTranslation("success"),
+                detail: toastInvitationTranslation("successMessage"),
                 life: 3000
             });
             setTimeout(() => {

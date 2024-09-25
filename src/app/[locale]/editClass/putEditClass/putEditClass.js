@@ -1,6 +1,6 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
 
-const putEditClass = async (classId, title, gradeNumber, languageTitles, disciplineTitles, toast) => {
+const putEditClass = async (classId, title, gradeNumber, languageTitles, disciplineTitles, toast, editClassToastTranslations) => {
 
     try {
 
@@ -28,7 +28,7 @@ const putEditClass = async (classId, title, gradeNumber, languageTitles, discipl
     catch (error) {
         console.log(error);
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            toast.current.show({severity: 'error', summary: editClassToastTranslations("error"), detail: error.message, life: 3000});
         }
         return false;
     }

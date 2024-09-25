@@ -15,19 +15,21 @@ export default function ForgetPassword() {
     const router = useRouter();
     const [email, setEmail] = useState('');
 
+    const t = useTranslations("ForgetPassword");
+    const errorToastsTranslations = useTranslations("DialogModal.Error")
+
+
     const successRedirect = () => {
         router.push('/signIn/forgetPassword/resetPasswordCode');
     };
     const handleContinue = async () => {
         if (!email) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToastsTranslations('error'), detail: errorToastsTranslations("emptyFields"), life: 3000 });
         }
         localStorage.setItem('forgetPasswordEmail', email)
         await postEmailForgetPassword(email, successRedirect, toast);
 
     }
-
-    const t = useTranslations("ForgetPassword");
 
     return (
         <div>

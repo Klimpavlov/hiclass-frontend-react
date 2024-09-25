@@ -35,6 +35,12 @@ export default function SignUp() {
 
     const [deviceToken, setDeviceToken] = useState('');
 
+
+    const t = useTranslations("SignUp");
+    const errorToastTranslations = useTranslations("DialogModal.Error");
+    const signUpToastTranslations = useTranslations("DialogModal.SignUp");
+
+
     useEffect(() => {
         const firebaseConfig = {
             apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
@@ -84,26 +90,26 @@ export default function SignUp() {
         // }
         // postSignUp(email, password, deviceToken, successRedirect)
         if (!email || !password || !confirmPassword) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         } else if (!validateEmail(email)) {
             toast.current.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Please enter a valid email address',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("validEmail"),
                 life: 3000
             });
             return;
         } else if (password.length < 6) {
             toast.current.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Password must be at least 6 characters',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("shortPassword"),
                 life: 3000
             });
             return;
         } else if (confirmPassword !== password) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Wrong confirm-password', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("wrongConfirmPassword"), life: 3000});
             return;
         }
 
@@ -112,8 +118,8 @@ export default function SignUp() {
         if (successSignUp) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Success signUp',
+                summary: signUpToastTranslations("success"),
+                detail: signUpToastTranslations("successMessage"),
                 life: 3000
             });
         }
@@ -122,8 +128,6 @@ export default function SignUp() {
     const successRedirect = () => {
         router.push('/signUp/verifyEmail');
     };
-
-    const t = useTranslations("SignUp");
 
     return (
         <main>

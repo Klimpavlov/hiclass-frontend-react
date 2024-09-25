@@ -1,6 +1,6 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
 
-const postReverifyEmail = async (email, toast) => {
+const postReverifyEmail = async (email, toast, errorToasts) => {
     try {
         const response = await apiClient.post(`/User/reverify-email`, {
             Email: email,
@@ -12,7 +12,7 @@ const postReverifyEmail = async (email, toast) => {
     catch (error) {
         console.log(error);
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            toast.current.show({severity: 'error', summary: errorToasts("error"), detail: error.message, life: 3000});
         }
         return false;
     }

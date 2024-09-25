@@ -28,9 +28,17 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
     const [selectedLanguages, setSelectedLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
+    const t = useTranslations('EditClass');
+    const editClassToastTranslations = useTranslations("DialogModal.EditClass")
+
     const handlePutEditClass = async () => {
         if (!title || !grade || !selectedDisciplines || !selectedLanguages) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({
+                severity: 'error',
+                summary: editClassToastTranslations("error"),
+                detail: editClassToastTranslations("emptyFields"),
+                life: 3000
+            });
             return;
         }
 
@@ -42,16 +50,24 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
             disciplinesToSend = reverseTranslateItems(selectedDisciplines, disciplinesMapping);
         }
 
-        const editClassSuccess = await putEditClass(classId, title, grade, languagesToSend, disciplinesToSend, toast);
+        const editClassSuccess = await putEditClass(classId, title, grade, languagesToSend, disciplinesToSend, toast, editClassToastTranslations);
         if (editClassSuccess) {
-                toast.current.show({ severity: 'info', summary: 'Success', detail: 'Class successfully edited', life: 3000 });
-                window.location.reload();
+            toast.current.show({severity: 'info',
+                summary: editClassToastTranslations("success"),
+                detail: editClassToastTranslations("successEditMessage"),
+                life: 3000});
+            window.location.reload();
         }
 
         if (photo) {
             const editImageSuccess = await editClassImage(classId, photo, toast);
             if (editImageSuccess) {
-                toast.current.show({ severity: 'info', summary: 'Success', detail: 'Image successfully edited', life: 3000 });
+                toast.current.show({
+                    severity: 'info',
+                    summary: editClassToastTranslations("success"),
+                    detail: editClassToastTranslations("successEditImageMessage"),
+                    life: 3000
+                });
                 window.location.reload();
             }
         }
@@ -61,13 +77,11 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
         setIsModalOpen(false);
     };
 
-    const t = useTranslations('EditClass');
-
     return (
         <>
 
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-400 z-50">
-                <ErrorNotification ref={toast} />
+                <ErrorNotification ref={toast}/>
                 <div className="modal-content bg-white p-4 rounded-lg w-4/5 sm:w-3/5">
                     <CreateClassHeader headerText={t("headerText")}
                                        handleCloseModal={handleCloseModal}

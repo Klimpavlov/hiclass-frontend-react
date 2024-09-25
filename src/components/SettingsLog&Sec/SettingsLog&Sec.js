@@ -21,6 +21,13 @@ const SettingsLogSec = () => {
     const router = useRouter();
     const toast = useRef(null);
 
+    // translation
+
+    const t = useTranslations('LoginSecurity');
+    const deleteUserToastTranslations = useTranslations('DialogModal.DeleteAccount');
+    const errorToasts = useTranslations('DialogModal.Error');
+    const passwordsToasts = useTranslations('DialogModal.Passwords');
+
 
     useEffect(() => {
         getUserInfo()
@@ -44,18 +51,18 @@ const SettingsLogSec = () => {
     };
     const handleUpdateEmail = async () => {
         if(!email) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("emptyFields"), life: 3000 });
             return;
         }
         if (!validateEmail(email)) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: "Please enter a valid email address", life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("validEmail"), life: 3000 });
             return;
         }
 
         const success= await putUpdateEmail(email, toast)
 
         if (success) {
-            postReverifyEmail(email, toast)
+            postReverifyEmail(email, toast, errorToasts)
         }
 
     }
@@ -67,13 +74,13 @@ const SettingsLogSec = () => {
 
     const handleUpdatePassword = async () => {
         if (newPassword !== confirmNewPassword) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Passwords do not match', life: 3000 });
+            toast.current.show({ severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("passwordsDontMatch"), life: 3000 });
         }
         else if(!oldPassword || !newPassword || !confirmNewPassword) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("emptyFields"), life: 3000 });
         }
         else if(newPassword === confirmNewPassword) {
-            await putUpdatePassword(oldPassword, newPassword, toast)
+            await putUpdatePassword(oldPassword, newPassword, toast, passwordsToasts)
         }
     }
 
@@ -86,16 +93,12 @@ const SettingsLogSec = () => {
     }
 
     const handleDeleteUser = async () => {
-       await deleteUser(successRedirect, toast)
+       await deleteUser(successRedirect, toast, deleteUserToastTranslations)
     }
 
     const successRedirect = () => {
         router.push("/signUp");
     };
-
-    // translation
-
-    const t = useTranslations('LoginSecurity');
 
     return (
         <>

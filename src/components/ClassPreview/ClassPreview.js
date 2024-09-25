@@ -46,15 +46,17 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
 
     }, [])
 
-    const postDeleteClass = () => {
-        setTimeout(() => {
-            deleteClass({classId}, toast);
-        }, 1500)
-    }
-
     // translation
 
     const t = useTranslations('ClassPreview');
+    const deleteClassTranslation = useTranslations("DialogModal.DeleteClass");
+
+    const postDeleteClass = () => {
+        setTimeout(() => {
+            deleteClass({classId}, toast, deleteClassTranslation);
+        }, 1500)
+    }
+
 
     return (
         <div className="class-preview w-64">

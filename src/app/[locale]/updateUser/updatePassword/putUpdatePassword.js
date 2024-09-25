@@ -1,5 +1,5 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
-const putUpdatePassword = async (oldPassword, newPassword, toast) => {
+const putUpdatePassword = async (oldPassword, newPassword, toast, passwordsToasts) => {
     try {
         const response = await apiClient.put('/EditUser/password', {
             OldPassword: oldPassword,
@@ -9,14 +9,14 @@ const putUpdatePassword = async (oldPassword, newPassword, toast) => {
         console.log(response);
         toast.current.show({
             severity: 'info',
-            summary: 'Confirmed',
-            detail: 'New password successfully created',
+            summary: passwordsToasts("confirmed"),
+            detail: passwordsToasts("newPasswordConfirmedMessage"),
             life: 3000
         });
         return true;
     } catch (error) {
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            toast.current.show({severity: 'error', summary: passwordsToasts("error"), detail: error.message, life: 3000});
         }
         return false;
     }

@@ -18,9 +18,13 @@ export default function resetPasswordCode() {
     const [code, setCode] = useState();
     const resetPasswordEmail = localStorage.getItem('forgetPasswordEmail')
 
+    const t = useTranslations("ForgetPassword");
+    const errorToastsTranslations = useTranslations("DialogModal.Error")
+
+
     const handleContinue = async () => {
         if (!code) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToastsTranslations('error'), detail: errorToastsTranslations("emptyFields"), life: 3000 });
             return;
         }
         console.log(code)
@@ -30,8 +34,6 @@ export default function resetPasswordCode() {
             router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
         }
     }
-
-    const t = useTranslations("ForgetPassword");
 
     return (
         <main>

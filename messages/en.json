@@ -259,7 +259,53 @@
     },
     "Error": {
       "error": "Error",
-      "emptyFields": "Please fill in all fields"
+      "emptyFields": "Please fill in all fields",
+      "validEmail": "Please enter a valid email address",
+      "wentWrong": "Something went wrong",
+      "wrongPassword": "Wrong password provided",
+      "wrongConfirmPassword": "Wrong confirm-password",
+      "shortPassword": "Password must be at least 6 characters"
+    },
+    "Invitation": {
+      "error": "Error",
+      "emptyClassError": "Please choose/create a class before sending the invitation",
+      "success": "Success",
+      "successMessage": "Invitation successfully created"
+    },
+    "DeleteClass": {
+      "error": "Error",
+      "confirmed": "Confirmed",
+      "successMessage": "Class successfully deleted"
+    },
+    "EditClass": {
+      "error": "Error",
+      "emptyFields": "Please fill in all fields",
+      "success": "Success",
+      "successEditMessage": "Class successfully edited",
+      "successEditImageMessage": "Image successfully edited"
+    },
+    "DeleteAccount": {
+      "error": "Error",
+      "confirmed": "Confirmed",
+      "successMessage": "User successfully deleted"
+    },
+    "Passwords": {
+      "error": "Error",
+      "passwordsDontMatch": "Passwords do not match",
+      "emptyFields": "Please fill in all fields",
+      "confirmed": "Confirmed",
+      "newPasswordConfirmedMessage": "New password successfully created"
+    },
+    "EditUser": {
+      "success": "Success",
+      "avatarUploaded": "User avatar is updated",
+      "personalInfoUploaded": "Personal information updated",
+      "institutionUploaded": "Institution information updated",
+      "professionalUploaded": "Professional information updated"
+    },
+    "SignUp": {
+      "success": "Success",
+      "successMessage": "Success signUp"
     }
   }
 }

@@ -36,6 +36,10 @@ const SettingsProfileInfo = () => {
     // locale
     const pathname = usePathname();
 
+    //translation
+    const t = useTranslations('SettingsProfileInfo');
+    const errorToastTranslations = useTranslations("DialogModal.Error")
+    const editUserToastTranslations = useTranslations("DialogModal.EditUser")
 
     // initial values
 
@@ -97,7 +101,12 @@ const SettingsProfileInfo = () => {
 
     async function getFile(event) {
         if (!userAvatar) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Something went wrong', life: 3000});
+            toast.current.show({
+                severity: 'error',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("wentWrong"),
+                life: 3000
+            });
             return;
         }
         const selectedFile = event.target.files[0];
@@ -107,8 +116,8 @@ const SettingsProfileInfo = () => {
         if (updateUserImageSuccess) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'User avatar is updated',
+                summary: editUserToastTranslations("success"),
+                detail: editUserToastTranslations("avatarUploaded"),
                 life: 3000
             });
         }
@@ -182,7 +191,7 @@ const SettingsProfileInfo = () => {
 
     const handleUpdatePersonalInfo = async () => {
         if (!firstName || !lastName || !country || !city) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
 
@@ -191,8 +200,8 @@ const SettingsProfileInfo = () => {
         if (updatePersonalInfoSuccess) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Personal information updated',
+                summary: editUserToastTranslations("success"),
+                detail: editUserToastTranslations("personalInfoUploaded"),
                 life: 3000
             });
         }
@@ -206,7 +215,7 @@ const SettingsProfileInfo = () => {
 
     const handleUpdateInstitution = async () => {
         if (!institutionName) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
         console.log(institutionName)
@@ -215,8 +224,8 @@ const SettingsProfileInfo = () => {
         if (updateInstitutionSuccess) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Institution information updated',
+                summary: editUserToastTranslations("success"),
+                detail: editUserToastTranslations("institutionUploaded"),
                 life: 3000
             });
         }
@@ -281,7 +290,7 @@ const SettingsProfileInfo = () => {
 
     const handleUpdateProfessionalInfo = async () => {
         if (!selectedLanguages || !selectedDisciplines || !selectedGrades) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
         console.log(selectedLanguages)
@@ -310,17 +319,12 @@ const SettingsProfileInfo = () => {
         if (updateProfessionalInfoSuccess) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Professional information updated',
+                summary: editUserToastTranslations("success"),
+                detail: editUserToastTranslations("professionalUploaded"),
                 life: 3000
             });
         }
     }
-
-
-    //translation
-
-    const t = useTranslations('SettingsProfileInfo');
 
     return (
         <main className="">

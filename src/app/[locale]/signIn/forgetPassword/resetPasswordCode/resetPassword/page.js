@@ -20,15 +20,18 @@ export default function resetPassword() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
 
+    const t = useTranslations("ForgetPassword")
+    const errorToastsTranslations = useTranslations("DialogModal.Error")
+
     const handleResetPassword = async () => {
         if (password.length < 6) {
             // setPasswordError("Password must be at least 6 characters")
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Password must be at least 6 characters', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToastsTranslations("error"), detail: errorToastsTranslations("shortPassword"), life: 3000 });
             return;
         }
         else if (confirmPassword !== password) {
             // setConfirmPasswordError("Wrong password")
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Wrong password provided', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToastsTranslations("error"), detail: errorToastsTranslations("wrongPassword"), life: 3000 });
             return;
         }
         const resetSuccess = await postResetPassword(password, toast);
@@ -37,8 +40,6 @@ export default function resetPassword() {
             router.push('/signIn');
         }
     }
-
-    const t = useTranslations("ForgetPassword")
 
     return (
         <main>

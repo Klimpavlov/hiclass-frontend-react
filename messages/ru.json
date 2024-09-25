@@ -311,7 +311,53 @@
     },
     "Error": {
       "error": "Ошибка",
-      "emptyFields": "Заполните все поля"
+      "emptyFields": "Заполните все поля",
+      "validEmail": "Введите действительный адрес электронной почты",
+      "wrongPassword": "Введен неправильный пароль",
+      "wrongConfirmPassword": "Неверный пароль для подтверждения",
+      "shortPassword": "Пароль должен быть минимум из 6 символов"
+    },
+    "Invitation": {
+      "error": "Ошибка",
+      "emptyClassError": "Выберите/создайте класс перед отправкой приглашения",
+      "success": "Успешно",
+      "successMessage": "Приглашение успешно отправлено"
+    },
+    "DeleteClass": {
+      "error": "Ошибка",
+      "confirmed": "Подтверждено",
+      "successMessage": "Класс успешно удален",
+      "wentWrong": "Что-то пошло не так"
+    },
+    "EditClass": {
+      "error": "Ошибка",
+      "emptyFields": "Заполните все поля",
+      "success": "Успешно",
+      "successEditMessage": "Класс успешно отредактирован",
+      "successEditImageMessage": "Фото успешно отредактировано"
+    },
+    "DeleteAccount": {
+      "error": "Ошибка",
+      "confirmed": "Успешно",
+      "successMessage": "Пользователь успешно удален"
+    },
+    "Passwords": {
+      "error": "Ошибка",
+      "passwordsDontMatch": "Пароли не совпадают",
+      "emptyFields": "Заполните все поля",
+      "confirmed": "Успешно",
+      "newPasswordConfirmedMessage": "Новый пароль успешно установлен"
+    },
+    "EditUser": {
+      "success": "Успешно",
+      "avatarUploaded": "Обновлен аватар пользователя",
+      "personalInfoUploaded": "Обновлена личная информация",
+      "institutionUploaded": "Обновлена информация об учреждении",
+      "professionalUploaded": "Обновлена профессиональная информация"
+    },
+    "SignUp": {
+      "success": "Успешно",
+      "successMessage": "Успешная регистрация"
     }
   }
 }
