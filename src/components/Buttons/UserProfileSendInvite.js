@@ -1,12 +1,14 @@
 import React from "react";
+import {useTranslations} from "next-intl";
 
 const UserProfileSendInviteBtn = ({buttonText, toast}) => {
+    const t = useTranslations("DialogModal.Invitation")
     const handleClick = () => {
         if (toast && toast.current) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Please',
-                detail: 'Choose class from the list below',
+                summary: t("please"),
+                detail: t("chooseClassFromList"),
                 life: 3000
             });
         }

@@ -67,7 +67,7 @@ const Filter = ({buttonText, onApply, options, clearAll, filterName, currentFilt
                 <Image className={`ml-1 ${isOpen ? "rotate-180" : ""}`} src={imgSrc} alt="hiClass chevronDown" />
             </div>
             {isOpen && (
-                <div className="absolute top-full left-0 mt-2 w-full md:w-80 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs md:max-w-xs z-50">
+                <div className="absolute top-full left-0 mt-2 md:w-80 bg-white border rounded-lg border-neutral-200-b-2-b-7-bd shadow-xs md:max-w-xs z-50">
                     <div className="py-2 max-h-60 overflow-y-auto">
                         {options.map((option, index) => (
                             <div className="py-3 px-3 flex items-center justify-between cursor-pointer"

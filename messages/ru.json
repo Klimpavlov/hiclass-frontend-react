@@ -140,7 +140,9 @@
   "MyProfile": {
     "classes": "Классы",
     "addClass": "Добавить класс",
-    "replaceBtn": "Изменить"
+    "replaceBtn": "Изменить",
+    "noClassesFound": "Классов не найдено",
+    "addClassesText": "Добавьте свои классы"
   },
   "UpdateUser": {
     "settings": "Настройки",
@@ -321,7 +323,9 @@
       "error": "Ошибка",
       "emptyClassError": "Выберите/создайте класс перед отправкой приглашения",
       "success": "Успешно",
-      "successMessage": "Приглашение успешно отправлено"
+      "successMessage": "Приглашение успешно отправлено",
+      "please": "Пожалуйста",
+      "chooseClassFromList": "Выберите класс из списка"
     },
     "DeleteClass": {
       "error": "Ошибка",
@@ -335,6 +339,10 @@
       "success": "Успешно",
       "successEditMessage": "Класс успешно отредактирован",
       "successEditImageMessage": "Фото успешно отредактировано"
+    },
+    "CreateClass": {
+      "success": "Успешно",
+      "successMessage": "Класс успешно создан"
     },
     "DeleteAccount": {
       "error": "Ошибка",

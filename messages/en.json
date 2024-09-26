@@ -139,7 +139,9 @@
   "MyProfile": {
     "classes": "Classes",
     "addClass": "Add class",
-    "replaceBtn": "Replace"
+    "replaceBtn": "Replace",
+    "noClassesFound": "No classes found",
+    "addClassesText": "Add your classes to get started"
   },
   "UpdateUser": {
     "settings": "Settings",
@@ -270,7 +272,9 @@
       "error": "Error",
       "emptyClassError": "Please choose/create a class before sending the invitation",
       "success": "Success",
-      "successMessage": "Invitation successfully created"
+      "successMessage": "Invitation successfully created",
+      "please": "Please",
+      "chooseClassFromList": "Choose class from the list below"
     },
     "DeleteClass": {
       "error": "Error",
@@ -283,6 +287,10 @@
       "success": "Success",
       "successEditMessage": "Class successfully edited",
       "successEditImageMessage": "Image successfully edited"
+    },
+    "CreateClass": {
+      "success": "Success",
+      "successMessage": "Class successfully created"
     },
     "DeleteAccount": {
       "error": "Error",

@@ -118,17 +118,22 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
 
     const pathname = usePathname()
     const toast = useRef(null);
-    const [loading, setLoading] = useState(false); // Для управления лоадером
+    // const [loading, setLoading] = useState(false); // Для управления лоадером
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // translation
+
+    const t = useTranslations('CreateClass');
+    const errorToastTranslation = useTranslations('DialogModal.Error');
+    const createClassToastTranslation = useTranslations('DialogModal.CreateClass');
+
     const handlePostCreateClass = async () => {
         if (isSubmitting) return;
-        setLoading(true);
         setIsSubmitting(true);
 
         if (!title || !grade || !selectedDisciplines || !selectedLanguages) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorToastTranslation("error"), detail: errorToastTranslation("emptyFields"), life: 3000 });
             setIsSubmitting(false);
             return;
         }
@@ -149,10 +154,10 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
                     toast.current.show({ severity: 'error', summary: 'Error', detail: 'Image upload failed', life: 3000 });
                 }
             }
-            toast.current.show({ severity: 'info', summary: 'Success', detail: 'Class successfully created', life: 3000 });
-            onCreateClass();
+            toast.current.show({ severity: 'info', summary: createClassToastTranslation("success"), detail: createClassToastTranslation("successMessage"), life: 3000 });
         }
         setIsModalOpen(false);
+        onCreateClass()
         setIsSubmitting(false);
     };
 
@@ -160,9 +165,6 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
         setIsModalOpen(false);
     };
 
-    // translation
-
-    const t = useTranslations('CreateClass');
 
     // if (loading) return (
     //     <div className='flex items-center justify-center h-screen'>

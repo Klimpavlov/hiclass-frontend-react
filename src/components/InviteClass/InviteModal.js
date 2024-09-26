@@ -148,20 +148,26 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                                maxLength={250}/>
                 </div>
                 <div>{t('selectClass')}</div>
+
+                {/*<div*/}
+                {/*    className='select-your-class overflow-y-auto h-40 max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col'>*/}
                 <div
-                    className='select-your-class max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col overflow-y-auto h-40'>
+                    className={`max-w-3xl w-full mx-auto p-8 sm:grid grid-cols-2 gap-4 flex flex-col ${
+                        classData.length > 2 ? 'overflow-y-auto h-40' : ''
+                    }`}>
                     {classData.map((defaultClass) => (
                         <div key={defaultClass.classId}
                              onClick={() => handleClassClick(defaultClass.classId)}
                              className={`class-item ${
                                  classSenderId === defaultClass.classId ? 'bg-green-100' : ''
                              } cursor-pointer`}>
-                            <div className='border border-black rounded py-2 px-2'>
+                            <div className='border border-black rounded py-2 px-2 '>
                                 <div>{defaultClass.title}</div>
                             </div>
                         </div>
                     ))}
                 </div>
+
                 <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
                     <ClearAllButton buttonText={t("cancelBtn")} clearAll={handleCancel}/>
                     <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation}/>
