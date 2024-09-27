@@ -3,7 +3,7 @@ import React from "react";
 const CreateClassHeader = ({ headerText, handleCloseModal }) => {
     return (
         <div className="flex justify-between items-center px-8 py-4 gap-8 max-w-screen-xl mx-auto">
-            <div className="header-left flex items-center">
+            <div className="header-left flex font-bold items-center">
                 {headerText}
             </div>
             <div

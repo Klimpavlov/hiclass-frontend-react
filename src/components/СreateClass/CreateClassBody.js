@@ -116,34 +116,30 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     return (
         <div className="flex flex-col sm:flex-row gap-5">
             <div className="section-photo w-full sm:w-1/2">
-                <div>{t("classPhoto")}</div>
-                <div className="w-full border border-black aspect-w-3 aspect-h-4">
-                    <div className="border border-black relative">
-                        <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
-                            {selectedImage || initialPhoto ? (
-                                <img
-                                    src={selectedImage ? selectedImage : initialPhoto}
-                                    alt="Uploaded"
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <div
-                                    className="flex items-center justify-center w-full h-full
-                                     border-2 cursor-pointer">
-                                    + {t("uploadImage")}
-                                </div>
-                            )}
-                        </label>
-                    </div>
-                    <input
-                        type="file"
-                        id="uploadImage"
-                        accept="image/jpeg,image/png,image/jpg"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                    />
+                <div className="mb-2">{t("classPhoto")}</div>
+                <div className="relative w-full h-64 border border-black rounded-lg overflow-hidden bg-gray-100">
+                    <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
+                        {selectedImage || initialPhoto ? (
+                            <img
+                                src={selectedImage ? selectedImage : initialPhoto}
+                                alt="Uploaded"
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="flex items-center justify-center w-full h-full text-green-800">
+                                + {t("uploadImage")}
+                            </div>
+                        )}
+                    </label>
                 </div>
-                <div>{t("uploadImageText")}</div>
+                <input
+                    type="file"
+                    id="uploadImage"
+                    accept="image/jpeg,image/png,image/jpg"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                />
+                <div className="text-sm text-gray-600 mt-2">{t("uploadImageText")}</div>
             </div>
             <div className='section-info w-full '>
                 <InputForm inputFormText={t("title")} placeholderText={t("placeholderClassTitle")}
