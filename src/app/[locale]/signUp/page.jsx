@@ -14,6 +14,8 @@ import {getMessaging, getToken} from "firebase/messaging";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import postLoginData from "@/app/[locale]/signIn/postLogin/postLoginData";
 import {useTranslations} from "next-intl";
+import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
 
 export default function SignUp() {
     const router = useRouter();
@@ -41,36 +43,49 @@ export default function SignUp() {
     const signUpToastTranslations = useTranslations("DialogModal.SignUp");
 
 
-    useEffect(() => {
-        const firebaseConfig = {
-            apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
-            authDomain: "hiclass-ff338.firebaseapp.com",
-            projectId: "hiclass-ff338",
-            storageBucket: "hiclass-ff338.appspot.com",
-            messagingSenderId: "526521652695",
-            appId: "1:526521652695:web:d166d6d34aaf7c63132792"
-        };
+    // useEffect(() => {
+    //     const firebaseConfig = {
+    //         apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+    //         authDomain: "hiclass-ff338.firebaseapp.com",
+    //         projectId: "hiclass-ff338",
+    //         storageBucket: "hiclass-ff338.appspot.com",
+    //         messagingSenderId: "526521652695",
+    //         appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+    //     };
+    //
+    //     const app = initializeApp(firebaseConfig);
+    //     const messaging = getMessaging(app);
+    //
+    //
+    //     const getDeviceTokenAndSave = async () => {
+    //         try {
+    //             const currentToken = await getToken(messaging, {vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4'});
+    //             if (currentToken) {
+    //                 console.log('Device token:', currentToken);
+    //                 setDeviceToken(currentToken)
+    //             } else {
+    //                 console.log('No registration token available. Request permission to generate one.');
+    //             }
+    //         } catch (err) {
+    //             console.log('An error occurred while retrieving token. ', err);
+    //         }
+    //     };
+    //
+    //     getDeviceTokenAndSave();
+    // }, [])
 
-        const app = initializeApp(firebaseConfig);
-        const messaging = getMessaging(app);
+    const firebaseConfig = {
+        apiKey: "AIzaSyA-Ti7RsZQL6QSgn4uHTamu4sHYXp9Sbe8",
+        authDomain: "hiclass-ff338.firebaseapp.com",
+        projectId: "hiclass-ff338",
+        storageBucket: "hiclass-ff338.appspot.com",
+        messagingSenderId: "526521652695",
+        appId: "1:526521652695:web:d166d6d34aaf7c63132792"
+    };
 
-
-        const getDeviceTokenAndSave = async () => {
-            try {
-                const currentToken = await getToken(messaging, {vapidKey: 'BMV5zY2GipaHYmj87jqJniSgMpJqiYgtbVBzBLfruOV2caEss56w_4AZcI74hAPgACjvVDKXlAPXfb3g3xg5wv4'});
-                if (currentToken) {
-                    console.log('Device token:', currentToken);
-                    setDeviceToken(currentToken)
-                } else {
-                    console.log('No registration token available. Request permission to generate one.');
-                }
-            } catch (err) {
-                console.log('An error occurred while retrieving token. ', err);
-            }
-        };
-
-        getDeviceTokenAndSave();
-    }, [])
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
     const validateEmail = (email) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -78,17 +93,6 @@ export default function SignUp() {
     };
 
     const handleSignUp = async () => {
-        // if (!validateEmail(email)) {
-        //     setEmailError("Please enter a valid email address");
-        //     return;
-        // }
-        // if (password.length < 6) {
-        //     setPasswordError("Password must be at least 6 characters")
-        // }
-        // if (confirmPassword !== password) {
-        //     setConfirmPasswordError("Wrong password")
-        // }
-        // postSignUp(email, password, deviceToken, successRedirect)
         if (!email || !password || !confirmPassword) {
             toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
@@ -129,6 +133,30 @@ export default function SignUp() {
         router.push('/signUp/verifyEmail');
     };
 
+
+    // google sign in/up
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const userToken = result.user.accessToken;
+            console.log(result)
+
+            const success = await postGoogleLoginData(userToken, deviceToken);
+
+            if (success) {
+                googleRedirect();
+            }
+
+        } catch (error) {
+            console.error('Error signing in:', error);
+        }
+    };
+
+    const googleRedirect = () => {
+        router.push("/myProfile");
+    };
+
     return (
         <main>
             <RegistrationHeader/>
@@ -142,7 +170,7 @@ export default function SignUp() {
                         <span className='text-green-800 cursor-pointer'
                               onClick={() => router.push(`/${locale}/signIn`)}>{t("signIn")}</span>
                     </div>
-                    <GoogleButton/>
+                    <GoogleButton onClick={handleGoogleSignIn}/>
                     {/*<FacebookButton/>*/}
                     <div className="divider"></div>
                     <div className="inputs w-full ">

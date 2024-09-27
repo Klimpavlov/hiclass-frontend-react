@@ -1,9 +1,8 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
-const putUpdatePassword = async (oldPassword, newPassword, toast, passwordsToasts) => {
+const putSetPassword = async (password, toast, passwordsToasts) => {
     try {
-        const response = await apiClient.put('/EditUser/password', {
-            OldPassword: oldPassword,
-            NewPassword: newPassword,
+        const response = await apiClient.put('/EditUser/set-password', {
+            NewPassword: password,
         })
 
         console.log(response);
@@ -22,6 +21,6 @@ const putUpdatePassword = async (oldPassword, newPassword, toast, passwordsToast
     }
 };
 
-export default putUpdatePassword;
+export default putSetPassword;
 
 

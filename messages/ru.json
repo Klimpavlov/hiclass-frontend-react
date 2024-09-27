@@ -180,11 +180,13 @@
 
   },
   "LoginSecurity": {
-    "email": "Адрес электронной почты",
-    "emailDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "email": "Смена адреса электронной почты",
+    "emailDetails": "Введите новый адрес электронной почты.",
     "update": "Обновить",
     "resetPassword": "Сброс пароля",
-    "resetPasswordDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "resetPasswordDetails": "Если вы хотите изменить пароль, введите ваш старый и придумайте новый пароль.",
+    "setPassword": "Установка пароля",
+    "setPasswordDetails": "Установите пароль если вы зарегестрировались аккаунт с помощью Google",
     "oldPassword": "Старый пароль",
     "enterOldPassword": "Введите ваш старый пароль",
     "newPassword": "Новый пароль",
@@ -315,6 +317,7 @@
       "error": "Ошибка",
       "emptyFields": "Заполните все поля",
       "validEmail": "Введите действительный адрес электронной почты",
+      "invalidEmailPassword": "Неверно указана почта или пароль",
       "wrongPassword": "Введен неправильный пароль",
       "wrongConfirmPassword": "Неверный пароль для подтверждения",
       "shortPassword": "Пароль должен быть минимум из 6 символов"
@@ -361,11 +364,16 @@
       "avatarUploaded": "Обновлен аватар пользователя",
       "personalInfoUploaded": "Обновлена личная информация",
       "institutionUploaded": "Обновлена информация об учреждении",
-      "professionalUploaded": "Обновлена профессиональная информация"
+      "professionalUploaded": "Обновлена профессиональная информация",
+      "emailUpdated": "Адрес электронной почты обновлен"
     },
     "SignUp": {
       "success": "Успешно",
       "successMessage": "Успешная регистрация"
+    },
+    "SignIn": {
+      "success": "Успешно",
+      "successMessage": "Успешный вход"
     }
   }
 }

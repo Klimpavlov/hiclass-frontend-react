@@ -14,6 +14,7 @@ import {useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postReverifyEmail from "@/app/[locale]/updateUser/updateEmail/reverifyEmail/postReverifyEmail";
+import putSetPassword from "@/app/[locale]/updateUser/putSetPassword/putSetPassword";
 
 
 const SettingsLogSec = () => {
@@ -27,6 +28,7 @@ const SettingsLogSec = () => {
     const deleteUserToastTranslations = useTranslations('DialogModal.DeleteAccount');
     const errorToasts = useTranslations('DialogModal.Error');
     const passwordsToasts = useTranslations('DialogModal.Passwords');
+    const updateUserToasts = useTranslations('DialogModal.EditUser');
 
 
     useEffect(() => {
@@ -62,12 +64,22 @@ const SettingsLogSec = () => {
         const success= await putUpdateEmail(email, toast)
 
         if (success) {
-            postReverifyEmail(email, toast, errorToasts)
+            postReverifyEmail(email, toast, errorToasts, updateUserToasts)
         }
 
     }
 
-    // password
+    // set password
+    const [password, setPassword] = useState('');
+
+    const handleSetPassword = async () => {
+        if (!password) {
+            toast.current.show({ severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("emptyFields"), life: 3000 });
+        }
+        await putSetPassword(password, toast, passwordsToasts)
+    }
+
+    // change password
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -109,6 +121,14 @@ const SettingsLogSec = () => {
                 <div className='py-8'>
                     <InputForm inputFormText={t("email")} value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <ApplyButton buttonText={t("update")} onApply={handleUpdateEmail}/>
+                </div>
+            </div>
+            <div className='section-set-password py-8'>
+                <SettingsSection title={t("setPassword")}
+                                 details={t("setPasswordDetails")}/>
+                <div className='py-8'>
+                    <InputForm isPassword={true} inputFormText={t("newPassword")} placeholderText={t("enterNewPassword")} onChange={(e) => setPassword(e.target.value)}/>
+                    <ApplyButton buttonText={t("update")} onApply={handleSetPassword}/>
                 </div>
             </div>
             <div className='section-pass-reset py-8'>

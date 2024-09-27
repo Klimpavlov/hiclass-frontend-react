@@ -178,11 +178,13 @@
     "languages": "Languages"
   },
   "LoginSecurity": {
-    "email": "Email address",
-    "emailDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "email": "Changing the email address",
+    "emailDetails": "Enter a new email address.",
     "update": "Update",
     "resetPassword": "Password reset",
-    "resetPasswordDetails": "Lorem ipsum dolor sit amet consectetur. Diam amet eget nam porttitor vitae non viverra.",
+    "resetPasswordDetails": "If you want to change your password, enter your old one and come up with a new password.",
+    "setPassword": "Set password",
+    "setPasswordDetails": "Set a password if you have registered using Google",
     "oldPassword": "Old password",
     "enterOldPassword": "Enter your old password",
     "newPassword": "New password",
@@ -263,6 +265,7 @@
       "error": "Error",
       "emptyFields": "Please fill in all fields",
       "validEmail": "Please enter a valid email address",
+      "invalidEmailPassword": "Invalid email or password",
       "wentWrong": "Something went wrong",
       "wrongPassword": "Wrong password provided",
       "wrongConfirmPassword": "Wrong confirm-password",
@@ -309,11 +312,16 @@
       "avatarUploaded": "User avatar is updated",
       "personalInfoUploaded": "Personal information updated",
       "institutionUploaded": "Institution information updated",
-      "professionalUploaded": "Professional information updated"
+      "professionalUploaded": "Professional information updated",
+      "emailUpdated": "Email is updated"
     },
     "SignUp": {
       "success": "Success",
       "successMessage": "Success signUp"
+    },
+    "SignIn": {
+      "success": "Success",
+      "successMessage": "Success login"
     }
   }
 }

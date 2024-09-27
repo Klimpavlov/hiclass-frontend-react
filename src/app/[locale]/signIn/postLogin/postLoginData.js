@@ -1,7 +1,7 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postLoginData = async (email, password, deviceToken, successRedirect, toast) => {
+const postLoginData = async (email, password, deviceToken, successRedirect, toast, errorToastTranslations) => {
     try {
         const localhost = getLocalhost();
 
@@ -25,7 +25,7 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
     } catch (error) {
         console.log(error);
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: "Invalid email or password", life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("invalidEmailPassword"), life: 3000});
         }
         return false;
     }

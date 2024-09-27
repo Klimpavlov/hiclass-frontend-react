@@ -25,7 +25,8 @@ export default function ProfilePhoto() {
     };
 
     const successRedirect = () => {
-        router.push('/signIn');
+        // router.push('/signIn');
+        router.push('/myProfile');
     }
 
     const t = useTranslations("CreateAccount.ProfilePhoto")

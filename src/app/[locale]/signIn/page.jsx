@@ -31,7 +31,9 @@ export default function SignIn() {
 
     const deviceToken = useDeviceToken();
 
-
+    const t = useTranslations("SignIn");
+    const errorToastTranslations= useTranslations("DialogModal.Error");
+    const signInToastTranslations= useTranslations("DialogModal.SignIn");
 
     // useEffect(() => {
         const firebaseConfig = {
@@ -76,17 +78,17 @@ export default function SignIn() {
 
     const handleSignIn = async () => {
         if (!email || !password) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000});
+            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
 
-        const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast);
+        const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations);
 
         if (successLogin) {
             toast.current.show({
                 severity: 'info',
-                summary: 'Success',
-                detail: 'Success login',
+                summary: signInToastTranslations("success"),
+                detail: signInToastTranslations("successMessage"),
                 life: 3000
             });
         }
@@ -96,7 +98,6 @@ export default function SignIn() {
         router.push("/myProfile");
     };
 
-    const t = useTranslations("SignIn");
 
     return (
         <main className="">
