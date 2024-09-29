@@ -16,6 +16,7 @@ import postLoginData from "@/app/[locale]/signIn/postLogin/postLoginData";
 import {useTranslations} from "next-intl";
 import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
+import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
 export default function SignUp() {
     const router = useRouter();
@@ -35,7 +36,7 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
 
-    const [deviceToken, setDeviceToken] = useState('');
+    const deviceToken = useDeviceToken();
 
 
     const t = useTranslations("SignUp");
