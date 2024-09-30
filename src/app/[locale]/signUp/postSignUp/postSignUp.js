@@ -1,7 +1,7 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-const postSignUpData = async (email, password, deviceToken, successRedirect, toast) => {
+const postSignUpData = async (email, password, deviceToken, successRedirect, toast, errorToastTranslations) => {
     try {
 
         const localhost = getLocalhost();
@@ -26,9 +26,27 @@ const postSignUpData = async (email, password, deviceToken, successRedirect, toa
     }
     catch (error) {
         console.log(error);
+
+        const errorResponse = error.response?.data?.errors?.[0];
+
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            if (errorResponse?.exceptionTitle === 'UserAlreadyExistsException') {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: errorToastTranslations("userExists"),
+                    life: 3000
+                });
+            } else {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: error.message || 'An unknown error occurred.',
+                    life: 3000
+                });
+            }
         }
+
         return false;
     }
 }

@@ -10,7 +10,7 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {ConfirmDialog} from "primereact/confirmdialog";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postReverifyEmail from "@/app/[locale]/updateUser/updateEmail/reverifyEmail/postReverifyEmail";
@@ -21,6 +21,8 @@ const SettingsLogSec = () => {
 
     const router = useRouter();
     const toast = useRef(null);
+    const pathname = usePathname();
+    const locale = pathname.slice(1, 3);
 
     // translation
 
@@ -39,35 +41,35 @@ const SettingsLogSec = () => {
     async function getUserInfo() {
         const accessToken = localStorage.getItem('accessToken');
         const userProfile = await getUserProfile(accessToken);
-        setEmail(userProfile.email);
+        // setEmail(userProfile.email);
 
     }
 
     //update email
 
-    const [email, setEmail] = useState('');
+    // const [email, setEmail] = useState('');
 
-    const validateEmail = (email) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
-    };
-    const handleUpdateEmail = async () => {
-        if(!email) {
-            toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("emptyFields"), life: 3000 });
-            return;
-        }
-        if (!validateEmail(email)) {
-            toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("validEmail"), life: 3000 });
-            return;
-        }
-
-        const success= await putUpdateEmail(email, toast)
-
-        if (success) {
-            postReverifyEmail(email, toast, errorToasts, updateUserToasts)
-        }
-
-    }
+    // const validateEmail = (email) => {
+    //     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     return emailPattern.test(email);
+    // };
+    // const handleUpdateEmail = async () => {
+    //     if(!email) {
+    //         toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("emptyFields"), life: 3000 });
+    //         return;
+    //     }
+    //     if (!validateEmail(email)) {
+    //         toast.current.show({ severity: 'error', summary: errorToasts("error"), detail: errorToasts("validEmail"), life: 3000 });
+    //         return;
+    //     }
+    //
+    //     const success= await putUpdateEmail(email, toast)
+    //
+    //     if (success) {
+    //         postReverifyEmail(email, toast, errorToasts, updateUserToasts)
+    //     }
+    //
+    // }
 
     // set password
     const [password, setPassword] = useState('');
@@ -114,20 +116,25 @@ const SettingsLogSec = () => {
 
     return (
         <>
-            <div className='section-email py-8'>
+            <div className='section-email'>
                 <ErrorNotification ref={toast}/>
-                <SettingsSection title={t("email")}
-                                 details={t("emailDetails")}/>
-                <div className='py-8'>
-                    <InputForm inputFormText={t("email")} value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <ApplyButton buttonText={t("update")} onApply={handleUpdateEmail}/>
-                </div>
+                {/*<SettingsSection title={t("email")}*/}
+                {/*                 details={t("emailDetails")}/>*/}
+                {/*<div className='py-8'>*/}
+                {/*    <InputForm inputFormText={t("email")} value={email} onChange={(e) => setEmail(e.target.value)}/>*/}
+                {/*    <ApplyButton buttonText={t("update")} onApply={handleUpdateEmail}/>*/}
+                {/*</div>*/}
             </div>
             <div className='section-set-password py-8'>
                 <SettingsSection title={t("setPassword")}
                                  details={t("setPasswordDetails")}/>
                 <div className='py-8'>
-                    <InputForm isPassword={true} inputFormText={t("newPassword")} placeholderText={t("enterNewPassword")} onChange={(e) => setPassword(e.target.value)}/>
+                    <InputForm isPassword={true}
+                               optionalFormText={t("forgetPassword")}
+                               link={`/${locale}/signIn/forgetPassword`}
+                               inputFormText={t("newPassword")}
+                               placeholderText={t("enterNewPassword")}
+                               onChange={(e) => setPassword(e.target.value)}/>
                     <ApplyButton buttonText={t("update")} onApply={handleSetPassword}/>
                 </div>
             </div>

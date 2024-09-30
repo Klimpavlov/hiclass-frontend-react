@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 
 const InputForm = ({inputFormText, optionalFormText, placeholderText, value, link,
                        onChange, isPassword, error, hasMaxLength, maxLength, isTextarea, onFocus}) => {
 
-    const inputType = isPassword ? 'password' : 'text';
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(prevState => !prevState);
+    };
+
+    const inputType = isPassword ? (showPassword ? 'text' : 'password') : 'text';
 
 
     return (
@@ -26,16 +32,28 @@ const InputForm = ({inputFormText, optionalFormText, placeholderText, value, lin
                         rows={5}
                     />
                 ) : (
-                    <input
-                        className="input flex justify-center items-center py-3 px-5
-                        rounded-lg border border-gray-400 w-full"
-                        type={inputType}
-                        placeholder={placeholderText}
-                        value={value}
-                        onChange={onChange}
-                        onFocus={onFocus}
-                        maxLength={hasMaxLength ? maxLength : undefined}
-                    />
+                    <div className="relative w-full">
+                        <input
+                            className="input flex justify-center items-center py-3 px-5
+                            rounded-lg border border-gray-400 w-full"
+                            type={inputType}
+                            placeholder={placeholderText}
+                            value={value}
+                            onChange={onChange}
+                            onFocus={onFocus}
+                            maxLength={hasMaxLength ? maxLength : undefined}
+                        />
+                        {isPassword && (
+                            <button
+                                type="button"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? '👁️' : '🙈'}
+                            </button>
+                        )}
+                    </div>
+
                 )}
                 {error && <div className='text-red-700'>{error}</div>}
             </label>

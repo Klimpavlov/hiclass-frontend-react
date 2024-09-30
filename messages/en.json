@@ -181,6 +181,7 @@
     "email": "Changing the email address",
     "emailDetails": "Enter a new email address.",
     "update": "Update",
+    "forgetPassword": "Forget password",
     "resetPassword": "Password reset",
     "resetPasswordDetails": "If you want to change your password, enter your old one and come up with a new password.",
     "setPassword": "Set password",
@@ -269,7 +270,8 @@
       "wentWrong": "Something went wrong",
       "wrongPassword": "Wrong password provided",
       "wrongConfirmPassword": "Wrong confirm-password",
-      "shortPassword": "Password must be at least 6 characters"
+      "shortPassword": "Password must be at least 6 characters",
+      "userExists": "User already exists"
     },
     "Invitation": {
       "error": "Error",

@@ -118,7 +118,7 @@ export default function SignUp() {
             return;
         }
 
-        const successSignUp = await postSignUp(email, password, deviceToken, successRedirect, toast)
+        const successSignUp = await postSignUp(email, password, deviceToken, successRedirect, toast, errorToastTranslations)
 
         if (successSignUp) {
             toast.current.show({
