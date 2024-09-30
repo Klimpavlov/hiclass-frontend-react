@@ -124,7 +124,7 @@ const Header = ({testNotifications}) => {
     }, []);
 
     async function getNotifications() {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = sessionStorage.getItem('accessToken');
         const notificationsFromApi = await getAllNotifications(accessToken);
         console.log(notificationsFromApi);
         setReceivedNotifications(notificationsFromApi.map((notification) => ({
