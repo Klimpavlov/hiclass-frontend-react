@@ -271,7 +271,8 @@
       "wrongPassword": "Wrong password provided",
       "wrongConfirmPassword": "Wrong confirm-password",
       "shortPassword": "Password must be at least 6 characters",
-      "userExists": "User already exists"
+      "userExists": "User already exists",
+      "passwordIsSet": "Password is already set for this user"
     },
     "Invitation": {
       "error": "Error",

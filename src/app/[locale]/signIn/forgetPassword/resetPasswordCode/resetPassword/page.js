@@ -37,7 +37,7 @@ export default function resetPassword() {
         const resetSuccess = await postResetPassword(password, toast);
 
         if (resetSuccess) {
-            router.push('/signIn');
+            router.push('/myProfile');
         }
     }
 

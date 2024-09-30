@@ -78,7 +78,7 @@ const SettingsLogSec = () => {
         if (!password) {
             toast.current.show({ severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("emptyFields"), life: 3000 });
         }
-        await putSetPassword(password, toast, passwordsToasts)
+        await putSetPassword(password, toast, passwordsToasts, errorToasts)
     }
 
     // change password
@@ -130,8 +130,6 @@ const SettingsLogSec = () => {
                                  details={t("setPasswordDetails")}/>
                 <div className='py-8'>
                     <InputForm isPassword={true}
-                               optionalFormText={t("forgetPassword")}
-                               link={`/${locale}/signIn/forgetPassword`}
                                inputFormText={t("newPassword")}
                                placeholderText={t("enterNewPassword")}
                                onChange={(e) => setPassword(e.target.value)}/>
@@ -144,6 +142,8 @@ const SettingsLogSec = () => {
                 <div className='py-8'>
                     <InputForm isPassword={true} inputFormText={t("oldPassword")}
                                placeholderText={t("enterOldPassword")}
+                               optionalFormText={t("forgetPassword")}
+                               link={`/${locale}/signIn/forgetPassword`}
                                onChange={(e) => setOldPassword(e.target.value)}/>
                     <InputForm isPassword={true} inputFormText={t("newPassword")} placeholderText={t("enterNewPassword")}
                                onChange={(e) => setNewPassword(e.target.value)}/>

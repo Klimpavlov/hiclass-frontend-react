@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import Link from "next/link";
+import imgHidePassword from "@/components/Inputs/hide-password.png"
+import imgShowPassword from "@/components/Inputs/show-password.png"
 
 const InputForm = ({inputFormText, optionalFormText, placeholderText, value, link,
                        onChange, isPassword, error, hasMaxLength, maxLength, isTextarea, onFocus}) => {
@@ -49,7 +51,7 @@ const InputForm = ({inputFormText, optionalFormText, placeholderText, value, lin
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
                                 onClick={togglePasswordVisibility}
                             >
-                                {showPassword ? '👁️' : '🙈'}
+                                {showPassword ? '🐵' : '🙈'}
                             </button>
                         )}
                     </div>
