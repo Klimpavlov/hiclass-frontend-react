@@ -128,8 +128,8 @@
     "chat": "Сообщения",
     "russian": "Русский",
     "english": "Английский",
-    "notifications": "Уведомления"
-
+    "notifications": "Уведомления",
+    "invitationMessage": "отправил(а) вам приглашение присоединиться к своему классу"
   },
   "Filters": {
     "Subject": "Предмет",

@@ -128,8 +128,9 @@
     "chat": "Chat",
     "russian": "Russian",
     "english": "English",
-    "notifications": "Notifications"
-  },
+    "notifications": "Notifications",
+    "invitationMessage": "sent you an invitation to join his/her class"
+},
   "Filters": {
     "Subject": "Subject",
     "Grade": "Grade",
