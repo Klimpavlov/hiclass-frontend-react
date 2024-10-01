@@ -16,20 +16,21 @@ export default function ProfilePhoto() {
     const router = useRouter();
     const [selectedFile, setSelectedFile] = useState(null);
 
+    const t = useTranslations("CreateAccount.ProfilePhoto");
+    const errorTranslations = useTranslations("DialogModal.Error");
+
+
     const handleContinue = () => {
         if (!selectedFile) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         postUserImage(selectedFile, successRedirect);
     };
 
     const successRedirect = () => {
-        // router.push('/signIn');
         router.push('/myProfile');
     }
-
-    const t = useTranslations("CreateAccount.ProfilePhoto")
 
     return (
         <main>
@@ -43,7 +44,6 @@ export default function ProfilePhoto() {
                     <div className="inputs w-full">
                         <div className="my-4">
                             <AddProfilePhoto onFileSelected={setSelectedFile} />
-                            {/* Передача функции setSelectedFile в компонент AddProfilePhoto */}
                         </div>
                     </div>
                     <ContinueButton buttonText={t("finishBtn")} onClick={handleContinue} />

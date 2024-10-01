@@ -83,6 +83,8 @@
       "city": "Город",
       "languages": "Языки",
       "placeholderLanguages": "Выберите языки, на которых вы говорите",
+      "placeholderCountry": "Выберите страну",
+      "placeholderCity": "Выберите город",
       "ContinueBtn": "Продолжить"
     },
     "Institution": {
@@ -323,7 +325,8 @@
       "wrongConfirmPassword": "Неверный пароль для подтверждения",
       "shortPassword": "Пароль должен быть минимум из 6 символов",
       "userExists": "Такой пользователь уже существует",
-      "passwordIsSet": "Для этого пользователя пароль установлен"
+      "passwordIsSet": "Для этого пользователя пароль установлен",
+      "chooseCountry": "Выберите страну перед тем как выбрать город"
     },
     "Invitation": {
       "error": "Ошибка",

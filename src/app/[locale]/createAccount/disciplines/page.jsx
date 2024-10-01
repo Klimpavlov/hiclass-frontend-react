@@ -19,6 +19,10 @@ export default function disciplinesForm() {
     const router = useRouter();
     const [disciplines, setDisciplines] = useState([]);
     const [selectedDisciplines, setSelectedDisciplines] = useState([]);
+
+    const t = useTranslations("CreateAccount.Disciplines")
+    const errorTranslations = useTranslations("DialogModal.Error");
+
     console.log(selectedDisciplines)
     localStorage.setItem('disciplines', selectedDisciplines);
 
@@ -36,14 +40,11 @@ export default function disciplinesForm() {
 
     const handleContinue = () => {
         if (selectedDisciplines.length === 0) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         router.push('/createAccount/grades');
     }
-
-    const t = useTranslations("CreateAccount.Disciplines")
-
 
     return (
         <main>

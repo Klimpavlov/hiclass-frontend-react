@@ -16,17 +16,19 @@ export default function PositionForm() {
     const [isTeacher, setIsTeacher] = useState(false);
     const [isExpert, setIsExpert] = useState(false);
 
+    const t = useTranslations("CreateAccount.PositionForm")
+    const errorTranslations = useTranslations("DialogModal.Error")
+
+
     localStorage.setItem('isTeacher', isTeacher);
     localStorage.setItem('isExpert', isExpert);
     const handleContinue = () => {
         if(!isTeacher && !isExpert) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         router.push('/createAccount/locationAndLanguages');
     };
-
-    const t = useTranslations("CreateAccount.PositionForm")
 
 
     return (

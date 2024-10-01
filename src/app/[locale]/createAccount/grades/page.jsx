@@ -20,14 +20,18 @@ export default function gradesForm() {
     const grades = getAvailableGrades()
     const [selectedGrades, setSelectedGrades] = useState([])
 
+    const t = useTranslations("CreateAccount.Grades");
+    const errorTranslations = useTranslations("DialogModal.Error");
+
+
     console.log(selectedGrades)
 
     localStorage.setItem('grades', selectedGrades)
 
 
     const handleContinue = async () => {
-        if (selectedGrades.length === 0) {  // Проверяем длину массива
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+        if (selectedGrades.length === 0) {
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         const success = await postCreateAccount(successRedirect, toast, pathname, deviceToken);
@@ -39,8 +43,6 @@ export default function gradesForm() {
     const successRedirect = () => {
         router.push('/createAccount/profilePhoto')
     }
-
-    const t = useTranslations("CreateAccount.Grades")
 
 
     return (

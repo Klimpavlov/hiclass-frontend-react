@@ -16,6 +16,10 @@ export default function institutionForm() {
     const [institutionName, setInstitutionName] = useState('');
     const [orgData, setOrgData] = useState([]);
 
+    const t = useTranslations("CreateAccount.Institution")
+    const errorTranslations = useTranslations("DialogModal.Error");
+
+
     localStorage.setItem('institution', institutionName);
 
     useEffect(() => {
@@ -37,13 +41,11 @@ export default function institutionForm() {
 
     const handleContinue = () => {
         if (!institutionName) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         router.push('/createAccount/disciplines');
     };
-
-    const t = useTranslations("CreateAccount.Institution")
 
 
     return (

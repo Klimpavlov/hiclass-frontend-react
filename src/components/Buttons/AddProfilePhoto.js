@@ -26,12 +26,12 @@ const AddProfilePhoto = ({ onFileSelected }) => {
         //     <img src={file} alt="Profile Photo" />
         // </div>
         <div className="w-full border border-black aspect-w-3 aspect-h-4">
-            <div className="border rounded border-solid relative">
+            <div className="relative w-full h-64 border border-black rounded-lg overflow-hidden bg-gray-100">
                 <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
                         <img
                             src={file}
                             alt="+ Upload image"
-                            className="w-full h-full object-cover"
+                            className="flex items-center justify-center w-full h-full text-green-800"
                         />
                 </label>
             </div>

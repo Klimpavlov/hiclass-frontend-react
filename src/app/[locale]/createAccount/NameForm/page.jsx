@@ -6,10 +6,15 @@ import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
+import ClearAllButton from "@/components/Buttons/ClearAllButton";
 
 export default function nameForm() {
 
     const toast = useRef(null);
+
+    const t = useTranslations("CreateAccount.NameForm");
+    const errorTranslations = useTranslations("DialogModal.Error")
+
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -20,14 +25,12 @@ export default function nameForm() {
 
     const handleContinue = async () => {
         if(!firstName || !lastName) {
-            toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in all fields', life: 3000 });
+            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
         router.push('/createAccount/positionForm');
 
     };
-
-    const t = useTranslations("CreateAccount.NameForm")
 
     return (
         <main>

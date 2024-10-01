@@ -401,7 +401,7 @@ const SettingsProfileInfo = () => {
                             {country !== '' && (
                                 <div className="">
                                     {isCountryInputActive && (
-                                        <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
+                                        <div className="cursor-pointer py-2x max-h-60 overflow-y-auto">
                                             {countryData.map((country) => (
                                                 <div key={country} onClick={() => {
                                                     setCountry(country.country);
