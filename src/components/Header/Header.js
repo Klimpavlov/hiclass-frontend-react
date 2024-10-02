@@ -126,7 +126,6 @@ const Header = ({testNotifications}) => {
     async function getNotifications() {
         const accessToken = sessionStorage.getItem('accessToken');
         const notificationsFromApi = await getAllNotifications(accessToken);
-        console.log(notificationsFromApi[0].message.split(' ')[0]);
         setReceivedNotifications(notificationsFromApi.map((notification) => ({
             notificationId: notification.notificationId,
             message: notification.message.split(' ')[0] + ' ' + t("invitationMessage"),
