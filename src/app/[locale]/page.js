@@ -364,7 +364,7 @@ export default function ExplorePage() {
 
                         {selectedClass && (
                             <ClassPreviewModal
-                                headerText='Lorem ipsum dolor sit amet consectetur. Sapien lectus platea magna sed .'
+                                headerText={t("classPreviewText")}
                                 classId={selectedClass.classId}
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}

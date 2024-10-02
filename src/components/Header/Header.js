@@ -239,7 +239,7 @@ const Header = ({testNotifications}) => {
                     </div>
                     {isLanguagesDropdownOpen && (
                         <div
-                            className="absolute mt-2 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
+                            className="absolute mt-2 right-10 z-50 py-2 px-1 text-left text-sm bg-white border border-gray-300 rounded-lg shadow-lg cursor-pointer">
                             <div
                                 className='px-2 sm:pr-20 hover:text-green-700 hover:bg-green-50'
                                 onClick={() => changeLanguage('en')}>

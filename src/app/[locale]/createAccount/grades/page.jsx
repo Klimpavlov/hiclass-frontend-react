@@ -53,7 +53,7 @@ export default function gradesForm() {
                 <div className="content flex flex-col items-center gap-8 w-full
              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
                     <div className="text-4xl whitespace-pre-line">{t("welcome")}</div>
-                    <div className=" ">{t("gradesFormText")}
+                    <div className="text-center">{t("gradesFormText")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">

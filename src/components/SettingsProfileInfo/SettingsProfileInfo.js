@@ -401,9 +401,11 @@ const SettingsProfileInfo = () => {
                             {country !== '' && (
                                 <div className="">
                                     {isCountryInputActive && (
-                                        <div className="cursor-pointer py-2x max-h-60 overflow-y-auto">
+                                        <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
                                             {countryData.map((country) => (
-                                                <div key={country} onClick={() => {
+                                                <div key={country}
+                                                     className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
+                                                     onClick={() => {
                                                     setCountry(country.country);
                                                     setIsCountryInputActive(false);
                                                 }}>
@@ -420,9 +422,11 @@ const SettingsProfileInfo = () => {
                             {city !== '' && (
                                 <div className="">
                                     {isCityInputActive && (
-                                        <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
+                                        <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
                                             {cityData.map((cityItem) => (
-                                                <div key={cityItem} onClick={() => {
+                                                <div key={cityItem}
+                                                     className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
+                                                     onClick={() => {
                                                     setCity(cityItem);
                                                     setIsCityInputActive(false)
                                                 }}>
@@ -454,7 +458,7 @@ const SettingsProfileInfo = () => {
                                     <div className="py-2 max-h-60 overflow-y-auto">
                                         {orgData.map((feature) => (
                                             <div key={feature.properties.id}
-                                                 className='cursor-pointer py-2 max-h-60 overflow-y-auto'
+                                                 className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
                                                  onClick={() => {
                                                      setInstitutionName(feature.properties.name + '; ' + feature.properties.description);
                                                      setIsInstitutionInputActive(false);

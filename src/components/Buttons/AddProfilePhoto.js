@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import {useTranslations} from "next-intl";
 
 const AddProfilePhoto = ({ onFileSelected }) => {
     const [file, setFile] = useState();
@@ -20,19 +21,26 @@ const AddProfilePhoto = ({ onFileSelected }) => {
         }
     }
 
+    const t = useTranslations('CreateAccount.ProfilePhoto');
+
+
     return (
         // <div>
         //     <input type="file" onChange={getFile} />
         //     <img src={file} alt="Profile Photo" />
         // </div>
         <div className="w-full border border-black aspect-w-3 aspect-h-4">
-            <div className="relative w-full h-64 border border-black rounded-lg overflow-hidden bg-gray-100">
-                <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
+            <div className="relative w-full h-64 border overflow-hidden bg-gray-100 flex items-center justify-center">
+                <label htmlFor="uploadImage" className="cursor-pointer w-full h-full flex items-center justify-center">
+                    {file ? (
                         <img
                             src={file}
-                            alt="+ Upload image"
-                            className="flex items-center justify-center w-full h-full text-green-800"
+                            alt={t("uploadImage")}
+                            className="w-full h-full object-cover"
                         />
+                    ) : (
+                        <span className="text-green-700">{t("uploadImage")}</span>
+                    )}
                 </label>
             </div>
             <input
@@ -43,6 +51,7 @@ const AddProfilePhoto = ({ onFileSelected }) => {
                 className="hidden"
             />
         </div>
+
     );
 };
 
