@@ -328,17 +328,17 @@ const SettingsProfileInfo = () => {
 
     return (
         <main className="">
-            {loading ? (
-                <div className='flex justify-center items-center h-screen'>
-                    <RingLoader
-                        color={'#36d7b7'}
-                        loading={loading}
-                        size={150}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    />
-                </div>
-            ) : (
+            {/*{loading ? (*/}
+            {/*    <div className='flex justify-center items-center h-screen'>*/}
+            {/*        <RingLoader*/}
+            {/*            color={'#36d7b7'}*/}
+            {/*            loading={loading}*/}
+            {/*            size={150}*/}
+            {/*            aria-label="Loading Spinner"*/}
+            {/*            data-testid="loader"*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*) : (*/}
                 <>
                     <div className='section-photo py-8'>
                         <ErrorNotification ref={toast}/>
@@ -496,7 +496,7 @@ const SettingsProfileInfo = () => {
                         </div>
                     </div>
                 </>
-            )}
+            {/*)}*/}
         </main>
     )
 }

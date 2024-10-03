@@ -5,10 +5,12 @@ import languagesMapping from "../../../../../mapping/languagesMapping/languagesM
 import disciplinesMapping from "../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
+import Cookies from "js-cookie";
 
 const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) => {
     try {
-        const accessToken = sessionStorage.getItem('accessToken');
+        // const accessToken = sessionStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const localhost = getLocalhost();
         console.log(accessToken)
 

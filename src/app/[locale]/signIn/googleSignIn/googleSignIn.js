@@ -1,5 +1,6 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import Cookies from "js-cookie";
 
 const postGoogleLoginData = async (token, deviceToken) => {
     try {
@@ -15,10 +16,13 @@ const postGoogleLoginData = async (token, deviceToken) => {
         const refreshToken = response.data.value.refreshToken;
 
         // Сохраните accessToken в памяти
-        sessionStorage.setItem('accessToken', accessToken);
-        sessionStorage.setItem('refreshToken', refreshToken);
-        // setCookie('refreshToken', refreshToken, 7);
-        localStorage.setItem('deviceToken', deviceToken)
+        // sessionStorage.setItem('accessToken', accessToken);
+        // sessionStorage.setItem('refreshToken', refreshToken);
+        // localStorage.setItem('deviceToken', deviceToken)
+
+        Cookies.set('accessToken', accessToken);
+        Cookies.set('refreshToken', refreshToken);
+        Cookies.set('deviceToken', deviceToken);
 
 
         return true;
@@ -29,15 +33,6 @@ const postGoogleLoginData = async (token, deviceToken) => {
 }
 export default postGoogleLoginData;
 
-// function setCookie(name, value, days) {
-//     let expires = "";
-//     if (days) {
-//         const date = new Date();
-//         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-//         expires = "; expires=" + date.toUTCString();
-//     }
-//     document.cookie = name + "=" + (value || "") + expires + "; path=/";
-// }
 
 
 

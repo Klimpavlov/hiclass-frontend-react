@@ -19,6 +19,7 @@ import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifi
 import postUpdateNotificationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
 import postLogout from "@/app/[locale]/signOut/postLogout";
 import {RingLoader} from "react-spinners";
+import Cookies from "js-cookie";
 
 const Header = ({testNotifications}) => {
 
@@ -84,8 +85,8 @@ const Header = ({testNotifications}) => {
 
     const handleLogout = async () => {
         try {
-            // clearCookie('refreshToken');
-            const deviceToken = localStorage.getItem('deviceToken');
+            // const deviceToken = localStorage.getItem('deviceToken');
+            const deviceToken = Cookies.get('deviceToken');
             await postLogout(deviceToken, successRedirect);
             router.push('/signIn');
         } catch (error) {
@@ -104,7 +105,8 @@ const Header = ({testNotifications}) => {
     }, []);
 
     async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const userProfile = await getUserProfile(accessToken)
         console.log(userProfile);
 
@@ -124,7 +126,8 @@ const Header = ({testNotifications}) => {
     }, []);
 
     async function getNotifications() {
-        const accessToken = sessionStorage.getItem('accessToken');
+        // const accessToken = sessionStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const notificationsFromApi = await getAllNotifications(accessToken);
         setReceivedNotifications(notificationsFromApi.map((notification) => ({
             notificationId: notification.notificationId,

@@ -1,5 +1,6 @@
 import axios from "axios";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import Cookies from "js-cookie";
 
 const postSignUpData = async (email, password, deviceToken, successRedirect, toast, errorToastTranslations) => {
     try {
@@ -16,11 +17,15 @@ const postSignUpData = async (email, password, deviceToken, successRedirect, toa
                 const refreshToken = response.data.value.refreshToken;
                 console.log(response);
                 console.log(response.data.value.accessToken)
-                // localStorage.setItem('accessToken', accessToken);
-                sessionStorage.setItem('accessToken', accessToken);
-                sessionStorage.setItem('refreshToken', refreshToken);
-                // setCookie('refreshToken', refreshToken, 7);
-                localStorage.setItem('deviceToken', deviceToken)
+
+                // sessionStorage.setItem('accessToken', accessToken);
+                // sessionStorage.setItem('refreshToken', refreshToken);
+                // localStorage.setItem('deviceToken', deviceToken)
+
+                Cookies.set('accessToken', accessToken);
+                Cookies.set('refreshToken', refreshToken);
+                Cookies.set('deviceToken', deviceToken);
+
                 successRedirect()
             })
     }
