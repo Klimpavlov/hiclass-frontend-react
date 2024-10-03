@@ -143,7 +143,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
             </div>
             <div className='section-info w-full '>
                 <InputForm inputFormText={t("title")} placeholderText={t("placeholderClassTitle")}
-                           value={initialTitle}
+                           value={initialTitle} hasMaxLength={true} maxLength={25}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
                           placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : t("selectGrade")}

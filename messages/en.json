@@ -214,7 +214,8 @@
     "speaks": "Speaks {languages}",
     "sendInvite": "Send invite",
     "chatWith": "Chat with",
-    "availableAsAnExpert": "Available as an expert"
+    "availableAsAnExpert": "Available as an expert",
+    "classPreviewText": "Select a class and fill out the meeting invitation."
   },
   "ClassPreview": {
     "editBtn": "Edit",

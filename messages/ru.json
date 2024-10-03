@@ -216,7 +216,8 @@
     "speaks": "Говорит на {languages}",
     "sendInvite": "Отправить приглашение",
     "chatWith": "Начать переписку",
-    "availableAsAnExpert": "Доступен в качестве эксперта"
+    "availableAsAnExpert": "Доступен в качестве эксперта",
+    "classPreviewText": "Выберите класс и заполните приглашение для встречи."
   },
   "ClassPreview": {
     "editBtn": "Править",

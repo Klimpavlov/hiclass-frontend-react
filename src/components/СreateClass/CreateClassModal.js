@@ -132,7 +132,7 @@ export default function CreateClassModal({classId, setIsModalOpen, onCreateClass
         if (isSubmitting) return;
         setIsSubmitting(true);
 
-        if (!title || !grade || !selectedDisciplines || !selectedLanguages) {
+        if (!title || !grade || selectedDisciplines.length === 0 || !selectedLanguages || selectedLanguages.length === 0) {
             toast.current.show({ severity: 'error', summary: errorToastTranslation("error"), detail: errorToastTranslation("emptyFields"), life: 3000 });
             setIsSubmitting(false);
             return;
