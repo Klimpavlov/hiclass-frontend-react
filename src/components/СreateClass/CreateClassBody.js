@@ -41,8 +41,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         setInitialSubjects(translateDisciplines(classInfo.value.disciplineTitle))
         setInitialGrades([classInfo.value.grade])
         setInitialLanguages(translateItems(classInfo.value.languageTitles, languagesMapping))
-        setInitialPhoto(classInfo.value.imageUrl)
-
+        setInitialPhoto(classInfo.value.imageUrl);
     }
 
 
@@ -53,9 +52,6 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-
-        // setSelectedImage(URL.createObjectURL(file));
-        // setPhoto(file ? file : initialPhoto);
 
         if (file && allowedTypes.includes(file.type)) {
             setSelectedImage(URL.createObjectURL(file));

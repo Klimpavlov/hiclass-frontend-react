@@ -5,6 +5,7 @@ import ApplyButton from "@/components/Buttons/ApplyButton";
 import InviteModal from "@/components/InviteClass/InviteModal";
 import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
+import imgDefaultClass from "@/components/ClassPreview/defaultClassImage.jpg";
 
 const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
     const router = useRouter()
@@ -45,7 +46,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 </div>
                 <div className="class-preview-image w-64 h-40 overflow-hidden rounded-2xl relative">
                     <Image
-                        src={photo}
+                        src={photo ? photo : imgDefaultClass}
                         alt="ClassImage"
                         className="object-cover absolute inset-0 w-full h-full rounded-2xl"
                         layout="fill"
