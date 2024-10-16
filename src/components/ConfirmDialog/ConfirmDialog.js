@@ -27,7 +27,9 @@ export default function DialogModal({ setIsModalOpen, postDelete, toast }) {
             header: t("Confirmation"),
             icon: 'pi pi-info-circle',
             defaultFocus: 'reject',
-            acceptClassName: 'p-button-danger',
+            // acceptClassName: 'p-button-danger',
+            acceptClassName: 'custom-accept-btn',  // Класс для кнопки "Yes"
+            rejectClassName: 'custom-reject-btn',  // Класс для кнопки "No"
             accept,
             reject,
             acceptLabel: t("Yes"),

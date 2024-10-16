@@ -10,3 +10,14 @@
 .rotate-180 {
     transform: rotate(180deg);
 }
+
+.custom-accept-btn {
+    margin-right: 0;
+
+}
+
+.custom-reject-btn {
+    margin-right: 180px;
+
+}
+

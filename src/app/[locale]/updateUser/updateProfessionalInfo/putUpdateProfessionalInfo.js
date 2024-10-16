@@ -2,7 +2,7 @@ import apiClient from "@/app/[locale]/api/utils/axios";
 const putUpdateProfessionalInfo = async (selectedLanguages, selectedDisciplines, selectedGrades, toast) => {
 
     try {
-        const response = apiClient.put('/EditUser/professional-info', {
+        const response = await apiClient.put('/EditUser/professional-info', {
             Languages: selectedLanguages,
             Disciplines: selectedDisciplines,
             Grades: selectedGrades
