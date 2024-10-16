@@ -16,7 +16,7 @@ import languagesMapping from "../../../../mapping/languagesMapping/languagesMapp
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
 
-export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onCreateClass}) {
+export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onEditClass}) {
 
     const pathname = usePathname();
     const toast = useRef(null);
@@ -28,10 +28,15 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
     const [selectedLanguages, setSelectedLanguages] = useState('');
     const [photo, setPhoto] = useState(null);
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const t = useTranslations('EditClass');
     const editClassToastTranslations = useTranslations("DialogModal.EditClass")
 
     const handlePutEditClass = async () => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         if (!title || !grade || !selectedDisciplines || !selectedLanguages) {
             toast.current.show({
                 severity: 'error',
@@ -52,24 +57,23 @@ export default function EditClassModal({classId, isModalOpen, setIsModalOpen, on
 
         const editClassSuccess = await putEditClass(classId, title, grade, languagesToSend, disciplinesToSend, toast, editClassToastTranslations);
         if (editClassSuccess) {
+            if (photo) {
+                const editImageSuccess = await editClassImage(classId, photo, toast);
+                if (!editImageSuccess) {
+                    toast.current.show({
+                        severity: 'error', summary: editClassToastTranslations("error"),
+                        // detail: editClassToastTranslations("successEditImageMessage"),
+                        life: 3000});
+                }
+            }
             toast.current.show({severity: 'info',
                 summary: editClassToastTranslations("success"),
                 detail: editClassToastTranslations("successEditMessage"),
                 life: 3000});
-            window.location.reload();
-        }
-
-        if (photo) {
-            const editImageSuccess = await editClassImage(classId, photo, toast);
-            if (editImageSuccess) {
-                toast.current.show({
-                    severity: 'info',
-                    summary: editClassToastTranslations("success"),
-                    detail: editClassToastTranslations("successEditImageMessage"),
-                    life: 3000
-                });
-                window.location.reload();
-            }
+            // window.location.reload();
+            setIsModalOpen(false);
+            onEditClass()
+            setIsSubmitting(false);
         }
     }
 

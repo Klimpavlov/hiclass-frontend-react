@@ -63,10 +63,11 @@ export default function MyProfile() {
         fetchUserProfile();
     }, []);
 
-    const handleCreateClass = () => {
+    const refreshClassList = () => {
         fetchUserProfile();
         setIsModalOpen(false);
     };
+
 
     // translation
 
@@ -129,6 +130,8 @@ export default function MyProfile() {
                                                     photo={defaultClass.imageUrl}
                                                     showDropdown={true}
                                                     userAvatar={userAvatar}
+                                                    onEditClass={refreshClassList}
+                                                    onDeleteClass={refreshClassList}
                                                 />
                                             </div>
                                         );
@@ -144,7 +147,7 @@ export default function MyProfile() {
                 <CreateClassModal
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
-                    onCreateClass={handleCreateClass}
+                    onCreateClass={refreshClassList}
                 />
             )}
         </main>

@@ -13,7 +13,7 @@ import {useTranslations} from "next-intl";
 import imgDefaultClass from "../ClassPreview/defaultClassImage.jpg";
 
 
-const ClassPreview = ({classId, title, username, tags, photo, showDropdown, userAvatar}) => {
+const ClassPreview = ({classId, title, username, tags, photo, showDropdown, userAvatar, onEditClass, onDeleteClass}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -49,7 +49,6 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
     }, []);
 
     useEffect(() => {
-        // Проверяем, есть ли место для дропдауна вправо, иначе открываем влево
         if (dropdownRef.current) {
             const rect = dropdownRef.current.getBoundingClientRect();
             const viewportWidth = window.innerWidth;
@@ -65,10 +64,17 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
     const t = useTranslations('ClassPreview');
     const deleteClassTranslation = useTranslations("DialogModal.DeleteClass");
 
-    const postDeleteClass = () => {
-        setTimeout(() => {
-            deleteClass({classId}, toast, deleteClassTranslation);
-        }, 1500);
+    // const postDeleteClass = () => {
+    //     setTimeout(() => {
+    //         deleteClass({classId}, toast, deleteClassTranslation);
+    //     }, 1500);
+    // };
+
+    const postDeleteClass = async () => {
+        const isDeleted = await deleteClass({classId}, toast, deleteClassTranslation);
+        if (isDeleted) {
+            onDeleteClass();
+        }
     };
 
     return (
@@ -136,6 +142,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
                     <EditClassModal
                         classId={classId}
                         setIsModalOpen={setIsEditModalOpen}
+                        onEditClass={onEditClass}
                     />
                 )}
                 {isDeleteModalOpen && (

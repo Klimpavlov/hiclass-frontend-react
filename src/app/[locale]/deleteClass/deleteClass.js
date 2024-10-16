@@ -9,7 +9,7 @@ const deleteClass = async ({ classId }, toast, deleteClassTranslation) => {
         });
         console.log(response);
         toast.current.show({ severity: 'info', summary: deleteClassTranslation("confirmed"), detail: deleteClassTranslation("successMessage"), life: 3000 });
-        window.location.reload();
+        // window.location.reload();
         return true;
     } catch (error) {
         console.log(error);
