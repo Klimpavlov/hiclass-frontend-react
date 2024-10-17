@@ -14,33 +14,37 @@ export default function institutionForm() {
 
     const router = useRouter()
     const [institutionName, setInstitutionName] = useState('');
-    const [orgData, setOrgData] = useState([]);
+    const [institutionAddress, setInstitutionAddress] = useState('');
+    // const [orgData, setOrgData] = useState([]);
 
     const t = useTranslations("CreateAccount.Institution")
     const errorTranslations = useTranslations("DialogModal.Error");
 
 
-    localStorage.setItem('institution', institutionName);
+    localStorage.setItem('institutionName', institutionName);
+    localStorage.setItem('institutionAddress', institutionAddress);
 
-    useEffect(() => {
-        fetchOrg(institutionName);
-    }, [institutionName])
-    async function fetchOrg(searchText) {
-        try {
-            const response = await axios.get(
-                `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
-            );
-            const data = response.data;
-            setOrgData(data.features);
-        } catch (error) {
-            console.log("Error fetching organization data:", error);
-        }
-    }
+    // api search org
+
+    // useEffect(() => {
+    //     fetchOrg(institutionName);
+    // }, [institutionName])
+    // async function fetchOrg(searchText) {
+    //     try {
+    //         const response = await axios.get(
+    //             `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
+    //         );
+    //         const data = response.data;
+    //         setOrgData(data.features);
+    //     } catch (error) {
+    //         console.log("Error fetching organization data:", error);
+    //     }
+    // }
 
 
 
     const handleContinue = () => {
-        if (!institutionName) {
+        if (!institutionName || !institutionAddress) {
             toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
@@ -60,19 +64,27 @@ export default function institutionForm() {
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
+                        {/*<div className="my-4">*/}
+                        {/*    <InputForm inputFormText={t("institution")} placeholderText={t("placeholder")} value={institutionName}*/}
+                        {/*               onChange={(e) => setInstitutionName(e.target.value)}/>*/}
+                        {/*    <div className="dropdown max-h-60 overflow-y-auto mt-2" >*/}
+                        {/*    {orgData.map((feature) => (*/}
+                        {/*        <div key={feature.properties.id}*/}
+                        {/*             className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*             onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>*/}
+                        {/*            <h2>{feature.properties.name}</h2>*/}
+                        {/*            <p>{feature.properties.description}</p>*/}
+                        {/*        </div>*/}
+                        {/*    ))}*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className="my-4">
-                            <InputForm inputFormText={t("institution")} placeholderText={t("placeholder")} value={institutionName}
-                                       onChange={(e) => setInstitutionName(e.target.value)}/>
-                            <div className="dropdown max-h-60 overflow-y-auto mt-2" >
-                            {orgData.map((feature) => (
-                                <div key={feature.properties.id}
-                                     className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
-                                     onClick={() => setInstitutionName(feature.properties.name + ';' + feature.properties.description)}>
-                                    <h2>{feature.properties.name}</h2>
-                                    <p>{feature.properties.description}</p>
-                                </div>
-                            ))}
-                            </div>
+                            <InputForm inputFormText={t("institutionName")} placeholderText={t("institutionName")} value={institutionName}
+                                       onChange={(e) => setInstitutionName(e.target.value)}
+                            />
+                            <InputForm inputFormText={t("institutionAddress")} placeholderText={t("institutionAddress")} value={institutionAddress}
+                                       onChange={(e) => setInstitutionAddress(e.target.value)}
+                            />
                         </div>
                     </div>
                     <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>

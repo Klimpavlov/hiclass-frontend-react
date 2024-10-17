@@ -1,14 +1,14 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
 
-const putUpdatePersonalInfo = async (institution, toast) => {
+const putUpdatePersonalInfo = async (institutionName, institutionAddress, toast) => {
 
     try {
-        const institutionRequest = institution.split(';')
-        const institutionTitle = institutionRequest[0];
-        const institutionAddress = institution[1]
+        // const institutionRequest = institution.split(';')
+        // const institutionTitle = institutionRequest[0];
+        // const institutionAddress = institution[1];
 
         const response = await apiClient.put('/EditUser/institution', {
-            InstitutionTitle: institutionTitle,
+            InstitutionTitle: institutionName,
             Address: institutionAddress,
             Types: [
                 "School"

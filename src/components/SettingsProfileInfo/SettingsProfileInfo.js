@@ -52,6 +52,7 @@ const SettingsProfileInfo = () => {
     const [isExpert, setIsExpert] = useState(false);
 
     const [institutionName, setInstitutionName] = useState("");
+    const [institutionAddress, setInstitutionAddress] = useState("");
 
     const [initialLanguages, setInitialLanguages] = useState([]);
     const [initialDisciplines, setInitialDisciplines] = useState([]);
@@ -78,7 +79,8 @@ const SettingsProfileInfo = () => {
             setIsTeacher(userProfile.isATeacher);
             setIsExpert(userProfile.isAnExpert);
 
-            setInstitutionName(userProfile.institution.title)
+            setInstitutionName(userProfile.institution.title);
+            setInstitutionAddress(userProfile.institution.address);
 
             setInitialLanguages(translateItems(userProfile.languageTitles, languagesMapping, pathname));
             setInitialDisciplines(translateItems(userProfile.disciplineTitles, disciplinesMapping, pathname));
@@ -211,15 +213,51 @@ const SettingsProfileInfo = () => {
 
     // institution
 
-    const [orgData, setOrgData] = useState([]);
+    // const [orgData, setOrgData] = useState([]);
+
+    // const handleUpdateInstitution = async () => {
+    //     if (!institutionName) {
+    //         toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
+    //         return;
+    //     }
+    //     console.log(institutionName)
+    //     const updateInstitutionSuccess = await putUpdateInstitution(institutionName, toast);
+    //
+    //     if (updateInstitutionSuccess) {
+    //         toast.current.show({
+    //             severity: 'info',
+    //             summary: editUserToastTranslations("success"),
+    //             detail: editUserToastTranslations("institutionUploaded"),
+    //             life: 3000
+    //         });
+    //     }
+    // };
+
+    // api search org
+
+    // useEffect(() => {
+    //     fetchOrg(institutionName);
+    // }, [institutionName])
+    //
+    // async function fetchOrg(searchText) {
+    //     try {
+    //         const response = await axios.get(
+    //             `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
+    //         );
+    //         const data = response.data;
+    //         setOrgData(data.features);
+    //     } catch (error) {
+    //         console.log("Error fetching organization data:", error);
+    //     }
+    // }
 
     const handleUpdateInstitution = async () => {
-        if (!institutionName) {
+        if (!institutionName || !institutionAddress) {
             toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
         console.log(institutionName)
-        const updateInstitutionSuccess = await putUpdateInstitution(institutionName, toast);
+        const updateInstitutionSuccess = await putUpdateInstitution(institutionName, institutionAddress, toast);
 
         if (updateInstitutionSuccess) {
             toast.current.show({
@@ -230,22 +268,6 @@ const SettingsProfileInfo = () => {
             });
         }
     };
-
-    useEffect(() => {
-        fetchOrg(institutionName);
-    }, [institutionName])
-
-    async function fetchOrg(searchText) {
-        try {
-            const response = await axios.get(
-                `https://search-maps.yandex.ru/v1/?text=${searchText}&type=biz&lang=ru_RU&apikey=6d742c7a-847a-40eb-b9a2-ae34493ad1f8`
-            );
-            const data = response.data;
-            setOrgData(data.features);
-        } catch (error) {
-            console.log("Error fetching organization data:", error);
-        }
-    }
 
 
 // languages
@@ -449,31 +471,48 @@ const SettingsProfileInfo = () => {
                     <div className='section-pos-verif py-8'>
                         <SettingsSection title={t("positionVerification")}
                                          details={t("positionVerificationDetails")}/>
+                        {/*api search org*/}
+
+                        {/*<div className='py-8'>*/}
+                        {/*    <InputForm inputFormText={t("institutionName")} value={institutionName}*/}
+                        {/*               onChange={(e) => setInstitutionName(e.target.value)}*/}
+                        {/*               onFocus={() => setIsInstitutionInputActive(true)}/>*/}
+                        {/*    <div className="">*/}
+                        {/*        {isInstitutionInputActive && institutionName && (*/}
+                        {/*            <div className="py-2 max-h-60 overflow-y-auto">*/}
+                        {/*                {orgData.map((feature) => (*/}
+                        {/*                    <div key={feature.properties.id}*/}
+                        {/*                         className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*                         onClick={() => {*/}
+                        {/*                             setInstitutionName(feature.properties.name + '; ' + feature.properties.description);*/}
+                        {/*                             setIsInstitutionInputActive(false);*/}
+                        {/*                         }}>*/}
+                        {/*                        <h2>{feature.properties.name}</h2>*/}
+                        {/*                        <p>{feature.properties.description}</p>*/}
+                        {/*                    </div>*/}
+                        {/*                ))}*/}
+                        {/*            </div>*/}
+                        {/*        )}*/}
+                        {/*    </div>*/}
+                        {/*    <ApplyButton buttonText={t("update")} onApply={handleUpdateInstitution}/>*/}
+                        {/*</div>*/}
+
                         <div className='py-8'>
                             <InputForm inputFormText={t("institutionName")} value={institutionName}
                                        onChange={(e) => setInstitutionName(e.target.value)}
-                                       onFocus={() => setIsInstitutionInputActive(true)}/>
-                            <div className="">
-                                {isInstitutionInputActive && institutionName && (
-                                    <div className="py-2 max-h-60 overflow-y-auto">
-                                        {orgData.map((feature) => (
-                                            <div key={feature.properties.id}
-                                                 className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
-                                                 onClick={() => {
-                                                     setInstitutionName(feature.properties.name + '; ' + feature.properties.description);
-                                                     setIsInstitutionInputActive(false);
-                                                 }}>
-                                                <h2>{feature.properties.name}</h2>
-                                                <p>{feature.properties.description}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
+                                       onFocus={() => setIsInstitutionInputActive(true)}
+                                       placeholderText={t("institutionName")}
+                            />
+                            <InputForm inputFormText={t("institutionAddress")} value={institutionAddress}
+                                       onChange={(e) => setInstitutionAddress(e.target.value)}
+                                       onFocus={() => setIsInstitutionInputActive(true)}
+                                       placeholderText={t("institutionAddress")}
+                            />
+
                             <ApplyButton buttonText={t("update")} onApply={handleUpdateInstitution}/>
-                            {/*<ClearAllButton buttonText='Update'/>*/}
                         </div>
                     </div>
+
                     <div className='section-prof-details py-8'>
                         <SettingsSection title={t("professionalInfo")}
                                          details={t("professionalInfoDetails")}

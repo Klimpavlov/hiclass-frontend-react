@@ -90,9 +90,9 @@
     "Institution": {
       "welcome": "Welcome !",
       "institutionFormText": " It’s great to have you with us! To help us optimise your experience, tell us what you plan to use Hi,class for.",
-      "institution": "Institution name",
-      "ContinueBtn": "Continue",
-      "placeholder": "Select institution"
+      "institutionName": "Institution name",
+      "institutionAddress": "Institution address",
+      "ContinueBtn": "Continue"
     },
     "Disciplines": {
       "welcome": "Welcome !",
@@ -177,6 +177,7 @@
     "positionVerification": "Position verification",
     "positionVerificationDetails": "For your security, we need you to verify your identity",
     "institutionName": "Institution name",
+    "institutionAddress": "Institution address",
     "professionalInfo": "Professional details",
     "professionalInfoDetails": "Add professional details about you",
     "areasOfWork": "Areas of work",

@@ -22,10 +22,11 @@ const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) 
         const isTeacher = localStorage.getItem('isTeacher');
         const isExpert = localStorage.getItem('isExpert');
 
-        const institution = localStorage.getItem('institution');
-        const institutionRequest = institution.split(';');
-        const institutionTitle = institutionRequest[0];
-        const institutionAddress = institutionRequest[1];
+        const institutionName = localStorage.getItem('institutionName');
+        const institutionAddress = localStorage.getItem('institutionAddress');
+        // const institutionRequest = institution.split(';');
+        // const institutionTitle = institutionRequest[0];
+        // const institutionAddress = institutionRequest[1];
 
         const disciplines = localStorage.getItem('disciplines');
         const disciplinesArray = disciplines.split(',');
@@ -57,7 +58,7 @@ const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) 
             InstitutionDto: {
                 Types: ["School"],
                 Address: institutionAddress,
-                Title: institutionTitle
+                Title: institutionName
             },
             DisciplineTitles: disciplinesToSend,
             LanguageTitles: languagesToSend,

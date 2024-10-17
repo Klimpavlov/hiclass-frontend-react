@@ -90,9 +90,9 @@
     "Institution": {
       "welcome": "Добро пожаловать !",
       "institutionFormText": "Мы рады, что вы с нами! Чтобы помочь нам оптимизировать ваш опыт, расскажите, для чего вы планируете использовать Hi,class.",
-      "institution": "Название учреждения",
-      "ContinueBtn": "Продолжить",
-      "placeholder": "Найдите учебное заведение"
+      "institutionName": "Название учреждения",
+      "institutionAddress": "Адрес учреждения",
+      "ContinueBtn": "Продолжить"
     },
     "Disciplines": {
       "welcome": "Добро пожаловать !",
@@ -177,6 +177,7 @@
     "positionVerification": "Проверка местоположения",
     "positionVerificationDetails": "В целях вашей безопасности нам необходимо, чтобы вы подтвердили свою личность",
     "institutionName": "Название учреждения",
+    "institutionAddress": "Адрес учреждения",
     "professionalInfo": "Профессиональные сведения",
     "professionalInfoDetails": "Добавьте профессиональные сведения о вас",
     "areasOfWork": "Направления работы",
