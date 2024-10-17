@@ -12,9 +12,6 @@ const putBannerImage = (banner) => {
         })
         .then(function (response) {
             console.log(response);
-
-            // page reload
-            window.location.reload()
         })
         .catch(function (error) {
             console.log(error);

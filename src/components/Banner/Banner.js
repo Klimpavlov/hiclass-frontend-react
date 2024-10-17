@@ -9,7 +9,7 @@ import {useTranslations} from "next-intl";
 const Banner = () => {
     const [file, setFile] = useState();
 
-    function getFile(event) {
+     function getFile(event) {
         const selectedFile = event.target.files[0];
         setFile(URL.createObjectURL(selectedFile));
         putBannerImage(selectedFile);
@@ -73,13 +73,4 @@ const Banner = () => {
     );
 };
 
-export default Banner;
-
-
-
-// <div className="absolute">
-//  <div className="space-x-2">
-//    <ApplyButton buttonText="change" />
-//       <ApplyButton buttonText="remove" />
-//    </div>
-// </div>
+export default Banner

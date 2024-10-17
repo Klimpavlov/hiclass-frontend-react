@@ -79,10 +79,6 @@ const Header = ({testNotifications}) => {
     }
 
 
-    // function clearCookie(name) {
-    //     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; Secure; SameSite=Strict`;
-    // }
-
     const handleLogout = async () => {
         try {
             // const deviceToken = localStorage.getItem('deviceToken');
