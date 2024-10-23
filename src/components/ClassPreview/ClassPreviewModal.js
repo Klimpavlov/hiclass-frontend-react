@@ -29,15 +29,21 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
 
     return (
         <div className="class-preview fixed inset-0 flex items-center justify-center bg-white z-50 overflow-y-auto">
-            <div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
-                 onClick={handleCloseModal}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </div>
+            {/*<div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"*/}
+            {/*     onClick={handleCloseModal}>*/}
+            {/*    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">*/}
+            {/*        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />*/}
+            {/*    </svg>*/}
+            {/*</div>*/}
             <div className="class-preview-content max-w-3xl w-full mx-auto p-8">
                 <div className='class-preview-header flex justify-between items-center'>
                     <div className='class-preview-text text-xl font-bold'>{headerText}</div>
+                    <div className="class-preview-close cursor-pointer text-gray-500"
+                         onClick={handleCloseModal}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
                     {/*<ApplyButton buttonText='Invite class' onApply={handleOpenInviteModal}/>*/}
                 </div>
                 <div className='class-preview-username&avatar my-4 flex items-center'>

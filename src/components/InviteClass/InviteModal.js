@@ -118,14 +118,21 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
             <ErrorNotification ref={toast}/>
             <div
                 className="class-preview fixed inset-0 flex flex-col items-center justify-center bg-white z-50 overflow-y-auto">
-                <div className="class-preview-close absolute top-4 right-4 cursor-pointer text-gray-500"
-                     onClick={handleCloseModal}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                {/*<div className="class-preview-close cursor-pointer text-gray-500"*/}
+                {/*     onClick={handleCloseModal}>*/}
+                {/*    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"*/}
+                {/*         stroke="currentColor">*/}
+                {/*        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>*/}
+                {/*    </svg>*/}
+                {/*</div>*/}
+                <div className="header relative flex items-center justify-center w-full max-w-3xl mx-auto p-8">
+                    <div className="header-title flex-grow text-center">{t("inviteModalText")}</div>
+                    <div className="class-preview-close absolute right-4 cursor-pointer text-gray-500" onClick={handleCloseModal}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
                 </div>
-                <div className="header-title">{t("inviteModalText")}</div>
                 <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
                     <div className='dropdowns sm:flex justify-between'>
                         {/*<Dropdown dropdownFormText={t("subject")} placeholderText={t("placeholderSubject")}*/}

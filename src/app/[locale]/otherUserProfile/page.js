@@ -119,7 +119,7 @@ export default function otherUserProfile() {
                     <ErrorNotification ref={toast}/>
                     <Header/>
                     <TopSection/>
-                    <div className='flex flex-col sm:flex-row p-4 md:p-28'>
+                    <div className='flex flex-col sm:flex-row p-4 lg:p-20 md:p-10'>
                         <OtherUserInfo username={firstName + ' ' + lastName}
                                        isExpert={isExpert}
                                        email={email}
@@ -130,7 +130,7 @@ export default function otherUserProfile() {
                                        disciplines={disciplineTitles}
                                        toast={toast}
                         />
-                        <div className='classesContainer mt-12 flex flex-col gap-12 sm:ml-10  lg:ml-28 sm:mr-0'>
+                        <div className='classesContainer sm:w-2/3 mt-12 flex flex-col gap-12 sm:ml-10 lg:ml-28 sm:mr-0'>
                             <div className='clsCntHeader flex justify-between'>
                                 <div className=''>{t("classes")}</div>
                                 <div className='text-green-700 cursor-pointer'>
