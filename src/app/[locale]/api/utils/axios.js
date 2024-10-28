@@ -67,7 +67,7 @@ apiClient.interceptors.response.use((response) => {
             return apiClient(originalRequest);
         } catch (refreshError) {
             console.error('Unable to refresh access token:', refreshError);
-            // window.location.href = '/signIn';
+            window.location.href = '/signIn';
             // Логика выхода из системы или перенаправление на страницу логина
         }
     }

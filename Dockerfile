@@ -1,3 +1,4 @@
+
 # Step 1: Use Node.js as the base image to build the application
 FROM node:18-alpine AS build
 
