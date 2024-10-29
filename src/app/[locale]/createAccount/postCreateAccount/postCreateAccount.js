@@ -74,6 +74,8 @@ const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) 
             })
 
         console.log(response);
+        const newAccessToken = response.data.value.accessToken;
+        Cookies.set('accessToken', newAccessToken);
         successRedirect()
         return true;
     } catch (error) {

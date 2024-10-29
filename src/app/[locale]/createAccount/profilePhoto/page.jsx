@@ -26,6 +26,7 @@ export default function ProfilePhoto() {
             return;
         }
         postUserImage(selectedFile, successRedirect);
+
     };
 
     const successRedirect = () => {
