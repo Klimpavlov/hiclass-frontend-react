@@ -26,11 +26,13 @@
     "placeholderConfirmPassword": "Re-enter your password",
     "ContinueBtn": "Continue",
     "VerifyEmail": {
+      "error": "Error",
       "verifyFormText": "Verify your email address",
       "sendLinkTo": "We’ve sent a verification link to ",
       "clickLink": "Click the link to complete the verification process. If you don’t see it you may\n need to check your spam folder.",
       "verificationCode": "Verification code",
       "placeholderVerificationCode": "Enter verification code",
+      "errorVerificationCode": "Enter a valid verification code",
       "ContinueBtn": "Continue"
     },
     "IsVerified": {

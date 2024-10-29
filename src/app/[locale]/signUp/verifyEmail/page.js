@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
@@ -8,22 +8,29 @@ import postVerificationCode from "@/app/[locale]/signUp/verifyEmail/postVerifica
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 
 export default function verifyEmail() {
     const router = useRouter();
     const [code, setCode] = useState();
     const email = localStorage.getItem('emailForVerification')
-
-    const handleContinue = () => {
-        postVerificationCode(email, code);
-        router.push('/signUp/verifyEmail/isVerified')
-    }
+    const toast = useRef(null);
 
     const t = useTranslations("SignUp.VerifyEmail")
 
+
+    const handleContinue = async () => {
+         await postVerificationCode(email, code, successRedirect, toast, t);
+    }
+
+    const successRedirect = () => {
+        router.push('/signUp/verifyEmail/isVerified');
+    };
+
     return (
         <main>
+            <ErrorNotification ref={toast}/>
             <RegistrationHeader/>
             <div className='flex flex-col items-center justify-center'>
                 <div className="content flex flex-col items-center gap-8 w-full

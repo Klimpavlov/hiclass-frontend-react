@@ -26,11 +26,13 @@
     "placeholderConfirmPassword": "Повторно введите пароль",
     "ContinueBtn": "Продолжить",
     "VerifyEmail": {
+      "error": "Ошибка",
       "verifyFormText": "Подтвердите свой адрес электронной почты",
       "sendLinkTo": "Мы отправили ссылку для подтверждения ",
       "clickLink": "Нажмите на ссылку, чтобы завершить процесс проверки. Если вы его не видите, возможно, вам нужно проверить папку со спамом.",
       "verificationCode": "Проверочный код",
       "placeholderVerificationCode": "Введите проверочный код",
+      "errorVerificationCode": "Введите валидный проверочный код",
       "ContinueBtn": "Продолжить"
     },
     "IsVerified": {
