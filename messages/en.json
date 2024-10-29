@@ -145,6 +145,8 @@
     "Location": "Location"
   },
   "MyProfile": {
+    "error": "Error",
+    "createClassPositionError": "Only teachers can create a class. Check the 'Position' field in the settings",
     "classes": "Classes",
     "addClass": "Add class",
     "replaceBtn": "Replace",

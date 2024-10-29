@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Header from "@/components/Header/Header";
 import UserInfo from "@/components/UserInfo/UserInfo";
 import ClassPreview from "@/components/ClassPreview/ClassPreview";
@@ -12,38 +12,35 @@ import {useTranslations} from "next-intl";
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
 import ApplyButton from "@/components/Buttons/ApplyButton";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 export default function MyProfile() {
 
     const pathname = usePathname();
 
     const [loading, setLoading] = useState(true);
+    const toast = useRef(null);
+    const t = useTranslations('MyProfile');
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // const handleAddClass = () => {
+    //     setIsModalOpen(true);
+    // };
+
     const handleAddClass = () => {
-        setIsModalOpen(true);
+        if (isTeacher) {
+            setIsModalOpen(true);
+        } else if (isExpert) {
+            toast.current.show({severity: 'error', summary: t("error"), detail: t("createClassPositionError"), life: 3000});
+        }
     };
 
     const [classData, setClassData] = useState([]);
     const [userAvatar, setUserAvatar] = useState([]);
-
-    // const handleCreateClass = () => {
-    //     setIsModalOpen(false);
-    // };
-
-
-    // useEffect(() => {
-    //     async function fetchUserProfile() {
-    //         const userProfile = await getUserProfile();
-    //         console.log(userProfile);
-    //         setClassData(userProfile.classDtos)
-    //         setTimeout(() => {
-    //             setLoading(false)
-    //         }, 1300)
-    //     }
-    //     fetchUserProfile();
-    // }, []);
+    const [isTeacher, setIsTeacher] = useState('');
+    const [isExpert, setIsExpert] = useState('');
 
     const fetchUserProfile = async () => {
         try {
@@ -51,7 +48,9 @@ export default function MyProfile() {
             const userProfile = await getUserProfile();
             console.log(userProfile);
             setClassData(userProfile.classDtos);
-            setUserAvatar(userProfile.imageUrl)
+            setUserAvatar(userProfile.imageUrl);
+            setIsTeacher(userProfile.isATeacher);
+            setIsExpert(userProfile.isAnExpert);
         } catch (error) {
             console.error("Failed to fetch user profile", error);
         } finally {
@@ -68,6 +67,7 @@ export default function MyProfile() {
         setIsModalOpen(false);
     };
 
+    console.log(isTeacher, isExpert)
 
     // translation
 
@@ -78,10 +78,9 @@ export default function MyProfile() {
         return disciplines.split(',');
     };
 
-    const t = useTranslations('MyProfile');
-
     return (
         <main className="">
+            <ErrorNotification ref={toast}/>
             {loading ? (
                 <div className='flex items-center justify-center h-screen'>
                     <RingLoader
