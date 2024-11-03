@@ -5,6 +5,7 @@ import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import imgSrc from '../Banner/Banner.jpg';
 import {useTranslations} from "next-intl";
+import Cookies from "js-cookie";
 
 const Banner = () => {
     const [file, setFile] = useState();
@@ -22,7 +23,8 @@ const Banner = () => {
     }, []);
 
     async function getUser() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const userProfile = await getUserProfile(accessToken)
         console.log(userProfile);
 

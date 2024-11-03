@@ -180,6 +180,7 @@ import { useTranslations } from "next-intl";
 import { translateItems } from "@/app/[locale]/translateItems/translateItems";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function LocationAndLanguages() {
     const pathname = usePathname();
@@ -229,7 +230,8 @@ export default function LocationAndLanguages() {
     }, []);
 
     async function getLanguages() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
         setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }

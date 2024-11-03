@@ -131,19 +131,19 @@ export default function ExplorePage() {
 
 
     async function getDisciplines() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines();
         setDisciplines(currentPathname === 'ru' ? Object.values(ruLocale.Disciplines) : availableDisciplines);
     }
 
     async function getLanguages() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
         const availableLanguages = await getAvailableLanguages();
         setLanguages(currentPathname === 'ru' ? Object.values(ruLocale.Languages) : availableLanguages);
     }
 
     async function getCountries() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
         const availableCountries = await getAvailableCountries();
         setCountries(availableCountries);
     }

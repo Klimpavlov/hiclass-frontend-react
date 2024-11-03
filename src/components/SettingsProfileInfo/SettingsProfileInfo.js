@@ -24,6 +24,7 @@ import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesM
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+import Cookies from "js-cookie";
 
 const SettingsProfileInfo = () => {
 
@@ -281,7 +282,8 @@ const SettingsProfileInfo = () => {
 
 
     async function getLanguages() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const availableLanguages = await getAvailableLanguages(accessToken);
         setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
@@ -299,7 +301,8 @@ const SettingsProfileInfo = () => {
 
 
     async function getDisciplines() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
         setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }

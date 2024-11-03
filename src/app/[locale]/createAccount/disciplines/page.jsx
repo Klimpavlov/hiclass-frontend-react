@@ -11,6 +11,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json"
+import Cookies from "js-cookie";
 
 export default function disciplinesForm() {
     const pathname = usePathname();
@@ -33,7 +34,8 @@ export default function disciplinesForm() {
 
 
     async function getDisciplines() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
         setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }

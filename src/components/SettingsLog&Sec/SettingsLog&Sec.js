@@ -15,6 +15,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postReverifyEmail from "@/app/[locale]/updateUser/updateEmail/reverifyEmail/postReverifyEmail";
 import putSetPassword from "@/app/[locale]/updateUser/putSetPassword/putSetPassword";
+import Cookies from "js-cookie";
 
 
 const SettingsLogSec = () => {
@@ -39,7 +40,8 @@ const SettingsLogSec = () => {
 
 
     async function getUserInfo() {
-        const accessToken = localStorage.getItem('accessToken');
+        // const accessToken = localStorage.getItem('accessToken');
+        const accessToken =  Cookies.get('accessToken');
         const userProfile = await getUserProfile(accessToken);
         // setEmail(userProfile.email);
 
