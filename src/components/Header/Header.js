@@ -7,24 +7,26 @@ import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '@/components/Header/RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '@/components/Header/RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
-import imgChevronDownSrc from '../Header/chevron-down.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
-import {useLocale, useTranslations} from "next-intl";
+import {useTranslations} from "next-intl";
 import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
 import postUpdateNotificationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
 import postLogout from "@/app/[locale]/signOut/postLogout";
 import {RingLoader} from "react-spinners";
 import Cookies from "js-cookie";
+import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
+import ErrorNotification from "@/components/Error/ErrorNotification";
 
 const Header = ({testNotifications}) => {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const toast = useRef(null);
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -78,6 +80,14 @@ const Header = ({testNotifications}) => {
         setIsDropdownOpen(!isDropdownOpen);
     }
 
+
+    // logout modal
+
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+    const toggleLogoutModalOpen = () => {
+        setIsLogoutModalOpen(!isLogoutModalOpen);
+    }
 
     const handleLogout = async () => {
         try {
@@ -196,6 +206,7 @@ const Header = ({testNotifications}) => {
 
     return (
         <main className="">
+            <ErrorNotification ref={toast}/>
             {loading ? (
                 <div className='flex items-center justify-center h-screen'>
                     <RingLoader
@@ -319,10 +330,15 @@ const Header = ({testNotifications}) => {
                             </div>
                             <div
                                 className="flex items-center px-2 hover:text-green-700 cursor-pointer hover:bg-green-50 mt-2"
-                                onClick={handleLogout}>
+                                onClick={toggleLogoutModalOpen}>
                                 <span className="pi pi-sign-out mr-2"></span>
                                 {t('logout')}
                             </div>
+                            {isLogoutModalOpen && (
+                                <DialogModal setIsModalOpen={setIsLogoutModalOpen}
+                                postDelete={handleLogout}
+                                toast={toast}/>
+                            )}
                         </div>
                     )}
                 </div>

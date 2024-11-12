@@ -99,9 +99,9 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
                             className="rounded-full"
                         />
                     </div>
-                    <div className="username text-black font-bold cursor-pointer ml-1">{username}</div>
+                    <div className="username text-black font-bold cursor-pointer ml-1">{title}</div>
                 </div>
-                <div className="class-preview-text"> {title}</div>
+                <div className="class-preview-text"> {username}</div>
                 <div className="class-preview-footer flex justify-between">
                     <div className="class-preview-tags flex flex-wrap gap-2">
                         {tags.map((title) => (

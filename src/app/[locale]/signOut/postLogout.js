@@ -1,4 +1,5 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
+import Cookies from "js-cookie";
 
 const postLogout = async (deviceToken, successRedirect) => {
     try {
@@ -7,6 +8,8 @@ const postLogout = async (deviceToken, successRedirect) => {
         });
         localStorage.clear();
         sessionStorage.clear();
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
         console.log(response);
         successRedirect()
         return true;
