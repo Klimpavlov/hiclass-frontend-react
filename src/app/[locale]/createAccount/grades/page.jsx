@@ -64,7 +64,7 @@ export default function gradesForm() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText='Continue' onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
                 </div>
             </div>
         </main>
