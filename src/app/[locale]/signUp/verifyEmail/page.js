@@ -38,7 +38,7 @@ export default function verifyEmail() {
                     <div className="text-4xl whitespace-pre-line text-center">{t("verifyFormText")}</div>
                     <div className="text-center">{t("sendLinkTo")}<span className='user-email'>{email}</span>
                     </div>
-                    <div className=''>{t("clickLink")}
+                    <div className='text-center'>{t("clickLink")}
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
@@ -46,7 +46,7 @@ export default function verifyEmail() {
                             <InputForm inputFormText={t("verificationCode")} placeholderText={t("placeholderVerificationCode")}
                                        value={code}
                                        onChange={(e) => setCode(e.target.value)}
-
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                         </div>
                     </div>

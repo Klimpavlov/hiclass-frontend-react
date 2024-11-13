@@ -32,13 +32,28 @@ export default function disciplinesForm() {
         getDisciplines()
     }, []);
 
-
     async function getDisciplines() {
         // const accessToken = localStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
         const availableDisciplines = await getAvailableDisciplines(accessToken);
         setDisciplines(translateItems(availableDisciplines, disciplinesMapping, pathname));
     }
+
+    // enter btn
+
+    useEffect(() => {
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleContinue();
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [selectedDisciplines, router]);
+
 
     const handleContinue = () => {
         if (selectedDisciplines.length === 0) {

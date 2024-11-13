@@ -81,9 +81,11 @@ export default function institutionForm() {
                         <div className="my-4">
                             <InputForm inputFormText={t("institutionName")} placeholderText={t("institutionName")} value={institutionName}
                                        onChange={(e) => setInstitutionName(e.target.value)}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                             <InputForm inputFormText={t("institutionAddress")} placeholderText={t("institutionAddress")} value={institutionAddress}
                                        onChange={(e) => setInstitutionAddress(e.target.value)}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                         </div>
                     </div>

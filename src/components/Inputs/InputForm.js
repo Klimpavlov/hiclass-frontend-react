@@ -3,8 +3,10 @@ import Link from "next/link";
 import imgHidePassword from "@/components/Inputs/hide-password.png"
 import imgShowPassword from "@/components/Inputs/show-password.png"
 
-const InputForm = ({inputFormText, optionalFormText, placeholderText, value, link,
-                       onChange, isPassword, error, hasMaxLength, maxLength, isTextarea, onFocus}) => {
+const InputForm = ({
+                       inputFormText, optionalFormText, placeholderText, value, link,
+                       onChange, isPassword, error, hasMaxLength, maxLength, isTextarea, onFocus, onKeyDown
+                   }) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +21,8 @@ const InputForm = ({inputFormText, optionalFormText, placeholderText, value, lin
         <div className="">
             <div className='flex justify-between'>
                 {inputFormText}
-                {optionalFormText && <Link href={link} className='text-green-800 cursor-pointer'>{optionalFormText}</Link>}
+                {optionalFormText &&
+                    <Link href={link} className='text-green-800 cursor-pointer'>{optionalFormText}</Link>}
             </div>
             <label htmlFor="Input">
                 {isTextarea ? (
@@ -44,6 +47,7 @@ const InputForm = ({inputFormText, optionalFormText, placeholderText, value, lin
                             onChange={onChange}
                             onFocus={onFocus}
                             maxLength={hasMaxLength ? maxLength : undefined}
+                            onKeyDown={onKeyDown}
                         />
                         {isPassword && (
                             <button

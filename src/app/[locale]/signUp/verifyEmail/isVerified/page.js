@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, {useEffect} from "react";
 import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import {useRouter} from "next/navigation";
@@ -9,7 +9,21 @@ import {useTranslations} from "next-intl";
 export default function isVerified() {
     const router = useRouter();
 
-    const t = useTranslations("SignUp.IsVerified")
+    const t = useTranslations("SignUp.IsVerified");
+
+    useEffect(() => {
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                router.push('/createAccount/NameForm');
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [router]);
+
 
     return (
         <main>

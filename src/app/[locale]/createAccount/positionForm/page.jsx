@@ -49,6 +49,7 @@ export default function PositionForm() {
                                 inputAboutFormText={t("aboutTeacherForm")}
                                 checked={isTeacher}
                                 onChange={(value) => setIsTeacher(value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                         </div>
                         <InputRadioForm
@@ -56,6 +57,7 @@ export default function PositionForm() {
                             inputAboutFormText={t("aboutExpertForm")}
                             checked={isExpert}
                             onChange={(value) => setIsExpert(value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                         />
                     </div>
                     <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} />

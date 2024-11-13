@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import RegistrationHeader from '@/components/Header/RegistrationHeader/RegistrationHeader';
 import ContinueButton from '@/components/Buttons/ContinueButton';
@@ -19,6 +19,20 @@ export default function ProfilePhoto() {
     const t = useTranslations("CreateAccount.ProfilePhoto");
     const errorTranslations = useTranslations("DialogModal.Error");
 
+    // enter btn
+
+    useEffect(() => {
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleContinue();
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [selectedFile, router]);
 
     const handleContinue = () => {
         if (!selectedFile) {

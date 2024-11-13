@@ -47,11 +47,13 @@ export default function nameForm() {
                             <InputForm inputFormText={t("firstName")} placeholderText={t("placeholderFirstName")}
                                        value={firstName}
                                        onChange={(e) => setFirstName(e.target.value)}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                         </div>
                         <InputForm inputFormText={t("lastName")} placeholderText={t("placeholderLastName")}
                                    value={lastName}
                                    onChange={(e) => setLastName(e.target.value)}
+                                   onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                         />
                     </div>
                             <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>

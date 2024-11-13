@@ -28,6 +28,20 @@ export default function gradesForm() {
 
     localStorage.setItem('grades', selectedGrades)
 
+    // enter btn
+
+    useEffect(() => {
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                handleContinue();
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [selectedGrades, router]);
 
     const handleContinue = async () => {
         if (selectedGrades.length === 0) {

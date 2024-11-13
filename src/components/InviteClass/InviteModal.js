@@ -152,7 +152,8 @@ const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPr
                                onChange={(e) => (setInvitationText(e.target.value))}
                                isTextarea={true}
                                hasMaxLength={true}
-                               maxLength={250}/>
+                               maxLength={250}
+                    />
                 </div>
                 <div>{t('selectClass')}</div>
 

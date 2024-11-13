@@ -180,6 +180,7 @@ export default function SignUp() {
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
                                        error={emailError}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleSignUp()}
                             />
                         </div>
                         <InputForm inputFormText={t("password")} placeholderText={t("placeholderPassword")}
@@ -187,6 +188,7 @@ export default function SignUp() {
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
                                    error={passwordError}
+                                   onKeyDown={(e) => e.key === 'Enter' && handleSignUp()}
                         />
                         <div className="my-4">
                             <InputForm inputFormText={t("confirmPassword")}
@@ -194,6 +196,7 @@ export default function SignUp() {
                                        onChange={(e) => setConfirmPassword(e.target.value)}
                                        isPassword={true}
                                        error={confirmPasswordError}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleSignUp()}
                             />
 
                         </div>

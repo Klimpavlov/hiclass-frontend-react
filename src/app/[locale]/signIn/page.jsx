@@ -83,7 +83,6 @@ export default function SignIn() {
         }
 
         const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations);
-
         if (successLogin) {
             toast.current.show({
                 severity: 'info',
@@ -118,7 +117,9 @@ export default function SignIn() {
                         <div className="my-4">
                             <InputForm inputFormText={t("email")} placeholderText="awesomeperson@email.com"
                                        value={email}
-                                       onChange={(e) => setEmail(e.target.value)}/>
+                                       onChange={(e) => setEmail(e.target.value)}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
+                            />
                         </div>
                         <InputForm inputFormText={t("password")} placeholderText={t("placeholderPassword")}
                                    optionalFormText={t("forgotPassword")}
@@ -126,6 +127,7 @@ export default function SignIn() {
                                    value={password}
                                    onChange={(e) => setPassword(e.target.value)}
                                    isPassword={true}
+                                   onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
                         />
                     </div>
                     <ContinueButton buttonText={t("signInBtn")} onClick={handleSignIn}/>

@@ -307,6 +307,7 @@ export default function LocationAndLanguages() {
                                        placeholderText={t("placeholderCountry")}
                                        onChange={(e) => setCountry(e.target.value)}
                                        onFocus={handleCountryInputFocus}
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                             {isDropdownOpen && country !== '' && (
                                 <div className="dropdown max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>
@@ -327,6 +328,7 @@ export default function LocationAndLanguages() {
                                        onChange={(e) => setCity(e.target.value)}
                                        onFocus={handleCityInputFocus}  // Обрабатываем фокус на поле города
                                        disabled={!country}  // Отключаем поле города, если страна не выбрана
+                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
                             {isDropdownOpen && city !== '' && country && (  // Показываем дропдаун только если выбрана страна
                                 <div className="dropdown max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>
