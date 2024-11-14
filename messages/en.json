@@ -46,7 +46,7 @@
     },
     "IsVerified": {
      "isVerifiedTopText": "Email address verified!",
-      "isVerifiedMainText": "You have successfully verified your email address.",
+      "isVerifiedMainText": "You have successfully verified your email address",
       "ContinueBtn": "Continue"
     }
   },
