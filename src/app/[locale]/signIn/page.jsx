@@ -82,7 +82,7 @@ export default function SignIn() {
             return;
         }
 
-        const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations);
+        const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations, userNotVerifiedRedirect);
         if (successLogin) {
             toast.current.show({
                 severity: 'info',
@@ -96,6 +96,10 @@ export default function SignIn() {
     const successRedirect = () => {
         router.push("/myProfile");
     };
+
+    const userNotVerifiedRedirect = () => {
+        router.push('/signUp/verifyEmail/reVerifyEmail');
+    }
 
 
     return (
