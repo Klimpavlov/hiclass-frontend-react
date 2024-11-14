@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation"
 import Cookies from 'js-cookie';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 
-// Создаем экземпляр axios
+// Экземпляр axios
 const apiClient = axios.create({
     baseURL: `http://${getLocalhost()}/api`,
 });

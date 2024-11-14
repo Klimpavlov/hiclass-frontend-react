@@ -6,7 +6,7 @@ import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postVerificationCode from "@/app/[locale]/signUp/verifyEmail/postVerificationCode/postVerificationCode";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 
@@ -16,6 +16,9 @@ export default function verifyEmail() {
     const [code, setCode] = useState();
     const email = localStorage.getItem('emailForVerification')
     const toast = useRef(null);
+    const pathname = usePathname();
+    const locale = pathname.slice(1, 3);
+
 
     const t = useTranslations("SignUp.VerifyEmail")
 
@@ -44,6 +47,8 @@ export default function verifyEmail() {
                     <div className="inputs w-full ">
                         <div className="my-4">
                             <InputForm inputFormText={t("verificationCode")} placeholderText={t("placeholderVerificationCode")}
+                                       optionalFormText={t("resendCode")}
+                                       link={`/${locale}/signUp/verifyEmail/reVerifyEmail`}
                                        value={code}
                                        onChange={(e) => setCode(e.target.value)}
                                        onKeyDown={(e) => e.key === 'Enter' && handleContinue()}

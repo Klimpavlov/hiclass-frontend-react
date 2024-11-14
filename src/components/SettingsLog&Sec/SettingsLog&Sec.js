@@ -13,7 +13,7 @@ import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
 import {usePathname, useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
-import postReverifyEmail from "@/app/[locale]/updateUser/updateEmail/reverifyEmail/postReverifyEmail";
+import postReverifyEmail from "@/app/[locale]/signUp/verifyEmail/reVerifyEmail/postReVerifyEmail";
 import putSetPassword from "@/app/[locale]/updateUser/putSetPassword/putSetPassword";
 import Cookies from "js-cookie";
 
