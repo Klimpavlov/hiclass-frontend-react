@@ -4,7 +4,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import RegistrationHeader from '@/components/Header/RegistrationHeader/RegistrationHeader';
 import ContinueButton from '@/components/Buttons/ContinueButton';
-import postCreateAccount from '@/app/[locale]/createAccount/postCreateAccount/postCreateAccount';
 import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
 import postUserImage from "@/app/[locale]/createAccount/profilePhoto/postUserImage";
 import ErrorNotification from "@/components/Error/ErrorNotification";
@@ -35,12 +34,11 @@ export default function ProfilePhoto() {
     }, [selectedFile, router]);
 
     const handleContinue = () => {
-        if (!selectedFile) {
-            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
-            return;
-        }
-        postUserImage(selectedFile, successRedirect);
-
+        // if (!selectedFile) {
+        //     toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
+        //     return;
+        // }
+        selectedFile ? postUserImage(selectedFile, successRedirect) : successRedirect();
     };
 
     const successRedirect = () => {

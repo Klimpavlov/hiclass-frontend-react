@@ -7,6 +7,7 @@ import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '@/components/Header/RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '@/components/Header/RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
+import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
@@ -304,7 +305,7 @@ const Header = ({testNotifications}) => {
                         <Image
                             // className="rounded-full overflow-hidden object-cover w-full h-full"
                             className="w-full h-full object-cover cursor-pointer"
-                            src={userAvatar}
+                            src={userAvatar || defaultUserImage}
                             alt="avatar-header"
                             width={100}
                             height={100}

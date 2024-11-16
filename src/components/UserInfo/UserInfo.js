@@ -15,6 +15,7 @@ import imgInstitution from "@/components/UserInfo/institutionAddress.svg"
 import imgLightning from "@/components/UserInfo/lightning.svg"
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
+import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
 import {usePathname} from "next/navigation";
 const UserInfo = () => {
     const pathname = usePathname();
@@ -96,7 +97,7 @@ const UserInfo = () => {
             <div className="rounded-full overflow-hidden w-36 h-36">
                 <Image
                     className="w-full h-full object-cover"
-                    src={userAvatar}
+                    src={userAvatar || defaultUserImage}
                     alt="user-avatar"
                     width={144}
                     height={144}
