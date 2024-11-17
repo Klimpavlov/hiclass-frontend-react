@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useRouter} from "next/navigation"
 import Cookies from 'js-cookie';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 
 // Экземпляр axios
 const apiClient = axios.create({
@@ -9,36 +10,35 @@ const apiClient = axios.create({
 });
 
 //Функция для получения нового access token с помощью refresh token
-const refreshAccessToken = async () => {
-    try {
-        // const refreshToken = sessionStorage.getItem('refreshToken');
-        // const deviceToken = localStorage.getItem('deviceToken')
-        const refreshToken = Cookies.get('refreshToken');
-        const deviceToken = Cookies.get('deviceToken');
-        console.log(refreshToken, deviceToken)
-
-        const response = await apiClient.post('/Authentication/refresh-token', {
-            refreshToken: refreshToken,
-            deviceToken: deviceToken
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log(response);
-        const newAccessToken = response.data.value.accessToken;
-        const newRefreshToken = response.data.value.refreshToken;
-        // sessionStorage.setItem('accessToken', newAccessToken);
-        // sessionStorage.setItem('refreshToken', newRefreshToken);
-        Cookies.set('accessToken', newAccessToken);
-        Cookies.set('refreshToken', newRefreshToken);
-        return newAccessToken;
-    } catch (error) {
-        console.error('Unable to refresh access token:', error);
-        throw error;
-    }
-};
-
+// const refreshAccessToken = async () => {
+//     try {
+//         // const refreshToken = sessionStorage.getItem('refreshToken');
+//         // const deviceToken = localStorage.getItem('deviceToken')
+//         const refreshToken = Cookies.get('refreshToken');
+//         const deviceToken = Cookies.get('deviceToken');
+//         console.log(refreshToken, deviceToken)
+//
+//         const response = await apiClient.post('/Authentication/refresh-token', {
+//             refreshToken: refreshToken,
+//             deviceToken: deviceToken
+//         }, {
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+//         console.log(response);
+//         const newAccessToken = response.data.value.accessToken;
+//         const newRefreshToken = response.data.value.refreshToken;
+//         // sessionStorage.setItem('accessToken', newAccessToken);
+//         // sessionStorage.setItem('refreshToken', newRefreshToken);
+//         Cookies.set('accessToken', newAccessToken);
+//         Cookies.set('refreshToken', newRefreshToken);
+//         return newAccessToken;
+//     } catch (error) {
+//         console.error('Unable to refresh access token:', error);
+//         throw error;
+//     }
+// };
 
 // Интерсептор запроса для добавления access token в заголовки
 apiClient.interceptors.request.use(async (config) => {
@@ -73,5 +73,6 @@ apiClient.interceptors.response.use((response) => {
     }
     return Promise.reject(error);
 });
+
 
 export default apiClient;

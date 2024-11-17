@@ -11,6 +11,7 @@ import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDiscipline
 import getAvailableGrades from "@/app/[locale]/api/getAvailableGrades/getAvailableGrades";
 import putUpdateProfessionalInfo from "@/app/[locale]/updateUser/updateProfessionalInfo/putUpdateProfessionalInfo";
 import putUpdateInstitution from "@/app/[locale]/updateUser/updateInstitution/putUpdateInstitution";
+// import refreshAccessToken from "@/app/[locale]/api/utils/axios";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import {RingLoader} from "react-spinners";
 import ErrorNotification from "@/components/Error/ErrorNotification";
@@ -25,6 +26,7 @@ import languagesMapping from "../../../mapping/languagesMapping/languagesMapping
 import {translateItems} from "@/app/[locale]/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
 import Cookies from "js-cookie";
+import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 
 const SettingsProfileInfo = () => {
 
@@ -207,6 +209,7 @@ const SettingsProfileInfo = () => {
                 detail: editUserToastTranslations("personalInfoUploaded"),
                 life: 3000
             });
+            await refreshAccessToken();
         }
 
     }

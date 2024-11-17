@@ -11,6 +11,7 @@ import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import imgDefaultClass from "../ClassPreview/defaultClassImage.jpg";
+import defaultUserImage from "@/components/UserInfo/avatar-default.svg";
 
 
 const ClassPreview = ({classId, title, username, tags, photo, showDropdown, userAvatar, onEditClass, onDeleteClass}) => {
@@ -92,7 +93,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
                 <div className='class-preview-header flex items-center mt-1'>
                     <div className='relative w-8 h-8 rounded-full overflow-hidden'>
                         <Image
-                            src={userAvatar}
+                            src={userAvatar || defaultUserImage}
                             alt="userAvatar"
                             layout="fill"
                             objectFit="cover"
