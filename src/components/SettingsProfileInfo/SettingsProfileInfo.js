@@ -18,6 +18,7 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import Image from "next/image";
 import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
 import imgSrc from "@/components/Banner/Banner.jpg";
+import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
 import putEditUserImage from "@/app/[locale]/updateUser/updateUserImage/putUpdateUserImage";
 import {useTranslations} from "next-intl";
 import {usePathname} from "next/navigation";
@@ -374,29 +375,16 @@ const SettingsProfileInfo = () => {
                                          details={t("photoDetails")}/>
                         <div className="button group pt-5">
                             <input className='hidden' type="file" onChange={getFile}/>
-                            {userAvatar ? (
                                 <div className="rounded-full overflow-hidden w-36 h-36">
                                     <Image
                                         className="w-full h-full object-cover"
-                                        src={userAvatar}
+                                        src={userAvatar || defaultUserImage}
                                         alt="user-avatar"
                                         width={144}
                                         height={144}
                                         quality={100}
                                     />
                                 </div>
-                            ) : (
-                                <div className="rounded-full overflow-hidden w-36 h-36">
-                                    <Image
-                                        className="w-full h-full object-cover"
-                                        src={imgSrc}
-                                        alt="default user-avatar"
-                                        width={144}
-                                        height={144}
-                                        quality={100}
-                                    />
-                                </div>
-                            )}
                             <div className="">
                                 <ApplyButton buttonText={t("replaceBtn")}
                                              onApply={() => document.querySelector('input[type="file"]').click()}/>

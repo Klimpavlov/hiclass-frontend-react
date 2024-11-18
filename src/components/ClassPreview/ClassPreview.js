@@ -1,3 +1,5 @@
+'use client'
+
 import React, {useEffect, useRef, useState} from "react";
 import Tag from "@/components/Tags/Tag";
 import imgSrc from '@/components/ClassPreview/class-menu-icon.svg';
