@@ -10,6 +10,7 @@ import {useTranslations} from "next-intl";
 import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {RingLoader} from "react-spinners";
 
 const UserProfile = () => {
 
@@ -30,7 +31,12 @@ const UserProfile = () => {
         if (isTeacher) {
             setIsModalOpen(true);
         } else if (isExpert) {
-            toast.current.show({severity: 'error', summary: t("error"), detail: t("createClassPositionError"), life: 3000});
+            toast.current.show({
+                severity: 'error',
+                summary: t("error"),
+                detail: t("createClassPositionError"),
+                life: 3000
+            });
         }
     };
 
@@ -41,7 +47,7 @@ const UserProfile = () => {
 
     const fetchUserProfile = async () => {
         try {
-            setLoading(true); // Устанавливаем состояние загрузки перед запросом
+            setLoading(true);
             const userProfile = await getUserProfile();
             console.log(userProfile);
             setClassData(userProfile.classDtos);
@@ -51,7 +57,7 @@ const UserProfile = () => {
         } catch (error) {
             console.error("Failed to fetch user profile", error);
         } finally {
-            setLoading(false); // Отключаем состояние загрузки после завершения запроса
+            setLoading(false);
         }
     };
 
@@ -75,63 +81,77 @@ const UserProfile = () => {
         return disciplines.split(',');
     };
     return (
-        <div className='flex flex-col sm:flex-row p-4 lg:p-20 md:p-10'>
-            <ErrorNotification ref={toast}/>
-            <UserInfo/>
-            <div className='classesContainer sm:w-2/3 mt-12 flex flex-col gap-12 sm:ml-10 lg:ml-28 sm:mr-0'>
-                <div className='clsCntHeader flex justify-between'>
-                    <div className=''>{t("classes")}</div>
-                    <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
-                        + {t("addClass")}
-                    </div>
+        <>
+            {loading ? (
+                <div className='flex items-center justify-center h-screen'>
+                    <RingLoader
+                        color={'#36d7b7'}
+                        loading={loading}
+                        size={150}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
                 </div>
-
-                {/* Если у пользователя нет классов */}
-                {classData.length === 0 ? (
-                    <div className="no-classes flex items-center justify-center border-1 border border-gray-200 h-64">
-                        <div className="text-center flex flex-col">
-                            <span className="mb-2 font-semibold">{t("noClassesFound")}</span>
-                            <span className='text-sm text-gray-500'>{t("addClassesText")}</span>
-                            <ApplyButton buttonText={t("addClass")} onApply={handleAddClass}/>
+            ) : (
+                <div className='flex flex-col sm:flex-row p-4 lg:p-20 md:p-10'>
+                    <ErrorNotification ref={toast}/>
+                    <UserInfo/>
+                    <div className='classesContainer sm:w-2/3 mt-12 flex flex-col gap-12 sm:ml-10 lg:ml-28 sm:mr-0'>
+                        <div className='clsCntHeader flex justify-between'>
+                            <div className=''>{t("classes")}</div>
+                            <div className='text-green-700 cursor-pointer' onClick={handleAddClass}>
+                                + {t("addClass")}
+                            </div>
                         </div>
-                    </div>
-                ) : (
-                    // Если у пользователя есть классы
-                    <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-                        {classData.map((defaultClass) => {
-                            const translatedTags = translateDisciplines(defaultClass.disciplineTitle);
-                            return (
-                                <div key={defaultClass.classId}>
-                                    <ClassPreview
-                                        classId={defaultClass.classId}
-                                        title={defaultClass.title}
-                                        username={defaultClass.userFullName}
-                                        tags={translatedTags}
-                                        photo={defaultClass.imageUrl}
-                                        showDropdown={true}
-                                        userAvatar={userAvatar}
-                                        onEditClass={refreshClassList}
-                                        onDeleteClass={refreshClassList}
-                                    />
+
+                        {/* Если у пользователя нет классов */}
+                        {classData.length === 0 ? (
+                            <div
+                                className="no-classes flex items-center justify-center border-1 border border-gray-200 h-64">
+                                <div className="text-center flex flex-col">
+                                    <span className="mb-2 font-semibold">{t("noClassesFound")}</span>
+                                    <span className='text-sm text-gray-500'>{t("addClassesText")}</span>
+                                    <ApplyButton buttonText={t("addClass")} onApply={handleAddClass}/>
                                 </div>
-                            );
-                        })}
+                            </div>
+                        ) : (
+                            // Если у пользователя есть классы
+                            <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+                                {classData.map((defaultClass) => {
+                                    const translatedTags = translateDisciplines(defaultClass.disciplineTitle);
+                                    return (
+                                        <div key={defaultClass.classId}>
+                                            <ClassPreview
+                                                classId={defaultClass.classId}
+                                                title={defaultClass.title}
+                                                username={defaultClass.userFullName}
+                                                tags={translatedTags}
+                                                photo={defaultClass.imageUrl}
+                                                showDropdown={true}
+                                                userAvatar={userAvatar}
+                                                onEditClass={refreshClassList}
+                                                onDeleteClass={refreshClassList}
+                                            />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
-            {isModalOpen && (
-                <CreateClassModal
-                    isModalOpen={isModalOpen}
-                    setIsModalOpen={setIsModalOpen}
-                    onCreateClass={refreshClassList}
-                />
+                    {isModalOpen && (
+                        <CreateClassModal
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            onCreateClass={refreshClassList}
+                        />
+                    )}
+                </div>
             )}
-        </div>
+        </>
     )
 }
 
 export default UserProfile
-
 
 
 // 'use client'

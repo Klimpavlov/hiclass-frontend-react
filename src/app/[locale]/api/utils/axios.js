@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 
 // Экземпляр axios
@@ -68,8 +68,8 @@ apiClient.interceptors.response.use((response) => {
             return apiClient(originalRequest);
         } catch (refreshError) {
             console.error('Unable to refresh access token:', refreshError);
-            // window.location.href = '/signIn';
-            redirect('/signIn')
+            window.location.href = '/signIn';
+            // redirect('/signIn')
             // Логика выхода из системы или перенаправление на страницу логина
         }
     }
