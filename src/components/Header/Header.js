@@ -325,7 +325,7 @@ const Header = ({testNotifications}) => {
                                 {t("myProfile")}
                             </div>
                             <div className="flex items-center px-2 hover:text-green-700 cursor-pointer hover:bg-green-50 mt-2"
-                                 onClick={() => handleNavigation(`/${locale}/updateUser`)}>
+                                 onClick={() => handleNavigation(`/${locale}/editProfile`)}>
                                 <span className="pi pi-cog mr-2"></span>
                                 {t("editProfile")}
                             </div>
