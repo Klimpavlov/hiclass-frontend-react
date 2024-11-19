@@ -1,4 +1,4 @@
-import apiClient from '../utils/axios';
+import apiClient from '../../utils/axios';
 
 export const getUserProfile = async () => {
     try {

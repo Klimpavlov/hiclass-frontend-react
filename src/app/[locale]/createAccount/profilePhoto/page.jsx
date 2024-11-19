@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import RegistrationHeader from '@/components/Header/RegistrationHeader/RegistrationHeader';
 import ContinueButton from '@/components/Buttons/ContinueButton';
 import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
-import postUserImage from "@/app/[locale]/createAccount/profilePhoto/postUserImage";
+import postUserImage from "@/app/[locale]/api/user/postCreateAccount/postUserImage";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 

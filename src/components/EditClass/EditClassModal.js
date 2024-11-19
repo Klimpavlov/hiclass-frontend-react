@@ -4,16 +4,16 @@ import React, {useState, useEffect, useRef} from "react";
 import CreateClassHeader from "@/components/СreateClass/CreateClassHeader";
 import CreateClassBottom from "@/components/СreateClass/CreateClassBottom";
 import CreateClassBody from "@/components/СreateClass/CreateClassBody";
-import postCreateClass from "@/app/[locale]/postCreateClass/postCreateClass";
-import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
-import putClassImage from "@/app/[locale]/postCreateClass/setClassImage/putClassImage";
-import putEditClass from "@/app/[locale]/editClass/putEditClass/putEditClass";
-import editClassImage from "@/app/[locale]/editClass/editClassImage/editClassImage";
+import postCreateClass from "@/app/[locale]/api/class/postCreateClass/postCreateClass";
+import {getAvailableDisciplines} from "@/app/[locale]/api/staticData/getAvailableDisciplines/getAvailableDisciplines";
+import putClassImage from "@/app/[locale]/api/class/postCreateClass/setClassImage/putClassImage";
+import putEditClass from "@/app/[locale]/api/class/editClass/putEditClass/putEditClass";
+import editClassImage from "@/app/[locale]/api/class/editClass/editClassImage/editClassImage";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
-import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
-import languagesMapping from "../../../../mapping/languagesMapping/languagesMapping.json";
-import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
+import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import {usePathname} from "next/navigation";
 
 export default function EditClassModal({classId, isModalOpen, setIsModalOpen, onEditClass}) {

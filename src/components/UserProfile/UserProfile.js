@@ -7,7 +7,7 @@ import ClassPreview from "@/components/ClassPreview/ClassPreview";
 import CreateClassModal from "@/components/СreateClass/CreateClassModal";
 import {usePathname} from "next/navigation";
 import {useTranslations} from "next-intl";
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {RingLoader} from "react-spinners";

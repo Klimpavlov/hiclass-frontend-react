@@ -7,7 +7,7 @@ import Tag from "@/components/Tags/Tag";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import {useTranslations} from "next-intl";
 import imgLocalCountry from "@/components/UserInfo/pinCountry.svg"
 import imgLocalTime from "@/components/UserInfo/localTime.svg"

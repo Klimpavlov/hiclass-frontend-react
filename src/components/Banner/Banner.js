@@ -2,8 +2,8 @@
 
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
-import putBannerImage from "@/app/[locale]/putBanner/putBannerImage";
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import putBannerImage from "@/app/[locale]/api/user/putBanner/putBannerImage";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import imgSrc from '../Banner/Banner.jpg';
 import {useTranslations} from "next-intl";

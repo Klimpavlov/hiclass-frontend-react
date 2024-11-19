@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import App from "next/app";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
-import postCreateClass from "@/app/[locale]/postCreateClass/postCreateClass";
+import postCreateClass from "@/app/[locale]/api/class/postCreateClass/postCreateClass";
 import {useTranslations} from "next-intl";
 
 const CreateClassBottom = ({handleCloseModal, handlePostClass, isSubmitting}) => {

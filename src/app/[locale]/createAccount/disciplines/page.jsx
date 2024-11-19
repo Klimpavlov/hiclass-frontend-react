@@ -6,10 +6,10 @@ import RegistrationHeader from "@/components/Header/RegistrationHeader/Registrat
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import axios from "axios";
-import {getAvailableDisciplines} from "@/app/[locale]/api/getAvailableDisciplines/getAvailableDisciplines";
+import {getAvailableDisciplines} from "@/app/[locale]/api/staticData/getAvailableDisciplines/getAvailableDisciplines";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
-import {translateItems} from "@/app/[locale]/translateItems/translateItems";
+import {translateItems} from "@/app/[locale]/api/translateItems/translateItems";
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json"
 import Cookies from "js-cookie";
 

@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import Image from "next/image";
-import {getClassInfo} from "@/app/[locale]/api/getClassProfile/getClassInfo";
+import {getClassInfo} from "@/app/[locale]/api/class/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
 import ruLocale from "../../../messages/ru.json";
 import {usePathname} from "next/navigation";
 import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
-import {reverseTranslateItems} from "@/app/[locale]/translateItems/reverseTranslateItems";
+import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 
 
 const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, setLanguage}) => {

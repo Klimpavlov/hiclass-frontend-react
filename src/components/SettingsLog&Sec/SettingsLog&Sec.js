@@ -4,17 +4,17 @@ import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";
 import DeleteAccBtn from "@/components/Buttons/DeleteAccBtn";
-import putUpdateEmail from "@/app/[locale]/updateUser/updateEmail/putUpdateEmail";
-import putUpdatePassword from "@/app/[locale]/updateUser/updatePassword/putUpdatePassword";
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import putUpdateEmail from "@/app/[locale]/api/user/editUser/updateEmail/putUpdateEmail";
+import putUpdatePassword from "@/app/[locale]/api/user/editUser/updatePassword/putUpdatePassword";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import {ConfirmDialog} from "primereact/confirmdialog";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
-import deleteUser from "@/app/[locale]/deleteUser/deleteUser";
+import deleteUser from "@/app/[locale]/api/user/deleteUser/deleteUser";
 import {usePathname, useRouter} from "next/navigation";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postReverifyEmail from "@/app/[locale]/signUp/verifyEmail/reVerifyEmail/postReVerifyEmail";
-import putSetPassword from "@/app/[locale]/updateUser/putSetPassword/putSetPassword";
+import putSetPassword from "@/app/[locale]/api/user/editUser/putSetPassword/putSetPassword";
 import Cookies from "js-cookie";
 
 

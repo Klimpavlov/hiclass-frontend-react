@@ -9,15 +9,15 @@ import imgRUFlag from '@/components/Header/RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
 import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
 import Link from 'next/link'
-import {getUserProfile} from "@/app/[locale]/api/getUserProfile/getUserProfile";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {useTranslations} from "next-intl";
-import {getAllNotifications} from "@/app/[locale]/api/notifications/getAllNotifications";
-import postUpdateNotificationStatus from "@/app/[locale]/updateNotificationsStatus/postUpdateNotificationsStatus";
-import postLogout from "@/app/[locale]/signOut/postLogout";
+import {getAllNotifications} from "@/app/[locale]/api/notifications/getNotifications/getAllNotifications";
+import postUpdateNotificationStatus from "@/app/[locale]/api/notifications/updateNotificationsStatus/postUpdateNotificationsStatus";
+import postLogout from "@/app/[locale]/api/user/signOut/postLogout";
 import {RingLoader} from "react-spinners";
 import Cookies from "js-cookie";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
