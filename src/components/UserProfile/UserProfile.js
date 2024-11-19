@@ -83,7 +83,7 @@ const UserProfile = () => {
     return (
         <>
             {loading ? (
-                <div className='flex items-center justify-center h-screen'>
+                <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 z-50">
                     <RingLoader
                         color={'#36d7b7'}
                         loading={loading}

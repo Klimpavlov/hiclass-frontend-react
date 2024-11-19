@@ -1,3 +1,39 @@
+import Header from "@/components/Header/Header";
+import Banner from "@/components/Banner/Banner";
+import UserProfile from "@/components/UserProfile/UserProfile";
+
+export default function MyProfile() {
+
+    return (
+        <main className="">
+            <Header/>
+            <Banner/>
+            <UserProfile/>
+        </main>
+    );
+}
+
+
+// SSR
+
+// import Header from "@/components/Header/Header";
+// import Banner from "@/components/Banner/Banner";
+// import UserProfile from "@/components/UserProfile/UserProfile";
+// import { getUserProfile } from "@/app/[locale]/api/getUserProfile/getUserProfile";
+//
+// export default async function MyProfile() {
+//     const userData = await getUserProfile();
+//     return (
+//         <main className="">
+//             <Header />
+//             <Banner />
+//             <UserProfile userData={userData} />
+//         </main>
+//     );
+// }
+
+
+
 // 'use client';
 //
 // import React, {useState, useEffect, useRef} from "react";
@@ -149,114 +185,6 @@
 //                     onCreateClass={refreshClassList}
 //                 />
 //             )}
-//         </main>
-//     );
-// }
-
-
-import Header from "@/components/Header/Header";
-import Banner from "@/components/Banner/Banner";
-import UserProfile from "@/components/UserProfile/UserProfile";
-
-export default function MyProfile() {
-
-    return (
-        <main className="">
-            <Header/>
-            <Banner/>
-            <UserProfile/>
-        </main>
-    );
-}
-
-
-// SSR
-
-// import Header from "@/components/Header/Header";
-// import Banner from "@/components/Banner/Banner";
-// import UserProfile from "@/components/UserProfile/UserProfile";
-// import { getUserProfile } from "@/app/[locale]/api/getUserProfile/getUserProfile";
-//
-// export default async function MyProfile() {
-//     const userData = await getUserProfile();
-//     return (
-//         <main className="">
-//             <Header />
-//             <Banner />
-//             <UserProfile userData={userData} />
-//         </main>
-//     );
-// }
-
-
-
-// import { getUserProfile } from "@/app/[locale]/api/getUserProfile/getUserProfile";
-// import Header from "@/components/Header/Header";
-// import UserInfo from "@/components/UserInfo/UserInfo";
-// import ClassPreview from "@/components/ClassPreview/ClassPreview";
-// import CreateClassModal from "@/components/СreateClass/CreateClassModal";
-// import Banner from "@/components/Banner/Banner";
-// import ApplyButton from "@/components/Buttons/ApplyButton";
-// import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
-//
-// export default async function MyProfile({ params }) {
-//     const { locale } = params;
-//
-//     let initialData = null;
-//     try {
-//         initialData = await getUserProfile(); // Передача заголовков, если нужно
-//     } catch (error) {
-//         console.error("Failed to fetch user profile", error);
-//     }
-//
-//     const translateDisciplines = (disciplines) => {
-//         if (locale === 'ru') {
-//             return disciplines
-//                 .split(',')
-//                 .map((discipline) => Object.keys(disciplinesMapping).find((key) => disciplinesMapping[key] === discipline) || discipline);
-//         }
-//         return disciplines.split(',');
-//     };
-//
-//     return (
-//         <main>
-//             <Header />
-//             <Banner />
-//             <div className='flex flex-col sm:flex-row p-4 lg:p-20 md:p-10'>
-//                 <UserInfo />
-//                 <div className='classesContainer sm:w-2/3 mt-12 flex flex-col gap-12 sm:ml-10 lg:ml-28 sm:mr-0'>
-//                     <div className='clsCntHeader flex justify-between'>
-//                         <div className=''>Классы</div>
-//                         <div className='text-green-700 cursor-pointer'>+ Добавить класс</div>
-//                     </div>
-//                     {initialData?.classDtos?.length === 0 ? (
-//                         <div className="no-classes flex items-center justify-center border-1 border border-gray-200 h-64">
-//                             <div className="text-center flex flex-col">
-//                                 <span className="mb-2 font-semibold">Нет классов</span>
-//                                 <span className='text-sm text-gray-500'>Добавьте класс, чтобы начать</span>
-//                                 <ApplyButton buttonText="Добавить класс" onApply={() => {}} />
-//                             </div>
-//                         </div>
-//                     ) : (
-//                         <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-//                             {initialData?.classDtos?.map((defaultClass) => {
-//                                 const translatedTags = translateDisciplines(defaultClass.disciplineTitle);
-//                                 return (
-//                                     <div key={defaultClass.classId}>
-//                                         <ClassPreview
-//                                             classId={defaultClass.classId}
-//                                             title={defaultClass.title}
-//                                             username={defaultClass.userFullName}
-//                                             tags={translatedTags}
-//                                             photo={defaultClass.imageUrl}
-//                                         />
-//                                     </div>
-//                                 );
-//                             })}
-//                         </div>
-//                     )}
-//                 </div>
-//             </div>
 //         </main>
 //     );
 // }
