@@ -1,4 +1,7 @@
 {
+  "Grade": {
+    "grade": "-й класс"
+  },
   "Position": {
     "teacher": "учитель",
     "expert": "эксперт"

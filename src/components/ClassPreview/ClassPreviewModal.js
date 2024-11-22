@@ -7,7 +7,7 @@ import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
 import imgDefaultClass from "@/components/ClassPreview/defaultClassImage.jpg";
 
-const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
+const ClassPreviewModal = ({headerText, title, username, tags, grade, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
     const router = useRouter()
 
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -26,6 +26,7 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
     };
 
     const t = useTranslations("InviteModal");
+    const gradeTranslation = useTranslations("Grade")
 
     return (
         <div className="class-preview fixed inset-0 flex items-center justify-center bg-white z-50 overflow-y-auto">
@@ -64,9 +65,13 @@ const ClassPreviewModal = ({headerText, title, username, tags, handleCloseModal,
                 <div className="class-preview-text"> {title}</div>
                 <div className="class-preview-footer flex justify-between items-center mt-4">
                     <div className="class-preview-tags flex flex-wrap gap-2">
-                        {tags.map((title) => (
+                        <div>{tags.map((title) => (
                             <Tag key={title} text={title}></Tag>
                         ))}
+                        </div>
+                        <div>
+                            <Tag key={grade} text={grade + gradeTranslation("grade")}></Tag>
+                        </div>
                     </div>
                     <div>
                         <ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal}/>

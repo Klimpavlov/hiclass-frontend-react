@@ -144,6 +144,7 @@ export default function otherUserProfile() {
                                                       title={defaultClass.title}
                                                       username={defaultClass.userFullName}
                                                       tags={translateDisciplines(defaultClass.disciplineTitle)}
+                                                      grade={defaultClass.grade}
                                                       photo={defaultClass.imageUrl}
                                                       userAvatar={userAvatar}
                                         ></ClassPreview>
@@ -158,6 +159,7 @@ export default function otherUserProfile() {
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
                                 tags={translateDisciplines(selectedClass.disciplineTitle)}
+                                grade={selectedClass.grade}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}

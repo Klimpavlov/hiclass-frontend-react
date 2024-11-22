@@ -126,6 +126,7 @@ const UserProfile = () => {
                                                 title={defaultClass.title}
                                                 username={defaultClass.userFullName}
                                                 tags={translatedTags}
+                                                grade={defaultClass.grade}
                                                 photo={defaultClass.imageUrl}
                                                 showDropdown={true}
                                                 userAvatar={userAvatar}

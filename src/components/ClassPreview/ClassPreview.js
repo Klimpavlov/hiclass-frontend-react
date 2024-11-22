@@ -16,12 +16,23 @@ import imgDefaultClass from "../ClassPreview/defaultClassImage.jpg";
 import defaultUserImage from "@/components/UserInfo/avatar-default.svg";
 
 
-const ClassPreview = ({classId, title, username, tags, photo, showDropdown, userAvatar, onEditClass, onDeleteClass}) => {
+const ClassPreview = ({
+                          classId,
+                          title,
+                          username,
+                          tags,
+                          grade,
+                          photo,
+                          showDropdown,
+                          userAvatar,
+                          onEditClass,
+                          onDeleteClass
+                      }) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [dropdownPosition, setDropdownPosition] = useState("right"); // Позиция дропдауна
+    const [dropdownPosition, setDropdownPosition] = useState("right");
 
     const toast = useRef(null);
 
@@ -65,6 +76,7 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
 
     // translation
     const t = useTranslations('ClassPreview');
+    const gradeTranslation = useTranslations("Grade")
     const deleteClassTranslation = useTranslations("DialogModal.DeleteClass");
 
     // const postDeleteClass = () => {
@@ -107,9 +119,13 @@ const ClassPreview = ({classId, title, username, tags, photo, showDropdown, user
                 <div className="class-preview-text"> {username}</div>
                 <div className="class-preview-footer flex justify-between">
                     <div className="class-preview-tags flex flex-wrap gap-2">
-                        {tags.map((title) => (
+                        <div>{tags.map((title) => (
                             <Tag key={title} text={title}></Tag>
                         ))}
+                        </div>
+                        <div>
+                            <Tag key={grade} text={grade + gradeTranslation("grade")}></Tag>
+                        </div>
                     </div>
                     {showDropdown && (
                         <>

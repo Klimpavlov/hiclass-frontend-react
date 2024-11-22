@@ -2,16 +2,10 @@
 
 import React, {useState, useEffect, useRef} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
-import Dropdown from "@/components/Dropdowns/Dropdown";
 import InputCalendar from "@/components/Inputs/InputCalendar";
 import InputForm from "@/components/Inputs/InputForm";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postInviteClass from "@/app/[locale]/api/class/postInviteClass/postInviteClass";
-import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
-import axios from "axios";
-import ClassPreview from "@/components/ClassPreview/ClassPreview";
-import Image from "next/image";
-import Tag from "@/components/Tags/Tag";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {format} from "date-fns";
@@ -19,7 +13,7 @@ import {useTranslations} from "next-intl";
 import apiClient from "@/app/[locale]/api/utils/axios";
 
 
-const InviteModal = ({classId, disciplines, handleCloseModal, handleCloseClassPreviewModal}) => {
+const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) => {
     const toast = useRef(null);
     const localhost = getLocalhost();
 

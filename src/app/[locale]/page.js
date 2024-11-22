@@ -328,6 +328,7 @@ export default function ExplorePage() {
                                         <ClassPreview key={classInfo.classId} title={classInfo.title}
                                                       username={classInfo.userFullName}
                                                       tags={translateDisciplines(classInfo.disciplineTitle)}
+                                                      grade={classInfo.grade}
                                                       photo={classInfo.imageUrl}
                                                       userAvatar={teacher.imageUrl}
                                         />
@@ -348,6 +349,7 @@ export default function ExplorePage() {
                                         <ClassPreview key={classInfo.classId} title={classInfo.title}
                                                       username={classInfo.userFullName}
                                                       tags={translateDisciplines(classInfo.disciplineTitle)}
+                                                      grade={classInfo.grade}
                                                       photo={classInfo.imageUrl}
                                                       userAvatar={teacher.imageUrl}
                                         />
@@ -363,6 +365,7 @@ export default function ExplorePage() {
                                 title={selectedClass.title}
                                 username={selectedClass.userFullName}
                                 tags={translateDisciplines(selectedClass.disciplineTitle)}
+                                grade={selectedClass.grade}
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
