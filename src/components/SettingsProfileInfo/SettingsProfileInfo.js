@@ -182,17 +182,37 @@ const SettingsProfileInfo = () => {
             const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
             const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
 
-            // filter country
+            // // filter country
+            // const filteredCountries = countriesData.filter((country) =>
+            //     country.country.toLowerCase().includes(transliteratedCountrySearch)
+            // );
+            //
+            // setCountryData(filteredCountries);
+            //
+            // // filter city
+            // const filteredCities = filteredCountries.flatMap((country) =>
+            //     country.cities.filter((city) =>
+            //         city.toLowerCase().includes(transliteratedCitySearch)
+            //     )
+            // );
+            //
+            // setCityData(filteredCities);
+            // console.log(filteredCities);
+
             const filteredCountries = countriesData.filter((country) =>
-                country.country.toLowerCase().includes(transliteratedCountrySearch)
+                transliteratedCountrySearch.some((variant) =>
+                    country.country.toLowerCase().includes(variant)
+                )
             );
 
             setCountryData(filteredCountries);
 
-            // filter city
+            // Фильтрация городов: проверяем совпадение с любым вариантом
             const filteredCities = filteredCountries.flatMap((country) =>
                 country.cities.filter((city) =>
-                    city.toLowerCase().includes(transliteratedCitySearch)
+                    transliteratedCitySearch.some((variant) =>
+                        city.toLowerCase().includes(variant)
+                    )
                 )
             );
 
