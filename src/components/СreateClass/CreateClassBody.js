@@ -142,15 +142,15 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                            value={initialTitle} hasMaxLength={true} maxLength={25}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
-                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : t("selectGrade")}
+                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : <span className='text-gray-400'>{t("selectGrade")}</span>}
                           options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText={t("subject")}
-                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : t("selectSubject")}
+                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : <span className='text-gray-400'>{t("selectSubject")}</span>}
                           options={disciplines} initialSelectedOptions={initialSubjects} onChange={setSelectedDisciplines}
                           isSingleSelect={true} />
                 <Dropdown dropdownFormText={t("language")}
-                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : t("selectLanguage")}
+                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : <span className='text-gray-400'>{t("selectLanguage")}</span>}
                           options={languages} initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
             </div>
         </div>

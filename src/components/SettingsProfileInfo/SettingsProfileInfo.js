@@ -28,6 +28,7 @@ import {translateItems} from "@/app/[locale]/api/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import Cookies from "js-cookie";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
+import transliterate from "/mapping/transliteration/transliterate"
 
 const SettingsProfileInfo = () => {
 
@@ -177,17 +178,24 @@ const SettingsProfileInfo = () => {
             );
             const countriesData = response.data.data;
 
+            // transliteration of search text
+            const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+            const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+
+            // filter country
             const filteredCountries = countriesData.filter((country) =>
-                country.country.toLowerCase().includes(countrySearchText)
+                country.country.toLowerCase().includes(transliteratedCountrySearch)
             );
 
             setCountryData(filteredCountries);
 
+            // filter city
             const filteredCities = filteredCountries.flatMap((country) =>
                 country.cities.filter((city) =>
-                    city.toLowerCase().includes(citySearchText)
+                    city.toLowerCase().includes(transliteratedCitySearch)
                 )
             );
+
             setCityData(filteredCities);
             console.log(filteredCities);
         } catch (error) {
@@ -217,6 +225,9 @@ const SettingsProfileInfo = () => {
 
 
     // institution
+
+    //
+    // yandex api organization search
 
     // const [orgData, setOrgData] = useState([]);
 
@@ -255,6 +266,8 @@ const SettingsProfileInfo = () => {
     //         console.log("Error fetching organization data:", error);
     //     }
     // }
+
+    //
 
     const handleUpdateInstitution = async () => {
         if (!institutionName || !institutionAddress) {
@@ -396,8 +409,10 @@ const SettingsProfileInfo = () => {
                         <div className='py-8'>
                             {/*<div className='flex flex-col md:flex-row justify-between'>*/}
                             <InputForm inputFormText={t("firstName")} value={firstName}
+                                       placeholderText={t("placeholderFirstName")}
                                        onChange={(e) => setFirstName(e.target.value)}/>
                             <InputForm inputFormText={t("lastName")} value={lastName}
+                                       placeholderText={t("placeholderLastName")}
                                        onChange={(e) => setLastName(e.target.value)}/>
                             {/*</div>*/}
                             <Dropdown
@@ -412,6 +427,7 @@ const SettingsProfileInfo = () => {
                                 }}
                             />
                             <InputForm inputFormText={t("country")} value={country}
+                                       placeholderText={t("placeholderCountry")}
                                        onChange={(e) => setCountry(e.target.value)}
                                        onFocus={() => setIsCountryInputActive(true)}/>
                             {country !== '' && (
@@ -433,6 +449,7 @@ const SettingsProfileInfo = () => {
                                 </div>
                             )}
                             <InputForm inputFormText={t("city")} value={city}
+                                       placeholderText={t("placeholderCity")}
                                        onChange={(e) => setCity(e.target.value)}
                                        onFocus={() => setIsCityInputActive(true)}/>
                             {city !== '' && (
