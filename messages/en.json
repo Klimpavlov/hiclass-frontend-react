@@ -63,6 +63,8 @@
     "clickLinkText": "Enter the code to complete the verification process. If you don’t see the email it you may\n   need to check your spam folder.",
     "verificationCode": "Verification code",
     "placeholderVerificationCode": "Enter verification code",
+    "error": "Error",
+    "errorResetVerificationCode": "Invalid verification code",
     "resetPassword": "Reset password",
     "setupNewPassword": "Set up your new password to log in to Hi,class",
     "password": "Password",

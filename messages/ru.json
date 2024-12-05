@@ -63,6 +63,8 @@
     "clickLinkText": "Введите код, чтобы завершить процесс проверки. Если вы не видите письмо с кодом, возможно, вам\nстоит проверить папку со спамом.",
     "verificationCode": "Код подтверждения",
     "placeholderVerificationCode": "Введите код подтверждения",
+    "error": "Ошибка",
+    "errorResetVerificationCode": "Неверный код подтверждения",
     "resetPassword": "Сбросьте пароль",
     "setupNewPassword": "Установите новый пароль для входа в Hi, class",
     "password": "Пароль",
