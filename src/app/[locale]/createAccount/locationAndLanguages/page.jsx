@@ -181,6 +181,7 @@ import { translateItems } from "@/app/[locale]/api/translateItems/translateItems
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
+import transliterate from "../../../../../mapping/transliteration/transliterate";
 
 export default function LocationAndLanguages() {
     const pathname = usePathname();
@@ -250,23 +251,50 @@ export default function LocationAndLanguages() {
             );
             const countriesData = response.data.data;
 
+            // transliteration of search text
+            const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+            const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+
             const filteredCountries = countriesData.filter((country) =>
-                country.country.toLowerCase().includes(countrySearchText.toLowerCase())
+                transliteratedCountrySearch.some((variant) =>
+                    country.country.toLowerCase().includes(variant)
+                )
             );
 
             setCountryData(filteredCountries);
 
-            // Проверяем, выбрана ли страна перед поиском городов
+            // Фильтрация городов: проверяем совпадение с любым вариантом
             if (countrySearchText && filteredCountries.length > 0) {
                 const filteredCities = filteredCountries.flatMap((country) =>
                     country.cities.filter((city) =>
-                        city.toLowerCase().includes(citySearchText)
+                        transliteratedCitySearch.some((variant) =>
+                            city.toLowerCase().includes(variant)
+                        )
                     )
                 );
                 setCityData(filteredCities);
             } else {
                 setCityData([]);  // Очищаем данные городов, если страна не выбрана
             }
+
+
+            // const filteredCountries = countriesData.filter((country) =>
+            //     country.country.toLowerCase().includes(countrySearchText.toLowerCase())
+            // );
+            //
+            // setCountryData(filteredCountries);
+            //
+            // Проверяем, выбрана ли страна перед поиском городов
+            // if (countrySearchText && filteredCountries.length > 0) {
+            //     const filteredCities = filteredCountries.flatMap((country) =>
+            //         country.cities.filter((city) =>
+            //             city.toLowerCase().includes(citySearchText)
+            //         )
+            //     );
+            //     setCityData(filteredCities);
+            // } else {
+            //     setCityData([]);  // Очищаем данные городов, если страна не выбрана
+            // }
         } catch (error) {
             console.error(error);
         }

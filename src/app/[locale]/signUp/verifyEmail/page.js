@@ -41,8 +41,6 @@ export default function verifyEmail() {
                     <div className="text-4xl whitespace-pre-line text-center">{t("verifyFormText")}</div>
                     <div className="text-center">{t("sendLinkTo")}<span className='user-email'>{email}</span>
                     </div>
-                    <div className='text-center'>{t("clickLink")}
-                    </div>
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
