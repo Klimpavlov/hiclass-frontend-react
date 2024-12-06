@@ -339,6 +339,7 @@
       "error": "Error",
       "passwordsDontMatch": "Passwords do not match",
       "emptyFields": "Please fill in all fields",
+      "wrongPassword": "Wrong password provided",
       "confirmed": "Confirmed",
       "newPasswordConfirmedMessage": "New password successfully created"
     },

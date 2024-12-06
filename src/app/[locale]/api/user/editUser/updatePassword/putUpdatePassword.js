@@ -16,7 +16,7 @@ const putUpdatePassword = async (oldPassword, newPassword, toast, passwordsToast
         return true;
     } catch (error) {
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: passwordsToasts("error"), detail: error.message, life: 3000});
+            toast.current.show({severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("wrongPassword"), life: 3000});
         }
         return false;
     }

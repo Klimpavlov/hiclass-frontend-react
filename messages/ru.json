@@ -390,6 +390,7 @@
       "error": "Ошибка",
       "passwordsDontMatch": "Пароли не совпадают",
       "emptyFields": "Заполните все поля",
+      "wrongPassword": "Введен неправильный пароль",
       "confirmed": "Успешно",
       "newPasswordConfirmedMessage": "Новый пароль успешно установлен"
     },
