@@ -17,6 +17,7 @@ import {useTranslations} from "next-intl";
 import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
+import {LabelTerms} from "@/components/Label/Label";
 
 export default function SignUp() {
     const router = useRouter();
@@ -35,6 +36,8 @@ export default function SignUp() {
 
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("")
+
+    const [terms, setTerms] = useState(false);
 
     const deviceToken = useDeviceToken();
 
@@ -94,8 +97,13 @@ export default function SignUp() {
     };
 
     const handleSignUp = async () => {
-        if (!email || !password || !confirmPassword) {
-            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
+        if (!email || !password || !confirmPassword || !terms) {
+            toast.current.show({
+                severity: 'error',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("emptyFields"),
+                life: 3000
+            });
             return;
         } else if (!validateEmail(email)) {
             toast.current.show({
@@ -114,7 +122,12 @@ export default function SignUp() {
             });
             return;
         } else if (confirmPassword !== password) {
-            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("wrongConfirmPassword"), life: 3000});
+            toast.current.show({
+                severity: 'error',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("wrongConfirmPassword"),
+                life: 3000
+            });
             return;
         }
 
@@ -172,10 +185,8 @@ export default function SignUp() {
                               onClick={() => router.push(`/${locale}/signIn`)}>{t("signIn")}</span>
                     </div>
                     <GoogleButton onClick={handleGoogleSignIn}/>
-                    {/*<FacebookButton/>*/}
-                    <div className="divider"></div>
                     <div className="inputs w-full ">
-                        <div className="my-4">
+                        <div className="mb-4">
                             <InputForm inputFormText={t("email")} placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
@@ -198,10 +209,10 @@ export default function SignUp() {
                                        error={confirmPasswordError}
                                        onKeyDown={(e) => e.key === 'Enter' && handleSignUp()}
                             />
-
                         </div>
                     </div>
                     <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
+                    <LabelTerms checked={terms} onChange={(value) => setTerms(value)}/>
                 </div>
             </div>
         </main>

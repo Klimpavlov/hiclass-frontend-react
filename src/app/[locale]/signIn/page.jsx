@@ -2,7 +2,6 @@
 
 import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
-import FacebookButton from "@/components/Buttons/FacebookButton";
 import React, {useEffect, useRef, useState} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
@@ -17,6 +16,7 @@ import { signInWithPopup } from 'firebase/auth';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
+import {LabelTerms} from "@/components/Label/Label";
 
 export default function SignIn() {
     const router = useRouter();
@@ -115,10 +115,8 @@ export default function SignIn() {
                               onClick={() => router.push(`/${locale}/signUp`)}>{t("signUp")}</span>
                     </div>
                     <GoogleButton onClick={handleGoogleSignIn} />
-                    {/*<FacebookButton/>*/}
-                    <div className="divider"></div>
                     <div className="inputs w-full ">
-                        <div className="my-4">
+                        <div className="mb-4">
                             <InputForm inputFormText={t("email")} placeholderText="awesomeperson@email.com"
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
