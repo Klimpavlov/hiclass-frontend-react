@@ -297,6 +297,7 @@
       "emptyFields": "Please fill in all fields",
       "validEmail": "Please enter a valid email address",
       "invalidEmailPassword": "Invalid email or password",
+      "userNotFound": "User not found",
       "userNotVerified": "User is not verified",
       "wentWrong": "Something went wrong",
       "wrongPassword": "Wrong password provided",

@@ -27,7 +27,7 @@ export default function ForgetPassword() {
             toast.current.show({ severity: 'error', summary: errorToastsTranslations('error'), detail: errorToastsTranslations("emptyFields"), life: 3000 });
         }
         localStorage.setItem('forgetPasswordEmail', email)
-        await postEmailForgetPassword(email, successRedirect, toast);
+        await postEmailForgetPassword(email, successRedirect, errorToastsTranslations, toast);
 
     }
 
