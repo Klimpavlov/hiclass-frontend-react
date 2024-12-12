@@ -15,8 +15,29 @@ const putUpdatePassword = async (oldPassword, newPassword, toast, passwordsToast
         });
         return true;
     } catch (error) {
-        if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("wrongPassword"), life: 3000});
+        console.log(error);
+        const errorResponse = error.response?.data?.errors?.[0];
+
+        if (errorResponse?.exceptionTitle === 'UserPasswordNotSetException') {
+            toast.current.show({
+                severity: 'error',
+                summary: passwordsToasts("error"),
+                detail: passwordsToasts("passwordNotSet"),
+                life: 3000
+            });
+        }
+        if (errorResponse?.exceptionTitle === 'EqualityPropertiesException') {
+            toast.current.show({
+                severity: 'error',
+                summary: passwordsToasts("error"),
+                detail: passwordsToasts("equalPasswords"),
+                life: 3000
+            });
+        }
+        else {
+            if (toast && toast.current) {
+                toast.current.show({severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("wrongPassword"), life: 3000});
+            }
         }
         return false;
     }

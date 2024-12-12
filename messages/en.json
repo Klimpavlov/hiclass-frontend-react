@@ -305,6 +305,7 @@
       "shortPassword": "Password must be at least 6 characters",
       "userExists": "User already exists",
       "passwordIsSet": "Password is already set for this user",
+      "passwordNotSet": "Password is not set for this user",
       "chooseCountry": "Select a country before you select a city"
     },
     "Invitation": {
@@ -342,7 +343,9 @@
       "emptyFields": "Please fill in all fields",
       "wrongPassword": "Wrong password provided",
       "confirmed": "Confirmed",
-      "newPasswordConfirmedMessage": "New password successfully created"
+      "newPasswordConfirmedMessage": "New password successfully created",
+      "passwordNotSet": "Password is not set for this user",
+      "equalPasswords": "NewPassword cannot be equal to OldPassword"
     },
     "EditUser": {
       "success": "Success",
