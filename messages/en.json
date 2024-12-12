@@ -306,6 +306,7 @@
       "userExists": "User already exists",
       "passwordIsSet": "Password is already set for this user",
       "passwordNotSet": "Password is not set for this user",
+      "passwordNotSetTryGoogle": "Password is not set, login using Google",
       "chooseCountry": "Select a country before you select a city"
     },
     "Invitation": {

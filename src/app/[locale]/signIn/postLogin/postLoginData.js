@@ -31,28 +31,39 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
         console.log(error.response.status);
         console.log(error.response.data.errors[0]);
 
-        if (error.response.data.errors[0].exceptionTitle === "UserNotVerifiedException" && toast && toast.current) {
-            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("userNotVerified"), life: 3000});
-            userNotVerifiedRedirect();
-            return false;
-        }
+        const errorResponse = error.response?.data?.errors?.[0];
 
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("invalidEmailPassword"), life: 3000});
+            if (errorResponse?.exceptionTitle === "UserNotVerifiedException") {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: errorToastTranslations("userNotVerified"),
+                    life: 3000
+                });
+                userNotVerifiedRedirect();
+                return false;
+            }
+
+            if (errorResponse?.exceptionTitle === 'UserPasswordNotSetException') {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: errorToastTranslations("passwordNotSetTryGoogle"),
+                    life: 3000
+                });
+            } else {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: errorToastTranslations("invalidEmailPassword"),
+                    life: 3000
+                });
+            }
         }
         return false;
     }
 }
-
-// function setCookie(name, value, days) {
-//     let expires = "";
-//     if (days) {
-//         const date = new Date();
-//         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-//         expires = "; expires=" + date.toUTCString();
-//     }
-//     document.cookie = name + "=" + (value || "") + expires + "; path=/";
-// }
 
 export default postLoginData;
 
