@@ -30,6 +30,8 @@ const postVerificationCode = async (email, code, successRedirect, toast, t) => {
     }
     catch (error) {
         console.log(error);
+        console.log(error.response.status);
+        console.log(error.response.data.errors[0]);
         if (toast && toast.current) {
             toast.current.show({severity: 'error', summary: t("error"), detail: t("errorVerificationCode"), life: 3000});
         }

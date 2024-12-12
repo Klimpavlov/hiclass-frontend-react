@@ -28,6 +28,8 @@ const postGoogleLoginData = async (token, deviceToken) => {
         return true;
     } catch (error) {
         console.error('Error during Google login request:', error);
+        console.log(error.response.status);
+        console.log(error.response.data.errors[0]);
         return false;
     }
 }

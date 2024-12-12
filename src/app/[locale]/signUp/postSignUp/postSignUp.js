@@ -31,7 +31,8 @@ const postSignUpData = async (email, password, deviceToken, successRedirect, toa
     }
     catch (error) {
         console.log(error);
-
+        console.log(error.response.status);
+        console.log(error.response.data.errors[0]);
         const errorResponse = error.response?.data?.errors?.[0];
 
         if (toast && toast.current) {

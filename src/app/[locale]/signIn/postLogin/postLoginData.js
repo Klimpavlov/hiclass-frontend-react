@@ -29,6 +29,7 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
     } catch (error) {
         console.log(error);
         console.log(error.response.status);
+        console.log(error.response.data.errors[0]);
 
         if (error.response.data.errors[0].exceptionTitle === "UserNotVerifiedException" && toast && toast.current) {
             toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("userNotVerified"), life: 3000});

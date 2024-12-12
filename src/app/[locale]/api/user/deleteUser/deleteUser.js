@@ -13,6 +13,8 @@ const deleteUser = async (successRedirect, toast, deleteUserToastTranslations) =
         return true;
     } catch (error) {
         console.log(error);
+        console.log(error.response.status);
+        console.log(error.response.data.errors[0]);
         if (toast && toast.current) {
             toast.current.show({severity: 'error', summary: deleteUserToastTranslations("error"), detail: error.message, life: 3000});
         }
