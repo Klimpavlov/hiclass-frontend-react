@@ -7,7 +7,7 @@ import imgSrc from '../Header/hiClass_logo.svg';
 import imgUKFlag from '@/components/Header/RegistrationHeader/FlagUnited Kingdom.svg'
 import imgRUFlag from '@/components/Header/RegistrationHeader/ru.svg'
 import imgNotificationBtn from '../Header/notification-bell.svg';
-import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
+import defaultUserImage from '@/components/User/UserInfo/avatar-default.svg';
 import Link from 'next/link'
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import 'primereact/resources/primereact.min.css';

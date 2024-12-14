@@ -1,14 +1,14 @@
 'use client'
 
 import React, {useEffect, useRef, useState} from "react";
-import UserInfo from "@/components/UserInfo/UserInfo";
+import UserInfo from "@/components/User/UserInfo/UserInfo";
 import ApplyButton from "@/components/Buttons/ApplyButton";
-import ClassPreview from "@/components/ClassPreview/ClassPreview";
-import CreateClassModal from "@/components/СreateClass/CreateClassModal";
+import ClassPreview from "@/components/Class/ClassPreview/ClassPreview";
+import CreateClassModal from "@/components/Class/СreateClass/CreateClassModal";
 import {usePathname} from "next/navigation";
 import {useTranslations} from "next-intl";
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
-import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {RingLoader} from "react-spinners";
 

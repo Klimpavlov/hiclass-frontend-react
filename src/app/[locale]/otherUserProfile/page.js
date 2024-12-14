@@ -3,13 +3,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
-import UserInfo from "@/components/UserInfo/UserInfo";
-import ClassPreview from "@/components/ClassPreview/ClassPreview";
+import UserInfo from "@/components/User/UserInfo/UserInfo";
+import ClassPreview from "@/components/Class/ClassPreview/ClassPreview";
 import {usePathname, useRouter} from "next/navigation";
 import OtherUserInfo from "@/components/OtherUserInfo/OtherUserInfo";
 import axios from "axios";
 import {RingLoader} from "react-spinners";
-import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
+import ClassPreviewModal from "@/components/Class/ClassPreview/ClassPreviewModal";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";

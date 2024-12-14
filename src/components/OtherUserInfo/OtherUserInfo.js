@@ -10,7 +10,7 @@ import UserProfileChatBtn from "@/components/Buttons/UserProfileChatBtn";
 import UserProfileSendInviteBtn from "@/components/Buttons/UserProfileSendInvite";
 import Image from "next/image";
 import {useTranslations} from "next-intl";
-import imgLightning from "@/components/UserInfo/lightning.svg";
+import imgLightning from "@/components/User/UserInfo/lightning.svg";
 
 const OtherUserInfo = ({
                            username,

@@ -4,14 +4,14 @@ import React, {useEffect, useRef, useState} from "react";
 import Header from "@/components/Header/Header";
 import TopSection from "@/components/TopSection/TopSection";
 import Filter from "@/components/Filter/Filter";
-import ClassPreview from "@/components/ClassPreview/ClassPreview";
+import ClassPreview from "@/components/Class/ClassPreview/ClassPreview";
 import {getAvailableDisciplines} from "@/app/[locale]/api/staticData/getAvailableDisciplines/getAvailableDisciplines";
 import {getAvailableLanguages} from "@/app/[locale]/api/staticData/getAvailableLanguages/getAvailableLanguages";
 import {getAvailableCountries} from "@/app/[locale]/api/staticData/getAvailableCountry/getAvailableCountries";
 import {getDefaultSearch} from "@/app/[locale]/api/search/defaultSearch/defaultSearch";
 import {searchRequest} from "@/app/[locale]/api/search/searchRequest/searchRequest";
 import Tag from "@/components/Tags/Tag";
-import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
+import ClassPreviewModal from "@/components/Class/ClassPreview/ClassPreviewModal";
 import {RingLoader} from "react-spinners";
 import {useTranslations} from "next-intl";
 import ruLocale from '/messages/ru.json';
@@ -358,6 +358,7 @@ export default function ExplorePage() {
                                                    photo={expert.imageUrl}
                                                    userAvatar={expert.imageUrl}
                                                    tags={translateDisciplines(expert.disciplineTitles.toString())}
+                                                   grades={expert.gradeNumbers}
                                     />
                                 </div>
                             ))

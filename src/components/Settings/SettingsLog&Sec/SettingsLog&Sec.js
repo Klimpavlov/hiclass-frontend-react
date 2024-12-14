@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import SettingsSection from "@/components/SettingsSection/SettingsSection";
+import SettingsSection from "@/components/Settings/SettingsSection/SettingsSection";
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";

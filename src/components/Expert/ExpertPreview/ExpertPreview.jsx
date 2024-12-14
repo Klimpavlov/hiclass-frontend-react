@@ -2,12 +2,14 @@
 
 import React from "react";
 import Image from "next/image";
-import imgDefaultClass from "@/components/ClassPreview/defaultClassImage.jpg";
-import defaultUserImage from "@/components/UserInfo/avatar-default.svg";
+import imgDefaultClass from "@/components/Class/ClassPreview/defaultClassImage.jpg";
+import defaultUserImage from "@/components/User/UserInfo/avatar-default.svg";
 import Tag from "@/components/Tags/Tag";
 import {useTranslations} from "next-intl";
 
-const ExpertPreview = ({photo, userAvatar, username, tags}) => {
+const ExpertPreview = ({photo, userAvatar, username, tags, grades}) => {
+
+    const gradeTranslation = useTranslations("Grade");
 
     return (
         <div className='w-64'>
@@ -35,10 +37,12 @@ const ExpertPreview = ({photo, userAvatar, username, tags}) => {
                 </div>
                 <div className='flex justify-between'>
                     <div className="flex flex-wrap gap-2">
-                        <div>{tags.map((title) => (
+                        {tags.map((title) => (
                             <Tag key={title} text={title}></Tag>
                         ))}
-                        </div>
+                        {grades.map((grade) => (
+                            <Tag key={grade} text={grade + gradeTranslation("grade")}></Tag>
+                        ))}
                     </div>
                 </div>
             </div>

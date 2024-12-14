@@ -2,10 +2,10 @@ import Image from "next/image";
 import Tag from "@/components/Tags/Tag";
 import React, {useState} from "react";
 import ApplyButton from "@/components/Buttons/ApplyButton";
-import InviteModal from "@/components/InviteClass/InviteModal";
+import InviteModal from "@/components/Class/InviteClass/InviteModal";
 import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
-import imgDefaultClass from "@/components/ClassPreview/defaultClassImage.jpg";
+import imgDefaultClass from "@/components/Class/ClassPreview/defaultClassImage.jpg";
 
 const ClassPreviewModal = ({headerText, title, username, tags, grade, handleCloseModal, classId, photo, handleCloseClassPreviewModal}) => {
     const router = useRouter()

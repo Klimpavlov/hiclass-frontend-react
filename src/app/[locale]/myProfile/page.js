@@ -1,6 +1,6 @@
 import Header from "@/components/Header/Header";
 import Banner from "@/components/Banner/Banner";
-import UserProfile from "@/components/UserProfile/UserProfile";
+import UserProfile from "@/components/User/UserProfile/UserProfile";
 
 export default function MyProfile() {
 

@@ -9,13 +9,13 @@ import Link from "next/link";
 import Image from "next/image";
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import {useTranslations} from "next-intl";
-import imgLocalCountry from "@/components/UserInfo/pinCountry.svg"
-import imgLocalTime from "@/components/UserInfo/localTime.svg"
-import imgInstitution from "@/components/UserInfo/institutionAddress.svg"
-import imgLightning from "@/components/UserInfo/lightning.svg"
+import imgLocalCountry from "@/components/User/UserInfo/pinCountry.svg"
+import imgLocalTime from "@/components/User/UserInfo/localTime.svg"
+import imgInstitution from "@/components/User/UserInfo/institutionAddress.svg"
+import imgLightning from "@/components/User/UserInfo/lightning.svg"
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
-import defaultUserImage from '@/components/UserInfo/avatar-default.svg';
+import defaultUserImage from '@/components/User/UserInfo/avatar-default.svg';
 import {usePathname} from "next/navigation";
 const UserInfo = () => {
     const pathname = usePathname();

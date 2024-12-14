@@ -5,10 +5,10 @@ import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProf
 import Image from "next/image";
 import {getClassInfo} from "@/app/[locale]/api/class/getClassProfile/getClassInfo";
 import {useTranslations} from "next-intl";
-import ruLocale from "../../../messages/ru.json";
+import ruLocale from "../../../../messages/ru.json";
 import {usePathname} from "next/navigation";
-import disciplinesMapping from "../../../mapping/disciplinesMapping/disciplinesMapping.json";
-import languagesMapping from "../../../mapping/languagesMapping/languagesMapping.json";
+import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
+import languagesMapping from "../../../../mapping/languagesMapping/languagesMapping.json";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 
 

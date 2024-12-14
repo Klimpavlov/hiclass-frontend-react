@@ -2,18 +2,18 @@
 
 import React, {useEffect, useRef, useState} from "react";
 import Tag from "@/components/Tags/Tag";
-import imgSrc from '@/components/ClassPreview/class-menu-icon.svg';
+import imgSrc from '@/components/Class/ClassPreview/class-menu-icon.svg';
 import deleteClass from "@/app/[locale]/api/class/deleteClass/deleteClass";
 import Image from "next/image";
-import EditClassModal from "@/components/EditClass/EditClassModal";
+import EditClassModal from "@/components/Class/EditClass/EditClassModal";
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
-import imgDefaultClass from "../ClassPreview/defaultClassImage.jpg";
-import defaultUserImage from "@/components/UserInfo/avatar-default.svg";
+import imgDefaultClass from "./defaultClassImage.jpg";
+import defaultUserImage from "@/components/User/UserInfo/avatar-default.svg";
 
 
 const ClassPreview = ({
