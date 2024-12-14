@@ -35,7 +35,7 @@ const ExpertPreview = ({photo, userAvatar, username, tags, grades}) => {
                     </div>
                     <div className="username text-black font-bold cursor-pointer ml-1">{username}</div>
                 </div>
-                <div className='flex justify-between'>
+                <div className='flex justify-between mt-1'>
                     <div className="flex flex-wrap gap-2">
                         {tags.map((title) => (
                             <Tag key={title} text={title}></Tag>
