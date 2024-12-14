@@ -1,4 +1,3 @@
-import axios from "axios";
 import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postCreateClass = async (title, gradeNumber, languageTitles, disciplineTitles, toast) => {

@@ -15,7 +15,7 @@ import ClassPreviewModal from "@/components/ClassPreview/ClassPreviewModal";
 import {RingLoader} from "react-spinners";
 import {useTranslations} from "next-intl";
 import ruLocale from '/messages/ru.json';
-import {usePathname} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import getAvailableGrades from "@/app/[locale]/api/staticData/getAvailableGrades/getAvailableGrades";
@@ -23,11 +23,12 @@ import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {initializeApp} from 'firebase/app';
 import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import ExpertPreview from "@/components/Expert/ExpertPreview/ExpertPreview";
 
 export default function ExplorePage() {
     const pathname = usePathname();
     const currentPathname = pathname.slice(1);
-
+    const router = useRouter();
     const toast = useRef(null);
 
     const [loading, setLoading] = useState(true);
@@ -35,6 +36,7 @@ export default function ExplorePage() {
     const [selectedClass, setSelectedClass] = useState(null);
     const [searchClassData, setSearchClassData] = useState([]);
     const [teacherProfileData, setTeacherProfileData] = useState([]);
+    const [searchExperts, setSearchExperts] = useState([]);
 
     const [disciplines, setDisciplines] = useState([]);
     const [languages, setLanguages] = useState([]);
@@ -157,6 +159,13 @@ export default function ExplorePage() {
         localStorage.setItem('selectedUserId', teacher.userId);
     };
 
+    const handleExpertClick = (expertId) => {
+        console.log('click')
+        localStorage.setItem('selectedUserId', expertId);
+        router.push('/otherUserProfile')
+    }
+
+
     // // get user`s avatars
     //
     // const [userAvatar, setUserAvatar] = useState([]);
@@ -244,7 +253,9 @@ export default function ExplorePage() {
 
         try {
             const response = await searchRequest(accessToken, searchUrl);
+            console.error(response);
             setSearchClassData(response.teacherProfiles);
+            setSearchExperts(response.expertProfiles);
         } catch (error) {
             console.error(error);
         }
@@ -319,6 +330,8 @@ export default function ExplorePage() {
                             )}
                         </div>
                     </div>
+
+                    {/*Show search classes by filters*/}
                     <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
                         <div
                             className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
@@ -335,12 +348,28 @@ export default function ExplorePage() {
                                     </div>
                                 ))
                             ))}
+
+                            {/*Show experts*/}
+
+                            {searchExperts.map((expert) => (
+                                <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
+                                    <ExpertPreview key={expert.id}
+                                                   username={expert.firstName + ' ' + expert.lastName}
+                                                   photo={expert.imageUrl}
+                                                   userAvatar={expert.imageUrl}
+                                                   tags={translateDisciplines(expert.disciplineTitles.toString())}
+                                    />
+                                </div>
+                            ))
+                            }
                         </div>
                         <div className='flex justify-between mt-4 md:mt-8'>
                             <div className='font-bold'>{t('mostPopularClasses')}<span
                                 className='text-green-700'>{t('Belarus')}</span></div>
                             {/*<div className='text-green-700'>{t('seeAll')}</div>*/}
                         </div>
+
+                        {/*Show default search classes*/}
                         <div
                             className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                             {teacherProfileData.map((teacher) => (

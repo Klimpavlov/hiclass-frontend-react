@@ -12,7 +12,18 @@ import Image from "next/image";
 import {useTranslations} from "next-intl";
 import imgLightning from "@/components/UserInfo/lightning.svg";
 
-const OtherUserInfo = ({username, isExpert, languageTitles, email, userAvatar, userDescription, country, disciplines, toast}) => {
+const OtherUserInfo = ({
+                           username,
+                           isExpert,
+                           isTeacher,
+                           languageTitles,
+                           email,
+                           userAvatar,
+                           userDescription,
+                           country,
+                           disciplines,
+                           toast
+                       }) => {
     const t = useTranslations("OtherUserProfile");
 
 
@@ -42,7 +53,13 @@ const OtherUserInfo = ({username, isExpert, languageTitles, email, userAvatar, u
             <div className="languages">{t("speaks", {languages: languageTitles.join(", ")})}</div>
             <div className='aboutUser '>{userDescription}</div>
             <div className='country'></div>
-            <div className='w-full'><UserProfileSendInviteBtn toast={toast} buttonText={t("sendInvite")}/></div>
+            <div className='w-full'>
+                <UserProfileSendInviteBtn toast={toast}
+                                          isExpert={isExpert}
+                                          isTeacher={isTeacher}
+                                          buttonText={t("sendInvite")}
+                />
+            </div>
             <div className='w-full'><UserProfileChatBtn buttonText={t("chatWith")}/></div>
             <div className='location'>{country}</div>
             <div className='tags flex flex-wrap gap-2'>
