@@ -364,5 +364,8 @@
       "success": "Success",
       "successMessage": "Success login"
     }
+  },
+  "IsExpert": {
+    "expert": "Expert"
   }
 }
