@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import EditProfileButton from "@/components/Buttons/EditProfileButton";
-import Switch from "@/components/Buttons/SwitchButton";
+import Switch from "@/components/Buttons/Switch/SwitchButton(prev)";
 import Tag from "@/components/Tags/Tag";
 import axios from "axios";
 import Link from "next/link";

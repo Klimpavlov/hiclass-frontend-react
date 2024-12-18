@@ -24,6 +24,7 @@ import {initializeApp} from 'firebase/app';
 import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import ExpertPreview from "@/components/Expert/ExpertPreview/ExpertPreview";
+import {SwitchDemo} from "@/components/Buttons/Switch/Switch";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -292,8 +293,9 @@ export default function ExplorePage() {
                     <ErrorNotification ref={toast}/>
                     <Header testNotifications={notification}/>
                     <TopSection/>
+                    <div className='flex justify-between border-b border-b-gray'>
                     <div
-                        className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4 border-b border-b-gray">
+                        className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4">
                         <div className="flex flex-wrap gap-2 px-4 md:px-8">
                             <Filter buttonText={filtersTranslation('Subject')}
                                     options={disciplines} onApply={handleFilterApply}
@@ -318,6 +320,11 @@ export default function ExplorePage() {
                                     currentFilters={currentFilters}/>
                         </div>
                     </div>
+                        <div className='flex items-center px-8 md:px-16'>
+                            <SwitchDemo/>
+                        </div>
+                    </div>
+
                     <div className="applied-filters-container px-4 md:px-8">
                         <div className='px-4 md:px-8 pt-2 md:pt-4'>
                             {Object.entries(currentFilters).flatMap(([filterName, filterValues]) =>
