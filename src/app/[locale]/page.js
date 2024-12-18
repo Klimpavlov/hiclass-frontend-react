@@ -38,6 +38,7 @@ export default function ExplorePage() {
     const [searchClassData, setSearchClassData] = useState([]);
     const [teacherProfileData, setTeacherProfileData] = useState([]);
     const [searchExperts, setSearchExperts] = useState([]);
+    const [isSwitchOn, setIsSwitchOn] = useState(false)
 
     const [disciplines, setDisciplines] = useState([]);
     const [languages, setLanguages] = useState([]);
@@ -206,6 +207,7 @@ export default function ExplorePage() {
     const handleClearAll = () => {
         setCurrentFilters({});
         setSearchClassData([]);
+        setSearchExperts([]);
     };
 
     const handleRemoveTag = (filterName, filterValue) => {
@@ -217,6 +219,11 @@ export default function ExplorePage() {
         setCurrentFilters(updatedFilters);
         handleSearchRequest(updatedFilters);
     };
+
+    const handleSwitchChange = (checked) => {
+        setIsSwitchOn(checked);
+        console.log("Switch state:", checked)
+    }
 
     const handleSearchRequest = async (filters) => {
         const accessToken = localStorage.getItem('accessToken');
@@ -255,12 +262,19 @@ export default function ExplorePage() {
         try {
             const response = await searchRequest(accessToken, searchUrl);
             console.error(response);
-            setSearchClassData(response.teacherProfiles);
-            setSearchExperts(response.expertProfiles);
+            if (isSwitchOn === true) {
+                setSearchClassData([]);
+                setSearchExperts(response.expertProfiles || []);
+            } else {
+                setSearchClassData(response.teacherProfiles || []);
+                setSearchExperts(response.expertProfiles || []);
+            }
         } catch (error) {
             console.error(error);
         }
         console.log(searchUrl);
+        console.log(searchClassData);
+
     };
 
     const translateDisciplines = (disciplines) => {
@@ -269,6 +283,7 @@ export default function ExplorePage() {
         }
         return disciplines.split(',');
     };
+
 
 
     //translation
@@ -321,7 +336,7 @@ export default function ExplorePage() {
                         </div>
                     </div>
                         <div className='flex items-center px-8 md:px-16'>
-                            <SwitchDemo/>
+                            <SwitchDemo value={isSwitchOn} onChange={handleSwitchChange}/>
                         </div>
                     </div>
 
