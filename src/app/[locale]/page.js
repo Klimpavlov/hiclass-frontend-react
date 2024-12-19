@@ -223,11 +223,11 @@ export default function ExplorePage() {
     const handleSwitchChange = (checked) => {
         setIsSwitchOn(checked);
         console.log("Switch state:", checked)
+        // handleSearchRequest(currentFilters);
     }
 
     const handleSearchRequest = async (filters) => {
         const accessToken = localStorage.getItem('accessToken');
-        const localhost = getLocalhost();
 
         const getMappingFile = (filterName) => {
             if (filterName === 'Disciplines') {
@@ -262,13 +262,8 @@ export default function ExplorePage() {
         try {
             const response = await searchRequest(accessToken, searchUrl);
             console.error(response);
-            if (isSwitchOn === true) {
-                setSearchClassData([]);
-                setSearchExperts(response.expertProfiles || []);
-            } else {
                 setSearchClassData(response.teacherProfiles || []);
                 setSearchExperts(response.expertProfiles || []);
-            }
         } catch (error) {
             console.error(error);
         }
@@ -357,34 +352,53 @@ export default function ExplorePage() {
                     <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
                         <div
                             className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                            {searchClassData.map((teacher) => (
-                                teacher.classDtos.map((classInfo) => (
-                                    <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title}
-                                                      username={classInfo.userFullName}
-                                                      tags={translateDisciplines(classInfo.disciplineTitle)}
-                                                      grade={classInfo.grade}
-                                                      photo={classInfo.imageUrl}
-                                                      userAvatar={teacher.imageUrl}
-                                        />
-                                    </div>
-                                ))
-                            ))}
+                            {isSwitchOn
+                                ? (
+                                    /* Show experts only */
+                                    searchExperts.map((expert) => (
+                                        <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
+                                            <ExpertPreview key={expert.id}
+                                                           username={expert.firstName + ' ' + expert.lastName}
+                                                           photo={expert.imageUrl}
+                                                           userAvatar={expert.imageUrl}
+                                                           tags={translateDisciplines(expert.disciplineTitles.toString())}
+                                                           grades={expert.gradeNumbers}
+                                            />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>
+                                        {/* Show teachers */}
+                                        {searchClassData.map((teacher) => (
+                                            teacher.classDtos.map((classInfo) => (
+                                                <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
+                                                    <ClassPreview key={classInfo.classId} title={classInfo.title}
+                                                                  username={classInfo.userFullName}
+                                                                  tags={translateDisciplines(classInfo.disciplineTitle)}
+                                                                  grade={classInfo.grade}
+                                                                  photo={classInfo.imageUrl}
+                                                                  userAvatar={teacher.imageUrl}
+                                                    />
+                                                </div>
+                                            ))
+                                        ))}
 
-                            {/*Show experts*/}
-
-                            {searchExperts.map((expert) => (
-                                <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
-                                    <ExpertPreview key={expert.id}
-                                                   username={expert.firstName + ' ' + expert.lastName}
-                                                   photo={expert.imageUrl}
-                                                   userAvatar={expert.imageUrl}
-                                                   tags={translateDisciplines(expert.disciplineTitles.toString())}
-                                                   grades={expert.gradeNumbers}
-                                    />
-                                </div>
-                            ))
+                                        {/* Show experts */}
+                                        {searchExperts.map((expert) => (
+                                            <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
+                                                <ExpertPreview key={expert.id}
+                                                               username={expert.firstName + ' ' + expert.lastName}
+                                                               photo={expert.imageUrl}
+                                                               userAvatar={expert.imageUrl}
+                                                               tags={translateDisciplines(expert.disciplineTitles.toString())}
+                                                               grades={expert.gradeNumbers}
+                                                />
+                                            </div>
+                                        ))}
+                                    </>
+                                )
                             }
+
                         </div>
                         <div className='flex justify-between mt-4 md:mt-8'>
                             <div className='font-bold'>{t('mostPopularClasses')}<span
