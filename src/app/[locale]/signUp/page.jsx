@@ -201,7 +201,7 @@ export default function SignUp() {
                                    error={passwordError}
                                    onKeyDown={(e) => e.key === 'Enter' && handleSignUp()}
                         />
-                        <div className="my-4">
+                        <div className="mt-4">
                             <InputForm inputFormText={t("confirmPassword")}
                                        placeholderText={t("placeholderConfirmPassword")}
                                        onChange={(e) => setConfirmPassword(e.target.value)}
@@ -211,8 +211,8 @@ export default function SignUp() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
                     <LabelTerms checked={terms} onChange={(value) => setTerms(value)}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
                 </div>
             </div>
         </main>
