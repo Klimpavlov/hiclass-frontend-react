@@ -331,7 +331,7 @@ export default function ExplorePage() {
                         </div>
                     </div>
                         <div className='flex items-center px-8 md:px-16'>
-                            <SwitchDemo value={isSwitchOn} onChange={handleSwitchChange}/>
+                            <SwitchDemo text={t('showOnlyExperts')} value={isSwitchOn} onChange={handleSwitchChange}/>
                         </div>
                     </div>
 
