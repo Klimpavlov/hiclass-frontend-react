@@ -211,7 +211,7 @@ export default function SignUp() {
                             />
                         </div>
                     </div>
-                    <LabelTerms checked={terms} onChange={(value) => setTerms(value)}/>
+                    <LabelTerms text={t('terms')} checked={terms} onChange={(value) => setTerms(value)}/>
                     <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
                 </div>
             </div>

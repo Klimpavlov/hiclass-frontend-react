@@ -28,6 +28,7 @@
     "confirmPassword": "Подтвердите пароль",
     "placeholderConfirmPassword": "Повторно введите пароль",
     "ContinueBtn": "Продолжить",
+    "terms": "Принять условия использования",
     "VerifyEmail": {
       "error": "Ошибка",
       "verifyFormText": "Подтвердите свой адрес электронной почты",

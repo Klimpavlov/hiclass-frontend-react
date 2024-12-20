@@ -28,6 +28,7 @@
     "confirmPassword": "Confirm password",
     "placeholderConfirmPassword": "Re-enter your password",
     "ContinueBtn": "Continue",
+    "terms": "Accept terms and conditions",
     "VerifyEmail": {
       "error": "Error",
       "verifyFormText": "Verify your email address",
