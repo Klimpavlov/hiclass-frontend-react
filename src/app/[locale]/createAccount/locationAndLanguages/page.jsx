@@ -337,11 +337,14 @@ export default function LocationAndLanguages() {
                                        onFocus={handleCountryInputFocus}
                                        onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
                             />
+                            <div className="relative">
                             {isDropdownOpen && country !== '' && (
-                                <div className="dropdown max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>
+                                <div
+                                    className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                <div className="cursor-pointer max-h-60 overflow-y-auto" ref={dropdownRef}>
                                     {countryData.map((country) => (
                                         <div key={country.country}
-                                             className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
+                                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
                                              onClick={() => {
                                                  setCountry(country.country);
                                                  setIsDropdownOpen(false);  // Закрываем дропдаун после выбора
@@ -350,7 +353,9 @@ export default function LocationAndLanguages() {
                                         </div>
                                     ))}
                                 </div>
+                                </div>
                             )}
+                            </div>
                             <InputForm inputFormText={t("city")} value={city}
                                        placeholderText={t("placeholderCity")}
                                        onChange={(e) => setCity(e.target.value)}
