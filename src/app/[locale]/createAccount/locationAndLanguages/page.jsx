@@ -190,7 +190,11 @@ export default function LocationAndLanguages() {
 
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);  // Статус дропдауна для стран и городов
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const [isCountryInputActive, setIsCountryInputActive] = useState(false);
+    const [isCityInputActive, setIsCityInputActive] = useState(false);
+
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
 
@@ -331,52 +335,114 @@ export default function LocationAndLanguages() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
+                            {/*<InputForm inputFormText={t("country")} value={country}*/}
+                            {/*           placeholderText={t("placeholderCountry")}*/}
+                            {/*           onChange={(e) => setCountry(e.target.value)}*/}
+                            {/*           onFocus={handleCountryInputFocus}*/}
+                            {/*           onKeyDown={(e) => e.key === 'Enter' && handleContinue()}*/}
+                            {/*/>*/}
+                            {/*<div className="relative">*/}
+                            {/*{isDropdownOpen && country !== '' && (*/}
+                            {/*    <div*/}
+                            {/*        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                            {/*    <div className="cursor-pointer max-h-60 overflow-y-auto" ref={dropdownRef}>*/}
+                            {/*        {countryData.map((country) => (*/}
+                            {/*            <div key={country.country}*/}
+                            {/*                 className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                            {/*                 onClick={() => {*/}
+                            {/*                     setCountry(country.country);*/}
+                            {/*                     setIsDropdownOpen(false);  // Закрываем дропдаун после выбора*/}
+                            {/*                 }}>*/}
+                            {/*                {country.country}*/}
+                            {/*            </div>*/}
+                            {/*        ))}*/}
+                            {/*    </div>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+                            {/*</div>*/}
+                            {/*<InputForm inputFormText={t("city")} value={city}*/}
+                            {/*           placeholderText={t("placeholderCity")}*/}
+                            {/*           onChange={(e) => setCity(e.target.value)}*/}
+                            {/*           onFocus={handleCityInputFocus}  // Обрабатываем фокус на поле города*/}
+                            {/*           disabled={!country}  // Отключаем поле города, если страна не выбрана*/}
+                            {/*           onKeyDown={(e) => e.key === 'Enter' && handleContinue()}*/}
+                            {/*/>*/}
+                            {/*<div className="relative">*/}
+                            {/*{isDropdownOpen && city !== '' && country && (  // Показываем дропдаун только если выбрана страна*/}
+                            {/*    <div*/}
+                            {/*        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                            {/*    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>*/}
+                            {/*        {cityData.map((cityItem) => (*/}
+                            {/*            <div key={cityItem}*/}
+                            {/*                 className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                            {/*                 onClick={() => {*/}
+                            {/*                     setCity(cityItem);*/}
+                            {/*                     setIsDropdownOpen(false);  // Закрываем дропдаун после выбора*/}
+                            {/*                 }}>*/}
+                            {/*                {cityItem}*/}
+                            {/*            </div>*/}
+                            {/*        ))}*/}
+                            {/*    </div>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+                            {/*</div>*/}
+
+
                             <InputForm inputFormText={t("country")} value={country}
                                        placeholderText={t("placeholderCountry")}
                                        onChange={(e) => setCountry(e.target.value)}
-                                       onFocus={handleCountryInputFocus}
-                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
-                            />
-                            <div className="relative">
-                            {isDropdownOpen && country !== '' && (
-                                <div
-                                    className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                                <div className="cursor-pointer max-h-60 overflow-y-auto" ref={dropdownRef}>
-                                    {countryData.map((country) => (
-                                        <div key={country.country}
-                                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                             onClick={() => {
-                                                 setCountry(country.country);
-                                                 setIsDropdownOpen(false);  // Закрываем дропдаун после выбора
-                                             }}>
-                                            {country.country}
+                                       onFocus={() => setIsCountryInputActive(true)}/>
+                            {country !== '' && (
+                                <div className="relative">
+                                    {isCountryInputActive && (
+                                        <div
+                                            className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                            <div className="cursor-pointer max-h-60 overflow-y-auto">
+                                                {countryData.map((country) => (
+                                                    <div
+                                                        key={country}
+                                                        className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                        onClick={() => {
+                                                            setCountry(country.country);
+                                                            setIsCountryInputActive(false);
+                                                        }}
+                                                    >
+                                                        {country.country}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    ))}
-                                </div>
+                                    )}
                                 </div>
                             )}
-                            </div>
                             <InputForm inputFormText={t("city")} value={city}
                                        placeholderText={t("placeholderCity")}
                                        onChange={(e) => setCity(e.target.value)}
-                                       onFocus={handleCityInputFocus}  // Обрабатываем фокус на поле города
-                                       disabled={!country}  // Отключаем поле города, если страна не выбрана
-                                       onKeyDown={(e) => e.key === 'Enter' && handleContinue()}
-                            />
-                            {isDropdownOpen && city !== '' && country && (  // Показываем дропдаун только если выбрана страна
-                                <div className="dropdown max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>
-                                    {cityData.map((cityItem) => (
-                                        <div key={cityItem}
-                                             className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
-                                             onClick={() => {
-                                                 setCity(cityItem);
-                                                 setIsDropdownOpen(false);  // Закрываем дропдаун после выбора
-                                             }}>
-                                            {cityItem}
+                                       onFocus={() => setIsCityInputActive(true)}/>
+                            {city !== '' && (
+                                <div className="relative">
+                                    {isCityInputActive && (
+                                        <div
+                                            className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+
+                                            <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
+                                                {cityData.map((cityItem) => (
+                                                    <div key={cityItem}
+                                                         className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                         onClick={() => {
+                                                             setCity(cityItem);
+                                                             setIsCityInputActive(false)
+                                                         }}>
+                                                        {cityItem}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
                             )}
+
+
                         </div>
                         <Dropdown dropdownFormText={t("languages")} placeholderText={t("placeholderLanguages")}
                                   options={languages}
