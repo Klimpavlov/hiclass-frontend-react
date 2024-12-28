@@ -108,15 +108,15 @@ const SettingsProfileInfo = () => {
     // const [file, setFile] = useState();
 
     async function getFile(event) {
-        if (!userAvatar) {
-            toast.current.show({
-                severity: 'error',
-                summary: errorToastTranslations("error"),
-                detail: errorToastTranslations("wentWrong"),
-                life: 3000
-            });
-            return;
-        }
+        // if (!userAvatar) {
+        //     toast.current.show({
+        //         severity: 'error',
+        //         summary: errorToastTranslations("error"),
+        //         detail: errorToastTranslations("wentWrong"),
+        //         life: 3000
+        //     });
+        //     return;
+        // }
         const selectedFile = event.target.files[0];
 
         const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);

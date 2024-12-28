@@ -14,7 +14,7 @@ const putEditUserImage = async (userImage, toast) => {
 
         console.log(response);
         // page reload
-        window.location.reload()
+        // window.location.reload()
         return true
     }
     catch (error) {
