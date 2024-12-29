@@ -67,6 +67,8 @@ const SettingsProfileInfo = () => {
 
     const [userAvatar, setUserAvatar] = useState([]);
 
+    const [file, setFile] = useState();
+
     const [isInstitutionInputActive, setIsInstitutionInputActive] = useState(false);
     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
     const [isCityInputActive, setIsCityInputActive] = useState(false);
@@ -118,7 +120,7 @@ const SettingsProfileInfo = () => {
         //     return;
         // }
         const selectedFile = event.target.files[0];
-
+        setFile(URL.createObjectURL(selectedFile));
         const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);
 
         if (updateUserImageSuccess) {
@@ -425,14 +427,25 @@ const SettingsProfileInfo = () => {
                     <div className="button group pt-5">
                         <input className='hidden' type="file" onChange={getFile}/>
                         <div className="rounded-full overflow-hidden w-36 h-36">
-                            <Image
-                                className="w-full h-full object-cover"
-                                src={userAvatar || defaultUserImage}
-                                alt="user-avatar"
-                                width={144}
-                                height={144}
-                                quality={100}
-                            />
+                            {file ? (
+                                <Image
+                                    className="w-full h-full object-cover"
+                                    src={file}
+                                    alt="user-avatar"
+                                    width={144}
+                                    height={144}
+                                    quality={100}
+                                />
+                            ) : (
+                                <Image
+                                    className="w-full h-full object-cover"
+                                    src={userAvatar || defaultUserImage}
+                                    alt="user-avatar"
+                                    width={144}
+                                    height={144}
+                                    quality={100}
+                                />
+                            )}
                         </div>
                         <div className="">
                             <ApplyButton buttonText={t("replaceBtn")}
