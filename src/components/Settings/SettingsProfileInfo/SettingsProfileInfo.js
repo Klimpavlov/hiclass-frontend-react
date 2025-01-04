@@ -25,6 +25,7 @@ import {useTranslations} from "next-intl";
 import {usePathname} from "next/navigation";
 import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "../../../../mapping/languagesMapping/languagesMapping.json";
+import positionMapping from "../../../../mapping/positionMapping/positionMapping.json"
 import {translateItems} from "@/app/[locale]/api/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import Cookies from "js-cookie";

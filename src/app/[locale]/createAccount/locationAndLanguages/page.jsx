@@ -1,170 +1,3 @@
-// 'use client';
-//
-// import React, {useState, useEffect, useRef} from 'react';
-// import {useRouter} from "next/navigation";
-// import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
-// import ContinueButton from "@/components/Buttons/ContinueButton";
-// import InputForm from "@/components/Inputs/InputForm";
-// import Dropdown from "@/components/Dropdowns/Dropdown";
-// import axios from "axios";
-// import {getAvailableLanguages} from "@/app/[locale]/api/getAvailableLanguages/getAvailableLanguages";
-// import ErrorNotification from "@/components/Error/ErrorNotification";
-// import {useTranslations} from "next-intl";
-// import {translateItems} from "@/app/[locale]/translateItems/translateItems";
-// import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
-// import {usePathname} from "next/navigation";
-//
-// export default function locationAndLanguages() {
-//     const pathname = usePathname();
-//     const toast = useRef(null);
-//
-//     const router = useRouter();
-//     const [languages, setLanguages] = useState([]);
-//     const [selectedLanguages, setSelectedLanguages] = useState([]);
-//
-//     const t = useTranslations("CreateAccount.LocationAndLanguages")
-//     const errorTranslations = useTranslations("DialogModal.Error")
-//
-//     localStorage.setItem('languages', selectedLanguages);
-//
-//
-//     // languages
-//
-//     useEffect(() => {
-//         getLanguages()
-//     }, []);
-//
-//
-//     async function getLanguages() {
-//         const accessToken = localStorage.getItem('accessToken');
-//         const availableLanguages = await getAvailableLanguages(accessToken);
-//         setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
-//     }
-//
-//
-//     // country
-//
-//     const [country, setCountry] = useState('');
-//     const [city, setCity] = useState('');
-//
-//     const [countryData, setCountryData] = useState([]);
-//     const [cityData, setCityData] = useState([]);
-//
-//     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
-//     const [isCityInputActive, setIsCityInputActive] = useState(false);
-//
-//     localStorage.setItem('country', country);
-//     localStorage.setItem('city', city);
-//
-//     useEffect(() => {
-//         getLocation(country.toLowerCase(), city.toLowerCase());
-//     }, [country, city]);
-//
-//
-//
-//     async function getLocation(countrySearchText, citySearchText) {
-//         try {
-//             const response = await axios.get(
-//                 `https://countriesnow.space/api/v0.1/countries`
-//             );
-//             const countriesData = response.data.data;
-//
-//             const filteredCountries = countriesData.filter((country) =>
-//                 country.country.toLowerCase().includes(countrySearchText.toLowerCase())
-//             );
-//
-//             setCountryData(filteredCountries);
-//
-//             const filteredCities = filteredCountries.flatMap((country) =>
-//                 country.cities.filter((city) =>
-//                     city.toLowerCase().includes(citySearchText)
-//                 )
-//             );
-//             setCityData(filteredCities);
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     }
-//
-//
-//     const handleContinue = () => {
-//         if (!country || !city || selectedLanguages.length === 0) {
-//             toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
-//             return;
-//         }
-//             router.push('/createAccount/institution')
-//     }
-//
-//     // const preventCitySearch = () => {
-//     //     // toast.current.show({ severity: 'error', summary: 'Error', detail: 'Please fill in country field', life: 3000 });
-//     // }
-//
-//     return (
-//         <main>
-//             <ErrorNotification ref={toast} />
-//             <RegistrationHeader/>
-//             <div className='flex flex-col items-center justify-center'>
-//                 <div className="content flex flex-col items-center gap-8 w-full
-//              max-w-screen-sm p-4 md:p-8 lg:p-16 xl:p-20 2xl:p-32">
-//                     <div className="text-4xl whitespace-pre-line">{t("welcome")}</div>
-//                     <div className="">{t("locationFormText")}
-//                     </div>
-//                     <div className="divider"></div>
-//                     <div className="inputs w-full ">
-//                         <div className="my-4">
-//                             <InputForm inputFormText={t("country")} value={country}
-//                                        placeholderText={t("placeholderCountry")}
-//                                        onChange={(e) => setCountry(e.target.value)}
-//                                        onFocus={() => setIsCountryInputActive(true)}/>
-//                             {country !== '' && (
-//                                 <div className="">
-//                                     {isCountryInputActive && (
-//                                         <div className="cursor-pointer py-2x max-h-60 overflow-y-auto">
-//                                             {countryData.map((country) => (
-//                                                 <div key={country} onClick={() => {
-//                                                     setCountry(country.country);
-//                                                     setIsCountryInputActive(false);
-//                                                 }}>
-//                                                     {country.country}
-//                                                 </div>
-//                                             ))}
-//                                         </div>
-//                                     )}
-//                                 </div>
-//                             )}
-//                             <InputForm inputFormText={t("city")} value={city}
-//                                        placeholderText={t("placeholderCity")}
-//                                        onChange={(e) => setCity(e.target.value)}
-//                                        onFocus={() => setIsCityInputActive(true)}/>
-//                             {city !== '' && (
-//                                 <div className="">
-//                                     {isCityInputActive && (
-//                                         <div className="cursor-pointer py-2 max-h-60 overflow-y-auto">
-//                                             {cityData.map((cityItem) => (
-//                                                 <div key={cityItem} onClick={() => {
-//                                                     setCity(cityItem);
-//                                                     setIsCityInputActive(false)
-//                                                 }}>
-//                                                     {cityItem}
-//                                                 </div>
-//                                             ))}
-//                                         </div>
-//                                     )}
-//                                 </div>
-//                             )}
-//                         </div>
-//                         <Dropdown dropdownFormText={t("languages")} placeholderText={t("placeholderLanguages")}
-//                                   options={languages}
-//                                   onChange={setSelectedLanguages}
-//                         />
-//                     </div>
-//                     <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
-//                 </div>
-//             </div>
-//         </main>
-//     )
-// }
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -196,19 +29,36 @@ export default function LocationAndLanguages() {
     const [isCityInputActive, setIsCityInputActive] = useState(false);
 
     const [country, setCountry] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
     const [city, setCity] = useState('');
-
+    const [selectedCity, setSelectedCity] = useState('');
     const [countryData, setCountryData] = useState([]);
     const [cityData, setCityData] = useState([]);
+
 
     const t = useTranslations("CreateAccount.LocationAndLanguages");
     const errorTranslations = useTranslations("DialogModal.Error");
 
     localStorage.setItem('languages', selectedLanguages);
-    localStorage.setItem('country', country);
-    localStorage.setItem('city', city);
+    localStorage.setItem('country', selectedCountry);
+    localStorage.setItem('city', selectedCity);
+    // localStorage.setItem('country', country);
+    // localStorage.setItem('city', city);
 
     const dropdownRef = useRef(null);  // Ссылка на дропдаун
+
+
+    const handleCountrySelect = (country) => {
+        setSelectedCountry(country);
+        setCountry(country);
+        setIsCountryInputActive(false);
+    };
+
+    const handleCitySelect = (city) => {
+        setSelectedCity(city);
+        setCity(city);
+        setIsCityInputActive(false);
+    };
 
     // Закрытие дропдауна при клике вне его
     useEffect(() => {
@@ -317,7 +167,8 @@ export default function LocationAndLanguages() {
     };
 
     const handleContinue = () => {
-        if (!country || !city || selectedLanguages.length === 0) {
+        // if (!country || !city || selectedLanguages.length === 0) {
+        if (!selectedCountry || !selectedCity || selectedLanguages.length === 0) {
             toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
@@ -388,60 +239,117 @@ export default function LocationAndLanguages() {
                             {/*</div>*/}
 
 
-                            <InputForm inputFormText={t("country")} value={country}
-                                       placeholderText={t("placeholderCountry")}
-                                       onChange={(e) => setCountry(e.target.value)}
-                                       onFocus={() => setIsCountryInputActive(true)}/>
-                            {country !== '' && (
-                                <div className="relative">
-                                    {isCountryInputActive && (
-                                        <div
-                                            className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                                            <div className="cursor-pointer max-h-60 overflow-y-auto">
-                                                {countryData.map((country) => (
-                                                    <div
-                                                        key={country}
-                                                        className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                        onClick={() => {
-                                                            setCountry(country.country);
-                                                            setIsCountryInputActive(false);
-                                                        }}
-                                                    >
-                                                        {country.country}
-                                                    </div>
-                                                ))}
+                            {/*<InputForm inputFormText={t("country")} value={country}*/}
+                            {/*           placeholderText={t("placeholderCountry")}*/}
+                            {/*           onChange={(e) => setCountry(e.target.value)}*/}
+                            {/*           onFocus={() => setIsCountryInputActive(true)}/>*/}
+                            {/*{country !== '' && (*/}
+                            {/*    <div className="relative">*/}
+                            {/*        {isCountryInputActive && (*/}
+                            {/*            <div*/}
+                            {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                            {/*                <div className="cursor-pointer max-h-60 overflow-y-auto">*/}
+                            {/*                    {countryData.map((country) => (*/}
+                            {/*                        <div*/}
+                            {/*                            key={country}*/}
+                            {/*                            className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                            {/*                            onClick={() => {*/}
+                            {/*                                setCountry(country.country);*/}
+                            {/*                                setIsCountryInputActive(false);*/}
+                            {/*                            }}*/}
+                            {/*                        >*/}
+                            {/*                            {country.country}*/}
+                            {/*                        </div>*/}
+                            {/*                    ))}*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        )}*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+                            {/*<InputForm inputFormText={t("city")} value={city}*/}
+                            {/*           placeholderText={t("placeholderCity")}*/}
+                            {/*           onChange={(e) => setCity(e.target.value)}*/}
+                            {/*           onFocus={() => setIsCityInputActive(true)}/>*/}
+                            {/*{city !== '' && (*/}
+                            {/*    <div className="relative">*/}
+                            {/*        {isCityInputActive && (*/}
+                            {/*            <div*/}
+                            {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+
+                            {/*                <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
+                            {/*                    {cityData.map((cityItem) => (*/}
+                            {/*                        <div key={cityItem}*/}
+                            {/*                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                            {/*                             onClick={() => {*/}
+                            {/*                                 setCity(cityItem);*/}
+                            {/*                                 setIsCityInputActive(false)*/}
+                            {/*                             }}>*/}
+                            {/*                            {cityItem}*/}
+                            {/*                        </div>*/}
+                            {/*                    ))}*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        )}*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+
+
+                            <InputForm
+                                inputFormText={t("country")}
+                                value={country}
+                                placeholderText={t("placeholderCountry")}
+                                onChange={(e) => setCountry(e.target.value)}
+                                onFocus={() => setIsCountryInputActive(true)}
+                            />
+                            <div className="relative">
+                            {isCountryInputActive && (
+                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
+                                        {countryData.map((countryItem) => (
+                                            <div
+                                                key={countryItem.country}
+                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                onClick={() => handleCountrySelect(countryItem.country)}
+                                            >
+                                                {countryItem.country}
                                             </div>
-                                        </div>
-                                    )}
+                                        ))}
+                                    </div>
                                 </div>
                             )}
-                            <InputForm inputFormText={t("city")} value={city}
-                                       placeholderText={t("placeholderCity")}
-                                       onChange={(e) => setCity(e.target.value)}
-                                       onFocus={() => setIsCityInputActive(true)}/>
-                            {city !== '' && (
-                                <div className="relative">
-                                    {isCityInputActive && (
-                                        <div
-                                            className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                            </div>
 
-                                            <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                                {cityData.map((cityItem) => (
-                                                    <div key={cityItem}
-                                                         className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                         onClick={() => {
-                                                             setCity(cityItem);
-                                                             setIsCityInputActive(false)
-                                                         }}>
-                                                        {cityItem}
-                                                    </div>
-                                                ))}
+                            {/* Поле для города */}
+                            <InputForm
+                                inputFormText={t("city")}
+                                value={city}
+                                placeholderText={t("placeholderCity")}
+                                onChange={(e) => setCity(e.target.value)}
+                                onFocus={() => {
+                                    if (!selectedCountry) {
+                                        toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
+                                    } else {
+                                        setIsCityInputActive(true);
+                                    }
+                                }}
+                            />
+                            <div className="relative">
+                            {isCityInputActive && (
+                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
+                                        {cityData.map((cityItem) => (
+                                            <div
+                                                key={cityItem}
+                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                onClick={() => handleCitySelect(cityItem)}
+                                            >
+                                                {cityItem}
                                             </div>
-                                        </div>
-                                    )}
+                                        ))}
+                                    </div>
                                 </div>
                             )}
-
+                            </div>
 
                         </div>
                         <Dropdown dropdownFormText={t("languages")} placeholderText={t("placeholderLanguages")}
