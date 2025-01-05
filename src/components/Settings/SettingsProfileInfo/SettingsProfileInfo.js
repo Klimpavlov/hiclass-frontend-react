@@ -53,8 +53,16 @@ const SettingsProfileInfo = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
+
+    // const [country, setCountry] = useState('');
+    // const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
     const [city, setCity] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [countryData, setCountryData] = useState([]);
+    const [cityData, setCityData] = useState([]);
+
     const [isTeacher, setIsTeacher] = useState(false);
     const [isExpert, setIsExpert] = useState(false);
 
@@ -158,10 +166,22 @@ const SettingsProfileInfo = () => {
     // console.log(initialDisciplines)
 
 
-    // country
+    // // country
+    //
+    // const [countryData, setCountryData] = useState([]);
+    // const [cityData, setCityData] = useState([]);
 
-    const [countryData, setCountryData] = useState([]);
-    const [cityData, setCityData] = useState([]);
+    const handleCountrySelect = (country) => {
+        setSelectedCountry(country);
+        setCountry(country);
+        setIsCountryInputActive(false);
+    };
+
+    const handleCitySelect = (city) => {
+        setSelectedCity(city);
+        setCity(city);
+        setIsCityInputActive(false);
+    };
 
     useEffect(() => {
         getCountries(country.toLowerCase(), city.toLowerCase());
@@ -228,7 +248,7 @@ const SettingsProfileInfo = () => {
     }
 
     const handleUpdatePersonalInfo = async () => {
-        if (!firstName || !lastName || !country || !city) {
+        if (!firstName || !lastName || !selectedCountry || !selectedCity) {
             toast.current.show({
                 severity: 'error',
                 summary: errorToastTranslations("error"),
@@ -476,59 +496,117 @@ const SettingsProfileInfo = () => {
                                 setIsExpert(selectedOptions.includes("expert"));
                             }}
                         />
-                        <InputForm inputFormText={t("country")} value={country}
-                                   placeholderText={t("placeholderCountry")}
-                                   onChange={(e) => setCountry(e.target.value)}
-                                   onFocus={() => setIsCountryInputActive(true)}/>
-                        {country !== '' && (
-                            <div className="relative">
-                                {isCountryInputActive && (
-                                    <div
-                                        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                                        <div className="cursor-pointer max-h-60 overflow-y-auto">
-                                            {countryData.map((country) => (
-                                                <div
-                                                    key={country}
-                                                    className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                    onClick={() => {
-                                                        setCountry(country.country);
-                                                        setIsCountryInputActive(false);
-                                                    }}
-                                                >
-                                                    {country.country}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                        <InputForm inputFormText={t("city")} value={city}
-                                   placeholderText={t("placeholderCity")}
-                                   onChange={(e) => setCity(e.target.value)}
-                                   onFocus={() => setIsCityInputActive(true)}/>
-                        {city !== '' && (
-                            <div className="relative">
-                                {isCityInputActive && (
-                                    <div
-                                        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                        {/*<InputForm inputFormText={t("country")} value={country}*/}
+                        {/*           placeholderText={t("placeholderCountry")}*/}
+                        {/*           onChange={(e) => setCountry(e.target.value)}*/}
+                        {/*           onFocus={() => setIsCountryInputActive(true)}/>*/}
+                        {/*{country !== '' && (*/}
+                        {/*    <div className="relative">*/}
+                        {/*        {isCountryInputActive && (*/}
+                        {/*            <div*/}
+                        {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                        {/*                <div className="cursor-pointer max-h-60 overflow-y-auto">*/}
+                        {/*                    {countryData.map((country) => (*/}
+                        {/*                        <div*/}
+                        {/*                            key={country}*/}
+                        {/*                            className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*                            onClick={() => {*/}
+                        {/*                                setCountry(country.country);*/}
+                        {/*                                setIsCountryInputActive(false);*/}
+                        {/*                            }}*/}
+                        {/*                        >*/}
+                        {/*                            {country.country}*/}
+                        {/*                        </div>*/}
+                        {/*                    ))}*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        )}*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
+                        {/*<InputForm inputFormText={t("city")} value={city}*/}
+                        {/*           placeholderText={t("placeholderCity")}*/}
+                        {/*           onChange={(e) => setCity(e.target.value)}*/}
+                        {/*           onFocus={() => setIsCityInputActive(true)}/>*/}
+                        {/*{city !== '' && (*/}
+                        {/*    <div className="relative">*/}
+                        {/*        {isCityInputActive && (*/}
+                        {/*            <div*/}
+                        {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
 
-                                        <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                            {cityData.map((cityItem) => (
-                                                <div key={cityItem}
-                                                     className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                     onClick={() => {
-                                                         setCity(cityItem);
-                                                         setIsCityInputActive(false)
-                                                     }}>
-                                                    {cityItem}
-                                                </div>
-                                            ))}
-                                        </div>
+                        {/*                <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
+                        {/*                    {cityData.map((cityItem) => (*/}
+                        {/*                        <div key={cityItem}*/}
+                        {/*                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*                             onClick={() => {*/}
+                        {/*                                 setCity(cityItem);*/}
+                        {/*                                 setIsCityInputActive(false)*/}
+                        {/*                             }}>*/}
+                        {/*                            {cityItem}*/}
+                        {/*                        </div>*/}
+                        {/*                    ))}*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        )}*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
+
+                        <InputForm
+                            inputFormText={t("country")}
+                            value={country}
+                            placeholderText={t("placeholderCountry")}
+                            onChange={(e) => setCountry(e.target.value)}
+                            onFocus={() => setIsCountryInputActive(true)}
+                        />
+                        <div className="relative">
+                            {isCountryInputActive && (
+                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
+                                        {countryData.map((countryItem) => (
+                                            <div
+                                                key={countryItem.country}
+                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                onClick={() => handleCountrySelect(countryItem.country)}
+                                            >
+                                                {countryItem.country}
+                                            </div>
+                                        ))}
                                     </div>
-                                )}
-                            </div>
-                        )}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Поле для города */}
+                        <InputForm
+                            inputFormText={t("city")}
+                            value={city}
+                            placeholderText={t("placeholderCity")}
+                            onChange={(e) => setCity(e.target.value)}
+                            onFocus={() => {
+                                if (!selectedCountry) {
+                                    toast.current.show({ severity: 'warn', summary: errorToastTranslations("error"), detail: errorToastTranslations("chooseCountry"), life: 3000 });
+                                } else {
+                                    setIsCityInputActive(true);
+                                }
+                            }}
+                        />
+                        <div className="relative">
+                            {isCityInputActive && (
+                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
+                                        {cityData.map((cityItem) => (
+                                            <div
+                                                key={cityItem}
+                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                onClick={() => handleCitySelect(cityItem)}
+                                            >
+                                                {cityItem}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <InputForm inputFormText={t("description")} value={description}
                                    placeholderText={t('descriptionPlaceholder')}
                                    onChange={(e) => setDescription(e.target.value)}
