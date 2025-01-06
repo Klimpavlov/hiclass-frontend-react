@@ -21,7 +21,7 @@ const Filter = ({ buttonText, onApply, options, clearAll, filterName, currentFil
             }
         }
 
-        // ✅ Новый обработчик нажатия клавиши Enter
+        // Новый обработчик нажатия клавиши Enter
         function handleKeyPress(event) {
             // Проверка нажатия Enter и открытости фильтра
             if (event.key === 'Enter' && isOpen) {
@@ -30,12 +30,12 @@ const Filter = ({ buttonText, onApply, options, clearAll, filterName, currentFil
         }
 
         document.addEventListener('click', handleClickOutside);
-        document.addEventListener('keydown', handleKeyPress); // ✅ Добавлено
+        document.addEventListener('keydown', handleKeyPress);
 
         // Удаление обработчиков при размонтировании
         return () => {
             document.removeEventListener('click', handleClickOutside);
-            document.removeEventListener('keydown', handleKeyPress); // ✅ Добавлено
+            document.removeEventListener('keydown', handleKeyPress);
         };
     }, [isOpen, selectedOptions]);
 
@@ -57,7 +57,7 @@ const Filter = ({ buttonText, onApply, options, clearAll, filterName, currentFil
         );
     };
 
-    // ✅ Вызов handleApply() при нажатии Enter
+    // Вызов handleApply() при нажатии Enter
     const handleApply = () => {
         onApply(selectedOptions, filterName);
         toggleDropdown();
