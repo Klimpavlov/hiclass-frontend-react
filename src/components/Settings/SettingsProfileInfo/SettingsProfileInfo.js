@@ -12,13 +12,9 @@ import getAvailableGrades from "@/app/[locale]/api/staticData/getAvailableGrades
 import putUpdateProfessionalInfo
     from "@/app/[locale]/api/user/editUser/updateProfessionalInfo/putUpdateProfessionalInfo";
 import putUpdateInstitution from "@/app/[locale]/api/user/editUser/updateInstitution/putUpdateInstitution";
-// import refreshAccessToken from "@/app/[locale]/api/utils/axios";
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
-import {RingLoader} from "react-spinners";
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import Image from "next/image";
-import putBannerImage from "@/app/[locale]/api/user/putBanner/putBannerImage";
-import imgSrc from "@/components/Banner/Banner.jpg";
 import defaultUserImage from '@/components/User/UserInfo/avatar-default.svg';
 import putEditUserImage from "@/app/[locale]/api/user/editUser/updateUserImage/putUpdateUserImage";
 import {useTranslations} from "next-intl";
@@ -145,7 +141,6 @@ const SettingsProfileInfo = () => {
 
     // teacher/expert
     const position = ['teacher', 'expert'];
-    // const positionTranslation = useTranslations('Position');
 
 
     useEffect(() => {
@@ -170,6 +165,13 @@ const SettingsProfileInfo = () => {
     //
     // const [countryData, setCountryData] = useState([]);
     // const [cityData, setCityData] = useState([]);
+
+    useEffect(() => {
+        setSelectedCountry(country);
+        setSelectedCity(city);
+    }, [country, city]);
+
+
 
     const handleCountrySelect = (country) => {
         setSelectedCountry(country);

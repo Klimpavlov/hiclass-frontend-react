@@ -1,11 +1,10 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Header from "@/components/Header/Header";
 import BackButton from "@/components/Buttons/BackButton";
 import SettingsProfileInfo from "@/components/Settings/SettingsProfileInfo/SettingsProfileInfo";
 import SettingsLogSec from "@/components/Settings/SettingsLog&Sec/SettingsLog&Sec";
-import axios from "axios";
 import {useTranslations} from "next-intl";
 
 
