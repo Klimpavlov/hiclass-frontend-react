@@ -97,7 +97,7 @@ export default function SignUp() {
     };
 
     const handleSignUp = async () => {
-        if (!email || !password || !confirmPassword || !terms) {
+        if (!email || !password || !confirmPassword) {
             toast.current.show({
                 severity: 'error',
                 summary: errorToastTranslations("error"),
@@ -105,7 +105,16 @@ export default function SignUp() {
                 life: 3000
             });
             return;
-        } else if (!validateEmail(email)) {
+        } else if(!terms) {
+            toast.current.show({
+                severity: 'error',
+                summary: errorToastTranslations("error"),
+                detail: errorToastTranslations("acceptTerms"),
+            });
+            return;
+        }
+
+        else if (!validateEmail(email)) {
             toast.current.show({
                 severity: 'error',
                 summary: errorToastTranslations("error"),
