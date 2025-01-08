@@ -317,7 +317,8 @@
       "success": "Success",
       "successMessage": "Invitation successfully created",
       "please": "Please",
-      "chooseClassFromList": "Choose class from the list below"
+      "chooseClassFromList": "Choose class from the list below",
+      "positionError": "Only teachers can send invitation. Check the 'Position' field in the settings"
     },
     "DeleteClass": {
       "error": "Error",

@@ -23,6 +23,9 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
     const toastInvitationTranslation = useTranslations("DialogModal.Invitation")
 
     const [classData, setClassData] = useState([]);
+    const [isTeacher, setIsTeacher] = useState([]);
+    const [isExpert, setIsExpert] = useState([]);
+    const [isOnlyExpert, setIsOnlyExpert] = useState(false);
 
     const [clicked, setClicked] = useState(false);
 
@@ -34,7 +37,12 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
         try {
             const response = await apiClient.get(
                 '/User/userprofile',);
-            setClassData(response.data.value.classDtos)
+            console.log(response.data.value.isATeacher);
+            console.log(response.data.value.isAnExpert);
+
+            setIsTeacher(response.data.value.isATeacher)
+            setIsExpert(response.data.value.isAnExpert);
+            setClassData(response.data.value.classDtos);
         } catch (error) {
             console.error(error);
         }
@@ -68,6 +76,13 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
         console.log('classSenderId:', classSenderId);
         console.log('dateOfInvitation:', dateOfInvitation);
         console.log('invitationText:', invitationText);
+
+        if (isTeacher === false && isExpert === true) {
+            setIsOnlyExpert(true);
+            toast.current.show({severity: 'error', summary: toastErrorTranslation("error"),
+                detail: toastInvitationTranslation("positionError"), life: 3000});
+            return;
+        }
         if (!classSenderId && (!dateOfInvitation || !invitationText)) {
             toast.current.show({
                 severity: 'error',
@@ -178,7 +193,11 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
 
                 <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
                     <ClearAllButton buttonText={t("cancelBtn")} clearAll={handleCancel}/>
-                    <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation} isSubmitting={clicked}/>
+                    <ApplyButton buttonText={t("sendInviteBtn")}
+                                 onApply={handlePostInvitation}
+                                 isSubmitting={clicked}
+                                 isExpert={isOnlyExpert}
+                    />
                 </div>
             </div>
         </>
