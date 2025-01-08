@@ -75,7 +75,6 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
     setLanguage(selectedLanguages.length > 0 ? selectedLanguages : initialLanguages)
 
 
-
     useEffect(() => {
         getUserInfo()
     }, []);
@@ -88,12 +87,13 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
 
         setLanguages(translateItems(availableLanguages, languagesMapping));
         setDisciplines(translateItems(availableDisciplines, disciplinesMapping));
-        setGrade(availableGrades);
+
+        setGrade(availableGrades.sort((a, b) => a - b));
     }
 
     //translation
     const translateItems = (items, mappingFile) => {
-        if (pathname.includes('ru')){
+        if (pathname.includes('ru')) {
             return items.map(item => Object.keys(mappingFile).find(key => mappingFile[key] === item) || item)
         }
         return items;
@@ -142,16 +142,21 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                            value={initialTitle} hasMaxLength={true} maxLength={25}
                            onChange={(e) => setInitialTitle(e.target.value)}/>
                 <Dropdown dropdownFormText={t("grade")}
-                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") : <span className='text-gray-400'>{t("selectGrade")}</span>}
+                          placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") :
+                              <span className='text-gray-400'>{t("selectGrade")}</span>}
                           options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
 
                 <Dropdown dropdownFormText={t("subject")}
-                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") : <span className='text-gray-400'>{t("selectSubject")}</span>}
-                          options={disciplines} initialSelectedOptions={initialSubjects} onChange={setSelectedDisciplines}
-                          isSingleSelect={true} />
+                          placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") :
+                              <span className='text-gray-400'>{t("selectSubject")}</span>}
+                          options={disciplines} initialSelectedOptions={initialSubjects}
+                          onChange={setSelectedDisciplines}
+                          isSingleSelect={true}/>
                 <Dropdown dropdownFormText={t("language")}
-                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") : <span className='text-gray-400'>{t("selectLanguage")}</span>}
-                          options={languages} initialSelectedOptions={initialLanguages} onChange={setSelectedLanguages}/>
+                          placeholderText={initialLanguages.length > 0 ? initialLanguages.join(", ") :
+                              <span className='text-gray-400'>{t("selectLanguage")}</span>}
+                          options={languages} initialSelectedOptions={initialLanguages}
+                          onChange={setSelectedLanguages}/>
             </div>
         </div>
     )

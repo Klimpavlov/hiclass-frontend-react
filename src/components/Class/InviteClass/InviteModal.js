@@ -24,6 +24,8 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
 
     const [classData, setClassData] = useState([]);
 
+    const [clicked, setClicked] = useState(false);
+
     useEffect(() => {
         userProfile()
     }, []);
@@ -90,6 +92,8 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
             return;
         }
 
+        setClicked(true);
+
         const postInvitationSuccess = await postInviteClass(classSenderId, classId, dateOfInvitation, invitationText, toast)
 
         if (postInvitationSuccess) {
@@ -103,6 +107,8 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
                 handleCloseModal()
                 handleCloseClassPreviewModal();
             }, 1500)
+        } else {
+            setClicked(false);
         }
     }
 
@@ -172,7 +178,7 @@ const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) 
 
                 <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
                     <ClearAllButton buttonText={t("cancelBtn")} clearAll={handleCancel}/>
-                    <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation}/>
+                    <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation} isSubmitting={clicked}/>
                 </div>
             </div>
         </>
