@@ -23,10 +23,6 @@ export default function PositionForm() {
     localStorage.setItem('isTeacher', isTeacher);
     localStorage.setItem('isExpert', isExpert);
 
-    const handleClick = () => {
-        setIsTeacher()
-    }
-
     const handleContinue = () => {
         if (!isTeacher && !isExpert) {
             toast.current.show({
@@ -54,7 +50,7 @@ export default function PositionForm() {
                     </div>
                     <div className="divider"></div>
                     <div className="inputs w-full">
-                        <div className="my-4" onClick={() => handleClick()}>
+                        <div className="my-4">
                             <InputRadioForm
                                 inputFormText={t("teacherForm")}
                                 inputAboutFormText={t("aboutTeacherForm")}

@@ -25,6 +25,9 @@ const InviteExpertModal = ({handleCloseModal}) => {
 
     const [classData, setClassData] = useState([]);
 
+    const [clicked, setClicked] = useState(false);
+
+
     useEffect(() => {
         userProfile()
     }, []);
@@ -87,6 +90,8 @@ const InviteExpertModal = ({handleCloseModal}) => {
             return;
         }
 
+        setClicked(true);
+
         const postInvitationSuccess = await sendExpertInvitation(classSenderId, receiverId, dateOfInvitation, invitationText, toast)
 
         if (postInvitationSuccess) {
@@ -99,6 +104,8 @@ const InviteExpertModal = ({handleCloseModal}) => {
             setTimeout(() => {
                 handleCloseModal()
             }, 1500)
+        } else {
+            setClicked(false);
         }
     }
 
@@ -168,7 +175,7 @@ const InviteExpertModal = ({handleCloseModal}) => {
 
                 <div className='invite-modal-footer max-w-3xl w-full mx-auto p-8'>
                     <ClearAllButton buttonText={t("cancelBtn")} clearAll={handleCancel}/>
-                    <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation}/>
+                    <ApplyButton buttonText={t("sendInviteBtn")} onApply={handlePostInvitation} isSubmitting={clicked}/>
                 </div>
             </div>
         </>
