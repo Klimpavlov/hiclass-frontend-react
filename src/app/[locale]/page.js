@@ -262,8 +262,8 @@ export default function ExplorePage() {
         try {
             const response = await searchRequest(accessToken, searchUrl);
             console.error(response);
-                setSearchClassData(response.teacherProfiles || []);
-                setSearchExperts(response.expertProfiles || []);
+            setSearchClassData(response.teacherProfiles || []);
+            setSearchExperts(response.expertProfiles || []);
         } catch (error) {
             console.error(error);
         }
@@ -280,7 +280,6 @@ export default function ExplorePage() {
     };
 
 
-
     //translation
 
     const t = useTranslations("MainPage");
@@ -289,9 +288,9 @@ export default function ExplorePage() {
     return (
         <main className="">
             {loading ? (
-                <div className='flex items-center justify-center h-screen'>
+                <div className="flex items-center justify-center h-screen">
                     <RingLoader
-                        color={'#36d7b7'}
+                        color={"#36d7b7"}
                         loading={loading}
                         size={150}
                         aria-label="Loading Spinner"
@@ -303,126 +302,157 @@ export default function ExplorePage() {
                     <ErrorNotification ref={toast}/>
                     <Header testNotifications={notification}/>
                     <TopSection/>
-                    <div className='flex justify-between border-b border-b-gray'>
-                    <div
-                        className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4">
-                        <div className="flex flex-wrap gap-2 px-4 md:px-8">
-                            <Filter buttonText={filtersTranslation('Subject')}
-                                    options={disciplines} onApply={handleFilterApply}
+                    <div className="flex justify-between border-b border-b-gray">
+                        <div className="flex flex-col md:flex-row justify-between px-4 md:px-8 py-2 md:py-4">
+                            <div className="flex flex-wrap gap-2 px-4 md:px-8">
+                                <Filter
+                                    buttonText={filtersTranslation("Subject")}
+                                    options={disciplines}
+                                    onApply={handleFilterApply}
                                     clearAll={handleClearAll}
-                                    filterName='Disciplines'
-                                    currentFilters={currentFilters}/>
-                            <Filter buttonText={filtersTranslation('Grade')}
+                                    filterName="Disciplines"
+                                    currentFilters={currentFilters}
+                                />
+                                <Filter
+                                    buttonText={filtersTranslation("Grade")}
                                     options={getAvailableGrades()}
                                     onApply={handleFilterApply}
                                     clearAll={handleClearAll}
-                                    filterName='Grades'
-                                    currentFilters={currentFilters}/>
-                            <Filter buttonText={filtersTranslation('Language')}
-                                    options={languages} onApply={handleFilterApply}
+                                    filterName="Grades"
+                                    currentFilters={currentFilters}
+                                />
+                                <Filter
+                                    buttonText={filtersTranslation("Language")}
+                                    options={languages}
+                                    onApply={handleFilterApply}
                                     clearAll={handleClearAll}
-                                    filterName='Languages'
-                                    currentFilters={currentFilters}/>
-                            <Filter buttonText={filtersTranslation('Location')}
+                                    filterName="Languages"
+                                    currentFilters={currentFilters}
+                                />
+                                <Filter
+                                    buttonText={filtersTranslation("Location")}
                                     options={countries}
                                     onApply={handleFilterApply}
-                                    clearAll={handleClearAll} filterName='Countries'
-                                    currentFilters={currentFilters}/>
+                                    clearAll={handleClearAll}
+                                    filterName="Countries"
+                                    currentFilters={currentFilters}
+                                />
+                            </div>
                         </div>
-                    </div>
-                        <div className='flex items-center px-8 md:px-16'>
-                            <SwitchDemo text={t('showOnlyExperts')} value={isSwitchOn} onChange={handleSwitchChange}/>
+                        <div className="flex items-center px-8 md:px-16">
+                            <SwitchDemo
+                                text={t("showOnlyExperts")}
+                                value={isSwitchOn}
+                                onChange={handleSwitchChange}
+                            />
                         </div>
                     </div>
 
                     <div className="applied-filters-container px-4 md:px-8">
-                        <div className='px-4 md:px-8 pt-2 md:pt-4'>
+                        <div className="px-4 md:px-8 pt-2 md:pt-4">
                             {Object.entries(currentFilters).flatMap(([filterName, filterValues]) =>
                                 filterValues.map(filterValue => (
-                                    <span key={`${filterName}-${filterValue}`} className='pl-2'>
-                                        <Tag text={filterValue} removeTag={true}
-                                             onChange={() => handleRemoveTag(filterName, filterValue)}/>
-                                    </span>
+                                    <span
+                                        key={`${filterName}-${filterValue}`}
+                                        className="pl-2"
+                                    >
+                                    <Tag
+                                        text={filterValue}
+                                        removeTag={true}
+                                        onChange={() =>
+                                            handleRemoveTag(filterName, filterValue)
+                                        }
+                                    />
+                                </span>
                                 ))
                             )}
                         </div>
                     </div>
 
-                    {/*Show search classes by filters*/}
-                    <div className='p-4 sm:p-8 md:p-12 lg:p-16'>
+                    <div className="p-4 sm:p-8 md:p-12 lg:p-16">
                         <div
                             className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
                             {isSwitchOn
-                                ? (
-                                    /* Show experts only */
-                                    searchExperts.map((expert) => (
-                                        <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
-                                            <ExpertPreview key={expert.id}
-                                                           username={expert.firstName + ' ' + expert.lastName}
-                                                           photo={expert.imageUrl}
-                                                           userAvatar={expert.imageUrl}
-                                                           tags={translateDisciplines(expert.disciplineTitles.toString())}
-                                                           grades={expert.gradeNumbers}
-                                            />
-                                        </div>
-                                    ))
-                                ) : (
-                                    <>
-                                        {/* Show teachers */}
-                                        {searchClassData.map((teacher) => (
-                                            teacher.classDtos.map((classInfo) => (
-                                                <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                                    <ClassPreview key={classInfo.classId} title={classInfo.title}
-                                                                  username={classInfo.userFullName}
-                                                                  tags={translateDisciplines(classInfo.disciplineTitle)}
-                                                                  grade={classInfo.grade}
-                                                                  photo={classInfo.imageUrl}
-                                                                  userAvatar={teacher.imageUrl}
-                                                    />
-                                                </div>
-                                            ))
-                                        ))}
-
-                                        {/* Show experts */}
-                                        {searchExperts.map((expert) => (
-                                            <div key={expert.id} onClick={() => handleExpertClick(expert.userId)}>
-                                                <ExpertPreview key={expert.id}
-                                                               username={expert.firstName + ' ' + expert.lastName}
-                                                               photo={expert.imageUrl}
-                                                               userAvatar={expert.imageUrl}
-                                                               tags={translateDisciplines(expert.disciplineTitles.toString())}
-                                                               grades={expert.gradeNumbers}
-                                                />
-                                            </div>
-                                        ))}
-                                    </>
-                                )
-                            }
-
-                        </div>
-                        <div className='flex justify-between mt-4 md:mt-8'>
-                            <div className='font-bold'>{t('mostPopularClasses')}<span
-                                className='text-green-700'>{t('Belarus')}</span></div>
-                            {/*<div className='text-green-700'>{t('seeAll')}</div>*/}
-                        </div>
-
-                        {/*Show default search classes*/}
-                        <div
-                            className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                            {teacherProfileData.map((teacher) => (
-                                teacher.classDtos.map((classInfo) => (
-                                    <div key={classInfo.classId} onClick={() => handleClassClick(classInfo, teacher)}>
-                                        <ClassPreview key={classInfo.classId} title={classInfo.title}
-                                                      username={classInfo.userFullName}
-                                                      tags={translateDisciplines(classInfo.disciplineTitle)}
-                                                      grade={classInfo.grade}
-                                                      photo={classInfo.imageUrl}
-                                                      userAvatar={teacher.imageUrl}
+                                ? searchExperts.map(expert => (
+                                    <div
+                                        key={expert.id}
+                                        onClick={() => handleExpertClick(expert.userId)}
+                                    >
+                                        <ExpertPreview
+                                            key={expert.id}
+                                            username={
+                                                expert.firstName + " " + expert.lastName
+                                            }
+                                            photo={expert.imageUrl}
+                                            userAvatar={expert.imageUrl}
+                                            tags={translateDisciplines(
+                                                expert.disciplineTitles.toString()
+                                            )}
+                                            grades={expert.gradeNumbers}
                                         />
                                     </div>
                                 ))
-                            ))}
+                                : searchClassData.map(teacher =>
+                                    teacher.classDtos.map(classInfo => (
+                                        <div
+                                            key={classInfo.classId}
+                                            onClick={() =>
+                                                handleClassClick(classInfo, teacher)
+                                            }
+                                        >
+                                            <ClassPreview
+                                                key={classInfo.classId}
+                                                title={classInfo.title}
+                                                username={classInfo.userFullName}
+                                                tags={translateDisciplines(
+                                                    classInfo.disciplineTitle
+                                                )}
+                                                grade={classInfo.grade}
+                                                photo={classInfo.imageUrl}
+                                                userAvatar={teacher.imageUrl}
+                                            />
+                                        </div>
+                                    ))
+                                )}
                         </div>
+
+                        {!isSwitchOn && (
+                            <div>
+                                <div className="flex justify-between mt-4 md:mt-8">
+                                    <div className="font-bold">
+                                        {t("mostPopularClasses")}
+                                        <span className="text-green-700">
+                                        {t("Belarus")}
+                                    </span>
+                                    </div>
+                                </div>
+                                <div
+                                    className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
+                                    {teacherProfileData.map(teacher =>
+                                        teacher.classDtos.map(classInfo => (
+                                            <div
+                                                key={classInfo.classId}
+                                                onClick={() =>
+                                                    handleClassClick(classInfo, teacher)
+                                                }
+                                            >
+                                                <ClassPreview
+                                                    key={classInfo.classId}
+                                                    title={classInfo.title}
+                                                    username={classInfo.userFullName}
+                                                    tags={translateDisciplines(
+                                                        classInfo.disciplineTitle
+                                                    )}
+                                                    grade={classInfo.grade}
+                                                    photo={classInfo.imageUrl}
+                                                    userAvatar={teacher.imageUrl}
+                                                />
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
                         {selectedClass && (
                             <ClassPreviewModal
@@ -435,12 +465,13 @@ export default function ExplorePage() {
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
-                            ></ClassPreviewModal>
+                            />
                         )}
                     </div>
                 </>
             )}
         </main>
     );
+
 }
 
