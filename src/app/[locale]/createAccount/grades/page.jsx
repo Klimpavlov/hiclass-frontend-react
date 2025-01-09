@@ -48,7 +48,7 @@ export default function gradesForm() {
             toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
-        const success = await postCreateAccount(successRedirect, toast, pathname, deviceToken);
+        const success = await postCreateAccount(successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations);
         if (success) {
             successRedirect();
         }
@@ -56,6 +56,10 @@ export default function gradesForm() {
 
     const successRedirect = () => {
         router.push('/createAccount/profilePhoto')
+    }
+
+    const userExistRedirect = () => {
+        router.push('/signIn')
     }
 
 

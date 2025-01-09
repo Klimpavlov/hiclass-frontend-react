@@ -7,7 +7,7 @@ import {usePathname} from "next/navigation";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import Cookies from "js-cookie";
 
-const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) => {
+const postCreateAccount = async (successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations) => {
     try {
         // const accessToken = sessionStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
@@ -76,13 +76,25 @@ const postCreateAccount = async (successRedirect, toast, pathname, deviceToken) 
         console.log(response);
         const newAccessToken = response.data.value.accessToken;
         Cookies.set('accessToken', newAccessToken);
-        successRedirect()
+        successRedirect();
         return true;
     } catch (error) {
         console.log(error);
+        const errorResponse = error.response?.data?.errors?.[0];
+
         if (toast && toast.current) {
-            toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
-        }
+            if (errorResponse?.exceptionTitle === 'UserAlreadyHasAccountException') {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorTranslations("error"),
+                    detail: errorTranslations("userExists"),
+                    life: 3000
+                });
+                userExistRedirect();
+            } else {
+                toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
+            }}
+
         return false;
     }
 };
