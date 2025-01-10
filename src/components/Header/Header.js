@@ -143,6 +143,7 @@ const Header = ({testNotifications}) => {
         })).reverse());
     }
 
+    console.log(receivedNotifications);
 
     // isRead notification
 

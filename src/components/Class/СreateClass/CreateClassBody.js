@@ -144,7 +144,8 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
                 <Dropdown dropdownFormText={t("grade")}
                           placeholderText={initialGrades.length > 0 ? initialGrades.join(", ") :
                               <span className='text-gray-400'>{t("selectGrade")}</span>}
-                          options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}/>
+                          options={grades} initialSelectedOptions={initialGrades} onChange={setSelectedGrades}
+                          isSingleSelect={true}/>
 
                 <Dropdown dropdownFormText={t("subject")}
                           placeholderText={initialSubjects.length > 0 ? initialSubjects.join(", ") :
