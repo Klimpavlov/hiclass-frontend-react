@@ -25,6 +25,9 @@ import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import ExpertPreview from "@/components/Expert/ExpertPreview/ExpertPreview";
 import {SwitchDemo} from "@/components/Buttons/Switch/Switch";
+import apiClient from "@/app/[locale]/api/utils/axios";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
+import Cookies from "js-cookie";
 
 export default function ExplorePage() {
     const pathname = usePathname();
@@ -38,7 +41,11 @@ export default function ExplorePage() {
     const [searchClassData, setSearchClassData] = useState([]);
     const [teacherProfileData, setTeacherProfileData] = useState([]);
     const [searchExperts, setSearchExperts] = useState([]);
-    const [isSwitchOn, setIsSwitchOn] = useState(false)
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+    const [userProfile, setUserProfile] = useState([]);
+    const [isOnlyExpert, setIsOnlyExpert] = useState(false);
+
 
     const [disciplines, setDisciplines] = useState([]);
     const [languages, setLanguages] = useState([]);
@@ -48,6 +55,7 @@ export default function ExplorePage() {
     // const [receivedNotifications, setReceivedNotifications] = useState('');
 
     useEffect(() => {
+        getUser();
         getDisciplines();
         getLanguages();
         getCountries();
@@ -128,6 +136,24 @@ export default function ExplorePage() {
     }, [notification]);
 
 
+    // get user profile
+
+    async function getUser() {
+        const accessToken = Cookies.get('accessToken');
+        const userInfo = await getUserProfile(accessToken)
+        setUserProfile(userInfo);
+        if (userInfo.isATeacher === false && userInfo.isAnExpert === true) {
+            setIsOnlyExpert(true);
+
+        }
+    }
+
+    console.log(userProfile);
+    console.log(userProfile.isAnExpert)
+    console.log(isOnlyExpert);
+
+    // get static info
+
     async function getDisciplines() {
         // const accessToken = localStorage.getItem('accessToken');
         const availableDisciplines = await getAvailableDisciplines();
@@ -166,31 +192,6 @@ export default function ExplorePage() {
         localStorage.setItem('selectedUserId', expertId);
         router.push('/otherUserProfile')
     }
-
-
-    // // get user`s avatars
-    //
-    // const [userAvatar, setUserAvatar] = useState([]);
-    // const otherUserId = localStorage.getItem('selectedUserId');
-    //
-    // useEffect(() => {
-    //     async function getOtherUser() {
-    //         try {
-    //             const response = await apiClient.get(`/User/other-userprofile/${otherUserId}`);
-    //             console.log(response)
-    //             setUserAvatar(response.data.value.imageUrl)
-    //             setTimeout(() => {
-    //                 setLoading(false);
-    //             }, 1300)
-    //
-    //
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //
-    //     getOtherUser();
-    // }, []);
 
     const handleFilterApply = (selectedOptions, filterName) => {
         setCurrentFilters(prevFilters => ({
@@ -465,6 +466,7 @@ export default function ExplorePage() {
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
+                                isOnlyExpert={isOnlyExpert}
                             />
                         )}
                     </div>

@@ -91,7 +91,12 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
                     life: 3000
                 });
                 userExistRedirect();
-            } else {
+            }
+
+            // exceptionTitle
+            //     :
+            //     "NotFoundException"
+        else {
                 toast.current.show({severity: 'error', summary: 'Error', detail: error.message, life: 3000});
             }}
 
