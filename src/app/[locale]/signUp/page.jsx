@@ -18,6 +18,7 @@ import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import {LabelTerms} from "@/components/Label/Label";
+import {RingLoader} from "react-spinners";
 
 export default function SignUp() {
     const router = useRouter();
@@ -26,6 +27,8 @@ export default function SignUp() {
     const locale = pathname.slice(1, 3);
 
     const toast = useRef(null);
+    const [loading, setLoading] = useState(false);
+
 
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");

@@ -15,6 +15,8 @@ import disciplinesMapping from "../../../../mapping/disciplinesMapping/disciplin
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import {useTranslations} from "next-intl";
 import apiClient from "@/app/[locale]/api/utils/axios";
+import Cookies from "js-cookie";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 
 export default function otherUserProfile() {
 
@@ -37,6 +39,9 @@ export default function otherUserProfile() {
     const [disciplineTitles, setDisciplineTitles] = useState([]);
     const [isExpert, setIsExpert] = useState('');
     const [isTeacher, setIsTeacher] = useState('');
+
+    const [isOnlyExpert, setIsOnlyExpert] = useState(false);
+
 
     const [userAvatar, setUserAvatar] = useState([]);
     const [classData, setClassData] = useState([]);
@@ -86,6 +91,22 @@ export default function otherUserProfile() {
 
         getOtherUser();
     }, []);
+
+
+    // get user profile
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    async function getUser() {
+        const accessToken = Cookies.get('accessToken');
+        const userInfo = await getUserProfile(accessToken)
+        if (userInfo.isATeacher === false && userInfo.isAnExpert === true) {
+            setIsOnlyExpert(true);
+
+        }
+    }
 
     // Function to translate discipline titles if localization is "ru"
     const translateUserInfo = (items, mappingFile) => {
@@ -166,6 +187,7 @@ export default function otherUserProfile() {
                                 photo={selectedClass.imageUrl}
                                 handleCloseModal={() => setSelectedClass(null)}
                                 handleCloseClassPreviewModal={() => setSelectedClass(null)}
+                                isOnlyExpert={isOnlyExpert}
                             ></ClassPreviewModal>
                         )}
                     </div>

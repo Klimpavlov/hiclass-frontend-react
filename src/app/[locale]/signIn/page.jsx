@@ -17,6 +17,8 @@ import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
 import {LabelTerms} from "@/components/Label/Label";
+import {RingLoader} from "react-spinners";
+import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 
 export default function SignIn() {
     const router = useRouter();
@@ -25,6 +27,8 @@ export default function SignIn() {
     const locale = pathname.slice(1, 3);
 
     const toast = useRef(null);
+    const [loading, setLoading] = useState(false);
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -81,7 +85,6 @@ export default function SignIn() {
             toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
-
         const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations, userNotVerifiedRedirect);
         if (successLogin) {
             toast.current.show({
@@ -90,6 +93,7 @@ export default function SignIn() {
                 detail: signInToastTranslations("successMessage"),
                 life: 3000
             });
+            setLoading(true)
         }
     };
 
@@ -104,6 +108,18 @@ export default function SignIn() {
 
     return (
         <main className="">
+            {loading ? (
+                <div className="flex items-center justify-center h-screen">
+                    <RingLoader
+                        color={"#36d7b7"}
+                        loading={loading}
+                        size={150}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            ) : (
+                <>
             <RegistrationHeader/>
             <ErrorNotification ref={toast}/>
             <div className='flex flex-col items-center justify-center'>
@@ -135,6 +151,8 @@ export default function SignIn() {
                     <ContinueButton buttonText={t("signInBtn")} onClick={handleSignIn}/>
                 </div>
             </div>
+                </>
+            )}
         </main>
     )
 }
