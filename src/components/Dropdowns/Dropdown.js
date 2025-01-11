@@ -4,7 +4,14 @@ import React, {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import imgSrc from "@/components/Filter/chevron-down.svg";
 
-const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedOptions, onChange, isSingleSelect = false }) => {
+const Dropdown = ({
+                      dropdownFormText,
+                      placeholderText,
+                      options,
+                      initialSelectedOptions,
+                      onChange,
+                      isSingleSelect = false
+                  }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -61,7 +68,7 @@ const Dropdown = ({ dropdownFormText, placeholderText, options, initialSelectedO
                 onClick={toggleDropdown}
             >
                 <div className="">{displayText}</div>
-                <Image className={`ml-1 ${isOpen ? "rotate-180" : ""}`} src={imgSrc} alt="hiClass chevronDown" />
+                <Image className={`ml-1 ${isOpen ? "rotate-180" : ""}`} src={imgSrc} alt="hiClass chevronDown"/>
             </div>
             {isOpen && (
                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">

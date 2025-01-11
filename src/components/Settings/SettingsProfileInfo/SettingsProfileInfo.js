@@ -140,7 +140,7 @@ const SettingsProfileInfo = () => {
     }
 
     // teacher/expert
-    const position = ['teacher', 'expert'];
+    const position = translateItems(['teacher', 'expert'], positionMapping, pathname);
 
 
     useEffect(() => {
@@ -154,7 +154,7 @@ const SettingsProfileInfo = () => {
         setInitialPosition(positions);
     }, [isTeacher, isExpert]);
 
-    const initialPositionArray = initialPosition;
+    const initialPositionArray = translateItems(initialPosition, positionMapping, pathname);
 
 
     // console.log(initialPositionArray)
@@ -491,11 +491,19 @@ const SettingsProfileInfo = () => {
                             dropdownFormText={t("i`m")}
                             options={position}
                             // placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
-                            placeholderText={initialPositionArray.length > 0 ? initialPositionArray.join(", ") : "Select position"}
+                            placeholderText={initialPositionArray.length > 0 ? initialPositionArray.join(", ") : t("selectPosition")}
                             initialSelectedOptions={initialPositionArray}
+                            // onChange={(selectedOptions) => {
+                            //     setIsTeacher(selectedOptions.includes("teacher"));
+                            //     setIsExpert(selectedOptions.includes("expert"));
+                            // }}
+
                             onChange={(selectedOptions) => {
-                                setIsTeacher(selectedOptions.includes("teacher"));
-                                setIsExpert(selectedOptions.includes("expert"));
+                                pathname.includes('en') ? setIsTeacher(selectedOptions.includes("teacher")) :
+                                    setIsTeacher(selectedOptions.includes("учитель"));
+                                pathname.includes('en') ?
+                                    setIsExpert(selectedOptions.includes("expert")) :
+                                    setIsExpert(selectedOptions.includes("эксперт"));
                             }}
                         />
                         {/*<InputForm inputFormText={t("country")} value={country}*/}
