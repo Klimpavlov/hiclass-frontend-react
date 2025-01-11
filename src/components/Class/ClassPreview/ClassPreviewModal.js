@@ -6,7 +6,12 @@ import InviteModal from "@/components/Class/InviteClass/InviteModal";
 import {useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
 import imgDefaultClass from "@/components/Class/ClassPreview/defaultClassImage.jpg";
-
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 const ClassPreviewModal = ({
                                headerText,
                                title,
@@ -37,6 +42,7 @@ const ClassPreviewModal = ({
     };
 
     const t = useTranslations("InviteModal");
+    const toastInvitationTranslation = useTranslations("DialogModal.Invitation")
     const gradeTranslation = useTranslations("Grade")
 
     return (
@@ -77,6 +83,7 @@ const ClassPreviewModal = ({
                     <div className="avatar">{}</div>
                 </div>
                 <div className="class-preview-text"> {title}</div>
+
                 <div className="class-preview-footer flex justify-between items-center mt-4">
                     <div className="class-preview-tags flex flex-wrap gap-2">
                         <div>{tags.map((title) => (
@@ -88,8 +95,29 @@ const ClassPreviewModal = ({
                         </div>
                     </div>
                     <div>
-                        <ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal}
-                                     isSubmitting={isOnlyExpert}/>
+                        {/*<ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal}*/}
+                        {/*             isSubmitting={isOnlyExpert}/>*/}
+                        <TooltipProvider>
+                            {isOnlyExpert ? (
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <div>
+                                            <ApplyButton
+                                                buttonText={t("inviteBtn")}
+                                                onApply={handleOpenInviteModal}
+                                                isSubmitting={isOnlyExpert}
+                                                disabled={isOnlyExpert}
+                                            />
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top">
+                                        {toastInvitationTranslation("positionError")}
+                                    </TooltipContent>
+                                </Tooltip>
+                            ) : (
+                                <ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal} />
+                            )}
+                        </TooltipProvider>
                     </div>
                 </div>
             </div>
