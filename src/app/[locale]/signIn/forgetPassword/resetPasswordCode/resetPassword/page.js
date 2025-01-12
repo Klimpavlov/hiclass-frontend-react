@@ -15,10 +15,12 @@ export default function resetPassword() {
     const router = useRouter();
 
     const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("")
+    const [passwordError, setPasswordError] = useState("");
 
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState("")
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+    const [isClicked, setIsClicked] = useState(false);
 
     const t = useTranslations("ForgetPassword")
     const errorToastsTranslations = useTranslations("DialogModal.Error")
@@ -34,10 +36,15 @@ export default function resetPassword() {
             toast.current.show({ severity: 'error', summary: errorToastsTranslations("error"), detail: errorToastsTranslations("wrongPassword"), life: 3000 });
             return;
         }
+
+        setIsClicked(true);
+
         const resetSuccess = await postResetPassword(password, toast);
 
         if (resetSuccess) {
             router.push('/myProfile');
+        } else {
+            setIsClicked(false);
         }
     }
 
@@ -67,7 +74,7 @@ export default function resetPassword() {
 
                         </div>
                     </div>
-                    <ContinueButton buttonText={t("changePassword")} onClick={handleResetPassword}/>
+                    <ContinueButton buttonText={t("changePassword")} onClick={handleResetPassword} isSubmitting={isClicked}/>
                 </div>
             </div>
         </main>

@@ -28,6 +28,7 @@ export default function SignUp() {
 
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
 
     const [email, setEmail] = useState("");
@@ -143,6 +144,8 @@ export default function SignUp() {
             return;
         }
 
+        setIsClicked(true);
+
         const successSignUp = await postSignUp(email, password, deviceToken, successRedirect, toast, errorToastTranslations)
 
         if (successSignUp) {
@@ -152,6 +155,9 @@ export default function SignUp() {
                 detail: signUpToastTranslations("successMessage"),
                 life: 3000
             });
+            setLoading(true);
+        } else {
+            setIsClicked(false);
         }
     }
 
@@ -224,7 +230,7 @@ export default function SignUp() {
                         </div>
                     </div>
                     <LabelTerms text={t('terms')} checked={terms} onChange={(value) => setTerms(value)}/>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleSignUp} isSubmitting={isClicked}/>
                 </div>
             </div>
         </main>

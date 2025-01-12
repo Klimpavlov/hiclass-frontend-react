@@ -19,12 +19,18 @@ export default function verifyEmail() {
     const pathname = usePathname();
     const locale = pathname.slice(1, 3);
 
+    const [isClicked, setIsClicked] = useState(false);
+
 
     const t = useTranslations("SignUp.VerifyEmail")
 
 
     const handleContinue = async () => {
-         await postVerificationCode(email, code, successRedirect, toast, t);
+        setIsClicked(true);
+        const successVerification =  await postVerificationCode(email, code, successRedirect, toast, t);
+        if (!successVerification) {
+            setIsClicked(false);
+        }
     }
 
     const successRedirect = () => {
@@ -53,7 +59,7 @@ export default function verifyEmail() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} isSubmitting={isClicked}/>
                 </div>
             </div>
         </main>

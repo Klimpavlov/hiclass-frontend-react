@@ -15,7 +15,10 @@ export default function resetPasswordCode() {
 
     const router = useRouter();
     const [code, setCode] = useState();
-    const resetPasswordEmail = localStorage.getItem('forgetPasswordEmail')
+    const resetPasswordEmail = localStorage.getItem('forgetPasswordEmail');
+
+    const [isClicked, setIsClicked] = useState(false);
+
 
     const t = useTranslations("ForgetPassword");
     const errorToastsTranslations = useTranslations("DialogModal.Error")
@@ -26,11 +29,13 @@ export default function resetPasswordCode() {
             toast.current.show({ severity: 'error', summary: errorToastsTranslations('error'), detail: errorToastsTranslations("emptyFields"), life: 3000 });
             return;
         }
-        console.log(code)
-
+        console.log(code);
+        setIsClicked(true);
         const successResetPasswordCode = await postResetPasswordCode(resetPasswordEmail, code, t, toast);
         if (successResetPasswordCode) {
             router.push('/signIn/forgetPassword/resetPasswordCode/resetPassword');
+        } else {
+            setIsClicked(false);
         }
     }
 
@@ -56,7 +61,7 @@ export default function resetPasswordCode() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} isSubmitting={isClicked}/>
                 </div>
             </div>
         </main>

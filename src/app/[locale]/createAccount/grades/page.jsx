@@ -12,13 +12,16 @@ import {useTranslations} from "next-intl";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 
 export default function gradesForm() {
-    const pathname = usePathname()
+    const pathname = usePathname();
     const deviceToken = useDeviceToken();
     const toast = useRef(null);
 
     const router = useRouter();
-    const grades = getAvailableGrades()
-    const [selectedGrades, setSelectedGrades] = useState([])
+    const grades = getAvailableGrades();
+    const [selectedGrades, setSelectedGrades] = useState([]);
+
+    const [isClicked, setIsClicked] = useState(false);
+
 
     const t = useTranslations("CreateAccount.Grades");
     const errorTranslations = useTranslations("DialogModal.Error");
@@ -48,9 +51,12 @@ export default function gradesForm() {
             toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
             return;
         }
+        setIsClicked(true);
         const success = await postCreateAccount(successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations);
         if (success) {
             successRedirect();
+        } else {
+            setIsClicked(false);
         }
     }
 
@@ -82,7 +88,7 @@ export default function gradesForm() {
                             />
                         </div>
                     </div>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} isSubmitting={isClicked}/>
                 </div>
             </div>
         </main>

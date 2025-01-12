@@ -15,6 +15,9 @@ export default function ForgetPassword() {
     const router = useRouter();
     const [email, setEmail] = useState('');
 
+    const [isClicked, setIsClicked] = useState(false);
+
+
     const t = useTranslations("ForgetPassword");
     const errorToastsTranslations = useTranslations("DialogModal.Error")
 
@@ -25,9 +28,15 @@ export default function ForgetPassword() {
     const handleContinue = async () => {
         if (!email) {
             toast.current.show({ severity: 'error', summary: errorToastsTranslations('error'), detail: errorToastsTranslations("emptyFields"), life: 3000 });
+            return;
         }
+        setIsClicked(true);
         localStorage.setItem('forgetPasswordEmail', email)
-        await postEmailForgetPassword(email, successRedirect, errorToastsTranslations, toast);
+        const successRequest = await postEmailForgetPassword(email, successRedirect, errorToastsTranslations, toast);
+        if (!successRequest) {
+            setIsClicked(false);
+        }
+
 
     }
 
@@ -50,7 +59,7 @@ export default function ForgetPassword() {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue}/>
+                    <ContinueButton buttonText={t("ContinueBtn")} onClick={handleContinue} isSubmitting={isClicked}/>
                 </div>
             </div>
         </div>

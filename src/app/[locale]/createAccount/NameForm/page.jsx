@@ -13,8 +13,7 @@ export default function nameForm() {
     const toast = useRef(null);
 
     const t = useTranslations("CreateAccount.NameForm");
-    const errorTranslations = useTranslations("DialogModal.Error")
-
+    const errorTranslations = useTranslations("DialogModal.Error");
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

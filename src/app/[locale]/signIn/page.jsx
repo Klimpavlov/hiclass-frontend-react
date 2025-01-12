@@ -28,6 +28,7 @@ export default function SignIn() {
 
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
 
     const [email, setEmail] = useState("");
@@ -85,6 +86,7 @@ export default function SignIn() {
             toast.current.show({severity: 'error', summary: errorToastTranslations("error"), detail: errorToastTranslations("emptyFields"), life: 3000});
             return;
         }
+        setIsClicked(true);
         const successLogin = await postLoginData(email, password, deviceToken, successRedirect, toast, errorToastTranslations, userNotVerifiedRedirect);
         if (successLogin) {
             toast.current.show({
@@ -93,7 +95,9 @@ export default function SignIn() {
                 detail: signInToastTranslations("successMessage"),
                 life: 3000
             });
-            setLoading(true)
+            setLoading(true);
+        } else {
+            setIsClicked(false);
         }
     };
 
@@ -148,7 +152,7 @@ export default function SignIn() {
                                    onKeyDown={(e) => e.key === 'Enter' && handleSignIn()}
                         />
                     </div>
-                    <ContinueButton buttonText={t("signInBtn")} onClick={handleSignIn}/>
+                    <ContinueButton buttonText={t("signInBtn")} onClick={handleSignIn} isSubmitting={isClicked}/>
                 </div>
             </div>
                 </>
