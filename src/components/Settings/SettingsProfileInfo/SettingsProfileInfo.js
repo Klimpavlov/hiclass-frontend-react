@@ -269,7 +269,6 @@ const SettingsProfileInfo = () => {
                 detail: editUserToastTranslations("personalInfoUploaded"),
                 life: 3000
             });
-            await refreshAccessToken();
         }
 
     }

@@ -23,6 +23,9 @@ const UserProfile = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [isOnlyExpert, setIsOnlyExpert] = useState(false);
+
+
     // const handleAddClass = () => {
     //     setIsModalOpen(true);
     // };
@@ -54,6 +57,9 @@ const UserProfile = () => {
             setUserAvatar(userProfile.imageUrl);
             setIsTeacher(userProfile.isATeacher);
             setIsExpert(userProfile.isAnExpert);
+            if (userProfile.isATeacher === false && userProfile.isAnExpert === true) {
+                setIsOnlyExpert(true);
+            }
         } catch (error) {
             console.error("Failed to fetch user profile", error);
         } finally {
@@ -132,6 +138,7 @@ const UserProfile = () => {
                                                 userAvatar={userAvatar}
                                                 onEditClass={refreshClassList}
                                                 onDeleteClass={refreshClassList}
+
                                             />
                                         </div>
                                     );
