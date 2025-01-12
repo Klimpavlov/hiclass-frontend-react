@@ -3,7 +3,6 @@ import SettingsSection from "@/components/Settings/SettingsSection/SettingsSecti
 import InputForm from "@/components/Inputs/InputForm";
 import Dropdown from "@/components/Dropdowns/Dropdown";
 import ApplyButton from "@/components/Buttons/ApplyButton";
-import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import putUpdatePersonalInfo from "@/app/[locale]/api/user/editUser/updatePersonalInfo/putUpdatePersonalInfo";
 import axios from "axios";
 import {getAvailableLanguages} from "@/app/[locale]/api/staticData/getAvailableLanguages/getAvailableLanguages";
@@ -27,6 +26,7 @@ import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTr
 import Cookies from "js-cookie";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 import transliterate from "/mapping/transliteration/transliterate"
+import {useDebounce} from "use-debounce";
 
 const SettingsProfileInfo = () => {
 
@@ -58,6 +58,12 @@ const SettingsProfileInfo = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [countryData, setCountryData] = useState([]);
     const [cityData, setCityData] = useState([]);
+    const [debouncedCountry] = useDebounce(country, 300);
+    const [debouncedCity] = useDebounce(city, 300);
+
+    const countryDropdownRef = useRef(null);
+    const cityDropdownRef = useRef(null);
+
 
     const [isTeacher, setIsTeacher] = useState(false);
     const [isExpert, setIsExpert] = useState(false);
@@ -162,21 +168,90 @@ const SettingsProfileInfo = () => {
 
 
     // // country
-    //
-    // const [countryData, setCountryData] = useState([]);
-    // const [cityData, setCityData] = useState([]);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target)) {
+                setIsCountryInputActive(false);
+            }
+            if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
+                setIsCityInputActive(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Получение списка стран и городов
+    useEffect(() => {
+        if (debouncedCountry) {
+            fetchLocation(debouncedCountry, '');
+        } else {
+            setCountryData([]);
+        }
+    }, [debouncedCountry]);
 
     useEffect(() => {
-        setSelectedCountry(country);
-        setSelectedCity(city);
-    }, [country, city]);
+        if (debouncedCity && selectedCountry) {
+            fetchLocation(selectedCountry, debouncedCity);
+        } else {
+            setCityData([]);
+        }
+    }, [debouncedCity, selectedCountry]);
 
+    async function fetchLocation(countrySearchText, citySearchText) {
+        try {
+            const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
+            const countriesData = response.data.data;
 
+            // Логика для стран
+            if (!countrySearchText) {
+                setCountryData(countriesData);
+            } else {
+                const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+                const filteredCountries = countriesData.filter((country) =>
+                    transliteratedCountrySearch.some((variant) =>
+                        country.country.toLowerCase().includes(variant)
+                    )
+                );
+                setCountryData(filteredCountries);
+            }
+
+            // Логика для городов
+            if (countrySearchText && !citySearchText) {
+                const selectedCountryData = countriesData.find(
+                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+                );
+                if (selectedCountryData) {
+                    setCityData(selectedCountryData.cities);
+                }
+            } else if (countrySearchText && citySearchText) {
+                const selectedCountryData = countriesData.find(
+                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+                );
+                if (selectedCountryData) {
+                    const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+                    const filteredCities = selectedCountryData.cities.filter((city) =>
+                        transliteratedCitySearch.some((variant) =>
+                            city.toLowerCase().includes(variant)
+                        )
+                    );
+                    setCityData(filteredCities);
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке данных', error);
+        }
+    }
 
     const handleCountrySelect = (country) => {
         setSelectedCountry(country);
         setCountry(country);
         setIsCountryInputActive(false);
+        setCity('');
+        setCityData([]);
     };
 
     const handleCitySelect = (city) => {
@@ -184,70 +259,6 @@ const SettingsProfileInfo = () => {
         setCity(city);
         setIsCityInputActive(false);
     };
-
-    useEffect(() => {
-        getCountries(country.toLowerCase(), city.toLowerCase());
-    }, [country, city]);
-
-    async function getCountries(countrySearchText, citySearchText) {
-        try {
-            if (countrySearchText === '') {
-                setCountryData([]);
-                return;
-            }
-            if (citySearchText === '') {
-                setCityData([]);
-                return;
-            }
-            const response = await axios.get(
-                'https://countriesnow.space/api/v0.1/countries'
-            );
-            const countriesData = response.data.data;
-
-            // transliteration of search text
-            const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
-            const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
-
-            // // filter country
-            // const filteredCountries = countriesData.filter((country) =>
-            //     country.country.toLowerCase().includes(transliteratedCountrySearch)
-            // );
-            //
-            // setCountryData(filteredCountries);
-            //
-            // // filter city
-            // const filteredCities = filteredCountries.flatMap((country) =>
-            //     country.cities.filter((city) =>
-            //         city.toLowerCase().includes(transliteratedCitySearch)
-            //     )
-            // );
-            //
-            // setCityData(filteredCities);
-            // console.log(filteredCities);
-
-            const filteredCountries = countriesData.filter((country) =>
-                transliteratedCountrySearch.some((variant) =>
-                    country.country.toLowerCase().includes(variant)
-                )
-            );
-
-            setCountryData(filteredCountries);
-
-            // Фильтрация городов: проверяем совпадение с любым вариантом
-            const filteredCities = filteredCountries.flatMap((country) =>
-                country.cities.filter((city) =>
-                    transliteratedCitySearch.some((variant) =>
-                        city.toLowerCase().includes(variant)
-                    )
-                )
-            );
-
-            setCityData(filteredCities);
-            console.log(filteredCities);
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     const handleUpdatePersonalInfo = async () => {
         if (!firstName || !lastName || !selectedCountry || !selectedCity) {
@@ -559,9 +570,15 @@ const SettingsProfileInfo = () => {
                             value={country}
                             placeholderText={t("placeholderCountry")}
                             onChange={(e) => setCountry(e.target.value)}
-                            onFocus={() => setIsCountryInputActive(true)}
+                            // onFocus={() => setIsCountryInputActive(true)}
+                            onFocus={() => {
+                                setIsCountryInputActive(true);
+                                if (!country) {
+                                    fetchLocation('', '');
+                                }
+                            }}
                         />
-                        <div className="relative">
+                        <div className="relative" ref={countryDropdownRef}>
                             {isCountryInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
@@ -585,15 +602,25 @@ const SettingsProfileInfo = () => {
                             value={city}
                             placeholderText={t("placeholderCity")}
                             onChange={(e) => setCity(e.target.value)}
+                            // onFocus={() => {
+                            //     if (!selectedCountry) {
+                            //         toast.current.show({ severity: 'warn', summary: errorToastTranslations("error"), detail: errorToastTranslations("chooseCountry"), life: 3000 });
+                            //     } else {
+                            //         setIsCityInputActive(true);
+                            //     }
+                            // }}
                             onFocus={() => {
                                 if (!selectedCountry) {
-                                    toast.current.show({ severity: 'warn', summary: errorToastTranslations("error"), detail: errorToastTranslations("chooseCountry"), life: 3000 });
+                                    toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
                                 } else {
                                     setIsCityInputActive(true);
+                                    if (!city) {
+                                        fetchLocation(selectedCountry, '');
+                                    }
                                 }
                             }}
                         />
-                        <div className="relative">
+                        <div className="relative" ref={cityDropdownRef}>
                             {isCityInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
