@@ -492,11 +492,6 @@ const SettingsProfileInfo = () => {
                             // placeholderText={isTeacher ? "teacher" : (isExpert ? "expert" : "")}
                             placeholderText={initialPositionArray.length > 0 ? initialPositionArray.join(", ") : t("selectPosition")}
                             initialSelectedOptions={initialPositionArray}
-                            // onChange={(selectedOptions) => {
-                            //     setIsTeacher(selectedOptions.includes("teacher"));
-                            //     setIsExpert(selectedOptions.includes("expert"));
-                            // }}
-
                             onChange={(selectedOptions) => {
                                 pathname.includes('en') ? setIsTeacher(selectedOptions.includes("teacher")) :
                                     setIsTeacher(selectedOptions.includes("учитель"));

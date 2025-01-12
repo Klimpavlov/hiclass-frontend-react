@@ -12,6 +12,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+
 const ClassPreviewModal = ({
                                headerText,
                                title,
@@ -114,8 +115,7 @@ const ClassPreviewModal = ({
                                         {toastInvitationTranslation("positionError")}
                                     </TooltipContent>
                                 </Tooltip>
-                            ) : (
-                                <ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal} />
+                            ) : (<ApplyButton buttonText={t("inviteBtn")} onApply={handleOpenInviteModal}/>
                             )}
                         </TooltipProvider>
                     </div>

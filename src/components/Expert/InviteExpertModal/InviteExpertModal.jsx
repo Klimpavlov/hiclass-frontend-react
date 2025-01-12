@@ -135,14 +135,14 @@ const InviteExpertModal = ({handleCloseModal}) => {
                 {/*    </svg>*/}
                 {/*</div>*/}
                 <div className="header relative flex items-center justify-center w-full max-w-3xl mx-auto p-8">
-                    <div className="header-title flex-grow text-center">{t("inviteModalText")}</div>
+                    <div className="header-title flex-grow text-center text-xl font-semibold">{t("inviteModalText")}</div>
                     <div className="class-preview-close absolute right-4 cursor-pointer text-gray-500" onClick={handleCloseModal}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </div>
                 </div>
-                <div className="invite-modal-content max-w-3xl w-full mx-auto p-8">
+                <div className="invite-modal-content max-w-3xl w-full mx-auto py-4 px-8">
                     <div className='dropdowns sm:flex justify-between'>
                         {/*<Dropdown dropdownFormText={t("subject")} placeholderText={t("placeholderSubject")}*/}
                         {/*          options={disciplines}*/}
@@ -155,7 +155,7 @@ const InviteExpertModal = ({handleCloseModal}) => {
                         {/*<InputForm inputFormText='End time' placeholderText='Enter time'/>*/}
                     </div>
                 </div>
-                <div className='invite-message-form max-w-3xl w-full mx-auto p-8'>
+                <div className='invite-message-form max-w-3xl w-full mx-auto py-4 px-8'>
                     <InputForm inputFormText={t("message")} placeholderText={t("placeholderMessage")}
                                value={invitationText}
                                onChange={(e) => (setInvitationText(e.target.value))}

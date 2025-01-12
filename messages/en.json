@@ -309,7 +309,9 @@
       "passwordIsSet": "Password is already set for this user",
       "passwordNotSet": "Password is not set for this user",
       "passwordNotSetTryGoogle": "Password is not set, login using Google",
-      "chooseCountry": "Select a country before you select a city"
+      "chooseCountry": "Select a country from list before you select a city",
+      "invalidCountry": "Please select a country from list",
+      "invalidCity": "Please select a city from list"
     },
     "Invitation": {
       "error": "Error",

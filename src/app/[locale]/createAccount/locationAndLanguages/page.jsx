@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from "next/navigation";
+import { useDebounce } from 'use-debounce';
 import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import InputForm from "@/components/Inputs/InputForm";
@@ -23,35 +24,130 @@ export default function LocationAndLanguages() {
 
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const [isCountryInputActive, setIsCountryInputActive] = useState(false);
-    const [isCityInputActive, setIsCityInputActive] = useState(false);
-
-    const [country, setCountry] = useState('');
-    const [selectedCountry, setSelectedCountry] = useState('');
-    const [city, setCity] = useState('');
-    const [selectedCity, setSelectedCity] = useState('');
-    const [countryData, setCountryData] = useState([]);
-    const [cityData, setCityData] = useState([]);
+    // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    //
+    // const [isCountryInputActive, setIsCountryInputActive] = useState(false);
+    // const [isCityInputActive, setIsCityInputActive] = useState(false);
+    //
+    // const [country, setCountry] = useState('');
+    // const [selectedCountry, setSelectedCountry] = useState('');
+    // const [city, setCity] = useState('');
+    // const [selectedCity, setSelectedCity] = useState('');
+    // const [countryData, setCountryData] = useState([]);
+    // const [cityData, setCityData] = useState([]);
 
 
     const t = useTranslations("CreateAccount.LocationAndLanguages");
     const errorTranslations = useTranslations("DialogModal.Error");
 
-    localStorage.setItem('languages', selectedLanguages);
-    localStorage.setItem('country', selectedCountry);
-    localStorage.setItem('city', selectedCity);
     // localStorage.setItem('country', country);
     // localStorage.setItem('city', city);
 
-    const dropdownRef = useRef(null);  // Ссылка на дропдаун
+    // const dropdownRef = useRef(null);  // Ссылка на дропдаун
 
+    const [country, setCountry] = useState('');
+    const [debouncedCountry] = useDebounce(country, 300);
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [debouncedCity] = useDebounce(city, 300);
+    const [selectedCity, setSelectedCity] = useState('');
+    const [countryData, setCountryData] = useState([]);
+    const [cityData, setCityData] = useState([]);
+    const [isCountryInputActive, setIsCountryInputActive] = useState(false);
+    const [isCityInputActive, setIsCityInputActive] = useState(false);
+
+    const countryDropdownRef = useRef(null);
+    const cityDropdownRef = useRef(null);
+
+    localStorage.setItem('languages', selectedLanguages);
+    localStorage.setItem('country', selectedCountry);
+    localStorage.setItem('city', selectedCity);
+
+    // close dropdown when outside click
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target)) {
+                setIsCountryInputActive(false);
+            }
+            if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
+                setIsCityInputActive(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Получение списка стран и городов
+    useEffect(() => {
+        if (debouncedCountry) {
+            fetchLocation(debouncedCountry, '');
+        } else {
+            setCountryData([]);
+        }
+    }, [debouncedCountry]);
+
+    useEffect(() => {
+        if (debouncedCity && selectedCountry) {
+            fetchLocation(selectedCountry, debouncedCity);
+        } else {
+            setCityData([]);
+        }
+    }, [debouncedCity, selectedCountry]);
+
+    async function fetchLocation(countrySearchText, citySearchText) {
+        try {
+            const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
+            const countriesData = response.data.data;
+
+            // Логика для стран
+            if (!countrySearchText) {
+                setCountryData(countriesData);
+            } else {
+                const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+                const filteredCountries = countriesData.filter((country) =>
+                    transliteratedCountrySearch.some((variant) =>
+                        country.country.toLowerCase().includes(variant)
+                    )
+                );
+                setCountryData(filteredCountries);
+            }
+
+            // Логика для городов
+            if (countrySearchText && !citySearchText) {
+                const selectedCountryData = countriesData.find(
+                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+                );
+                if (selectedCountryData) {
+                    setCityData(selectedCountryData.cities);
+                }
+            } else if (countrySearchText && citySearchText) {
+                const selectedCountryData = countriesData.find(
+                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+                );
+                if (selectedCountryData) {
+                    const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+                    const filteredCities = selectedCountryData.cities.filter((city) =>
+                        transliteratedCitySearch.some((variant) =>
+                            city.toLowerCase().includes(variant)
+                        )
+                    );
+                    setCityData(filteredCities);
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке данных', error);
+        }
+    }
 
     const handleCountrySelect = (country) => {
         setSelectedCountry(country);
         setCountry(country);
         setIsCountryInputActive(false);
+        setCity('');
+        setCityData([]);
     };
 
     const handleCitySelect = (city) => {
@@ -60,29 +156,98 @@ export default function LocationAndLanguages() {
         setIsCityInputActive(false);
     };
 
-    // Закрытие дропдауна при клике вне его
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);  // Закрываем дропдаун при клике вне его
-            }
-        };
-
-        if (isDropdownOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isDropdownOpen]);
+    //
+    // const handleCountrySelect = (country) => {
+    //     setSelectedCountry(country);
+    //     setCountry(country);
+    //     setIsCountryInputActive(false);
+    // };
+    //
+    // const handleCitySelect = (city) => {
+    //     setSelectedCity(city);
+    //     setCity(city);
+    //     setIsCityInputActive(false);
+    // };
+    //
+    // // Закрытие дропдауна при клике вне его
+    // useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    //             setIsDropdownOpen(false);  // Закрываем дропдаун при клике вне его
+    //         }
+    //     };
+    //
+    //     if (isDropdownOpen) {
+    //         document.addEventListener('mousedown', handleClickOutside);
+    //     } else {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     }
+    //
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [isDropdownOpen]);
 
     // Получение списка языков
     useEffect(() => {
         getLanguages();
     }, []);
+
+    // // Получение стран и городов
+    // useEffect(() => {
+    //     if (country) {  // Проверяем, выбрана ли страна
+    //         getLocation(country.toLowerCase(), city.toLowerCase());
+    //     }
+    // }, [country, city]);
+    //
+    // async function getLocation(countrySearchText, citySearchText) {
+    //     try {
+    //         const response = await axios.get(
+    //             `https://countriesnow.space/api/v0.1/countries`
+    //         );
+    //         const countriesData = response.data.data;
+    //
+    //         // transliteration of search text
+    //         const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+    //         const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+    //
+    //         const filteredCountries = countriesData.filter((country) =>
+    //             transliteratedCountrySearch.some((variant) =>
+    //                 country.country.toLowerCase().includes(variant)
+    //             )
+    //         );
+    //
+    //         setCountryData(filteredCountries);
+    //
+    //         // Фильтрация городов: проверяем совпадение с любым вариантом
+    //         if (countrySearchText && filteredCountries.length > 0) {
+    //             const filteredCities = filteredCountries.flatMap((country) =>
+    //                 country.cities.filter((city) =>
+    //                     transliteratedCitySearch.some((variant) =>
+    //                         city.toLowerCase().includes(variant)
+    //                     )
+    //                 )
+    //             );
+    //             setCityData(filteredCities);
+    //         } else {
+    //             setCityData([]);  // Очищаем данные городов, если страна не выбрана
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+    //
+    // const handleCountryInputFocus = () => {
+    //     setIsDropdownOpen(true);  // Открываем дропдаун
+    // };
+    //
+    // const handleCityInputFocus = () => {
+    //     if (!country) {
+    //         toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
+    //     } else {
+    //         setIsDropdownOpen(true);  // Открываем дропдаун
+    //     }
+    // };
 
     async function getLanguages() {
         // const accessToken = localStorage.getItem('accessToken');
@@ -91,85 +256,43 @@ export default function LocationAndLanguages() {
         setLanguages(translateItems(availableLanguages, languagesMapping, pathname));
     }
 
-    // Получение стран и городов
-    useEffect(() => {
-        if (country) {  // Проверяем, выбрана ли страна
-            getLocation(country.toLowerCase(), city.toLowerCase());
-        }
-    }, [country, city]);
-
-    async function getLocation(countrySearchText, citySearchText) {
-        try {
-            const response = await axios.get(
-                `https://countriesnow.space/api/v0.1/countries`
-            );
-            const countriesData = response.data.data;
-
-            // transliteration of search text
-            const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
-            const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
-
-            const filteredCountries = countriesData.filter((country) =>
-                transliteratedCountrySearch.some((variant) =>
-                    country.country.toLowerCase().includes(variant)
-                )
-            );
-
-            setCountryData(filteredCountries);
-
-            // Фильтрация городов: проверяем совпадение с любым вариантом
-            if (countrySearchText && filteredCountries.length > 0) {
-                const filteredCities = filteredCountries.flatMap((country) =>
-                    country.cities.filter((city) =>
-                        transliteratedCitySearch.some((variant) =>
-                            city.toLowerCase().includes(variant)
-                        )
-                    )
-                );
-                setCityData(filteredCities);
-            } else {
-                setCityData([]);  // Очищаем данные городов, если страна не выбрана
-            }
-
-
-            // const filteredCountries = countriesData.filter((country) =>
-            //     country.country.toLowerCase().includes(countrySearchText.toLowerCase())
-            // );
-            //
-            // setCountryData(filteredCountries);
-            //
-            // Проверяем, выбрана ли страна перед поиском городов
-            // if (countrySearchText && filteredCountries.length > 0) {
-            //     const filteredCities = filteredCountries.flatMap((country) =>
-            //         country.cities.filter((city) =>
-            //             city.toLowerCase().includes(citySearchText)
-            //         )
-            //     );
-            //     setCityData(filteredCities);
-            // } else {
-            //     setCityData([]);  // Очищаем данные городов, если страна не выбрана
-            // }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    const handleCountryInputFocus = () => {
-        setIsDropdownOpen(true);  // Открываем дропдаун
-    };
-
-    const handleCityInputFocus = () => {
-        if (!country) {
-            toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
-        } else {
-            setIsDropdownOpen(true);  // Открываем дропдаун
-        }
-    };
-
     const handleContinue = () => {
-        // if (!country || !city || selectedLanguages.length === 0) {
+        // if (!selectedCountry || !selectedCity || selectedLanguages.length === 0) {
+        //     toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
+        //     return;
+        // }
+        const isCountryValid = countryData.some(
+            (item) => item.country === selectedCountry
+        );
+        const isCityValid = cityData.includes(selectedCity);
+
+        if (!isCountryValid) {
+            toast.current.show({
+                severity: 'warn',
+                summary: errorTranslations("error"),
+                detail: errorTranslations("invalidCountry"),
+                life: 3000,
+            });
+            return;
+        }
+
+        if (!isCityValid) {
+            toast.current.show({
+                severity: 'warn',
+                summary: errorTranslations("error"),
+                detail:errorTranslations("invalidCity"),
+                life: 3000,
+            });
+            return;
+        }
+
         if (!selectedCountry || !selectedCity || selectedLanguages.length === 0) {
-            toast.current.show({ severity: 'error', summary: errorTranslations("error"), detail: errorTranslations("emptyFields"), life: 3000 });
+            toast.current.show({
+                severity: 'error',
+                summary: errorTranslations("error"),
+                detail: errorTranslations("emptyFields"),
+                life: 3000,
+            });
             return;
         }
         router.push('/createAccount/institution');
@@ -186,122 +309,20 @@ export default function LocationAndLanguages() {
                     <div className="divider"></div>
                     <div className="inputs w-full ">
                         <div className="my-4">
-                            {/*<InputForm inputFormText={t("country")} value={country}*/}
-                            {/*           placeholderText={t("placeholderCountry")}*/}
-                            {/*           onChange={(e) => setCountry(e.target.value)}*/}
-                            {/*           onFocus={handleCountryInputFocus}*/}
-                            {/*           onKeyDown={(e) => e.key === 'Enter' && handleContinue()}*/}
-                            {/*/>*/}
-                            {/*<div className="relative">*/}
-                            {/*{isDropdownOpen && country !== '' && (*/}
-                            {/*    <div*/}
-                            {/*        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
-                            {/*    <div className="cursor-pointer max-h-60 overflow-y-auto" ref={dropdownRef}>*/}
-                            {/*        {countryData.map((country) => (*/}
-                            {/*            <div key={country.country}*/}
-                            {/*                 className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                            {/*                 onClick={() => {*/}
-                            {/*                     setCountry(country.country);*/}
-                            {/*                     setIsDropdownOpen(false);  // Закрываем дропдаун после выбора*/}
-                            {/*                 }}>*/}
-                            {/*                {country.country}*/}
-                            {/*            </div>*/}
-                            {/*        ))}*/}
-                            {/*    </div>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*</div>*/}
-                            {/*<InputForm inputFormText={t("city")} value={city}*/}
-                            {/*           placeholderText={t("placeholderCity")}*/}
-                            {/*           onChange={(e) => setCity(e.target.value)}*/}
-                            {/*           onFocus={handleCityInputFocus}  // Обрабатываем фокус на поле города*/}
-                            {/*           disabled={!country}  // Отключаем поле города, если страна не выбрана*/}
-                            {/*           onKeyDown={(e) => e.key === 'Enter' && handleContinue()}*/}
-                            {/*/>*/}
-                            {/*<div className="relative">*/}
-                            {/*{isDropdownOpen && city !== '' && country && (  // Показываем дропдаун только если выбрана страна*/}
-                            {/*    <div*/}
-                            {/*        className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
-                            {/*    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2" ref={dropdownRef}>*/}
-                            {/*        {cityData.map((cityItem) => (*/}
-                            {/*            <div key={cityItem}*/}
-                            {/*                 className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                            {/*                 onClick={() => {*/}
-                            {/*                     setCity(cityItem);*/}
-                            {/*                     setIsDropdownOpen(false);  // Закрываем дропдаун после выбора*/}
-                            {/*                 }}>*/}
-                            {/*                {cityItem}*/}
-                            {/*            </div>*/}
-                            {/*        ))}*/}
-                            {/*    </div>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*</div>*/}
-
-
-                            {/*<InputForm inputFormText={t("country")} value={country}*/}
-                            {/*           placeholderText={t("placeholderCountry")}*/}
-                            {/*           onChange={(e) => setCountry(e.target.value)}*/}
-                            {/*           onFocus={() => setIsCountryInputActive(true)}/>*/}
-                            {/*{country !== '' && (*/}
-                            {/*    <div className="relative">*/}
-                            {/*        {isCountryInputActive && (*/}
-                            {/*            <div*/}
-                            {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
-                            {/*                <div className="cursor-pointer max-h-60 overflow-y-auto">*/}
-                            {/*                    {countryData.map((country) => (*/}
-                            {/*                        <div*/}
-                            {/*                            key={country}*/}
-                            {/*                            className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                            {/*                            onClick={() => {*/}
-                            {/*                                setCountry(country.country);*/}
-                            {/*                                setIsCountryInputActive(false);*/}
-                            {/*                            }}*/}
-                            {/*                        >*/}
-                            {/*                            {country.country}*/}
-                            {/*                        </div>*/}
-                            {/*                    ))}*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        )}*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*<InputForm inputFormText={t("city")} value={city}*/}
-                            {/*           placeholderText={t("placeholderCity")}*/}
-                            {/*           onChange={(e) => setCity(e.target.value)}*/}
-                            {/*           onFocus={() => setIsCityInputActive(true)}/>*/}
-                            {/*{city !== '' && (*/}
-                            {/*    <div className="relative">*/}
-                            {/*        {isCityInputActive && (*/}
-                            {/*            <div*/}
-                            {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
-
-                            {/*                <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
-                            {/*                    {cityData.map((cityItem) => (*/}
-                            {/*                        <div key={cityItem}*/}
-                            {/*                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                            {/*                             onClick={() => {*/}
-                            {/*                                 setCity(cityItem);*/}
-                            {/*                                 setIsCityInputActive(false)*/}
-                            {/*                             }}>*/}
-                            {/*                            {cityItem}*/}
-                            {/*                        </div>*/}
-                            {/*                    ))}*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        )}*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-
-
                             <InputForm
                                 inputFormText={t("country")}
                                 value={country}
                                 placeholderText={t("placeholderCountry")}
                                 onChange={(e) => setCountry(e.target.value)}
-                                onFocus={() => setIsCountryInputActive(true)}
+                                // onFocus={() => setIsCountryInputActive(true)}
+                                onFocus={() => {
+                                    setIsCountryInputActive(true);
+                                    if (!country) {
+                                        fetchLocation('', '');
+                                    }
+                                }}
                             />
-                            <div className="relative">
+                            <div className="relative" ref={countryDropdownRef}>
                             {isCountryInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
@@ -325,15 +346,25 @@ export default function LocationAndLanguages() {
                                 value={city}
                                 placeholderText={t("placeholderCity")}
                                 onChange={(e) => setCity(e.target.value)}
+                                // onFocus={() => {
+                                //     if (!selectedCountry) {
+                                //         toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
+                                //     } else {
+                                //         setIsCityInputActive(true);
+                                //     }
+                                // }}
                                 onFocus={() => {
                                     if (!selectedCountry) {
                                         toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
                                     } else {
                                         setIsCityInputActive(true);
+                                        if (!city) {
+                                            fetchLocation(selectedCountry, '');
+                                        }
                                     }
                                 }}
                             />
-                            <div className="relative">
+                            <div className="relative" ref={cityDropdownRef}>
                             {isCityInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
@@ -363,3 +394,204 @@ export default function LocationAndLanguages() {
         </main>
     )
 }
+
+
+
+
+//
+// 'use client';
+//
+// import { useDebounce } from 'use-debounce';
+// import React, { useState, useEffect, useRef } from 'react';
+// import { useRouter } from "next/navigation";
+// import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
+// import ContinueButton from "@/components/Buttons/ContinueButton";
+// import InputForm from "@/components/Inputs/InputForm";
+// import axios from "axios";
+// import transliterate from "../../../../../mapping/transliteration/transliterate";
+//
+// export default function LocationAndLanguages() {
+//     const [country, setCountry] = useState('');
+//     const [debouncedCountry] = useDebounce(country, 300);
+//     const [selectedCountry, setSelectedCountry] = useState('');
+//     const [city, setCity] = useState('');
+//     const [debouncedCity] = useDebounce(city, 300);
+//     const [selectedCity, setSelectedCity] = useState('');
+//     const [countryData, setCountryData] = useState([]);
+//     const [cityData, setCityData] = useState([]);
+//     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
+//     const [isCityInputActive, setIsCityInputActive] = useState(false);
+//
+//     const countryDropdownRef = useRef(null);
+//     const cityDropdownRef = useRef(null);
+//
+//     // Закрытие дропдаунов при клике вне
+//     useEffect(() => {
+//         const handleClickOutside = (event) => {
+//             if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target)) {
+//                 setIsCountryInputActive(false);
+//             }
+//             if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
+//                 setIsCityInputActive(false);
+//             }
+//         };
+//
+//         document.addEventListener('mousedown', handleClickOutside);
+//         return () => {
+//             document.removeEventListener('mousedown', handleClickOutside);
+//         };
+//     }, []);
+//
+//     // Получение списка стран и городов
+//     useEffect(() => {
+//         if (debouncedCountry) {
+//             fetchLocation(debouncedCountry, '');
+//         } else {
+//             setCountryData([]);
+//         }
+//     }, [debouncedCountry]);
+//
+//     useEffect(() => {
+//         if (debouncedCity && selectedCountry) {
+//             fetchLocation(selectedCountry, debouncedCity);
+//         } else {
+//             setCityData([]);
+//         }
+//     }, [debouncedCity, selectedCountry]);
+//
+//     async function fetchLocation(countrySearchText, citySearchText) {
+//         try {
+//             const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
+//             const countriesData = response.data.data;
+//
+//             // Логика для стран
+//             if (!countrySearchText) {
+//                 setCountryData(countriesData);
+//             } else {
+//                 const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+//                 const filteredCountries = countriesData.filter((country) =>
+//                     transliteratedCountrySearch.some((variant) =>
+//                         country.country.toLowerCase().includes(variant)
+//                     )
+//                 );
+//                 setCountryData(filteredCountries);
+//             }
+//
+//             // Логика для городов
+//             if (countrySearchText && !citySearchText) {
+//                 const selectedCountryData = countriesData.find(
+//                     (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+//                 );
+//                 if (selectedCountryData) {
+//                     setCityData(selectedCountryData.cities); // Вернуть все города выбранной страны
+//                 }
+//             } else if (countrySearchText && citySearchText) {
+//                 const selectedCountryData = countriesData.find(
+//                     (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+//                 );
+//                 if (selectedCountryData) {
+//                     const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+//                     const filteredCities = selectedCountryData.cities.filter((city) =>
+//                         transliteratedCitySearch.some((variant) =>
+//                             city.toLowerCase().includes(variant)
+//                         )
+//                     );
+//                     setCityData(filteredCities);
+//                 }
+//             }
+//         } catch (error) {
+//             console.error('Ошибка при загрузке данных', error);
+//         }
+//     }
+//
+//     const handleCountrySelect = (country) => {
+//         setSelectedCountry(country);
+//         setCountry(country);
+//         setIsCountryInputActive(false);
+//         setCity(''); // Очистить поле города
+//         setCityData([]);
+//     };
+//
+//     const handleCitySelect = (city) => {
+//         setSelectedCity(city);
+//         setCity(city);
+//         setIsCityInputActive(false);
+//     };
+//
+//     return (
+//         <main>
+//             <div className="inputs w-full">
+//                 <div className="my-4">
+//                     <InputForm
+//                         inputFormText="Страна"
+//                         value={country}
+//                         placeholderText="Введите страну"
+//                         onChange={(e) => setCountry(e.target.value)}
+//                         onFocus={() => {
+//                             setIsCountryInputActive(true);
+//                             if (!country) {
+//                                 fetchLocation('', ''); // Запрос списка стран при пустом значении
+//                             }
+//                         }}
+//                     />
+//                     <div className="relative" ref={countryDropdownRef}>
+//                         {isCountryInputActive && (
+//                             <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+//                                 <div className="cursor-pointer max-h-60 overflow-y-auto">
+//                                     {countryData.map((countryItem) => (
+//                                         <div
+//                                             key={countryItem.country}
+//                                             className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
+//                                             onClick={() => handleCountrySelect(countryItem.country)}
+//                                         >
+//                                             {countryItem.country}
+//                                         </div>
+//                                     ))}
+//                                 </div>
+//                             </div>
+//                         )}
+//                     </div>
+//                 </div>
+//
+//
+//                 {/* Поле для города */}
+//                 <div className="my-4">
+//                     <InputForm
+//                         inputFormText="Город"
+//                         value={city}
+//                         placeholderText="Введите город"
+//                         onChange={(e) => setCity(e.target.value)}
+//                         onFocus={() => {
+//                             if (!selectedCountry) {
+//                                 alert('Сначала выберите страну');
+//                             } else {
+//                                 setIsCityInputActive(true);
+//                                 if (!city) {
+//                                     fetchLocation(selectedCountry, ''); // Загрузить все города страны
+//                                 }
+//                             }
+//                         }}
+//                     />
+//                     <div className="relative" ref={cityDropdownRef}>
+//                         {isCityInputActive && (
+//                             <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
+//                                 <div className="cursor-pointer max-h-60 overflow-y-auto">
+//                                     {cityData.map((cityItem, index) => (
+//                                         <div
+//                                             key={`${cityItem}-${index}`}
+//                                             className="cursor-pointer py-2 px-4 hover:bg-green-100 transition duration-200"
+//                                             onClick={() => handleCitySelect(cityItem)}
+//                                         >
+//                                             {cityItem}
+//                                         </div>
+//                                     ))}
+//                                 </div>
+//                             </div>
+//                         )}
+//                     </div>
+//                 </div>
+//
+//             </div>
+//         </main>
+//     );
+// }
