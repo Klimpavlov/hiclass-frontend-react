@@ -26,7 +26,8 @@ const ClassPreview = ({
                           showDropdown,
                           userAvatar,
                           onEditClass,
-                          onDeleteClass
+                          onDeleteClass,
+                          isOnlyExpert
                       }) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -41,7 +42,16 @@ const ClassPreview = ({
     }
 
     const toggleEditModal = () => {
-        setIsEditModalOpen(!isEditModalOpen);
+        if (isOnlyExpert) {
+            toast.current.show({
+                severity: 'error',
+                summary: myProfileTranslation("error"),
+                detail: myProfileTranslation("createClassPositionError"),
+                life: 3000
+            });
+        } else {
+            setIsEditModalOpen(!isEditModalOpen);
+        }
     }
 
     const toggleDeleteDropdown = () => {
@@ -78,6 +88,8 @@ const ClassPreview = ({
     const t = useTranslations('ClassPreview');
     const gradeTranslation = useTranslations("Grade")
     const deleteClassTranslation = useTranslations("DialogModal.DeleteClass");
+    const myProfileTranslation = useTranslations('MyProfile');
+
 
     // const postDeleteClass = () => {
     //     setTimeout(() => {

@@ -138,6 +138,7 @@ const UserProfile = () => {
                                                 userAvatar={userAvatar}
                                                 onEditClass={refreshClassList}
                                                 onDeleteClass={refreshClassList}
+                                                isOnlyExpert={isOnlyExpert}
 
                                             />
                                         </div>
