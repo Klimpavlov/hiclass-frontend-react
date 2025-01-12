@@ -34,7 +34,7 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
         const errorResponse = error.response?.data?.errors?.[0];
 
         if (toast && toast.current) {
-            if (errorResponse?.exceptionTitle === "UserNotFoundByEmailException") {
+            if (errorResponse?.exceptionTitle === "UserNotVerifiedException") {
                 toast.current.show({
                     severity: 'error',
                     summary: errorToastTranslations("error"),
@@ -42,6 +42,16 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
                     life: 3000
                 });
                 userNotVerifiedRedirect();
+                return false;
+            }
+
+            if (errorResponse?.exceptionTitle === "UserNotFoundByEmailException") {
+                toast.current.show({
+                    severity: 'error',
+                    summary: errorToastTranslations("error"),
+                    detail: errorToastTranslations("userNotFound"),
+                    life: 3000
+                });
                 return false;
             }
 

@@ -3,13 +3,14 @@
 import React from "react";
 
 
-const ContinueButton = ({buttonText, onClick}) => {
+const ContinueButton = ({buttonText, onClick, isSubmitting}) => {
     return (
-        <div  className="flex justify-center items-center py-3 px-5
-         rounded-lg w-full bg-green-800 text-white cursor-pointer"
-              onClick={onClick}>
+        <button className={`flex justify-center items-center py-3 px-5
+         rounded-lg w-full ${isSubmitting ? "bg-gray-300 cursor-not-allowed" : "bg-green-800 text-white cursor-pointer"}`}
+                onClick={onClick}
+                disabled={isSubmitting}>
             {buttonText}
-        </div>
+        </button>
     )
 }
 
