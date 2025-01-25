@@ -5,7 +5,7 @@ export async function POST(request) {
 
     const response = NextResponse.json({ message: 'Success' });
 
-    // Установка рефреш-токена в HttpOnly куки
+    // Set refresh-token in HttpOnly cookie
     response.cookies.set('refreshToken', refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
