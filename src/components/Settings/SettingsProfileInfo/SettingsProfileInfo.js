@@ -27,6 +27,23 @@ import Cookies from "js-cookie";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 import transliterate from "/mapping/transliteration/transliterate"
 import {useDebounce} from "use-debounce";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+
 
 const SettingsProfileInfo = () => {
 
@@ -83,6 +100,35 @@ const SettingsProfileInfo = () => {
     const [isInstitutionInputActive, setIsInstitutionInputActive] = useState(false);
     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
     const [isCityInputActive, setIsCityInputActive] = useState(false);
+
+
+    // shadcn ui component combobox
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
+    const [responseData, setResponseData] = useState([]);
+
+    const frameworks = [
+        {
+            value: "next.js",
+            label: "Next.js",
+        },
+        {
+            value: "sveltekit",
+            label: "SvelteKit",
+        },
+        {
+            value: "nuxt.js",
+            label: "Nuxt.js",
+        },
+        {
+            value: "remix",
+            label: "Remix",
+        },
+        {
+            value: "astro",
+            label: "Astro",
+        },
+    ]
 
     useEffect(() => {
         async function getUserInfo() {
@@ -205,6 +251,7 @@ const SettingsProfileInfo = () => {
         try {
             const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
             const countriesData = response.data.data;
+            setResponseData(countriesData);
 
             // Логика для стран
             if (!countrySearchText) {
@@ -511,90 +558,83 @@ const SettingsProfileInfo = () => {
                                     setIsExpert(selectedOptions.includes("эксперт"));
                             }}
                         />
-                        {/*<InputForm inputFormText={t("country")} value={country}*/}
-                        {/*           placeholderText={t("placeholderCountry")}*/}
-                        {/*           onChange={(e) => setCountry(e.target.value)}*/}
-                        {/*           onFocus={() => setIsCountryInputActive(true)}/>*/}
-                        {/*{country !== '' && (*/}
-                        {/*    <div className="relative">*/}
-                        {/*        {isCountryInputActive && (*/}
-                        {/*            <div*/}
-                        {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
-                        {/*                <div className="cursor-pointer max-h-60 overflow-y-auto">*/}
-                        {/*                    {countryData.map((country) => (*/}
-                        {/*                        <div*/}
-                        {/*                            key={country}*/}
-                        {/*                            className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                        {/*                            onClick={() => {*/}
-                        {/*                                setCountry(country.country);*/}
-                        {/*                                setIsCountryInputActive(false);*/}
-                        {/*                            }}*/}
-                        {/*                        >*/}
-                        {/*                            {country.country}*/}
-                        {/*                        </div>*/}
-                        {/*                    ))}*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        )}*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
-                        {/*<InputForm inputFormText={t("city")} value={city}*/}
-                        {/*           placeholderText={t("placeholderCity")}*/}
-                        {/*           onChange={(e) => setCity(e.target.value)}*/}
-                        {/*           onFocus={() => setIsCityInputActive(true)}/>*/}
-                        {/*{city !== '' && (*/}
-                        {/*    <div className="relative">*/}
-                        {/*        {isCityInputActive && (*/}
-                        {/*            <div*/}
-                        {/*                className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
 
-                        {/*                <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
-                        {/*                    {cityData.map((cityItem) => (*/}
-                        {/*                        <div key={cityItem}*/}
-                        {/*                             className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
-                        {/*                             onClick={() => {*/}
-                        {/*                                 setCity(cityItem);*/}
-                        {/*                                 setIsCityInputActive(false)*/}
-                        {/*                             }}>*/}
-                        {/*                            {cityItem}*/}
-                        {/*                        </div>*/}
-                        {/*                    ))}*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        )}*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
+                        {/* country */}
 
-                        <InputForm
-                            inputFormText={t("country")}
-                            value={country}
-                            placeholderText={t("placeholderCountry")}
-                            onChange={(e) => setCountry(e.target.value)}
-                            // onFocus={() => setIsCountryInputActive(true)}
-                            onFocus={() => {
-                                setIsCountryInputActive(true);
-                                if (!country) {
-                                    fetchLocation('', '');
-                                }
-                            }}
-                        />
-                        <div className="relative" ref={countryDropdownRef}>
-                            {isCountryInputActive && (
-                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                        {countryData.map((countryItem) => (
-                                            <div
-                                                key={countryItem.country}
-                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                onClick={() => handleCountrySelect(countryItem.country)}
-                                            >
-                                                {countryItem.country}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    aria-expanded={open}
+                                    className="justify-between"
+                                >
+                                    {value
+                                        ? responseData.find((country) => country.country === value) && console.log(responseData)
+                                        : "Select country..."}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search country..." />
+                                    <CommandList>
+                                        <CommandEmpty>No country found.</CommandEmpty>
+                                        <CommandGroup>
+                                            {responseData.map((country) => (
+                                                <CommandItem
+                                                    key={country.country}
+                                                    value={country.country}
+                                                    onSelect={(currentValue) => {
+                                                        setValue(currentValue === value ? "" : currentValue)
+                                                        setOpen(false)
+                                                    }}
+                                                >
+                                                    <Check
+                                                        className={cn(
+                                                            "mr-2 h-4 w-4",
+                                                            value === country.country ? "opacity-100" : "opacity-0"
+                                                        )}
+                                                    />
+                                                    {country.country}
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+
+                        {/*<InputForm*/}
+                        {/*    inputFormText={t("country")}*/}
+                        {/*    value={country}*/}
+                        {/*    placeholderText={t("placeholderCountry")}*/}
+                        {/*    onChange={(e) => setCountry(e.target.value)}*/}
+                        {/*    // onFocus={() => setIsCountryInputActive(true)}*/}
+                        {/*    onFocus={() => {*/}
+                        {/*        setIsCountryInputActive(true);*/}
+                        {/*        if (!country) {*/}
+                        {/*            fetchLocation('', '');*/}
+                        {/*        }*/}
+                        {/*    }}*/}
+                        {/*/>*/}
+                        {/*<div className="relative" ref={countryDropdownRef}>*/}
+                        {/*    {isCountryInputActive && (*/}
+                        {/*        <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                        {/*            <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
+                        {/*                {countryData.map((countryItem) => (*/}
+                        {/*                    <div*/}
+                        {/*                        key={countryItem.country}*/}
+                        {/*                        className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*                        onClick={() => handleCountrySelect(countryItem.country)}*/}
+                        {/*                    >*/}
+                        {/*                        {countryItem.country}*/}
+                        {/*                    </div>*/}
+                        {/*                ))}*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
 
                         {/* Поле для города */}
                         <InputForm
@@ -620,6 +660,7 @@ const SettingsProfileInfo = () => {
                                 }
                             }}
                         />
+
                         <div className="relative" ref={cityDropdownRef}>
                             {isCityInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
