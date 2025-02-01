@@ -27,9 +27,9 @@ import Cookies from "js-cookie";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 import transliterate from "/mapping/transliteration/transliterate"
 import {useDebounce} from "use-debounce";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {Check, ChevronsUpDown} from "lucide-react";
+import {cn} from "@/lib/utils";
+import {Button} from "@/components/ui/button";
 import {
     Command,
     CommandEmpty,
@@ -67,16 +67,24 @@ const SettingsProfileInfo = () => {
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
 
+    const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
+    const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+    const [country, setCountry] = useState("");
+    const [responseData, setResponseData] = useState([]);
+    const [initialCountry, setInitialCountry] = useState('');
+
+    const [initialCity, setInitialCity] = useState('');
+    const [city, setCity] = useState(initialCity);
+
+
     // const [country, setCountry] = useState('');
-    // const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('');
-    const [city, setCity] = useState('');
+    // const [city, setCity] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [countryData, setCountryData] = useState([]);
     const [cityData, setCityData] = useState([]);
-    const [debouncedCountry] = useDebounce(country, 300);
-    const [debouncedCity] = useDebounce(city, 300);
+    const [debouncedCountry] = useDebounce(initialCountry, 300);
+    const [debouncedCity] = useDebounce(initialCity, 300);
 
     const countryDropdownRef = useRef(null);
     const cityDropdownRef = useRef(null);
@@ -102,33 +110,13 @@ const SettingsProfileInfo = () => {
     const [isCityInputActive, setIsCityInputActive] = useState(false);
 
 
-    // shadcn ui component combobox
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
-    const [responseData, setResponseData] = useState([]);
+    const selectedCountryValue = responseData.find((c) => c.country === country);
 
-    const frameworks = [
-        {
-            value: "next.js",
-            label: "Next.js",
-        },
-        {
-            value: "sveltekit",
-            label: "SvelteKit",
-        },
-        {
-            value: "nuxt.js",
-            label: "Nuxt.js",
-        },
-        {
-            value: "remix",
-            label: "Remix",
-        },
-        {
-            value: "astro",
-            label: "Astro",
-        },
-    ]
+    useEffect(() => {
+        setCountry(initialCountry);
+        setCity(initialCity);
+    }, [initialCountry, initialCity]);
+
 
     useEffect(() => {
         async function getUserInfo() {
@@ -139,8 +127,8 @@ const SettingsProfileInfo = () => {
             setFirstName(userProfile.firstName);
             setLastName(userProfile.lastName);
             setDescription(userProfile.description);
-            setCountry(userProfile.countryTitle);
-            setCity(userProfile.cityTitle)
+            setInitialCountry(userProfile.countryTitle);
+            setInitialCity(userProfile.cityTitle)
             setIsTeacher(userProfile.isATeacher);
             setIsExpert(userProfile.isAnExpert);
 
@@ -233,82 +221,92 @@ const SettingsProfileInfo = () => {
     // Получение списка стран и городов
     useEffect(() => {
         if (debouncedCountry) {
-            fetchLocation(debouncedCountry, '');
+            fetchLocation();
         } else {
             setCountryData([]);
         }
     }, [debouncedCountry]);
 
     useEffect(() => {
-        if (debouncedCity && selectedCountry) {
-            fetchLocation(selectedCountry, debouncedCity);
+        if (debouncedCity && country) {
+            fetchLocation();
         } else {
             setCityData([]);
         }
     }, [debouncedCity, selectedCountry]);
 
-    async function fetchLocation(countrySearchText, citySearchText) {
+    async function fetchLocation() {
         try {
             const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
             const countriesData = response.data.data;
             setResponseData(countriesData);
-
-            // Логика для стран
-            if (!countrySearchText) {
-                setCountryData(countriesData);
-            } else {
-                const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
-                const filteredCountries = countriesData.filter((country) =>
-                    transliteratedCountrySearch.some((variant) =>
-                        country.country.toLowerCase().includes(variant)
-                    )
-                );
-                setCountryData(filteredCountries);
-            }
-
-            // Логика для городов
-            if (countrySearchText && !citySearchText) {
-                const selectedCountryData = countriesData.find(
-                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
-                );
-                if (selectedCountryData) {
-                    setCityData(selectedCountryData.cities);
-                }
-            } else if (countrySearchText && citySearchText) {
-                const selectedCountryData = countriesData.find(
-                    (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
-                );
-                if (selectedCountryData) {
-                    const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
-                    const filteredCities = selectedCountryData.cities.filter((city) =>
-                        transliteratedCitySearch.some((variant) =>
-                            city.toLowerCase().includes(variant)
-                        )
-                    );
-                    setCityData(filteredCities);
-                }
-            }
         } catch (error) {
-            console.error('Ошибка при загрузке данных', error);
+            console.error('Error fetching data', error);
         }
     }
 
-    const handleCountrySelect = (country) => {
-        setSelectedCountry(country);
-        setCountry(country);
-        setIsCountryInputActive(false);
-        setCity('');
-        setCityData([]);
-    };
+    // async function fetchLocation(countrySearchText, citySearchText) {
+    //     try {
+    //         const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
+    //         const countriesData = response.data.data;
+    //         setResponseData(countriesData);
+    //
+    //         // Логика для стран
+    //         if (!countrySearchText) {
+    //             setCountryData(countriesData);
+    //         } else {
+    //             const transliteratedCountrySearch = transliterate(countrySearchText.toLowerCase());
+    //             const filteredCountries = countriesData.filter((country) =>
+    //                 transliteratedCountrySearch.some((variant) =>
+    //                     country.country.toLowerCase().includes(variant)
+    //                 )
+    //             );
+    //             setCountryData(filteredCountries);
+    //         }
+    //
+    //         // Логика для городов
+    //         if (countrySearchText && !citySearchText) {
+    //             const selectedCountryData = countriesData.find(
+    //                 (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+    //             );
+    //             if (selectedCountryData) {
+    //                 setCityData(selectedCountryData.cities);
+    //             }
+    //         } else if (countrySearchText && citySearchText) {
+    //             const selectedCountryData = countriesData.find(
+    //                 (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
+    //             );
+    //             if (selectedCountryData) {
+    //                 const transliteratedCitySearch = transliterate(citySearchText.toLowerCase());
+    //                 const filteredCities = selectedCountryData.cities.filter((city) =>
+    //                     transliteratedCitySearch.some((variant) =>
+    //                         city.toLowerCase().includes(variant)
+    //                     )
+    //                 );
+    //                 setCityData(filteredCities);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching data', error);
+    //     }
+    // }
 
-    const handleCitySelect = (city) => {
-        setSelectedCity(city);
-        setCity(city);
-        setIsCityInputActive(false);
-    };
+    // const handleCountrySelect = (country) => {
+    //     setSelectedCountry(country);
+    //     setCountry(country);
+    //     setIsCountryInputActive(false);
+    //     setCity('');
+    //     setCityData([]);
+    // };
+    //
+    // const handleCitySelect = (city) => {
+    //     setSelectedCity(city);
+    //     setCity(city);
+    //     setIsCityInputActive(false);
+    // };
 
     const handleUpdatePersonalInfo = async () => {
-        if (!firstName || !lastName || !selectedCountry || !selectedCity) {
+        if (!firstName || !lastName || !country || !city) {
             toast.current.show({
                 severity: 'error',
                 summary: errorToastTranslations("error"),
@@ -534,8 +532,10 @@ const SettingsProfileInfo = () => {
                     </div>
                 </div>
                 <div className='section-aboutMe py-8'>
-                    <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
-                    <div className='py-8'>
+                    <div className='pb-8'>
+                        <SettingsSection title={t("aboutMe")} details={t("aboutMeDetails")}/>
+                    </div>
+                    <div className='space-y-4'>
                         {/*<div className='flex flex-col md:flex-row justify-between'>*/}
                         <InputForm inputFormText={t("firstName")} value={firstName}
                                    placeholderText={t("placeholderFirstName")}
@@ -559,52 +559,102 @@ const SettingsProfileInfo = () => {
                             }}
                         />
 
-                        {/* country */}
+                        <div className='flex'>
+                            {/* country */}
+                            <div>
+                                <div>{t("country")}</div>
+                                <Popover open={countryDropdownOpen} onOpenChange={setCountryDropdownOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={countryDropdownOpen}
+                                            className="justify-between"
+                                        >
+                                            {country || t("placeholderCountry")}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[200px] p-0">
+                                        <Command>
+                                            <CommandInput placeholder={t("placeholderCountry")}/>
+                                            <CommandList>
+                                                <CommandEmpty>No country found.</CommandEmpty>
+                                                <CommandGroup>
+                                                    {responseData.map((countryItem) => (
+                                                        <CommandItem
+                                                            key={countryItem.country}
+                                                            value={countryItem.country}
+                                                            onSelect={(currenValue) => {
+                                                                setCountry(currenValue === countryItem.country ? currenValue : "");
+                                                                setCity("");
+                                                                setInitialCity("");
+                                                                setCountryDropdownOpen(false);
+                                                            }}
+                                                        >
+                                                            <Check
+                                                                className={cn(
+                                                                    "mr-2 h-4 w-4",
+                                                                    country === countryItem.country ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                            {countryItem.country}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
 
-                        <Popover open={open} onOpenChange={setOpen}>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    aria-expanded={open}
-                                    className="justify-between"
-                                >
-                                    {value
-                                        ? responseData.find((country) => country.country === value) && console.log(responseData)
-                                        : "Select country..."}
-                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-[200px] p-0">
-                                <Command>
-                                    <CommandInput placeholder="Search country..." />
-                                    <CommandList>
-                                        <CommandEmpty>No country found.</CommandEmpty>
-                                        <CommandGroup>
-                                            {responseData.map((country) => (
-                                                <CommandItem
-                                                    key={country.country}
-                                                    value={country.country}
-                                                    onSelect={(currentValue) => {
-                                                        setValue(currentValue === value ? "" : currentValue)
-                                                        setOpen(false)
-                                                    }}
-                                                >
-                                                    <Check
-                                                        className={cn(
-                                                            "mr-2 h-4 w-4",
-                                                            value === country.country ? "opacity-100" : "opacity-0"
-                                                        )}
-                                                    />
-                                                    {country.country}
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
+                            {/* Поле для города */}
 
+                            <div className='ml-5'>
+                                <div>{t("city")}</div>
+                                <Popover open={cityDropdownOpen} onOpenChange={setCityDropdownOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={cityDropdownOpen}
+                                            className="justify-between"
+                                        >
+                                            {city || t("placeholderCity")}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[200px] p-0">
+                                        <Command>
+                                            <CommandInput placeholder={t("placeholderCity")}/>
+                                            <CommandList>
+                                                <CommandEmpty>No city found.</CommandEmpty>
+                                                <CommandGroup>
+                                                    {selectedCountryValue?.cities.map((cityItem) => (
+                                                        <CommandItem
+                                                            key={cityItem}
+                                                            value={cityItem}
+                                                            onSelect={(currenValue) => {
+                                                                setCity(currenValue === cityItem ? currenValue : "");
+                                                                setCityDropdownOpen(false);
+                                                            }}
+                                                        >
+                                                            <Check
+                                                                className={cn(
+                                                                    "mr-2 h-4 w-4",
+                                                                    city === cityItem ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                            {cityItem}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
+                        </div>
                         {/*<InputForm*/}
                         {/*    inputFormText={t("country")}*/}
                         {/*    value={country}*/}
@@ -636,48 +686,46 @@ const SettingsProfileInfo = () => {
                         {/*    )}*/}
                         {/*</div>*/}
 
-                        {/* Поле для города */}
-                        <InputForm
-                            inputFormText={t("city")}
-                            value={city}
-                            placeholderText={t("placeholderCity")}
-                            onChange={(e) => setCity(e.target.value)}
-                            // onFocus={() => {
-                            //     if (!selectedCountry) {
-                            //         toast.current.show({ severity: 'warn', summary: errorToastTranslations("error"), detail: errorToastTranslations("chooseCountry"), life: 3000 });
-                            //     } else {
-                            //         setIsCityInputActive(true);
-                            //     }
-                            // }}
-                            onFocus={() => {
-                                if (!selectedCountry) {
-                                    toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });
-                                } else {
-                                    setIsCityInputActive(true);
-                                    if (!city) {
-                                        fetchLocation(selectedCountry, '');
-                                    }
-                                }
-                            }}
-                        />
-
-                        <div className="relative" ref={cityDropdownRef}>
-                            {isCityInputActive && (
-                                <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
-                                    <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                        {cityData.map((cityItem) => (
-                                            <div
-                                                key={cityItem}
-                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                onClick={() => handleCitySelect(cityItem)}
-                                            >
-                                                {cityItem}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        {/*<InputForm*/}
+                        {/*    inputFormText={t("city")}*/}
+                        {/*    value={city}*/}
+                        {/*    placeholderText={t("placeholderCity")}*/}
+                        {/*    onChange={(e) => setCity(e.target.value)}*/}
+                        {/*    // onFocus={() => {*/}
+                        {/*    //     if (!selectedCountry) {*/}
+                        {/*    //         toast.current.show({ severity: 'warn', summary: errorToastTranslations("error"), detail: errorToastTranslations("chooseCountry"), life: 3000 });*/}
+                        {/*    //     } else {*/}
+                        {/*    //         setIsCityInputActive(true);*/}
+                        {/*    //     }*/}
+                        {/*    // }}*/}
+                        {/*    onFocus={() => {*/}
+                        {/*        if (!selectedCountry) {*/}
+                        {/*            toast.current.show({ severity: 'warn', summary: errorTranslations("error"), detail: errorTranslations("chooseCountry"), life: 3000 });*/}
+                        {/*        } else {*/}
+                        {/*            setIsCityInputActive(true);*/}
+                        {/*            if (!city) {*/}
+                        {/*                fetchLocation(selectedCountry, '');*/}
+                        {/*            }*/}
+                        {/*        }*/}
+                        {/*    }}*/}
+                        {/*/>*/}
+                        {/*<div className="relative" ref={cityDropdownRef}>*/}
+                        {/*    {isCityInputActive && (*/}
+                        {/*        <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">*/}
+                        {/*            <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">*/}
+                        {/*                {cityData.map((cityItem) => (*/}
+                        {/*                    <div*/}
+                        {/*                        key={cityItem}*/}
+                        {/*                        className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"*/}
+                        {/*                        onClick={() => handleCitySelect(cityItem)}*/}
+                        {/*                    >*/}
+                        {/*                        {cityItem}*/}
+                        {/*                    </div>*/}
+                        {/*                ))}*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
 
                         <InputForm inputFormText={t("description")} value={description}
                                    placeholderText={t('descriptionPlaceholder')}
@@ -738,10 +786,12 @@ const SettingsProfileInfo = () => {
                 </div>
 
                 <div className='section-prof-details py-8'>
-                    <SettingsSection title={t("professionalInfo")}
-                                     details={t("professionalInfoDetails")}
-                    />
-                    <div className='py-8'>
+                    <div className='pb-8'>
+                        <SettingsSection title={t("professionalInfo")}
+                                         details={t("professionalInfoDetails")}
+                        />
+                    </div>
+                    <div className='space-y-4'>
                         <Dropdown dropdownFormText={t("areasOfWork")}
                                   placeholderText={initialDisciplines.length > 0 ? initialDisciplines.join(", ") : "Select disciplines"}
                                   options={disciplines} initialSelectedOptions={initialDisciplines}
