@@ -102,7 +102,9 @@
       "placeholderLanguages": "Выберите языки, на которых вы говорите",
       "placeholderCountry": "Выберите страну",
       "placeholderCity": "Выберите город",
-      "ContinueBtn": "Продолжить"
+      "ContinueBtn": "Продолжить",
+      "countryNotFound": "Страна не найдена",
+      "cityNotFound": "Город не найден"
     },
     "Institution": {
       "welcome": "Добро пожаловать !",

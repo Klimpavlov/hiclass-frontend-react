@@ -569,7 +569,7 @@ const SettingsProfileInfo = () => {
                                             variant="outline"
                                             role="combobox"
                                             aria-expanded={countryDropdownOpen}
-                                            className="justify-between"
+                                            className="w-[200px] justify-between"
                                         >
                                             {country || t("placeholderCountry")}
                                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>

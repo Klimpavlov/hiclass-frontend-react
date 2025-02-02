@@ -102,7 +102,9 @@
       "placeholderLanguages": "Select languages that you speak",
       "placeholderCountry": "Choose country",
       "placeholderCity": "Choose city",
-      "ContinueBtn": "Continue"
+      "ContinueBtn": "Continue",
+      "countryNotFound": "No country found",
+      "cityNotFound": "No city found"
     },
     "Institution": {
       "welcome": "Welcome !",

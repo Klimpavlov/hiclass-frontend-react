@@ -326,15 +326,21 @@ export default function LocationAndLanguages() {
                             {isCountryInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                        {countryData.map((countryItem) => (
-                                            <div
-                                                key={countryItem.country}
-                                                className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
-                                                onClick={() => handleCountrySelect(countryItem.country)}
-                                            >
-                                                {countryItem.country}
+                                        {countryData.length > 0 ? (
+                                            countryData.map((countryItem) => (
+                                                <div
+                                                    key={countryItem.country}
+                                                    className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
+                                                    onClick={() => handleCountrySelect(countryItem.country)}
+                                                >
+                                                    {countryItem.country}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="py-4 px-4 text-gray-500">
+                                                {t("countryNotFound")}
                                             </div>
-                                        ))}
+                                        )}
                                     </div>
                                 </div>
                             )}
@@ -368,7 +374,8 @@ export default function LocationAndLanguages() {
                             {isCityInputActive && (
                                 <div className="absolute z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg w-full">
                                     <div className="cursor-pointer max-h-60 overflow-y-auto mt-2">
-                                        {cityData.map((cityItem) => (
+                                        {cityData.length > 0 ? (
+                                        cityData.map((cityItem) => (
                                             <div
                                                 key={cityItem}
                                                 className="cursor-pointer py-4 px-4 hover:bg-green-100 transition duration-200"
@@ -376,7 +383,11 @@ export default function LocationAndLanguages() {
                                             >
                                                 {cityItem}
                                             </div>
-                                        ))}
+                                        ))  ) : (
+                                            <div className="py-4 px-4 text-gray-500">
+                                                {t("cityNotFound")}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
