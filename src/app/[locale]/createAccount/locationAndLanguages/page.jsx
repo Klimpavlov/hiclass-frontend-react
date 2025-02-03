@@ -85,7 +85,8 @@ export default function LocationAndLanguages() {
         if (debouncedCountry) {
             fetchLocation(debouncedCountry, '');
         } else {
-            setCountryData([]);
+            // setCountryData([]);
+            fetchLocation('', '');
         }
     }, [debouncedCountry]);
 
@@ -93,7 +94,7 @@ export default function LocationAndLanguages() {
         if (debouncedCity && selectedCountry) {
             fetchLocation(selectedCountry, debouncedCity);
         } else {
-            setCityData([]);
+            fetchLocation(selectedCountry, '');
         }
     }, [debouncedCity, selectedCountry]);
 
