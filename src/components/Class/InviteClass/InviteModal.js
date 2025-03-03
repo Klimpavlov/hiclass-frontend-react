@@ -7,7 +7,6 @@ import InputForm from "@/components/Inputs/InputForm";
 import ClearAllButton from "@/components/Buttons/ClearAllButton";
 import postInviteClass from "@/app/[locale]/api/class/postInviteClass/postInviteClass";
 import ErrorNotification from "@/components/Error/ErrorNotification";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {format} from "date-fns";
 import {useTranslations} from "next-intl";
 import apiClient from "@/app/[locale]/api/utils/axios";
@@ -15,7 +14,6 @@ import apiClient from "@/app/[locale]/api/utils/axios";
 
 const InviteModal = ({classId, handleCloseModal, handleCloseClassPreviewModal}) => {
     const toast = useRef(null);
-    const localhost = getLocalhost();
 
     // translation
     const t = useTranslations("InviteModal");

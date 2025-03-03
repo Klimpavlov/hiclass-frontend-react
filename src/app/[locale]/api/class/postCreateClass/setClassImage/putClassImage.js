@@ -1,5 +1,3 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import apiClient from "@/app/[locale]/api/utils/axios";
 const putClassImage = async (file, toast) => {
     try {

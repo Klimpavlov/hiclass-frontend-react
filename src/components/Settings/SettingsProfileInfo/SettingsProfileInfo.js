@@ -237,7 +237,7 @@ const SettingsProfileInfo = () => {
 
     async function fetchLocation() {
         try {
-            const response = await axios.get(`https://countriesnow.space/api/v0.1/countries`);
+            const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
             const countriesData = response.data.data;
             setResponseData(countriesData);
         } catch (error) {

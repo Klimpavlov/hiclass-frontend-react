@@ -1,12 +1,9 @@
 import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import Cookies from "js-cookie";
 
 const postGoogleLoginData = async (token, deviceToken) => {
     try {
-        const localhost = getLocalhost();
-
-        const response = await axios.post(`http://${localhost}/api/Authentication/google-signin`, {
+        const response = await axios.post('/Authentication/google-signin', {
             Token: token,
             DeviceToken: deviceToken
         });

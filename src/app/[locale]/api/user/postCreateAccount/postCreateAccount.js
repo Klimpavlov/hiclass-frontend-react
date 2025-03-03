@@ -1,17 +1,13 @@
 import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import languagesMapping from "../../../../../../mapping/languagesMapping/languagesMapping.json";
 import disciplinesMapping from "../../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
-import {usePathname} from "next/navigation";
-import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import Cookies from "js-cookie";
 
 const postCreateAccount = async (successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations) => {
     try {
         // const accessToken = sessionStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
-        const localhost = getLocalhost();
         console.log(accessToken)
 
         const firstName = localStorage.getItem('firstName');
@@ -66,7 +62,7 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
         };
 
         console.log(requestData)
-        const response = await axios.put(`http://${localhost}/api/User/create-account`, requestData, {
+        const response = await axios.put('/api/User/create-account', requestData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${accessToken}`,
