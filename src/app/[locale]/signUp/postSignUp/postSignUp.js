@@ -1,13 +1,10 @@
 import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import Cookies from "js-cookie";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postSignUpData = async (email, password, deviceToken, successRedirect, toast, errorToastTranslations) => {
     try {
-
-        const localhost = getLocalhost();
-
-        await axios.post(`http://${localhost}/api/Authentication/register`, {
+        await apiClient.post('/Authentication/register', {
             Email: email,
             Password: password,
             DeviceToken: deviceToken

@@ -19,13 +19,11 @@ import {usePathname, useRouter} from 'next/navigation';
 import disciplinesMapping from "/mapping/disciplinesMapping/disciplinesMapping.json";
 import languagesMapping from "/mapping/languagesMapping/languagesMapping.json";
 import getAvailableGrades from "@/app/[locale]/api/staticData/getAvailableGrades/getAvailableGrades";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {initializeApp} from 'firebase/app';
 import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import ExpertPreview from "@/components/Expert/ExpertPreview/ExpertPreview";
 import {SwitchDemo} from "@/components/Buttons/Switch/Switch";
-import apiClient from "@/app/[locale]/api/utils/axios";
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import Cookies from "js-cookie";
 
@@ -66,7 +64,7 @@ export default function ExplorePage() {
     useEffect(() => {
         const getAccessToken = async () => {
             try {
-                const response = await fetch('/api/getAccessToken');
+                const response = await fetch(process.env.NEXT_PUBLIC_APP_URL + '/api/getAccessToken');
                 const data = await response.json();
                 if (data.accessToken) {
                     console.log('Access Token:', data.accessToken);
