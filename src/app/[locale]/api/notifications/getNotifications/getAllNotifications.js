@@ -1,8 +1,8 @@
-import axios from "axios";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 export async function getAllNotifications(accessToken) {
     try {
-        const response = await axios.get('Notifications/all-notifications', {
+        const response = await apiClient.get('Notifications/all-notifications', {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

@@ -24,7 +24,6 @@ import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import ExpertPreview from "@/components/Expert/ExpertPreview/ExpertPreview";
 import {SwitchDemo} from "@/components/Buttons/Switch/Switch";
-import apiClient from "@/app/[locale]/api/utils/axios";
 import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 import Cookies from "js-cookie";
 

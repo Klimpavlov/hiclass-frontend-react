@@ -1,8 +1,8 @@
-import axios from 'axios';
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import languagesMapping from "../../../../../../mapping/languagesMapping/languagesMapping.json";
 import disciplinesMapping from "../../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
 import Cookies from "js-cookie";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postCreateAccount = async (successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations) => {
     try {
@@ -62,7 +62,7 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
         };
 
         console.log(requestData)
-        const response = await axios.put('/api/User/create-account', requestData, {
+        const response = await apiClient.put('/api/User/create-account', requestData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${accessToken}`,

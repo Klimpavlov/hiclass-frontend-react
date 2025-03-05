@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "@/app/[locale]/api/utils/axios";
 import Cookies from "js-cookie";
 
 const postLoginData = async (email, password, deviceToken, successRedirect, toast, errorToastTranslations, userNotVerifiedRedirect) => {
     try {
-        const response = await axios.post('/Authentication/login', {
+        const response = await apiClient.post('/Authentication/login', {
             Email: email,
             Password: password,
             DeviceToken: deviceToken

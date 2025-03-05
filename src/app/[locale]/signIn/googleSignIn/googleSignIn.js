@@ -1,9 +1,9 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postGoogleLoginData = async (token, deviceToken) => {
     try {
-        const response = await axios.post('/Authentication/google-signin', {
+        const response = await apiClient.post('/Authentication/google-signin', {
             Token: token,
             DeviceToken: deviceToken
         });
