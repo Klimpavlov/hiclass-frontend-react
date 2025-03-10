@@ -1,12 +1,8 @@
-import axios from "axios";
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 export async function getAllNotifications(accessToken) {
     try {
-        const localhost = getLocalhost();
-        const response = await axios.get(
-            `http://${localhost}/api/Notifications/all-notifications`,
-            {
+        const response = await apiClient.get('Notifications/all-notifications', {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

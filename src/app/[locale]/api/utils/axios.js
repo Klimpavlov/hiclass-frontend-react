@@ -1,13 +1,13 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
+import getAppUrl from "@/app/[locale]/api/app/url";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
 // import { redirect } from 'next/navigation';
 
 
 // Экземпляр axios
 const apiClient = axios.create({
-    baseURL: `http://${getLocalhost()}/api`,
+    baseURL: getAppUrl() + '/api',
 });
 
 //Функция для получения нового access token с помощью refresh token
