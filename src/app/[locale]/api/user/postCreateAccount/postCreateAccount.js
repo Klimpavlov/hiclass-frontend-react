@@ -6,6 +6,7 @@ import disciplinesMapping from "../../../../../../mapping/disciplinesMapping/dis
 import {usePathname} from "next/navigation";
 import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import Cookies from "js-cookie";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postCreateAccount = async (successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations) => {
     try {
@@ -66,7 +67,7 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
         };
 
         console.log(requestData)
-        const response = await axios.put(`http://${localhost}/api/User/create-account`, requestData, {
+        const response = await apiClient.put(`/User/create-account`, requestData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${accessToken}`,
