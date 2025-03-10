@@ -8,6 +8,8 @@ import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import Cookies from "js-cookie";
 import apiClient from "@/app/[locale]/api/utils/axios";
 
+// create account
+
 const postCreateAccount = async (successRedirect, userExistRedirect, toast, pathname, deviceToken, errorTranslations) => {
     try {
         // const accessToken = sessionStorage.getItem('accessToken');
