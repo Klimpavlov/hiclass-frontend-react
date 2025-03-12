@@ -2,7 +2,7 @@
 
 import RegistrationHeader from "@/components/Header/RegistrationHeader/RegistrationHeader";
 import GoogleButton from "@/components/Buttons/GoogleButton";
-import React, {useEffect, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import InputForm from "@/components/Inputs/InputForm";
 import ContinueButton from "@/components/Buttons/ContinueButton";
 import postLoginData from "@/app/[locale]/signIn/postLogin/postLoginData";
@@ -16,9 +16,7 @@ import { signInWithPopup } from 'firebase/auth';
 import ErrorNotification from "@/components/Error/ErrorNotification";
 import {useTranslations} from "next-intl";
 import postGoogleLoginData from "@/app/[locale]/signIn/googleSignIn/googleSignIn";
-import {LabelTerms} from "@/components/Label/Label";
 import {RingLoader} from "react-spinners";
-import {getUserProfile} from "@/app/[locale]/api/user/getUserProfile/getUserProfile";
 
 export default function SignIn() {
     const router = useRouter();
@@ -77,9 +75,6 @@ export default function SignIn() {
             console.error('Error signing in:', error);
         }
     };
-
-
-
 
     const handleSignIn = async () => {
         if (!email || !password) {

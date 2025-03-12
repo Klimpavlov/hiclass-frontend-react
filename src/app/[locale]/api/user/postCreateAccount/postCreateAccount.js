@@ -1,10 +1,6 @@
-import axios from 'axios';
-import getLocalhost from "@/app/[locale]/api/localhost/localhost";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import languagesMapping from "../../../../../../mapping/languagesMapping/languagesMapping.json";
 import disciplinesMapping from "../../../../../../mapping/disciplinesMapping/disciplinesMapping.json";
-import {usePathname} from "next/navigation";
-import useDeviceToken from "@/app/[locale]/api/getDeviceToken/getDeviceToken";
 import Cookies from "js-cookie";
 import apiClient from "@/app/[locale]/api/utils/axios";
 
@@ -14,7 +10,6 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
     try {
         // const accessToken = sessionStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
-        const localhost = getLocalhost();
         console.log(accessToken)
 
         const firstName = localStorage.getItem('firstName');

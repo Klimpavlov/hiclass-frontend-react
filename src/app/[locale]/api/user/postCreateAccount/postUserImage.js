@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
+import apiClient from "@/app/[locale]/api/utils/axios";
 
 const postUserImage = (file, successRedirect) => {
     // const accessToken = sessionStorage.getItem('accessToken');
@@ -9,7 +10,7 @@ const postUserImage = (file, successRedirect) => {
 
     formData.append('ImageFormFile', file);
 
-    axios
+    apiClient
         .put("/Image/set-user-image", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',

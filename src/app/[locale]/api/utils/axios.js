@@ -5,12 +5,12 @@ import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refr
 // import { redirect } from 'next/navigation';
 
 
-// Экземпляр axios
+//  axios instance
 const apiClient = axios.create({
     baseURL: getAppUrl() + '/api',
 });
 
-//Функция для получения нового access token с помощью refresh token
+//function for obtaining a new access token using a refresh token
 // const refreshAccessToken = async () => {
 //     try {
 //         // const refreshToken = sessionStorage.getItem('refreshToken');
@@ -41,7 +41,7 @@ const apiClient = axios.create({
 //     }
 // };
 
-// Интерсептор запроса для добавления access token в заголовки
+// interceptors
 apiClient.interceptors.request.use(async (config) => {
     // let accessToken = sessionStorage.getItem('accessToken');
 
@@ -55,7 +55,7 @@ apiClient.interceptors.request.use(async (config) => {
     return Promise.reject(error);
 });
 
-// Интерсептор ответа для обработки 401 ошибок (токен истек)
+// interceptor for 401 error response (токен истек)
 apiClient.interceptors.response.use((response) => {
     return response;
 }, async (error) => {
@@ -70,7 +70,6 @@ apiClient.interceptors.response.use((response) => {
             console.error('Unable to refresh access token:', refreshError);
             window.location.href = '/signIn';
             // redirect('/signIn')
-            // Логика выхода из системы или перенаправление на страницу логина
         }
     }
     return Promise.reject(error);
