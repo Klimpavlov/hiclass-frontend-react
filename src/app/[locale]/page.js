@@ -226,7 +226,7 @@ export default function ExplorePage() {
     }
 
     const handleSearchRequest = async (filters) => {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = Cookies.get('accessToken');
 
         const getMappingFile = (filterName) => {
             if (filterName === 'Disciplines') {
@@ -262,6 +262,7 @@ export default function ExplorePage() {
             const response = await searchRequest(accessToken, searchUrl);
             console.error(response);
             setSearchClassData(response.teacherProfiles || []);
+            // setSearchClassData(response.classProfiles || []);
             setSearchExperts(response.expertProfiles || []);
         } catch (error) {
             console.error(error);
