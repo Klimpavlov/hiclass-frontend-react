@@ -170,7 +170,7 @@ export default function LocationAndLanguages() {
     //     setIsCityInputActive(false);
     // };
     //
-    // // Закрытие дропдауна при клике вне его
+    // close dropdown when clicl outside
     // useEffect(() => {
     //     const handleClickOutside = (event) => {
     //         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -189,12 +189,10 @@ export default function LocationAndLanguages() {
     //     };
     // }, [isDropdownOpen]);
 
-    // Получение списка языков
     useEffect(() => {
         getLanguages();
     }, []);
 
-    // // Получение стран и городов
     // useEffect(() => {
     //     if (country) {  // Проверяем, выбрана ли страна
     //         getLocation(country.toLowerCase(), city.toLowerCase());

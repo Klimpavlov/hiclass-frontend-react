@@ -63,11 +63,13 @@ const Dropdown = ({
         <div className="relative" ref={dropdownRef}>
             {dropdownFormText}
             <div
-                className="flex justify-between py-3 px-5 rounded-lg border border-neutral-200-b-2-b-7-bd bg-white
+                className="flex justify-between py-3 px-5 rounded-lg border border-gray-300-b-2-b-7-bd bg-white
                  shadow-xs text-neutral-9000-c-0-f-12 text-center font-inter text-base leading-6 cursor-pointer"
                 onClick={toggleDropdown}
             >
-                <div className="">{displayText}</div>
+                <div className={selectedOptions.length === 0 ? "text-gray-400" : "text-black"}>
+                    {displayText}
+                </div>
                 <Image className={`ml-1 ${isOpen ? "rotate-180" : ""}`} src={imgSrc} alt="hiClass chevronDown"/>
             </div>
             {isOpen && (

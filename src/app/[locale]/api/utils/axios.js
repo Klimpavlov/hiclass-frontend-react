@@ -2,7 +2,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import getAppUrl from "@/app/[locale]/api/app/url";
 import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
-// import { redirect } from 'next/navigation';
 
 
 //  axios instance
@@ -64,12 +63,14 @@ apiClient.interceptors.response.use((response) => {
         originalRequest._retry = true;
         try {
             const newAccessToken = await refreshAccessToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
             return apiClient(originalRequest);
         } catch (refreshError) {
             console.error('Unable to refresh access token:', refreshError);
+            Cookies.remove('accessToken');
+            Cookies.remove('refreshToken');
             window.location.href = '/signIn';
-            // redirect('/signIn')
         }
     }
     return Promise.reject(error);

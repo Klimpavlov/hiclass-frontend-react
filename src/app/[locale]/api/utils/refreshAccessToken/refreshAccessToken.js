@@ -20,8 +20,6 @@ const refreshAccessToken = async () => {
         console.log(response);
         const newAccessToken = response.data.value.accessToken;
         const newRefreshToken = response.data.value.refreshToken;
-        // sessionStorage.setItem('accessToken', newAccessToken);
-        // sessionStorage.setItem('refreshToken', newRefreshToken);
         Cookies.set('accessToken', newAccessToken);
         Cookies.set('refreshToken', newRefreshToken);
         return newAccessToken;

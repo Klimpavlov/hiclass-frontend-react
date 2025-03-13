@@ -235,7 +235,7 @@
     "localTime": "местное время",
     "editProfileBtn": "Редактирование профиля",
     "availableAsAnExpert": "Доступен в качестве эксперта",
-    "speaks": "Говорит на {languages}"
+    "speaks": "Языки: {languages}"
   },
   "OtherUserProfile": {
     "classes": "Классы",
