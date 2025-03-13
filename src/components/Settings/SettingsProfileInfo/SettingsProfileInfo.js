@@ -43,6 +43,8 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { FixedSizeList } from "react-window";
+
 
 
 const SettingsProfileInfo = () => {
@@ -69,12 +71,14 @@ const SettingsProfileInfo = () => {
 
     const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
     const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
-    const [country, setCountry] = useState("");
     const [responseData, setResponseData] = useState([]);
     const [initialCountry, setInitialCountry] = useState('');
+    const [country, setCountry] = useState('');
+    // const [country, setCountry] = useState(initialCountry);
 
     const [initialCity, setInitialCity] = useState('');
-    const [city, setCity] = useState(initialCity);
+    const [city, setCity] = useState('');
+    // const [city, setCity] = useState(initialCity);
 
 
     // const [country, setCountry] = useState('');
@@ -108,6 +112,7 @@ const SettingsProfileInfo = () => {
     const [isInstitutionInputActive, setIsInstitutionInputActive] = useState(false);
     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
     const [isCityInputActive, setIsCityInputActive] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
 
     const selectedCountryValue = responseData.find((c) => c.country === country);
@@ -117,6 +122,13 @@ const SettingsProfileInfo = () => {
         setCity(initialCity);
     }, [initialCountry, initialCity]);
 
+    // const filteredCities = selectedCountryValue?.cities.filter((city) =>
+    //     city.toLowerCase().includes(searchTerm.toLowerCase())
+    // ) || [];
+
+    const filteredCities = (selectedCountryValue?.cities ?? []).filter((city) =>
+        city.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     useEffect(() => {
         async function getUserInfo() {
@@ -218,7 +230,7 @@ const SettingsProfileInfo = () => {
         };
     }, []);
 
-    // Получение списка стран и городов
+    // get countries and cities
     useEffect(() => {
         if (debouncedCountry) {
             fetchLocation();
@@ -251,7 +263,7 @@ const SettingsProfileInfo = () => {
     //         const countriesData = response.data.data;
     //         setResponseData(countriesData);
     //
-    //         // Логика для стран
+    //         // countries
     //         if (!countrySearchText) {
     //             setCountryData(countriesData);
     //         } else {
@@ -264,7 +276,7 @@ const SettingsProfileInfo = () => {
     //             setCountryData(filteredCountries);
     //         }
     //
-    //         // Логика для городов
+    //         // cities
     //         if (countrySearchText && !citySearchText) {
     //             const selectedCountryData = countriesData.find(
     //                 (country) => country.country.toLowerCase() === countrySearchText.toLowerCase()
@@ -585,11 +597,15 @@ const SettingsProfileInfo = () => {
                                                         <CommandItem
                                                             key={countryItem.country}
                                                             value={countryItem.country}
-                                                            onSelect={(currenValue) => {
-                                                                setCountry(currenValue === countryItem.country ? currenValue : "");
-                                                                setCity("");
-                                                                setInitialCity("");
-                                                                setCountryDropdownOpen(false);
+                                                            onSelect={(currentValue) => {
+                                                                setCountry(currentValue);
+                                                                setInitialCountry(currentValue);
+
+                                                                setTimeout(() => {
+                                                                    setCity("");
+                                                                    setInitialCity("");
+                                                                    setCountryDropdownOpen(false);
+                                                                }, 10);
                                                             }}
                                                         >
                                                             <Check
@@ -608,7 +624,7 @@ const SettingsProfileInfo = () => {
                                 </Popover>
                             </div>
 
-                            {/* Поле для города */}
+                            {/* city */}
 
                             <div className='ml-5'>
                                 <div>{t("city")}</div>
@@ -626,31 +642,53 @@ const SettingsProfileInfo = () => {
                                     </PopoverTrigger>
                                     <PopoverContent className="w-[200px] p-0">
                                         <Command>
-                                            <CommandInput placeholder={t("placeholderCity")}/>
-                                            <CommandList>
-                                                <CommandEmpty>No city found.</CommandEmpty>
+                                            <CommandInput
+                                                placeholder={t("placeholderCity")}
+                                                value={searchTerm}
+                                                onValueChange={setSearchTerm}
+                                            />
+                                            <CommandList style={{ height: 300 }}>
                                                 <CommandGroup>
-                                                    {selectedCountryValue?.cities.map((cityItem) => (
-                                                        <CommandItem
-                                                            key={cityItem}
-                                                            value={cityItem}
-                                                            onSelect={(currenValue) => {
-                                                                setCity(currenValue === cityItem ? currenValue : "");
-                                                                setCityDropdownOpen(false);
-                                                            }}
-                                                        >
-                                                            <Check
-                                                                className={cn(
-                                                                    "mr-2 h-4 w-4",
-                                                                    city === cityItem ? "opacity-100" : "opacity-0"
-                                                                )}
-                                                            />
-                                                            {cityItem}
-                                                        </CommandItem>
-                                                    ))}
-                                                </CommandGroup>
+                                                {filteredCities.length > 0 ? (
+                                                    <FixedSizeList
+                                                        key={filteredCities.length}
+                                                        height={300}
+                                                        itemCount={filteredCities.length}
+                                                        itemSize={40}
+                                                        width="100%"
+                                                    >
+                                                        {({ index, style }) => {
+                                                            const cityItem = filteredCities[index];
+
+                                                            return (
+                                                                <div style={style} key={cityItem}>
+                                                                    <CommandItem
+                                                                        value={cityItem}
+                                                                        onSelect={(currentValue) => {
+                                                                            setCity(currentValue === cityItem ? currentValue : "");
+                                                                            setCityDropdownOpen(false);
+                                                                        }}
+                                                                    >
+                                                                        <Check
+                                                                            className={cn(
+                                                                                "mr-2 h-4 w-4",
+                                                                                city === cityItem ? "opacity-100" : "opacity-0"
+                                                                            )}
+                                                                        />
+                                                                        {cityItem}
+                                                                    </CommandItem>
+                                                                </div>
+                                                            );
+                                                        }}
+                                                    </FixedSizeList>
+                                                ) : (
+                                                    <CommandEmpty>No city found.</CommandEmpty>
+                                                )}
+                                                    </CommandGroup>
                                             </CommandList>
                                         </Command>
+
+
                                     </PopoverContent>
                                 </Popover>
                             </div>
@@ -739,7 +777,7 @@ const SettingsProfileInfo = () => {
                 <div className='section-pos-verif py-8'>
                     <SettingsSection title={t("positionVerification")}
                                      details={t("positionVerificationDetails")}/>
-                    {/*api search org*/}
+                    {/* yandex api search org*/}
 
                     {/*<div className='py-8'>*/}
                     {/*    <InputForm inputFormText={t("institutionName")} value={institutionName}*/}
