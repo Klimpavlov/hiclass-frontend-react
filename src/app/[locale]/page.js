@@ -37,7 +37,8 @@ export default function ExplorePage() {
     const [currentFilters, setCurrentFilters] = useState({});
     const [selectedClass, setSelectedClass] = useState(null);
     const [searchClassData, setSearchClassData] = useState([]);
-    const [teacherProfileData, setTeacherProfileData] = useState([]);
+    const [teacherProfilesData, setTeacherProfilesData] = useState([]);
+    const [defaultProfileData, setDefaultProfileData] = useState([]);
     const [searchExperts, setSearchExperts] = useState([]);
     const [isSwitchOn, setIsSwitchOn] = useState(false);
 
@@ -174,11 +175,11 @@ export default function ExplorePage() {
         // const accessToken = localStorage.getItem('accessToken');
         const defaultSearchData = await getDefaultSearch();
         console.log(defaultSearchData)
-        setTeacherProfileData(defaultSearchData.teacherProfilesByCountry);
+        setDefaultProfileData(defaultSearchData.teacherProfilesByCountry);
         setLoading(false);
     }
 
-    console.log(teacherProfileData)
+    console.log(defaultProfileData)
 
     const handleClassClick = (selectedClass, teacher) => {
         setSelectedClass(selectedClass);
@@ -277,8 +278,8 @@ export default function ExplorePage() {
         try {
             const response = await searchRequest(accessToken, searchUrl);
             console.error(response);
-            setSearchClassData(response.teacherProfiles || []);
-            // setSearchClassData(response.classProfiles || []);
+            setTeacherProfilesData(response.teacherProfiles || []);
+            setSearchClassData(response.classProfiles || []);
             setSearchExperts(response.expertProfiles || []);
         } catch (error) {
             console.error(error);
@@ -408,28 +409,27 @@ export default function ExplorePage() {
                                         />
                                     </div>
                                 ))
-                                : searchClassData.map(teacher =>
-                                    teacher.classDtos.map(classInfo => (
-                                        <div
-                                            key={classInfo.classId}
-                                            onClick={() =>
-                                                handleClassClick(classInfo, teacher)
-                                            }
-                                        >
+                                : searchClassData.map(classInfo => {
+                                    const teacher = teacherProfilesData.find(teacherProfile =>
+                                        teacherProfile.classDtos.some(c => c.classId === classInfo.classId)
+                                    );
+
+                                    return (
+                                        <div key={classInfo.classId}
+                                             onClick={() => handleClassClick(classInfo, teacher)}>
                                             <ClassPreview
                                                 key={classInfo.classId}
                                                 title={classInfo.title}
                                                 username={classInfo.userFullName}
-                                                tags={translateDisciplines(
-                                                    classInfo.disciplineTitle
-                                                )}
+                                                tags={translateDisciplines(classInfo.disciplineTitle)}
                                                 grade={classInfo.grade}
                                                 photo={classInfo.imageUrl}
-                                                userAvatar={teacher.imageUrl}
+                                                userAvatar={teacher?.imageUrl || ''}
                                             />
                                         </div>
-                                    ))
-                                )}
+                                    );
+                                })
+                            }
                         </div>
 
                         {!isSwitchOn && (
@@ -444,7 +444,7 @@ export default function ExplorePage() {
                                 </div>
                                 <div
                                     className="clsCntMain mt-10 sm:mt-4 md:mt-6 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer">
-                                    {teacherProfileData.map(teacher =>
+                                    {defaultProfileData.map(teacher =>
                                         teacher.classDtos.map(classInfo => (
                                             <div
                                                 key={classInfo.classId}

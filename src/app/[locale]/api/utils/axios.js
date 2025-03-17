@@ -63,7 +63,14 @@ apiClient.interceptors.response.use((response) => {
         originalRequest._retry = true;
         try {
             const newAccessToken = await refreshAccessToken();
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+            if (!newAccessToken) {
+                throw new Error("Refresh token expired or invalid");
+            }
+
+            Cookies.set('accessToken', newAccessToken);
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
             return apiClient(originalRequest);
         } catch (refreshError) {
@@ -71,6 +78,7 @@ apiClient.interceptors.response.use((response) => {
             Cookies.remove('accessToken');
             Cookies.remove('refreshToken');
             window.location.href = '/signIn';
+            return Promise.reject(refreshError);
         }
     }
     return Promise.reject(error);
