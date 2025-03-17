@@ -203,20 +203,36 @@ export default function ExplorePage() {
         });
     };
 
-    const handleClearAll = () => {
-        setCurrentFilters({});
-        setSearchClassData([]);
-        setSearchExperts([]);
-    };
+
+    useEffect(() => {
+        if (Object.keys(currentFilters).length > 0) {
+            handleSearchRequest(currentFilters);
+        }
+    }, [currentFilters]);
 
     const handleRemoveTag = (filterName, filterValue) => {
         const updatedFilters = {
             ...currentFilters,
-            [filterName]: currentFilters[filterName].filter(value => value !== filterValue)
+            [filterName]: currentFilters[filterName].filter(value => value !== filterValue),
         };
 
+        const isEmptyFilters = Object.values(updatedFilters).every(arr => Array.isArray(arr) && arr.length === 0);
+
+        if (isEmptyFilters) {
+            console.log("empty filters");
+            setCurrentFilters({});
+            setSearchClassData([]);
+            setSearchExperts([]);
+            return;
+        }
+
         setCurrentFilters(updatedFilters);
-        handleSearchRequest(updatedFilters);
+    };
+
+    const handleClearAll = () => {
+        setCurrentFilters({});
+        setSearchClassData([]);
+        setSearchExperts([]);
     };
 
     const handleSwitchChange = (checked) => {

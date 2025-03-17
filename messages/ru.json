@@ -239,7 +239,7 @@
   },
   "OtherUserProfile": {
     "classes": "Классы",
-    "speaks": "Говорит на {languages}",
+    "speaks": "Языки: {languages}",
     "sendInvite": "Отправить приглашение",
     "chatWith": "Начать переписку",
     "availableAsAnExpert": "Доступен в качестве эксперта",

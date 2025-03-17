@@ -11,6 +11,7 @@ import UserProfileSendInviteBtn from "@/components/Buttons/UserProfileSendInvite
 import Image from "next/image";
 import {useTranslations} from "next-intl";
 import imgLightning from "@/components/User/UserInfo/lightning.svg";
+import defaultUserImage from "@/components/User/UserInfo/avatar-default.svg";
 
 const OtherUserInfo = ({
                            username,
@@ -32,7 +33,7 @@ const OtherUserInfo = ({
             <div className="avatar-container">
                 <Image
                     className="rounded-full w-36 h-36"
-                    src={userAvatar}
+                    src={userAvatar || defaultUserImage}
                     alt="user-avatar"
                     width={200}
                     height={200}
