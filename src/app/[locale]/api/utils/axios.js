@@ -75,8 +75,8 @@ apiClient.interceptors.response.use((response) => {
             return apiClient(originalRequest);
         } catch (refreshError) {
             console.error('Unable to refresh access token:', refreshError);
-            Cookies.remove('accessToken');
-            Cookies.remove('refreshToken');
+            // Cookies.remove('accessToken');
+            // Cookies.remove('refreshToken');
             window.location.href = '/signIn';
             return Promise.reject(refreshError);
         }
