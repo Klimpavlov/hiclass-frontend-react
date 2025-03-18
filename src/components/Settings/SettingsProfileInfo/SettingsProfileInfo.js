@@ -24,8 +24,6 @@ import positionMapping from "../../../../mapping/positionMapping/positionMapping
 import {translateItems} from "@/app/[locale]/api/translateItems/translateItems";
 import {reverseTranslateItems} from "@/app/[locale]/api/translateItems/reverseTranslateItems";
 import Cookies from "js-cookie";
-import refreshAccessToken from "@/app/[locale]/api/utils/refreshAccessToken/refreshAccessToken";
-import transliterate from "/mapping/transliteration/transliterate"
 import {useDebounce} from "use-debounce";
 import {Check, ChevronsUpDown} from "lucide-react";
 import {cn} from "@/lib/utils";
