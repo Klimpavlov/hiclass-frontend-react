@@ -1,6 +1,6 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
 
-const putEditUserImage = async (userImage, toast) => {
+const putEditUserImage = async (userImage, toast, successCallback) => {
     try {
         const formData = new FormData();
         formData.append('ImageFormFile', userImage);
@@ -15,6 +15,7 @@ const putEditUserImage = async (userImage, toast) => {
         console.log(response);
         // page reload
         // window.location.reload()
+        successCallback()
         return true
     }
     catch (error) {

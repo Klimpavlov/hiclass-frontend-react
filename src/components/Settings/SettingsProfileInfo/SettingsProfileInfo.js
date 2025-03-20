@@ -105,9 +105,6 @@ const SettingsProfileInfo = () => {
     const [initialPosition, setInitialPosition] = useState([])
 
     const [userAvatar, setUserAvatar] = useState([]);
-
-    const [file, setFile] = useState();
-
     const [selectedFile, setSelectedFile] = useState(null);
 
 
@@ -132,8 +129,8 @@ const SettingsProfileInfo = () => {
         city.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    useEffect(() => {
-        async function getUserInfo() {
+
+        const getUserInfo = async () => {
             const userProfile = await getUserProfile();
 
             console.log(userProfile)
@@ -160,29 +157,15 @@ const SettingsProfileInfo = () => {
             }, 1300);
         }
 
+    useEffect(() => {
         getUserInfo()
     }, [])
 
 
-    // change user photo
-
-    // async function getFile(event) {
-    //     const selectedFile = event.target.files[0];
-    //     setFile(URL.createObjectURL(selectedFile));
-    //     const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);
-    //
-    //     if (updateUserImageSuccess) {
-    //         toast.current.show({
-    //             severity: 'info',
-    //             summary: editUserToastTranslations("success"),
-    //             detail: editUserToastTranslations("avatarUploaded"),
-    //             life: 3000
-    //         });
-    //     }
-    // }
+    // change user avatar
 
     const handleUpdateAvatar = async () => {
-        await putEditUserImage(selectedFile, toast);
+        await putEditUserImage(selectedFile, toast, getUserInfo);
 
     }
 
@@ -520,38 +503,17 @@ const SettingsProfileInfo = () => {
                                 height={144}
                                 quality={100}
                             />
-                            {/*{file ? (*/}
-                            {/*    <Image*/}
-                            {/*        className="w-full h-full object-cover"*/}
-                            {/*        src={file}*/}
-                            {/*        alt="user-avatar"*/}
-                            {/*        width={144}*/}
-                            {/*        height={144}*/}
-                            {/*        quality={100}*/}
-                            {/*    />*/}
-                            {/*) : (*/}
-                            {/*    <Image*/}
-                            {/*        className="w-full h-full object-cover"*/}
-                            {/*        src={userAvatar || defaultUserImage}*/}
-                            {/*        alt="user-avatar"*/}
-                            {/*        width={144}*/}
-                            {/*        height={144}*/}
-                            {/*        quality={100}*/}
-                            {/*    />*/}
-                            {/*)}*/}
                         </div>
                         <div className='mt-2'>
-                            <AddProfilePhoto onFileSelected={setSelectedFile}/>
-                            {selectedFile ? <div className="">
-                                    <ApplyButton buttonText={t("replaceBtn")}
-                                                 onApply={handleUpdateAvatar}/>
-                                </div>
-                                : null}
+                            <div className="content w-full max-w-screen-sm">
+                                <AddProfilePhoto onFileSelected={setSelectedFile}/>
+                                {selectedFile ? <div className="">
+                                        <ApplyButton buttonText={t("replaceBtn")}
+                                                     onApply={handleUpdateAvatar}/>
+                                    </div>
+                                    : null}
+                            </div>
                         </div>
-                        {/*<div className="">*/}
-                        {/*    <ApplyButton buttonText={t("replaceBtn")}*/}
-                        {/*                 onApply={() => document.querySelector('input[type="file"]').click()}/>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <div className='section-aboutMe py-8'>
