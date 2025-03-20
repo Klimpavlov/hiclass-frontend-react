@@ -22,6 +22,7 @@ import {RingLoader} from "react-spinners";
 import Cookies from "js-cookie";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import ErrorNotification from "@/components/Error/ErrorNotification";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 const Header = ({testNotifications}) => {
 
@@ -344,7 +345,7 @@ const Header = ({testNotifications}) => {
                         </div>
                     )}
                 </div>
-
+                {/*<ModeToggle/>*/}
             </div>
             {/* Mobile Button */}
             <div onClick={handleNav} className='block sm:hidden z-10'>

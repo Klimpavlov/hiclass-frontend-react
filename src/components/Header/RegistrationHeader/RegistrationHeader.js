@@ -6,6 +6,7 @@ import imgUKFlag from './FlagUnited Kingdom.svg'
 import imgRUFlag from './ru.svg'
 import Link from "next/link";
 import {useTranslations} from "next-intl";
+import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 
 const RegistrationHeader = () => {
@@ -90,6 +91,7 @@ const RegistrationHeader = () => {
                         </div>
                     )}
                 </div>
+                {/*<ModeToggle/>*/}
             </div>
         </div>
     )

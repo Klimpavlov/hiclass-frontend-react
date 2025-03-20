@@ -3,6 +3,7 @@ import './globals.css'
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import 'react-image-crop/dist/ReactCrop.css'
+import {ThemeProvider} from "@/components/theme/theme-provider";
 
 
 const inter = Inter({subsets: ['latin']})
@@ -27,9 +28,16 @@ export default async function RootLayout({
             <link rel="icon" href="/favicon-main.svg"/>
         </head>
         <body className={`${inter.className} overflow-x-hidden`}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
         <NextIntlClientProvider messages={messages}>
             {children}
         </NextIntlClientProvider>
+        </ThemeProvider>
         </body>
         </html>
     );
