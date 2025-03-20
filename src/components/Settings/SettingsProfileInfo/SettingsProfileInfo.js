@@ -41,8 +41,9 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { FixedSizeList } from "react-window";
-
+import {FixedSizeList} from "react-window";
+import AddProfilePhoto from '@/components/Buttons/AddProfilePhoto';
+import postUserImage from "@/app/[locale]/api/user/postCreateAccount/postUserImage";
 
 
 const SettingsProfileInfo = () => {
@@ -107,6 +108,9 @@ const SettingsProfileInfo = () => {
 
     const [file, setFile] = useState();
 
+    const [selectedFile, setSelectedFile] = useState(null);
+
+
     const [isInstitutionInputActive, setIsInstitutionInputActive] = useState(false);
     const [isCountryInputActive, setIsCountryInputActive] = useState(false);
     const [isCityInputActive, setIsCityInputActive] = useState(false);
@@ -162,31 +166,24 @@ const SettingsProfileInfo = () => {
 
     // change user photo
 
-    // const [file, setFile] = useState();
+    // async function getFile(event) {
+    //     const selectedFile = event.target.files[0];
+    //     setFile(URL.createObjectURL(selectedFile));
+    //     const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);
+    //
+    //     if (updateUserImageSuccess) {
+    //         toast.current.show({
+    //             severity: 'info',
+    //             summary: editUserToastTranslations("success"),
+    //             detail: editUserToastTranslations("avatarUploaded"),
+    //             life: 3000
+    //         });
+    //     }
+    // }
 
-    async function getFile(event) {
-        // if (!userAvatar) {
-        //     toast.current.show({
-        //         severity: 'error',
-        //         summary: errorToastTranslations("error"),
-        //         detail: errorToastTranslations("wentWrong"),
-        //         life: 3000
-        //     });
-        //     return;
-        // }
-        const selectedFile = event.target.files[0];
-        setFile(URL.createObjectURL(selectedFile));
-        const updateUserImageSuccess = await putEditUserImage(selectedFile, toast);
+    const handleUpdateAvatar = async () => {
+        await putEditUserImage(selectedFile, toast);
 
-        if (updateUserImageSuccess) {
-            toast.current.show({
-                severity: 'info',
-                summary: editUserToastTranslations("success"),
-                detail: editUserToastTranslations("avatarUploaded"),
-                life: 3000
-            });
-        }
-        // setFile(URL.createObjectURL(selectedFile));
     }
 
     // teacher/expert
@@ -513,32 +510,48 @@ const SettingsProfileInfo = () => {
                     <SettingsSection title={t("profilePhoto")}
                                      details={t("photoDetails")}/>
                     <div className="button group pt-5">
-                        <input className='hidden' type="file" onChange={getFile}/>
+                        {/*<input className='hidden' type="file" onChange={getFile}/>*/}
                         <div className="rounded-full overflow-hidden w-36 h-36">
-                            {file ? (
-                                <Image
-                                    className="w-full h-full object-cover"
-                                    src={file}
-                                    alt="user-avatar"
-                                    width={144}
-                                    height={144}
-                                    quality={100}
-                                />
-                            ) : (
-                                <Image
-                                    className="w-full h-full object-cover"
-                                    src={userAvatar || defaultUserImage}
-                                    alt="user-avatar"
-                                    width={144}
-                                    height={144}
-                                    quality={100}
-                                />
-                            )}
+                            <Image
+                                className="w-full h-full object-cover"
+                                src={userAvatar || defaultUserImage}
+                                alt="user-avatar"
+                                width={144}
+                                height={144}
+                                quality={100}
+                            />
+                            {/*{file ? (*/}
+                            {/*    <Image*/}
+                            {/*        className="w-full h-full object-cover"*/}
+                            {/*        src={file}*/}
+                            {/*        alt="user-avatar"*/}
+                            {/*        width={144}*/}
+                            {/*        height={144}*/}
+                            {/*        quality={100}*/}
+                            {/*    />*/}
+                            {/*) : (*/}
+                            {/*    <Image*/}
+                            {/*        className="w-full h-full object-cover"*/}
+                            {/*        src={userAvatar || defaultUserImage}*/}
+                            {/*        alt="user-avatar"*/}
+                            {/*        width={144}*/}
+                            {/*        height={144}*/}
+                            {/*        quality={100}*/}
+                            {/*    />*/}
+                            {/*)}*/}
                         </div>
-                        <div className="">
-                            <ApplyButton buttonText={t("replaceBtn")}
-                                         onApply={() => document.querySelector('input[type="file"]').click()}/>
+                        <div className='mt-2'>
+                            <AddProfilePhoto onFileSelected={setSelectedFile}/>
+                            {selectedFile ? <div className="">
+                                    <ApplyButton buttonText={t("replaceBtn")}
+                                                 onApply={handleUpdateAvatar}/>
+                                </div>
+                                : null}
                         </div>
+                        {/*<div className="">*/}
+                        {/*    <ApplyButton buttonText={t("replaceBtn")}*/}
+                        {/*                 onApply={() => document.querySelector('input[type="file"]').click()}/>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
                 <div className='section-aboutMe py-8'>
@@ -645,44 +658,44 @@ const SettingsProfileInfo = () => {
                                                 value={searchTerm}
                                                 onValueChange={setSearchTerm}
                                             />
-                                            <CommandList style={{ height: 300 }}>
+                                            <CommandList style={{height: 300}}>
                                                 <CommandGroup>
-                                                {filteredCities.length > 0 ? (
-                                                    <FixedSizeList
-                                                        key={filteredCities.length}
-                                                        height={300}
-                                                        itemCount={filteredCities.length}
-                                                        itemSize={40}
-                                                        width="100%"
-                                                    >
-                                                        {({ index, style }) => {
-                                                            const cityItem = filteredCities[index];
+                                                    {filteredCities.length > 0 ? (
+                                                        <FixedSizeList
+                                                            key={filteredCities.length}
+                                                            height={300}
+                                                            itemCount={filteredCities.length}
+                                                            itemSize={40}
+                                                            width="100%"
+                                                        >
+                                                            {({index, style}) => {
+                                                                const cityItem = filteredCities[index];
 
-                                                            return (
-                                                                <div style={style} key={cityItem}>
-                                                                    <CommandItem
-                                                                        value={cityItem}
-                                                                        onSelect={(currentValue) => {
-                                                                            setCity(currentValue === cityItem ? currentValue : "");
-                                                                            setCityDropdownOpen(false);
-                                                                        }}
-                                                                    >
-                                                                        <Check
-                                                                            className={cn(
-                                                                                "mr-2 h-4 w-4",
-                                                                                city === cityItem ? "opacity-100" : "opacity-0"
-                                                                            )}
-                                                                        />
-                                                                        {cityItem}
-                                                                    </CommandItem>
-                                                                </div>
-                                                            );
-                                                        }}
-                                                    </FixedSizeList>
-                                                ) : (
-                                                    <CommandEmpty>No city found.</CommandEmpty>
-                                                )}
-                                                    </CommandGroup>
+                                                                return (
+                                                                    <div style={style} key={cityItem}>
+                                                                        <CommandItem
+                                                                            value={cityItem}
+                                                                            onSelect={(currentValue) => {
+                                                                                setCity(currentValue === cityItem ? currentValue : "");
+                                                                                setCityDropdownOpen(false);
+                                                                            }}
+                                                                        >
+                                                                            <Check
+                                                                                className={cn(
+                                                                                    "mr-2 h-4 w-4",
+                                                                                    city === cityItem ? "opacity-100" : "opacity-0"
+                                                                                )}
+                                                                            />
+                                                                            {cityItem}
+                                                                        </CommandItem>
+                                                                    </div>
+                                                                );
+                                                            }}
+                                                        </FixedSizeList>
+                                                    ) : (
+                                                        <CommandEmpty>No city found.</CommandEmpty>
+                                                    )}
+                                                </CommandGroup>
                                             </CommandList>
                                         </Command>
 
