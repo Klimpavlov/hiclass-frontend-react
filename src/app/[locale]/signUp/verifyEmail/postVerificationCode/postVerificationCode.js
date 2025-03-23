@@ -15,7 +15,7 @@ const postVerificationCode = async (email, code, successRedirect, toast, t) => {
         // const requestUrl = `${url}?verificationCode=${code}`;
 
        const response = await apiClient.post('/User/verify-email', {
-            DeviceToken: deviceToken,
+            DeviceToken: deviceToken || '',
             Email: email,
             VerificationCode: code,
             RefreshToken: refreshToken
