@@ -1,10 +1,11 @@
 import apiClient from "@/app/[locale]/api/utils/axios";
 import Cookies from "js-cookie";
 
-const postLogout = async (deviceToken, successRedirect) => {
+const postLogout = async (deviceToken, refreshToken, successRedirect) => {
     try {
         const response = await apiClient.post(`/Authentication/log-out`, {
-            DeviceToken: deviceToken
+            DeviceToken: deviceToken,
+            RefreshToken: refreshToken
         });
         localStorage.clear();
         sessionStorage.clear();

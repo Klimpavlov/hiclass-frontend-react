@@ -95,7 +95,8 @@ const Header = ({testNotifications}) => {
         try {
             // const deviceToken = localStorage.getItem('deviceToken');
             const deviceToken = Cookies.get('deviceToken');
-            await postLogout(deviceToken, successRedirect);
+            const refreshToken = Cookies.get('refreshToken');
+            await postLogout(deviceToken, refreshToken, successRedirect);
             router.push('/signIn');
         } catch (error) {
             console.error("Logout failed:", error);

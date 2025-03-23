@@ -15,7 +15,7 @@ const postResetPasswordCode = async (email, code, t, toast) => {
         // sessionStorage.setItem('refreshToken', refreshToken);
 
         Cookies.set('accessToken', accessToken);
-        Cookies.set('refreshToken', refreshToken);
+        Cookies.set('refreshToken', accessToken); // bug on back, that's right
 
         // successRedirect()
         return true;

@@ -11,6 +11,8 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
         // const accessToken = sessionStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
         console.log(accessToken)
+        const refreshToken = Cookies.get('refreshToken');
+
 
         const firstName = localStorage.getItem('firstName');
         const lastName = localStorage.getItem('lastName');
@@ -47,6 +49,7 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
 
         const requestData = {
             DeviceToken: deviceToken,
+            RefreshToken: refreshToken,
             FirstName: firstName,
             LastName: lastName,
             IsATeacher: isTeacher,

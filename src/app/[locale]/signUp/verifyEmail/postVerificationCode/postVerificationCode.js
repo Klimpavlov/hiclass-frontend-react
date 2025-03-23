@@ -8,6 +8,8 @@ const postVerificationCode = async (email, code, successRedirect, toast, t) => {
         const accessToken =  Cookies.get('accessToken');
         // const deviceToken = localStorage.getItem('deviceToken')
         const deviceToken = Cookies.get('deviceToken');
+        const refreshToken = Cookies.get('refreshToken');
+
 
         // const url = `http://${localhost}/api/User/verify-email`;
         // const requestUrl = `${url}?verificationCode=${code}`;
@@ -16,6 +18,7 @@ const postVerificationCode = async (email, code, successRedirect, toast, t) => {
             DeviceToken: deviceToken,
             Email: email,
             VerificationCode: code,
+            RefreshToken: refreshToken
         }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
