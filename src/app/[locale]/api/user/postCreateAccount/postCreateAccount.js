@@ -76,7 +76,9 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
 
         console.log(response);
         const newAccessToken = response.data.value.accessToken;
+        const newRefreshToken = response.data.value.refreshToken;
         Cookies.set('accessToken', newAccessToken);
+        Cookies.set('refreshToken', newRefreshToken);
         successRedirect();
         return true;
     } catch (error) {

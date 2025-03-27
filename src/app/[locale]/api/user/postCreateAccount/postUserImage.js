@@ -19,6 +19,7 @@ const postUserImage = (file, successRedirect) => {
         })
         .then(function (response) {
             console.log(response);
+            // Cookies.set('refreshToken', response.data.value.refreshToken);
             successRedirect()
         })
         .catch(function (error) {
