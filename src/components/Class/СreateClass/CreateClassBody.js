@@ -113,7 +113,7 @@ const CreateClassBody = ({classId, setTitle, setPhoto, setSubjects, setGrades, s
         <div className="flex flex-col sm:flex-row gap-5">
             <div className="section-photo w-full sm:w-1/2">
                 <div className="mb-2">{t("classPhoto")}</div>
-                <div className="relative w-full h-64 border border-black rounded-lg overflow-hidden bg-gray-100">
+                <div className="relative w-full h-40 md:h-64 border border-black rounded-lg overflow-hidden bg-gray-100">
                     <label htmlFor="uploadImage" className="cursor-pointer block w-full h-full">
                         {selectedImage || initialPhoto ? (
                             <img
