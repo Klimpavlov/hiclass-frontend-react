@@ -48,7 +48,7 @@ const postCreateAccount = async (successRedirect, userExistRedirect, toast, path
         }
 
         const requestData = {
-            DeviceToken: deviceToken || '',
+            DeviceToken: deviceToken || null,
             RefreshToken: refreshToken,
             FirstName: firstName,
             LastName: lastName,

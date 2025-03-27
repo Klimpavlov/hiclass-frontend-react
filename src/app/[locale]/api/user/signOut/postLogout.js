@@ -7,11 +7,11 @@ const postLogout = async (deviceToken, refreshToken, successRedirect) => {
             DeviceToken: deviceToken,
             RefreshToken: refreshToken
         });
+        console.log(response);
         localStorage.clear();
         sessionStorage.clear();
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
-        console.log(response);
         successRedirect()
         return true;
     } catch (error) {
