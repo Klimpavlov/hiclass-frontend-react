@@ -544,7 +544,7 @@ const SettingsProfileInfo = () => {
                             }}
                         />
 
-                        <div className='flex'>
+                        <div className='md:flex'>
                             {/* country */}
                             <div>
                                 <div>{t("country")}</div>
@@ -599,7 +599,7 @@ const SettingsProfileInfo = () => {
 
                             {/* city */}
 
-                            <div className='ml-5'>
+                            <div className='md:ml-5'>
                                 <div>{t("city")}</div>
                                 <Popover open={cityDropdownOpen} onOpenChange={setCityDropdownOpen}>
                                     <PopoverTrigger asChild>

@@ -21,6 +21,8 @@ const postLoginData = async (email, password, deviceToken, successRedirect, toas
         Cookies.set('refreshToken', refreshToken);
         Cookies.set('deviceToken', deviceToken);
 
+        console.log(response);
+
         successRedirect();
         return true;
     } catch (error) {
