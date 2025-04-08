@@ -28,16 +28,16 @@ export default async function RootLayout({
             <link rel="icon" href="/favicon-main.svg"/>
         </head>
         <body className={`${inter.className} overflow-x-hidden`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
+        {/*<ThemeProvider*/}
+        {/*    attribute="class"*/}
+        {/*    defaultTheme="system"*/}
+        {/*    enableSystem*/}
+        {/*    disableTransitionOnChange*/}
+        {/*>*/}
         <NextIntlClientProvider messages={messages}>
             {children}
         </NextIntlClientProvider>
-        </ThemeProvider>
+        {/*</ThemeProvider>*/}
         </body>
         </html>
     );

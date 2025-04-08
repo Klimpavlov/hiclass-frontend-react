@@ -22,7 +22,7 @@ import {RingLoader} from "react-spinners";
 import Cookies from "js-cookie";
 import DialogModal from "@/components/ConfirmDialog/ConfirmDialog";
 import ErrorNotification from "@/components/Error/ErrorNotification";
-import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
+// import {ModeToggle} from "@/components/theme/toggle-theme/modeToggle";
 
 const Header = ({testNotifications}) => {
 
