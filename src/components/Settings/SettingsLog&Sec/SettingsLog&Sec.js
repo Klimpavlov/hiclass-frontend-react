@@ -33,19 +33,24 @@ const SettingsLogSec = () => {
     const passwordsToasts = useTranslations('DialogModal.Passwords');
     const updateUserToasts = useTranslations('DialogModal.EditUser');
 
-
-    useEffect(() => {
-        getUserInfo()
-    }, [])
-
+    const [isPasswordSet, setIsPasswordSet] = useState(false);
 
     async function getUserInfo() {
         // const accessToken = localStorage.getItem('accessToken');
         const accessToken =  Cookies.get('accessToken');
         const userProfile = await getUserProfile(accessToken);
+        console.log(userProfile);
+        if (userProfile.isPasswordSet === true) {
+            setIsPasswordSet(true)
+        }
         // setEmail(userProfile.email);
-
     }
+
+    useEffect(() => {
+        getUserInfo()
+    }, [])
+
+    console.log(isPasswordSet)
 
     //update email
 
@@ -77,10 +82,19 @@ const SettingsLogSec = () => {
     const [password, setPassword] = useState('');
 
     const handleSetPassword = async () => {
-        if (!password) {
+        if (!password && isPasswordSet === false) {
             toast.current.show({ severity: 'error', summary: passwordsToasts("error"), detail: passwordsToasts("emptyFields"), life: 3000 });
         }
-        await putSetPassword(password, toast, passwordsToasts, errorToasts)
+        if (isPasswordSet === true) {
+            toast.current.show({
+                severity: 'error',
+                summary: errorToasts("error"),
+                detail: errorToasts("passwordIsSet"),
+                life: 3000
+            });
+        } else {
+            await putSetPassword(password, toast, passwordsToasts, errorToasts)
+        }
     }
 
     // change password
