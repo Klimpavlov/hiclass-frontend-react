@@ -121,7 +121,7 @@ const UserProfile = () => {
                                 </div>
                             </div>
                         ) : (
-                            // Если у пользователя есть классы
+                            // if user have classes
                             <div className='clsCntMain gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
                                 {classData.map((defaultClass) => {
                                     const translatedTags = translateDisciplines(defaultClass.disciplineTitle);
