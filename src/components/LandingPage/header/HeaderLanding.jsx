@@ -1,26 +1,27 @@
 import Image from "next/image";
-import imgSrc from "@/components/Header/hiClass_logo.svg";
+import imgSrc from "@/assets/logo/HiClassLogoWhite.svg";
 import React from "react";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 const HeaderLanding = () => {
     return (
-        <div className=''>
-            <div className='flex justify-between'>
-                <div className='flex items-center justify-between text-[16px] text-white font-normal leading-6'>
-                    <Image src={imgSrc} alt="hiClass Logo" className='cursor-pointer'/>
-                    <div>About us</div>
-                    <div>Inspiration</div>
-                    <div>FAQ’s</div>
-                </div>
-                <div className='flex items-center justify-between'>
-                    <div>English</div>
-                    <Button className={'bg-[#216C5E] border border-white'}>Sign in</Button>
-                    <Button className={'bg-[#FDC435] text-[#30210D]'}>Start for free</Button>
-                </div>
+        <header className="w-full max-w-[1280px] mx-auto py-6 px-4 flex justify-between items-center text-white">
+            <div className="flex items-center gap-10 text-[16px] leading-6">
+                <Image src={imgSrc} alt="hiClass Logo" className="cursor-pointer" />
+                <nav className="flex gap-6">
+                    <div className="cursor-pointer">About us</div>
+                    <div className="cursor-pointer">Inspiration</div>
+                    <div className="cursor-pointer">FAQ’s</div>
+                </nav>
             </div>
-        </div>
-    )
-}
 
-export default HeaderLanding
+            <div className="flex items-center gap-4">
+                <div className="cursor-pointer">🇬🇧 English</div>
+                <Button variant="primary" className="border border-white text-white">Sign in</Button>
+                <Button className="bg-[#FDC435] text-[#30210D]">Start for free</Button>
+            </div>
+        </header>
+    );
+};
+
+export default HeaderLanding;
