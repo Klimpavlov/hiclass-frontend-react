@@ -17,8 +17,8 @@ const HeaderLanding = () => {
 
             <div className="flex items-center gap-4">
                 <div className="cursor-pointer">🇬🇧 English</div>
-                <Button variant="primary" className="border border-white text-white">Sign in</Button>
-                <Button className="bg-[#FDC435] text-[#30210D]">Start for free</Button>
+                <Button variant="primary" className="border border-white text-white">Войти</Button>
+                <Button className="bg-[#FDC435] text-[#30210D]">Присоединиться</Button>
             </div>
         </header>
     );
