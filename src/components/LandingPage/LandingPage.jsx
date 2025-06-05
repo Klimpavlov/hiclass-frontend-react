@@ -3,6 +3,7 @@ import TopContentLanding from "@/components/LandingPage/sections/topContent/TopC
 import topClassImage from "@/assets/images/ChatGPT_Image_2_class.png";
 import Image from "next/image";
 import HowItWorks from "@/components/LandingPage/sections/howItWorks/HowItWorks";
+import IdeasForMeeting from "@/components/LandingPage/sections/ideasForMeeting/IdeasForMeeting";
 
 export default function LandingPage() {
     return (
@@ -15,8 +16,11 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            <section className="bg-[#FDFBF5] pt-[350px] min-h-screen flex flex-col items-center">
+            <section className="bg-[#FDFBF5] pt-[350px] pb-[150px] min-h-screen flex flex-col items-center px-[100px]">
                 <HowItWorks />
+            </section>
+            <section className="bg-[#2356AA] pt-[150px] min-h-screen flex flex-col items-center px-[100px]">
+                <IdeasForMeeting />
             </section>
         </main>
     );
